@@ -122,13 +122,19 @@ section .head p { color: var(--ink-2); margin-top: 12px; max-width: var(--measur
 .cols p { color: var(--ink-2); font-size: 0.97rem; }
 
 /* comparison table */
-.table { width: 100%; border-collapse: collapse; font-size: 0.93rem; }
+.table { width: 100%; border-collapse: collapse; font-size: 0.93rem; table-layout: auto; }
 .table th, .table td { text-align: left; padding: 12px 12px 12px 0; border-bottom: 1px solid var(--rule); vertical-align: top; }
 .table th { font-family: var(--mono); font-weight: 500; font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-3); }
-.table td.k { font-weight: 500; white-space: nowrap; }
-.table td.n { font-family: var(--mono); white-space: nowrap; }
+.table td.k { font-weight: 500; min-width: 11ch; }
+.table td.n { font-family: var(--mono); min-width: 12ch; }
 .table .src { font-family: var(--mono); font-size: 0.72rem; color: var(--ink-3); display: block; margin-top: 3px; overflow-wrap: anywhere; white-space: normal; }
 .table-wrap { overflow-x: auto; }
+@media (max-width: 640px) {
+  .table thead { display: none; }
+  .table tr { display: block; padding: 12px 0; border-bottom: 1px solid var(--rule); }
+  .table td { display: block; border: 0; padding: 2px 0; min-width: 0; }
+  .table td.n { margin-bottom: 4px; }
+}
 
 /* ledger */
 .ledger { display: grid; grid-template-columns: 1fr 1fr; gap: 0; border: 1px solid var(--rule); }
