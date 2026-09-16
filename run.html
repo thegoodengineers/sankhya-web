@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light">
+<title>Run it — SANKHYA</title>
+<meta name="description" content="Install, build, test, solve and verify on Windows, Ubuntu or macOS, then call it from Python or C.">
+<meta property="og:title" content="Run it — SANKHYA">
+<meta property="og:description" content="Install, build, test, solve and verify on Windows, Ubuntu or macOS, then call it from Python or C.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://sankhya-solver.vercel.app/run">
+<link rel="canonical" href="https://sankhya-solver.vercel.app/run">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='4' fill='%231b1913'/%3E%3Ctext x='16' y='22' text-anchor='middle' font-family='Georgia,serif' font-size='18' fill='%23f5f1ea'%3ES%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=IBM+Plex+Sans:wght@400;500&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+<nav class="nav">
+  <div class="wrap">
+    <a class="brand" href="/">SANKHYA <small>SIH26119</small></a>
+    <ul><li><a href="/">Home</a></li><li><a href="/problem">Problem</a></li><li><a href="/solver">Solver</a></li><li><a href="/evidence">Evidence</a></li><li><a href="/run" aria-current="page">Run it</a></li><li><a href="/roadmap">Roadmap</a></li><li><a href="/team">Team</a></li></ul>
+    <a class="gh" href="https://github.com/thegoodengineers/SANKHYA"><span class="long">github.com/thegoodengineers/SANKHYA</span><span class="short">GitHub</span></a>
+  </div>
+  <div class="subnav"><a href="/">Home</a><a href="/problem">Problem</a><a href="/solver">Solver</a><a href="/evidence">Evidence</a><a href="/run" aria-current="page">Run it</a><a href="/roadmap">Roadmap</a><a href="/team">Team</a></div>
+</nav>
+
+<header class="page"><div class="wrap"><div class="label"><span class="n">04</span> · Run it</div><h1 style="margin-top:12px">From a fresh clone to a verified answer, on any machine.</h1><p class="lede">Needs a C++20 compiler, CMake 3.20+, Ninja, Python 3 and git. No CUDA, no internet after the clone: the Netlib instances are committed.</p></div></header>
+
+<section>
+  <div class="wrap">
+    <div class="head"><div class="label"><span class="n">Step 1</span></div><div><h2>Install the toolchain for your system.</h2></div></div>
+    <div class="os">
+      <div class="card"><h3><svg viewBox="0 0 24 24"><path d="M3 5.5l7.5-1v7H3zM12 4.3L21 3v8.5h-9zM3 12.5h7.5v7L3 18.5zM12 12.5h9V21l-9-1.3z"/></svg>Windows 10 / 11</h3>
+        <div class="step">install MSYS2, then in the UCRT64 shell</div>
+        <pre><code>pacman -S --needed git mingw-w64-ucrt-x86_64-gcc \
+  mingw-w64-ucrt-x86_64-cmake mingw-w64-ucrt-x86_64-ninja \
+  mingw-w64-ucrt-x86_64-python</code></pre>
+        <p class="small">Use the "MSYS2 UCRT64" shell for every command below. If the Microsoft Store owns <code>python3</code> on your PATH, run the demo as <code>PYTHON=python …</code>; <code>scripts/preflight.sh</code> tells you.</p></div>
+      <div class="card"><h3><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 3v18M3 12h18"/></svg>Ubuntu / Debian</h3>
+        <div class="step">one apt line</div>
+        <pre><code>sudo apt update &amp;&amp; sudo apt install -y \
+  build-essential cmake ninja-build python3 git</code></pre>
+        <p class="small">GCC 10 or newer is required for C++20; Ubuntu 22.04 and later ship GCC 11+. This is what CI runs on, so it is the reference platform.</p></div>
+      <div class="card"><h3><svg viewBox="0 0 24 24"><path d="M16 3c-1.5 0-3 1-3.5 2.5C14 6 15.5 5 16 3zM8.5 7C6 7 4 9.5 4 13c0 3.5 2 8 4.5 8 1 0 1.5-.5 3-.5s2 .5 3 .5c2.5 0 4.5-4.5 4.5-6.5-2-.5-3-2-3-3.5s1-3 2.5-3.5C17.5 7 16 6.5 15 7c-1 .5-1.5.7-2.5.7S10 7 8.5 7z"/></svg>macOS</h3>
+        <div class="step">Xcode command line tools, then Homebrew</div>
+        <pre><code>xcode-select --install
+brew install cmake ninja python git</code></pre>
+        <p class="small">Apple clang 12+ is fine. OpenMP is optional; without it <code>threads</code> is ignored with a note in the log.</p></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="head"><div class="label"><span class="n">Step 2</span></div><div><h2>Build and test. Same three commands everywhere.</h2></div></div>
+    <div class="two">
+      <pre><code>git clone https://github.com/thegoodengineers/SANKHYA
+cd SANKHYA
+scripts/configure.sh build Release
+cmake --build build -j
+ctest --test-dir build --output-on-failure</code></pre>
+      <div><p class="small"><b>What you should see:</b> the configure script names the compiler it picked (it checks the version rather than trusting PATH order), the build finishes with no warnings under <code>-Wall -Wextra -Werror</code>, and ctest reports <code>100% tests passed</code> out of 490. Windows sometimes blocks a freshly linked binary through Smart App Control; <code>scripts/preflight.sh</code> names the fix.</p><p class="small">Or skip straight to everything: <code>scripts/reproduce.sh</code> does the build, the tests, the Netlib benchmark with verification, the HiGHS comparison (if <code>pip install highspy</code> is present) and the PS26119 demo.</p></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="head"><div class="label"><span class="n">Step 3</span></div><div><h2>Solve something, then check it independently.</h2></div></div>
+    <div class="two">
+      <div><pre><code>./build/sankhya info  demo/crude_blend.mps
+./build/sankhya solve demo/crude_blend.mps \
+    --write-sol blend.sol --stats blend.json --ranging
+python tools/verify_solution.py demo/crude_blend.mps blend.sol</code></pre>
+      <p class="small">The solution file carries the objective, the point, every row's shadow price, cost and right-hand-side ranges, and, when the model has no plan, the certificate and the smallest conflicting set of constraints. The verifier re-derives all of it from the model file alone.</p></div>
+      <div><pre><code>./build/sankhya solve model.mps.gz \
+    --option algorithm=ipm --option time_limit=60
+./build/sankhya solve model.mps --progress-out live.jsonl
+./build/sankhya options        # every option, its default, why</code></pre>
+      <p class="small"><b>Exit codes:</b> 0 optimal · 1 a limit, or infeasible / unbounded proven · 3 unreadable file · 5 numerical or model error. <b>Ctrl-C</b> stops at the next safe point and returns the best point so far.</p></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="head"><div class="label"><span class="n">Step 4</span></div><div><h2>Call it from Python or C.</h2></div></div>
+    <div class="two">
+      <div><div class="step" style="font-family:var(--mono);font-size:.72rem;color:var(--accent);letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px">Python · nothing to compile</div><pre><code>export PYTHONPATH=bindings/python
+
+import sankhya
+
+m = sankhya.Model(maximize=True)
+x = m.add_column(cost=3.0, upper=3.0, name="x")
+y = m.add_column(cost=2.0, name="y")
+m.add_row({x: 1.0, y: 1.0}, upper=4.0)
+m.add_row({x: 1.0, y: 3.0}, upper=6.0)
+r = m.solve()
+print(r.status, r.objective, r.x)   # optimal 11.0 [3.0, 1.0]
+
+m = sankhya.Model.read("data/netlib/afiro.mps")
+r = m.solve(sankhya.Options(time_limit=30))
+print(r.row_duals, r.primal_infeasibility)</code></pre></div>
+      <div><div class="step" style="font-family:var(--mono);font-size:.72rem;color:var(--accent);letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px">C · include/sankhya/sankhya.h</div><pre><code>#include &lt;sankhya/sankhya.h&gt;
+
+sankhya_model*   m = sankhya_model_create();
+sankhya_model_read(m, "model.mps");
+sankhya_options* o = sankhya_options_create();
+sankhya_options_set_double(o, "time_limit", 60.0);
+
+sankhya_solution* s = NULL;
+sankhya_solve(m, o, &amp;s);
+printf("%s %.10g\n", sankhya_solution_message(s),
+                     sankhya_solution_objective(s));
+
+sankhya_solution_free(s);
+sankhya_options_free(o);
+sankhya_model_free(m);</code></pre></div>
+    </div>
+    <p class="small" style="margin-top:14px">The Python package is <code>ctypes</code> over the C API, so the shared library the build produces is the whole dependency. Callbacks arrive at most ten times a second and can stop the solve by returning non-zero.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="head"><div class="label"><span class="n">Step 5</span></div><div><h2>Run the demo the judges see.</h2></div></div>
+    <div class="two">
+      <pre><code>demo/run_sih_demo.sh            # full PS26119 walkthrough
+demo/run_sih_demo.sh --quick
+demo/run_demo.sh --list
+demo/run_demo.sh share2b        # solve, then verify</code></pre>
+      <p class="small">Walks the problem statement in its own order: blending LP with prices and ranges, the QP variant, the scheduling MILP corroborated by exhaustive enumeration, the three robustness hazards, Netlib with verification, the HiGHS comparison, and the list of what is not done. Every number it prints comes from a command it just ran.</p>
+    </div>
+  </div>
+</section>
+<footer>
+  <div class="wrap">
+    <div>SANKHYA · Smart India Hackathon 2026 · PS SIH26119 · Apache-2.0 · <a href="https://sankhya-solver.vercel.app">sankhya-solver.vercel.app</a></div>
+    <div><a href="https://github.com/thegoodengineers/SANKHYA">Source</a> · <a href="https://github.com/thegoodengineers/SANKHYA/blob/main/docs/BENCHMARKS.md">Benchmarks</a> · <a href="https://github.com/thegoodengineers/SANKHYA/blob/main/docs/PROVENANCE.md">Provenance</a> · <a href="https://github.com/thegoodengineers/SANKHYA/blob/main/docs/PS26119_COVERAGE.md">Coverage tracker</a></div>
+  </div>
+</footer>
+</body>
+</html>

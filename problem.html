@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light">
+<title>The problem — SANKHYA</title>
+<meta name="description" content="What MRPL asked for in SIH26119, what a refinery model looks like, what the statement requires, and what 'sovereign' has to mean.">
+<meta property="og:title" content="The problem — SANKHYA">
+<meta property="og:description" content="What MRPL asked for in SIH26119, what a refinery model looks like, what the statement requires, and what 'sovereign' has to mean.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://sankhya-solver.vercel.app/problem">
+<link rel="canonical" href="https://sankhya-solver.vercel.app/problem">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='4' fill='%231b1913'/%3E%3Ctext x='16' y='22' text-anchor='middle' font-family='Georgia,serif' font-size='18' fill='%23f5f1ea'%3ES%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=IBM+Plex+Sans:wght@400;500&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+<nav class="nav">
+  <div class="wrap">
+    <a class="brand" href="/">SANKHYA <small>SIH26119</small></a>
+    <ul><li><a href="/">Home</a></li><li><a href="/problem" aria-current="page">Problem</a></li><li><a href="/solver">Solver</a></li><li><a href="/evidence">Evidence</a></li><li><a href="/run">Run it</a></li><li><a href="/roadmap">Roadmap</a></li><li><a href="/team">Team</a></li></ul>
+    <a class="gh" href="https://github.com/thegoodengineers/SANKHYA"><span class="long">github.com/thegoodengineers/SANKHYA</span><span class="short">GitHub</span></a>
+  </div>
+  <div class="subnav"><a href="/">Home</a><a href="/problem" aria-current="page">Problem</a><a href="/solver">Solver</a><a href="/evidence">Evidence</a><a href="/run">Run it</a><a href="/roadmap">Roadmap</a><a href="/team">Team</a></div>
+</nav>
+
+<header class="page"><div class="wrap"><div class="label"><span class="n">01</span> · The problem</div><h1 style="margin-top:12px">A refinery asked for a sovereign alternative to CPLEX and Xpress.</h1><p class="lede">Problem statement SIH26119, Mangalore Refinery and Petrochemicals Ltd. Below: what a refinery model looks like, what the statement demands, and why "not built on another solver" is the hard part.</p></div></header>
+
+<section>
+  <div class="wrap">
+    <div class="head"><div class="label"><span class="n">The model</span></div><div><h2>What a refinery solves every week.</h2></div></div>
+    <div class="figure"><svg class="diagram" viewBox="0 0 900 260" role="img" aria-label="A refinery planning model: crudes into distillation, streams into product pools under capacity and quality constraints">
+  <defs><marker id="ar3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#4a463d"/></marker></defs>
+  <g>
+    <rect x="10" y="30" width="120" height="40" rx="4" class="box"/><text x="70" y="55" text-anchor="middle">Crude A · ₹</text>
+    <rect x="10" y="90" width="120" height="40" rx="4" class="box"/><text x="70" y="115" text-anchor="middle">Crude B · ₹</text>
+    <rect x="10" y="150" width="120" height="40" rx="4" class="box"/><text x="70" y="175" text-anchor="middle">Crude C · ₹</text>
+    <text x="70" y="225" text-anchor="middle" class="m">decision: how much of each</text>
+  </g>
+  <rect x="230" y="60" width="150" height="100" rx="4" class="accbox"/><text x="305" y="100" text-anchor="middle" class="t">CDU</text><text x="305" y="120" text-anchor="middle" class="m">throughput window</text><text x="305" y="136" text-anchor="middle" class="m">yields per crude</text>
+  <path d="M130 50 C180 50 180 100 230 100" class="line" marker-end="url(#ar3)"/><path d="M130 110 H230" class="line" marker-end="url(#ar3)"/><path d="M130 170 C180 170 180 120 230 120" class="line" marker-end="url(#ar3)"/>
+  <g>
+    <rect x="480" y="20" width="130" height="40" rx="4" class="box"/><text x="545" y="45" text-anchor="middle">naphtha</text>
+    <rect x="480" y="80" width="130" height="40" rx="4" class="box"/><text x="545" y="105" text-anchor="middle">diesel pool</text>
+    <rect x="480" y="140" width="130" height="40" rx="4" class="box"/><text x="545" y="165" text-anchor="middle">fuel oil</text>
+    <rect x="480" y="200" width="130" height="40" rx="4" class="soft"/><text x="545" y="225" text-anchor="middle" class="m">tanks · carry-over</text>
+  </g>
+  <path d="M380 90 C430 90 430 40 480 40" class="line" marker-end="url(#ar3)"/><path d="M380 110 C430 110 430 100 480 100" class="line" marker-end="url(#ar3)"/><path d="M380 130 C430 130 430 160 480 160" class="line" marker-end="url(#ar3)"/>
+  <g>
+    <rect x="700" y="20" width="190" height="52" rx="4" class="soft"/><text x="795" y="42" text-anchor="middle" class="t">sulphur ≤ 10 ppm</text><text x="795" y="60" text-anchor="middle" class="m">quality budget per pool</text>
+    <rect x="700" y="86" width="190" height="52" rx="4" class="soft"/><text x="795" y="108" text-anchor="middle" class="t">diesel ≥ commitment</text><text x="795" y="126" text-anchor="middle" class="m">delivery contracts</text>
+    <rect x="700" y="152" width="190" height="52" rx="4" class="soft"/><text x="795" y="174" text-anchor="middle" class="t">minimise cost</text><text x="795" y="192" text-anchor="middle" class="m">the objective</text>
+  </g>
+  <path d="M610 100 H700" class="dash"/><path d="M610 100 C650 100 650 46 700 46" class="dash"/><path d="M610 100 C650 100 650 178 700 178" class="dash"/>
+</svg><div class="cap">Crude choice, unit throughput and pool blending under quality and delivery constraints. This shape is <code>demo/crude_blend.mps</code> at small size and the generated refinery year at 779,640 rows.</div></div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="head"><div class="label"><span class="n">Why it matters</span></div><div><h2>Three reasons this is not a toy.</h2></div></div>
+    <div class="icons">
+      <div class="icon-card"><svg viewBox="0 0 24 24"><path d="M12 2v20M5 7l7-5 7 5M5 17l7 5 7-5"/></svg><h3>Constant re-planning</h3><p>Crude purchases, unit runs and blends are re-decided all the time. Each decision is an LP or MILP.</p></div>
+      <div class="icon-card"><svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="10" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg><h3>Licensed and opaque</h3><p>Today's answers come from foreign software nobody in the plant can inspect, audit or extend.</p></div>
+      <div class="icon-card"><svg viewBox="0 0 24 24"><path d="M12 9v4M12 17h.01M10.3 3.9L1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/></svg><h3>Wrong answers are silent</h3><p>A plan that violates a spec by one part in a thousand does not crash. It ships a bad blend.</p></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="head"><div class="label"><span class="n">The statement</span></div><div><h2>What SIH26119 asks for, against what exists on main.</h2><p>From the coverage tracker in the repository, checked against the source.</p></div></div>
+    <div class="legend"><span><i style="background:#2f6b3a"></i>done</span><span><i style="background:#d9a441"></i>partial</span><span><i style="background:#d9d2c5;border:1px solid #7d7869"></i>not started</span></div>
+    <div class="two">
+      <ul class="status">
+        <li class="done"><i></i><div><b>Linear programming</b> <span>· revised simplex, primal and dual</span></div></li>
+        <li class="done"><i></i><div><b>Mixed-integer LP</b> <span>· branch and bound, reliability branching</span></div></li>
+        <li class="done"><i></i><div><b>Convex QP and MIQP</b> <span>· Condat-Vũ; non-convex refused with a certificate</span></div></li>
+        <li class="part"><i></i><div><b>Modular for NLP / MINLP</b> <span>· the seam exists, no nonlinear engine yet</span></div></li>
+        <li class="done"><i></i><div><b>First-order method</b> <span>· restarted PDHG, finished by the interior point</span></div></li>
+        <li class="done"><i></i><div><b>Interior point</b> <span>· Mehrotra, sparse LDLᵀ, opt-in</span></div></li>
+        <li class="done"><i></i><div><b>Presolve, cutting planes, heuristics</b> <span>· cuts off by default, by measurement</span></div></li>
+        <li class="done"><i></i><div><b>Sensitivity ranging</b> <span>· cost and RHS, degeneracy stated</span></div></li>
+      </ul>
+      <ul class="status">
+        <li class="done"><i></i><div><b>Sparse linear algebra</b> <span>· Markowitz LU, hyper-sparse solves, LDLᵀ</span></div></li>
+        <li class="done"><i></i><div><b>Multi-core</b> <span>· OpenMP column loops, bit-identical at any thread count</span></div></li>
+        <li class="no"><i></i><div><b>GPU acceleration</b> <span>· backend written, never built: no GPU yet</span></div></li>
+        <li class="done"><i></i><div><b>Netlib, MIPLIB, Mittelmann benchmarks</b> <span>· all three run and committed</span></div></li>
+        <li class="done"><i></i><div><b>Compared with an established solver</b> <span>· HiGHS, separate process</span></div></li>
+        <li class="done"><i></i><div><b>Robustness: degenerate, ill-conditioned, weak relaxations</b> <span>· all three demonstrated</span></div></li>
+        <li class="part"><i></i><div><b>Thousands to millions of variables</b> <span>· reached at a million on generated families, exact at 32,485 rows on the refinery year</span></div></li>
+        <li class="done"><i></i><div><b>Not built on any existing solver</b> <span>· enforced in CI</span></div></li>
+      </ul>
+    </div>
+    <p class="small" style="margin-top:18px">31 checkable requirements: 27 done, 3 partial, 1 not started. <a href="https://github.com/thegoodengineers/SANKHYA/blob/main/docs/PS26119_COVERAGE.md">The tracker</a> cites the commit and CSV behind each row.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="head"><div class="label"><span class="n">Sovereign</span></div><div><h2>What "not a wrapper" has to mean, and how it is enforced.</h2></div></div>
+    <div class="tiles">
+      <div class="tile"><b>0</b><span>lines of code from CPLEX, Xpress, Gurobi, HiGHS, CBC, SCIP, GLPK, OSQP, PDLP or cuPDLP</span><small>docs/PROVENANCE.md, the red line</small></div>
+      <div class="tile"><b>5</b><span>libraries linked, none of them a solver: fmt, CLI11, nlohmann/json, zlib, GoogleTest (tests only)</span><small>dependency table, with why each is not a solver</small></div>
+      <div class="tile"><b>CI</b><span>dumps the link line and fails the build if a solver library ever appears in the binary</span><small>.github/workflows/ci.yml, provenance job</small></div>
+      <div class="tile"><b>SPDX</b><span>bill of materials generated from the pinned tags and checked on every push</span><small>docs/sbom.spdx.json</small></div>
+    </div>
+  </div>
+</section>
+<footer>
+  <div class="wrap">
+    <div>SANKHYA · Smart India Hackathon 2026 · PS SIH26119 · Apache-2.0 · <a href="https://sankhya-solver.vercel.app">sankhya-solver.vercel.app</a></div>
+    <div><a href="https://github.com/thegoodengineers/SANKHYA">Source</a> · <a href="https://github.com/thegoodengineers/SANKHYA/blob/main/docs/BENCHMARKS.md">Benchmarks</a> · <a href="https://github.com/thegoodengineers/SANKHYA/blob/main/docs/PROVENANCE.md">Provenance</a> · <a href="https://github.com/thegoodengineers/SANKHYA/blob/main/docs/PS26119_COVERAGE.md">Coverage tracker</a></div>
+  </div>
+</footer>
+</body>
+</html>

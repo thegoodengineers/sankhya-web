@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light">
+<title>The evidence — SANKHYA</title>
+<meta name="description" content="Netlib, MIPLIB, Mittelmann, the HiGHS cross-check and scale to a million rows, every number from a committed CSV.">
+<meta property="og:title" content="The evidence — SANKHYA">
+<meta property="og:description" content="Netlib, MIPLIB, Mittelmann, the HiGHS cross-check and scale to a million rows, every number from a committed CSV.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://sankhya-solver.vercel.app/evidence">
+<link rel="canonical" href="https://sankhya-solver.vercel.app/evidence">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='4' fill='%231b1913'/%3E%3Ctext x='16' y='22' text-anchor='middle' font-family='Georgia,serif' font-size='18' fill='%23f5f1ea'%3ES%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=IBM+Plex+Sans:wght@400;500&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+<nav class="nav">
+  <div class="wrap">
+    <a class="brand" href="/">SANKHYA <small>SIH26119</small></a>
+    <ul><li><a href="/">Home</a></li><li><a href="/problem">Problem</a></li><li><a href="/solver">Solver</a></li><li><a href="/evidence" aria-current="page">Evidence</a></li><li><a href="/run">Run it</a></li><li><a href="/roadmap">Roadmap</a></li><li><a href="/team">Team</a></li></ul>
+    <a class="gh" href="https://github.com/thegoodengineers/SANKHYA"><span class="long">github.com/thegoodengineers/SANKHYA</span><span class="short">GitHub</span></a>
+  </div>
+  <div class="subnav"><a href="/">Home</a><a href="/problem">Problem</a><a href="/solver">Solver</a><a href="/evidence" aria-current="page">Evidence</a><a href="/run">Run it</a><a href="/roadmap">Roadmap</a><a href="/team">Team</a></div>
+</nav>
+
+<header class="page"><div class="wrap"><div class="label"><span class="n">03</span> · The evidence</div><h1 style="margin-top:12px">Every number was produced by a command, and the CSV is named.</h1><p class="lede"><code>docs/BENCHMARKS.md</code> is generated from <code>bench/results/</code> by a script, so it cannot drift. Each CSV records the instance, its SHA-256, our objective, the published value, the gap, status, wall time, iterations, the commit and the machine.</p></div></header>
+
+<section>
+  <div class="wrap">
+    <div class="head"><div class="label"><span class="n">Linear programs</span></div><div><h2>Netlib, and the cross-check against HiGHS.</h2></div></div>
+    <div class="figure"><div class="bars">
+<div class="bar"><div class="lab"><b>Netlib, full set</b><small>netlib-full-2b4eb6b.csv</small></div><div class="track"><div class="fill " style="width:87.6%"></div></div><div class="val">78 / 89</div></div>
+<div class="bar"><div class="lab"><b>Netlib, medium tier</b><small>netlib-medium-2b4eb6b.csv</small></div><div class="track"><div class="fill " style="width:96.0%"></div></div><div class="val">48 / 50</div></div>
+<div class="bar"><div class="lab"><b>Netlib, small set (demo)</b><small>netlib-small-2b4eb6b.csv</small></div><div class="track"><div class="fill " style="width:100.0%"></div></div><div class="val">9 / 9</div></div>
+<div class="bar"><div class="lab"><b>HiGHS agreement, medium tier</b><small>compare-highs-medium-bf3df02*.csv</small></div><div class="track"><div class="fill ok" style="width:100.0%"></div></div><div class="val">50 / 50</div></div>
+</div><div class="cap">Of the 11 full-set non-passes: 7 where Netlib's own table is the outlier and our answer agrees with HiGHS, 2 time limits at 120 s, 1 downgraded by our own dual check, 1 declined rather than wrong. HiGHS runs as a separate process; wall time 2.0x to 2.1x slower over three runs an hour apart.</div></div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="head"><div class="label"><span class="n">Integer and large</span></div><div><h2>MIPLIB, Mittelmann, robustness.</h2></div></div>
+    <div class="figure"><div class="bars">
+<div class="bar"><div class="lab"><b>MIPLIB easy, reach published optimum</b><small>miplib-bf3df02.csv · 60 s</small></div><div class="track"><div class="fill " style="width:43.3%"></div></div><div class="val">13 / 30</div></div>
+<div class="bar"><div class="lab"><b>MIPLIB easy, prove it</b><small>same CSV</small></div><div class="track"><div class="fill dim" style="width:30.0%"></div></div><div class="val">9 / 30</div></div>
+<div class="bar"><div class="lab"><b>Mittelmann, 8 smallest LPs</b><small>mittelmann-bf3df02.csv · 300 s</small></div><div class="track"><div class="fill dim" style="width:0.0%"></div></div><div class="val">0 / 8</div></div>
+<div class="bar"><div class="lab"><b>Robustness hazards demonstrated</b><small>bench/runners/robustness.py</small></div><div class="track"><div class="fill ok" style="width:100.0%"></div></div><div class="val">3 / 3</div></div>
+</div><div class="cap">Mittelmann is the one line where nothing finishes, stated rather than omitted. Robustness: exact rank checked over the rationals on a degenerate model, condition number 2.1e+30 with the objective provably unmoved, a 33.8% integrality gap closed.</div></div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="two">
+      <div><div class="head" style="grid-template-columns:1fr"><div><div class="label"><span class="n">Scale</span></div><h2>To a million rows, with the optimum exact by construction.</h2><p>A fixed budget of 1,000 first-order iterations, which removes the machine from the claim. The error does not grow with the model; only the cost per iteration does. Under a 120 s clock the same engine reaches 100,000 × 100,000 to 9.1e-08.</p></div></div>
+      <div class="tiles" style="margin-top:8px"><div class="tile"><b>32,485</b><span>rows of the daily refinery year solved exactly by the interior point</span><small>scale-refinery-*.csv</small></div><div class="tile"><b>779,640</b><span>rows of the hourly year reached by PDHG to 1.1e-06, proved by nothing</span><small>same family, 8,760 periods</small></div></div></div>
+      <div class="figure"><svg class="diagram" viewBox="0 0 480 220" role="img" aria-label="Relative error after a fixed 1,000 PDHG iterations stays between 6.9e-06 and 6.1e-04 from one thousand to one million rows">
+  <line x1="70" y1="170" x2="450" y2="170" class="line"/><line x1="70" y1="20" x2="70" y2="170" class="line"/>
+  <text x="70.0" y="188" text-anchor="middle" class="m">10^3</text><text x="196.7" y="188" text-anchor="middle" class="m">10^4</text><text x="323.3" y="188" text-anchor="middle" class="m">10^5</text><text x="450.0" y="188" text-anchor="middle" class="m">10^6</text>
+  <text x="260" y="208" text-anchor="middle" class="m">rows = columns, random family</text>
+  <text x="62" y="24.0" text-anchor="end" class="m">1e-3</text><text x="62" y="66.9" text-anchor="end" class="m">1e-5</text><text x="62" y="109.7" text-anchor="end" class="m">1e-7</text><text x="62" y="152.6" text-anchor="end" class="m">1e-9</text>
+  <line x1="70" y1="62.9" x2="450" y2="62.9" class="dash"/><line x1="70" y1="105.7" x2="450" y2="105.7" class="dash"/><line x1="70" y1="148.6" x2="450" y2="148.6" class="dash"/>
+  <path d="M70.0 24.6 L196.7 33.3 L323.3 66.3 L450.0 38.3" class="line" style="stroke:#b1471f;stroke-width:2"/><circle cx="70.0" cy="24.6" r="4.5" class="acc"/><circle cx="196.7" cy="33.3" r="4.5" class="acc"/><circle cx="323.3" cy="66.3" r="4.5" class="acc"/><circle cx="450.0" cy="38.3" r="4.5" class="acc"/>
+  <circle cx="70.0" cy="164.0" r="4.5" fill="#2f6b3a"/><text x="80.0" y="168.0" class="m">polished by the interior point: 1.9e-10</text>
+  <text x="444.0" y="28.3" text-anchor="end" class="m">1,000 iterations, no clock</text>
+</svg><div class="cap"><code>scale-iterations-bf3df02.csv</code>, random family. Polished point: <code>#229</code>, interior point from PDHG's own point.</div></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="head"><div class="label"><span class="n">Reproduce</span></div><div><h2>One command regenerates this page's numbers.</h2></div></div>
+    <div class="two">
+      <pre><code>git clone https://github.com/thegoodengineers/SANKHYA
+cd SANKHYA
+scripts/reproduce.sh</code></pre>
+      <p class="small">Builds, runs 490 tests, the Netlib benchmark with verification, the HiGHS comparison and the PS26119 walkthrough, offline. Any step that cannot run on your machine says why and is listed again at the end, so a shorter run is never mistaken for a passing one. Commit hashes in the CSV names identify the exact solver that produced each number.</p>
+    </div>
+  </div>
+</section>
+<footer>
+  <div class="wrap">
+    <div>SANKHYA · Smart India Hackathon 2026 · PS SIH26119 · Apache-2.0 · <a href="https://sankhya-solver.vercel.app">sankhya-solver.vercel.app</a></div>
+    <div><a href="https://github.com/thegoodengineers/SANKHYA">Source</a> · <a href="https://github.com/thegoodengineers/SANKHYA/blob/main/docs/BENCHMARKS.md">Benchmarks</a> · <a href="https://github.com/thegoodengineers/SANKHYA/blob/main/docs/PROVENANCE.md">Provenance</a> · <a href="https://github.com/thegoodengineers/SANKHYA/blob/main/docs/PS26119_COVERAGE.md">Coverage tracker</a></div>
+  </div>
+</footer>
+</body>
+</html>

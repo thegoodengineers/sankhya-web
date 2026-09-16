@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light">
+<title>The solver — SANKHYA</title>
+<meta name="description" content="Four LP engines and branch and bound behind one call, an independent verifier, and where it is ahead of or behind existing solvers.">
+<meta property="og:title" content="The solver — SANKHYA">
+<meta property="og:description" content="Four LP engines and branch and bound behind one call, an independent verifier, and where it is ahead of or behind existing solvers.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://sankhya-solver.vercel.app/solver">
+<link rel="canonical" href="https://sankhya-solver.vercel.app/solver">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='4' fill='%231b1913'/%3E%3Ctext x='16' y='22' text-anchor='middle' font-family='Georgia,serif' font-size='18' fill='%23f5f1ea'%3ES%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=IBM+Plex+Sans:wght@400;500&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+<nav class="nav">
+  <div class="wrap">
+    <a class="brand" href="/">SANKHYA <small>SIH26119</small></a>
+    <ul><li><a href="/">Home</a></li><li><a href="/problem">Problem</a></li><li><a href="/solver" aria-current="page">Solver</a></li><li><a href="/evidence">Evidence</a></li><li><a href="/run">Run it</a></li><li><a href="/roadmap">Roadmap</a></li><li><a href="/team">Team</a></li></ul>
+    <a class="gh" href="https://github.com/thegoodengineers/SANKHYA"><span class="long">github.com/thegoodengineers/SANKHYA</span><span class="short">GitHub</span></a>
+  </div>
+  <div class="subnav"><a href="/">Home</a><a href="/problem">Problem</a><a href="/solver" aria-current="page">Solver</a><a href="/evidence">Evidence</a><a href="/run">Run it</a><a href="/roadmap">Roadmap</a><a href="/team">Team</a></div>
+</nav>
+
+<header class="page"><div class="wrap"><div class="label"><span class="n">02</span> · The solver</div><h1 style="margin-top:12px">Four engines behind one call, and a checker that trusts none of them.</h1><p class="lede"><code>solve(const Model&amp;, const Options&amp;) → Solution</code> is the one entry point. Everything below plugs into it.</p></div></header>
+
+<section>
+  <div class="wrap">
+    <div class="figure"><svg class="diagram" viewBox="0 0 960 250" role="img" aria-label="One call, four engines: a model goes through presolve and scaling, is dispatched by problem class to an engine, and its answer is postsolved and verified">
+  <defs><marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#4a463d"/></marker></defs>
+  <rect x="10" y="95" width="110" height="60" rx="4" class="box"/><text x="65" y="120" text-anchor="middle" class="t">MPS · LP · QPS</text><text x="65" y="138" text-anchor="middle" class="m">reader</text>
+  <rect x="150" y="95" width="110" height="60" rx="4" class="box"/><text x="205" y="120" text-anchor="middle" class="t">presolve</text><text x="205" y="138" text-anchor="middle" class="m">8 reductions</text>
+  <rect x="290" y="95" width="100" height="60" rx="4" class="box"/><text x="340" y="120" text-anchor="middle" class="t">scaling</text><text x="340" y="138" text-anchor="middle" class="m">Ruiz + P-C</text>
+  <rect x="420" y="80" width="120" height="90" rx="4" class="accbox"/><text x="480" y="112" text-anchor="middle" class="t">solve()</text><text x="480" y="130" text-anchor="middle" class="m">one entry point</text><text x="480" y="146" text-anchor="middle" class="m">dispatch by class</text>
+  <rect x="590" y="12" width="150" height="44" rx="4" class="box"/><text x="665" y="30" text-anchor="middle" class="t">dual simplex</text><text x="665" y="46" text-anchor="middle" class="m">LP default · basis</text>
+  <rect x="590" y="68" width="150" height="44" rx="4" class="box"/><text x="665" y="86" text-anchor="middle" class="t">interior point</text><text x="665" y="102" text-anchor="middle" class="m">LP at scale · LDLᵀ</text>
+  <rect x="590" y="124" width="150" height="44" rx="4" class="box"/><text x="665" y="142" text-anchor="middle" class="t">restarted PDHG</text><text x="665" y="158" text-anchor="middle" class="m">first-order · GPU shape</text>
+  <rect x="590" y="180" width="150" height="44" rx="4" class="box"/><text x="665" y="198" text-anchor="middle" class="t">branch &amp; bound</text><text x="665" y="214" text-anchor="middle" class="m">MILP · MIQP over QP</text>
+  <rect x="790" y="68" width="80" height="56" rx="4" class="box"/><text x="830" y="92" text-anchor="middle" class="t">postsolve</text><text x="830" y="108" text-anchor="middle" class="m">re-measured</text>
+  <rect x="790" y="140" width="160" height="56" rx="4" class="accbox"/><text x="870" y="163" text-anchor="middle" class="t">independent verifier</text><text x="870" y="180" text-anchor="middle" class="m">shares no code</text>
+  <path d="M120 125 H150" class="line" marker-end="url(#ar)"/><path d="M260 125 H290" class="line" marker-end="url(#ar)"/><path d="M390 125 H420" class="line" marker-end="url(#ar)"/>
+  <path d="M540 110 C565 110 565 34 590 34" class="line" marker-end="url(#ar)"/><path d="M540 118 C565 118 565 90 590 90" class="line" marker-end="url(#ar)"/><path d="M540 132 C565 132 565 146 590 146" class="line" marker-end="url(#ar)"/><path d="M540 140 C565 140 565 202 590 202" class="line" marker-end="url(#ar)"/>
+  <path d="M740 34 C765 34 765 96 790 96" class="line" marker-end="url(#ar)"/><path d="M740 90 H790" class="line" marker-end="url(#ar)"/><path d="M740 146 C765 146 765 96 790 96" class="line"/><path d="M740 202 C765 202 765 96 790 96" class="line"/>
+  <path d="M830 124 V140" class="line" marker-end="url(#ar)"/>
+  <path d="M665 224 V240 H480 V170" class="dash" marker-end="url(#ar)"/><text x="572" y="236" text-anchor="middle" class="m">node LPs warm-start the dual simplex</text>
+</svg><div class="cap">Presolve's postsolve re-measures the recovered point against the original model, so a wrong dual surfaces as a violation rather than as a quiet wrong number.</div></div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="head"><div class="label"><span class="n">Engines</span></div><div><h2>Chosen by the problem class.</h2></div></div>
+    <div class="engines">
+      <div><div class="label">LP · default</div><h3>Dual simplex</h3><p>Bounded-variable revised simplex, sparse Markowitz LU, Devex pricing. Produces a basis: the node engine for branch and bound.</p></div>
+      <div><div class="label">LP · primal</div><h3>Primal simplex</h3><p>Composite phase 1, no big-M. The hand-over engine when a basis needs repair.</p></div>
+      <div><div class="label">LP · opt-in</div><h3>Interior point</h3><p>Mehrotra predictor-corrector through a from-scratch sparse LDLᵀ with AMD ordering. The engine that scales; no basis.</p></div>
+      <div><div class="label">LP · first-order</div><h3>Restarted PDHG</h3><p>Two sparse mat-vecs and a projection per iteration: the GPU shape. Finished by the interior point from its own point.</p></div>
+      <div><div class="label">MILP · MIQP</div><h3>Branch and bound</h3><p>Reliability branching, dive then best-bound, warm-started dual node LPs, root Gomory and cover cuts.</p></div>
+      <div><div class="label">QP</div><h3>Condat-Vũ</h3><p>Convexity decided by LDLᵀ before any arithmetic. A non-convex Hessian is refused, never reported as global.</p></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="two">
+      <div>
+        <div class="head" style="grid-template-columns:1fr"><div><div class="label"><span class="n">Verification</span></div><h2>Two readers, two arithmetics.</h2><p>The verifier reads the model file and the solution file and re-derives feasibility, duality, integrality and the gap. Infeasible carries a Farkas certificate; unbounded carries a ray; an IIS carries witnesses. All proved, not trusted.</p></div></div>
+      </div>
+      <div class="figure"><svg class="diagram" viewBox="0 0 520 210" role="img" aria-label="Every answer is checked by a program that shares no code with the solver">
+  <defs><marker id="ar2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#4a463d"/></marker></defs>
+  <rect x="10" y="70" width="120" height="60" rx="4" class="box"/><text x="70" y="96" text-anchor="middle" class="t">model.mps</text><text x="70" y="114" text-anchor="middle" class="m">the original file</text>
+  <rect x="190" y="14" width="140" height="60" rx="4" class="accbox"/><text x="260" y="40" text-anchor="middle" class="t">SANKHYA</text><text x="260" y="58" text-anchor="middle" class="m">C++, the solver</text>
+  <rect x="190" y="126" width="140" height="60" rx="4" class="box"/><text x="260" y="152" text-anchor="middle" class="t">verify_solution.py</text><text x="260" y="170" text-anchor="middle" class="m">Python, no shared code</text>
+  <rect x="390" y="70" width="120" height="60" rx="4" class="box"/><text x="450" y="90" text-anchor="middle" class="t">plan.sol</text><text x="450" y="106" text-anchor="middle" class="m">prices · ranges</text><text x="450" y="120" text-anchor="middle" class="m">certificate · IIS</text>
+  <path d="M130 90 C160 90 160 44 190 44" class="line" marker-end="url(#ar2)"/>
+  <path d="M130 110 C160 110 160 156 190 156" class="line" marker-end="url(#ar2)"/>
+  <path d="M330 44 C360 44 360 90 390 90" class="line" marker-end="url(#ar2)"/>
+  <path d="M390 110 C360 110 360 156 330 156" class="line" marker-end="url(#ar2)"/>
+  <text x="260" y="108" text-anchor="middle" class="m">two readers, two arithmetics, one verdict</text>
+</svg></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="head"><div class="label"><span class="n">Compared</span></div><div><h2>Ahead and behind, on the same evidence.</h2><p>Three kinds of solver exist: open-source simplex codes, commercial ones, GPU first-order codes.</p></div></div>
+    <div class="ledger">
+      <div><h3>Ahead</h3><ul>
+        <li><b>Independent checker on every answer.</b> No open-source solver ships one; the commercial ones ship none.</li>
+        <li><b>Provenance enforced in CI,</b> not asserted in a README.</li>
+        <li><b>Scale evidence with exact optima:</b> generators build the model backwards from a known KKT point.</li>
+        <li><b>A planner's solution file:</b> prices, ranges, conflict set, progress stream.</li>
+        <li><b>An honest ledger</b> shipped with the product.</li>
+      </ul></div>
+      <div><h3>Behind</h3><ul>
+        <li><b>Raw simplex speed:</b> about 2x HiGHS's wall time on the Netlib medium tier.</li>
+        <li><b>MILP proofs:</b> 9 of 30 on MIPLIB; no MIR cuts, one core in the tree.</li>
+        <li><b>Very large LPs:</b> Mittelmann 0 of 8 inside 300 s.</li>
+        <li><b>GPU:</b> written, unbuilt, unmeasured. Not claimed.</li>
+        <li><b>Decades of tuning.</b> This has four months.</li>
+      </ul></div>
+    </div>
+  </div>
+</section>
+<footer>
+  <div class="wrap">
+    <div>SANKHYA · Smart India Hackathon 2026 · PS SIH26119 · Apache-2.0 · <a href="https://sankhya-solver.vercel.app">sankhya-solver.vercel.app</a></div>
+    <div><a href="https://github.com/thegoodengineers/SANKHYA">Source</a> · <a href="https://github.com/thegoodengineers/SANKHYA/blob/main/docs/BENCHMARKS.md">Benchmarks</a> · <a href="https://github.com/thegoodengineers/SANKHYA/blob/main/docs/PROVENANCE.md">Provenance</a> · <a href="https://github.com/thegoodengineers/SANKHYA/blob/main/docs/PS26119_COVERAGE.md">Coverage tracker</a></div>
+  </div>
+</footer>
+</body>
+</html>

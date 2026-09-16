@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light">
+<title>Roadmap — SANKHYA</title>
+<meta name="description" content="The deliverable, the gaps, and the plan for the day a GPU arrives.">
+<meta property="og:title" content="Roadmap — SANKHYA">
+<meta property="og:description" content="The deliverable, the gaps, and the plan for the day a GPU arrives.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://sankhya-solver.vercel.app/roadmap">
+<link rel="canonical" href="https://sankhya-solver.vercel.app/roadmap">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='4' fill='%231b1913'/%3E%3Ctext x='16' y='22' text-anchor='middle' font-family='Georgia,serif' font-size='18' fill='%23f5f1ea'%3ES%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=IBM+Plex+Sans:wght@400;500&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+<nav class="nav">
+  <div class="wrap">
+    <a class="brand" href="/">SANKHYA <small>SIH26119</small></a>
+    <ul><li><a href="/">Home</a></li><li><a href="/problem">Problem</a></li><li><a href="/solver">Solver</a></li><li><a href="/evidence">Evidence</a></li><li><a href="/run">Run it</a></li><li><a href="/roadmap" aria-current="page">Roadmap</a></li><li><a href="/team">Team</a></li></ul>
+    <a class="gh" href="https://github.com/thegoodengineers/SANKHYA"><span class="long">github.com/thegoodengineers/SANKHYA</span><span class="short">GitHub</span></a>
+  </div>
+  <div class="subnav"><a href="/">Home</a><a href="/problem">Problem</a><a href="/solver">Solver</a><a href="/evidence">Evidence</a><a href="/run">Run it</a><a href="/roadmap" aria-current="page">Roadmap</a><a href="/team">Team</a></div>
+</nav>
+
+<header class="page"><div class="wrap"><div class="label"><span class="n">05</span> · Roadmap</div><h1 style="margin-top:12px">What the product is at the end, what is missing, and the GPU plan.</h1></div></header>
+
+<section>
+  <div class="wrap">
+    <div class="head"><div class="label"><span class="n">Deliverable</span></div><div><h2>An engine, three ways to call it, and the evidence beside it.</h2><p>No GUI. The thing a refinery's planning tools would link against, plus the proof that it is right.</p></div></div>
+    <div class="stack">
+      <div class="acc"><b>Evidence</b><span>every CSV, the generated benchmarks page, provenance, SPDX SBOM, one-command reproduction</span></div>
+      <div><b>Verifier</b><span>Python, shares no code, proves certificates; the pass rates are counted by it</span></div>
+      <div><b>Python bindings</b><span>ctypes over the C API, nothing to compile</span></div>
+      <div><b>C API</b><span>FFI-safe, callbacks, interruption, the same options table</span></div>
+      <div><b>CLI</b><span>MPS / LP / QPS in, solution file with prices, ranges, certificates and IIS out</span></div>
+      <div><b>Solver core</b><span>static library: presolve, scaling, four LP engines, branch and bound over LP and QP, five non-solver dependencies</span></div>
+      <div class="acc"><b>GPU backend</b><span>CUDA port of the first-order engine, behind a build flag; claimed only when its CSV exists</span></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="head"><div class="label"><span class="n">Gaps</span></div><div><h2>What it does not do, with where each stands.</h2></div></div>
+    <div class="legend"><span><i style="background:#2f6b3a"></i>designed and built</span><span><i style="background:#d9a441"></i>partly there</span><span><i style="background:#d9d2c5;border:1px solid #7d7869"></i>not started</span></div>
+    <div class="two">
+      <ul class="status">
+        <li class="part"><i></i><div><b>GPU acceleration</b> <span>· the CUDA backend is a pull request never compiled by the team, for lack of a GPU. <code>--gpu</code> warns and falls back.</span></div></li>
+        <li class="part"><i></i><div><b>Speed at Mittelmann size</b> <span>· 0 of 8; the dual simplex's cost per iteration above 20,000 rows is the open line, two of three levers pulled.</span></div></li>
+        <li class="part"><i></i><div><b>Branch-and-cut proper</b> <span>· root cuts exist; MIR cuts and cuts below the root do not. Why MIPLIB proves 9 of 30.</span></div></li>
+        <li class="no"><i></i><div><b>Crossover</b> <span>· pushing the interior point's answer to a vertex, so it can certify and warm-start.</span></div></li>
+      </ul>
+      <ul class="status">
+        <li class="part"><i></i><div><b>Warm start through the API</b> <span>· exists inside branch and bound, not exposed yet.</span></div></li>
+        <li class="no"><i></i><div><b>NLP and MINLP</b> <span>· the seam dispatches four classes; no nonlinear engine behind it.</span></div></li>
+        <li class="done"><i></i><div><b>Non-convex QP</b> <span>· refused deliberately with a certificate. Reporting a local optimum as global is the one thing it will not do.</span></div></li>
+        <li class="part"><i></i><div><b>Parallel tree search</b> <span>· column loops run under OpenMP, bit-identical; the tree itself uses one core.</span></div></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="head"><div class="label"><span class="n">The GPU plan</span></div><div><h2>What happens the day the hardware arrives.</h2><p>Written down before the card exists, in <code>docs/GPU_PLAN.md</code>, so the first day is not spent deciding.</p></div></div>
+    <div class="timeline">
+      <div class="acc"><b>Day 0</b><span>Intake: driver, nvcc, device probe, a CPU baseline re-measured on that machine, alone.</span></div>
+      <div><b>Day 1</b><span>The plumbing: CMake guard, runtime <code>--gpu</code> flag, fallback path. CPU numbers must not move.</span></div>
+      <div><b>Day 2</b><span>The kernels, reviewed on the device: agreement with the CPU engine to 1e-9 on nine instances.</span></div>
+      <div><b>Day 3</b><span>The evidence: CPU-versus-GPU crossover by model size, committed as a CSV, losing region included.</span></div>
+      <div><b>Day 4</b><span>Documents, the demo section, the final read against the problem statement.</span></div>
+    </div>
+    <p class="note" style="margin-top:24px">The claim after Step 3 is not "faster than cuPDLP". It is "a from-scratch GPU first-order engine, verified, with its crossover measured and published". That is defensible in front of a judge; a fabricated 10x is not.</p>
+  </div>
+</section>
+<footer>
+  <div class="wrap">
+    <div>SANKHYA · Smart India Hackathon 2026 · PS SIH26119 · Apache-2.0 · <a href="https://sankhya-solver.vercel.app">sankhya-solver.vercel.app</a></div>
+    <div><a href="https://github.com/thegoodengineers/SANKHYA">Source</a> · <a href="https://github.com/thegoodengineers/SANKHYA/blob/main/docs/BENCHMARKS.md">Benchmarks</a> · <a href="https://github.com/thegoodengineers/SANKHYA/blob/main/docs/PROVENANCE.md">Provenance</a> · <a href="https://github.com/thegoodengineers/SANKHYA/blob/main/docs/PS26119_COVERAGE.md">Coverage tracker</a></div>
+  </div>
+</footer>
+</body>
+</html>
