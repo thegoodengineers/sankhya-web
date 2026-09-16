@@ -285,5 +285,7 @@ footer a { text-decoration: none; }
 .team-card { display: grid !important; grid-template-columns: 1fr auto; gap: 16px; align-items: center; }
 .faces { display: grid; grid-template-columns: repeat(3, 40px); gap: 6px; }
 .faces img { width: 40px; height: 40px; border-radius: 50%; background: var(--paper-2); }
-@media (min-width: 700px) { .team-card { grid-column: span 2; } }
-.team-card .faces { flex-shrink: 0; }
+.faces-cell { display: flex; flex-wrap: wrap; gap: 10px; align-content: center; align-items: center; padding: 10px 4px; }
+.faces-cell a { display: block; line-height: 0; }
+.faces-cell img { width: 56px; height: 56px; border-radius: 12px; background: var(--paper-2); }
+@media (min-width: 700px) { .faces-cell { grid-column: span 2; } }
