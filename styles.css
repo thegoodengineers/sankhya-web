@@ -15,30 +15,6 @@
   --gutter: 16px;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
-    --paper: #15140f;
-    --paper-2: #1e1c16;
-    --ink: #ece7dc;
-    --ink-2: #c2bcae;
-    --ink-3: #8f897a;
-    --rule: #34312a;
-    --accent: #e0703f;
-    --accent-ink: #f0895a;
-    --ok: #7fbf8a;
-  }
-}
-:root[data-theme="dark"] {
-  --paper: #15140f;
-  --paper-2: #1e1c16;
-  --ink: #ece7dc;
-  --ink-2: #c2bcae;
-  --ink-3: #8f897a;
-  --rule: #34312a;
-  --accent: #e0703f;
-  --accent-ink: #f0895a;
-  --ok: #7fbf8a;
-}
 
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; }
