@@ -282,3 +282,6 @@ footer a { text-decoration: none; }
 .logos b { font-family: var(--mono); font-weight: 500; color: var(--ink); margin-left: 6px; font-size: 1rem; }
 .icons a.icon-card { text-decoration: none; color: inherit; display: block; }
 .icons a.icon-card:hover { border-color: var(--accent); }
+.team-card { display: grid !important; grid-template-columns: 1fr auto; gap: 16px; align-items: center; }
+.faces { display: grid; grid-template-columns: repeat(3, 40px); gap: 6px; }
+.faces img { width: 40px; height: 40px; border-radius: 50%; background: var(--paper-2); }
