@@ -4,7 +4,7 @@ The project site for [SANKHYA](https://github.com/thegoodengineers/SANKHYA), the
 optimization solver built for Smart India Hackathon 2026, problem statement SIH26119
 (Mangalore Refinery and Petrochemicals Ltd).
 
-Static HTML and CSS, no build step. Deployed on Vercel from `main`.
+Static HTML and CSS, no build step. Deployed on Vercel from `main` at https://sankhya-solver.vercel.app.
 
 ## Edit
 
