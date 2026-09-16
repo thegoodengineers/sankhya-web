@@ -1,0 +1,419 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SANKHYA — an optimization solver written from the mathematics</title>
+<meta name="description" content="SANKHYA is an LP, MILP and convex QP solver written from scratch in C++20 for Smart India Hackathon 2026, problem statement SIH26119 from Mangalore Refinery and Petrochemicals. Every number on this page comes from a CSV in the repository.">
+<meta property="og:title" content="SANKHYA — an optimization solver written from the mathematics">
+<meta property="og:description" content="LP, MILP and convex QP from scratch, independently verified, with the evidence committed beside the code. SIH 2026, PS SIH26119, MRPL.">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='4' fill='%231b1913'/%3E%3Ctext x='16' y='22' text-anchor='middle' font-family='Georgia,serif' font-size='18' fill='%23f5f1ea'%3ES%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=IBM+Plex+Sans:wght@400;500&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="wrap">
+    <a class="brand" href="#top">SANKHYA <small>SIH26119</small></a>
+    <ul>
+      <li><a href="#problem">Problem</a></li>
+      <li><a href="#different">What is different</a></li>
+      <li><a href="#evidence">Evidence</a></li>
+      <li><a href="#inside">Inside</a></li>
+      <li><a href="#product">The product</a></li>
+      <li><a href="#use">Use</a></li>
+      <li><a href="#gaps">Gaps</a></li>
+      <li><a href="#team">Team</a></li>
+    </ul>
+    <a class="gh" href="https://github.com/thegoodengineers/SANKHYA">github.com/thegoodengineers/SANKHYA</a>
+  </div>
+</nav>
+
+<header class="hero" id="top">
+  <div class="wrap grid">
+    <div>
+      <div class="label"><span class="n">Smart India Hackathon 2026</span> · PS SIH26119 · Mangalore Refinery and Petrochemicals Ltd</div>
+      <h1 style="margin-top:18px">An optimization solver written <em>from the mathematics,</em> not on top of another solver.</h1>
+      <p class="lede">Linear, mixed-integer and convex quadratic programs, solved by four engines behind one call, and every answer checked by a program that shares no code with the solver.</p>
+      <p class="ps">C++20. Apache-2.0. No code from CPLEX, Xpress, Gurobi, HiGHS, CBC, SCIP or any other solver, and a CI job that fails the build if that ever changes.</p>
+      <div class="cta">
+        <a class="btn primary" href="https://github.com/thegoodengineers/SANKHYA">Read the code</a>
+        <a class="btn ghost" href="https://github.com/thegoodengineers/SANKHYA/blob/main/docs/BENCHMARKS.md">Read the benchmarks</a>
+      </div>
+    </div>
+    <div class="figures" aria-label="Headline numbers, each from a committed CSV">
+      <div><b>78 / 89</b><span>Netlib, full set, matched to the published optimum and independently verified</span><div class="src">bench/results/netlib-full-2b4eb6b.csv</div></div>
+      <div><b>50 / 50</b><span>objectives agree with HiGHS on the medium tier, run as a separate process</span><div class="src">bench/results/compare-highs-medium-*.csv</div></div>
+      <div><b>10<sup>6</sup> × 10<sup>6</sup></b><span>rows by columns reached by the first-order engine, optimum exact by construction</span><div class="src">bench/results/scale-iterations-bf3df02.csv</div></div>
+      <div><b>0</b><span>lines of code from any existing solver, enforced in CI against the linked binary</span><div class="src">docs/PROVENANCE.md</div></div>
+    </div>
+  </div>
+</header>
+
+<section id="problem">
+  <div class="wrap">
+    <div class="head">
+      <div class="label"><span class="n">01</span> · The problem statement</div>
+      <div>
+        <h2>A refinery asked for a sovereign alternative to CPLEX and Xpress.</h2>
+        <p>PS SIH26119 asks for an indigenous, GPU-accelerated optimization solver: LP, MILP and QP as the core, modular enough to take NLP and MINLP later, built on revised simplex, first-order methods, interior point and branch-and-bound, with presolve, cutting planes, sensitivity analysis and heuristics. It has to handle the models a refinery actually runs, crude blending, unit scheduling, production planning, and it has to be benchmarked on Netlib, MIPLIB and Mittelmann against an established solver. Above all, it must not be a wrapper around an existing open-source solver.</p>
+      </div>
+    </div>
+    <div class="cols">
+      <div>
+        <h3>Why it matters to MRPL</h3>
+        <p>A refinery re-plans constantly: which crudes to buy, how to run the distillation units, what to blend into which pool to meet a sulphur specification at the lowest cost. Each of those is a linear or mixed-integer program, and today the answers come from licensed foreign software whose internals nobody in the plant can inspect.</p>
+      </div>
+      <div>
+        <h3>What "sovereign" has to mean</h3>
+        <p>Not a rebranded HiGHS. Every algorithm written from the paper or the textbook it comes from, with the citation in the source above the implementation, a dependency table that explains why each library is not a solver, and a bill of materials that CI regenerates and checks.</p>
+      </div>
+      <div>
+        <h3>What a wrong answer costs</h3>
+        <p>Numerical code fails silently. A solver that returns a plausible plan which violates a constraint by one part in a thousand does not crash; it ships a bad blend. So the project is organized around verification first and speed second, and says so.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="different">
+  <div class="wrap">
+    <div class="head">
+      <div class="label"><span class="n">02</span> · What exists, and what is different</div>
+      <div>
+        <h2>There are three kinds of solver already. This is measured against each.</h2>
+        <p>The open-source simplex codes (HiGHS, CBC, GLPK), the commercial ones (CPLEX, Gurobi, Xpress), and the GPU first-order codes (PDLP, cuPDLP). Where SANKHYA is ahead is on evidence in the repository; where it is behind is on the same evidence, stated in the same place.</p>
+      </div>
+    </div>
+    <div class="ledger">
+      <div>
+        <h3>What it has that they do not</h3>
+        <ul>
+          <li><b>An independent checker on every answer.</b> <code>tools/verify_solution.py</code> reads the model and the solution file and re-derives feasibility, duality, integrality and the gap. An infeasible verdict carries a Farkas certificate the checker proves; an unbounded one carries a ray; an irreducible infeasible subsystem carries its own certificate and one witness per element. No open-source solver ships a checker of its own output; the commercial ones ship none.</li>
+          <li><b>Provenance that is enforced.</b> A CI job dumps the link line and fails the build if a solver library appears in the binary. "Not built on another solver" is a checked property, not a sentence.</li>
+          <li><b>Scale evidence with exact optima.</b> Three committed generators build a million-row LP backwards from a known KKT point, so a run at that size is an accuracy check rather than a timing loop. Public benchmarks have no such families.</li>
+          <li><b>The solution file a planner reads.</b> Shadow prices, sensitivity ranges with the basis's degeneracy stated, the smallest conflicting set of constraints when there is no plan, and a progress stream an operator can tail during a long solve.</li>
+          <li><b>An honest ledger shipped with the product.</b> The README's gaps table, the demo's last section and the coverage tracker say what is missing, with the number.</li>
+        </ul>
+      </div>
+      <div>
+        <h3>What they have that it does not, today</h3>
+        <ul>
+          <li><b>Raw simplex speed.</b> About twice HiGHS's wall time on the Netlib medium tier, median per-instance ratio 2.0x to 2.1x across three runs an hour apart. HiGHS's pricing also takes fewer iterations.</li>
+          <li><b>MILP proof rate.</b> 13 of 30 MIPLIB easy instances reach the published optimum in 60 s and 9 prove it. No mixed-integer rounding cuts, no cuts below the root, one core in the tree.</li>
+          <li><b>Very large LPs.</b> Mittelmann's eight smallest instances: 0 of 8 inside 300 s. The interior point runs out of memory on the 100,000-row random model.</li>
+          <li><b>A GPU path.</b> The CUDA backend exists as a pull request and has never been built or measured, because the team has had no GPU. The page does not say "GPU-accelerated" until a CSV exists.</li>
+          <li><b>Decades of tuning.</b> CPLEX and Gurobi have it. This has four months.</li>
+        </ul>
+      </div>
+    </div>
+    <p class="note" style="margin-top:28px">Every row above points at a file in the repository that would have to change for the row to change. That is the design: claims that can be regenerated, not remembered.</p>
+  </div>
+</section>
+
+<section id="evidence">
+  <div class="wrap">
+    <div class="head">
+      <div class="label"><span class="n">03</span> · Evidence</div>
+      <div>
+        <h2>Every number here was produced by a command, and the CSV it came from is named.</h2>
+        <p><code>docs/BENCHMARKS.md</code> is generated from the CSVs in <code>bench/results/</code> by a script, so it cannot drift from them. Each CSV records the instance, its SHA-256, our objective, the published reference, the gap, status, wall time, iterations, the git commit and the machine.</p>
+      </div>
+    </div>
+    <div class="table-wrap">
+      <table class="table">
+        <thead><tr><th>Benchmark</th><th>Result</th><th>What it means</th></tr></thead>
+        <tbody>
+          <tr><td class="k">Netlib, full set (89)</td><td class="n">78 verified<span class="src">netlib-full-2b4eb6b.csv</span></td><td>Matched to the published optimum to a relative 1e-6 and passed the independent checker. Of the 11 others, 7 are cases where Netlib's own table is the outlier and our answer agrees with HiGHS; 2 are time limits at 120 s; 1 is downgraded by our own dual check; 1 is a declined answer rather than a wrong one.</td></tr>
+          <tr><td class="k">Netlib, medium tier (50)</td><td class="n">48 verified<span class="src">netlib-medium-2b4eb6b.csv</span></td><td>The row-capped tier, so the easier half by construction. Quoted second for that reason.</td></tr>
+          <tr><td class="k">Cross-check vs HiGHS</td><td class="n">50 / 50 objectives agree<span class="src">compare-highs-medium-bf3df02*.csv</span></td><td>HiGHS runs as a separate process; nothing in the source knows it exists. Wall time: 2.0x to 2.1x slower, three runs an hour apart, alone on the machine, on mains.</td></tr>
+          <tr><td class="k">MIPLIB 2017, easy (30)</td><td class="n">13 reach, 9 prove<span class="src">miplib-bf3df02.csv</span></td><td>60 s per instance. Reliability branching, warm-started dual node LPs, diving heuristic. Root cuts exist and are off by default because on this set they cost a proof.</td></tr>
+          <tr><td class="k">Mittelmann, 8 smallest LPs</td><td class="n">0 / 8<span class="src">mittelmann-bf3df02.csv</span></td><td>6,330 to 376,500 rows at 300 s. Every row is a named time limit. The one benchmark line where nothing finishes, stated rather than omitted.</td></tr>
+          <tr><td class="k">Scale, random family</td><td class="n">100,000 × 100,000 to 9.1e-08<span class="src">scale-bf3df02.csv</span></td><td>First-order engine under a 120 s clock. Under a fixed 1,000 iterations the error stays between 6.9e-06 and 6.1e-04 all the way to a million rows and columns: what grows with the model is the cost per iteration, not the count.</td></tr>
+          <tr><td class="k">Scale, refinery year</td><td class="n">32,485 rows exact; 779,640 reached<span class="src">scale-refinery-*.csv</span></td><td>A T-period refinery planning LP with crudes, tanks, yields, capacities, quality budgets and commitments, optimum exact by construction. The daily year is solved exactly by the interior point; the hourly year is reached to 1.1e-06 and proved by nothing.</td></tr>
+          <tr><td class="k">Robustness</td><td class="n">3 / 3 hazards<span class="src">bench/runners/robustness.py</span></td><td>Highly degenerate (exact rank checked over the rationals), ill-conditioned (condition number 2.1e+30, objective provably unmoved), weak relaxation (33.8% integrality gap closed).</td></tr>
+          <tr><td class="k">Unit tests</td><td class="n">490 pass</td><td>Including an exact rational oracle the simplex is fuzzed against, and an exhaustive enumerator that corroborates every MILP proof in the demo.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="small" style="margin-top:18px">Commit hashes in file names identify the exact state of the solver that produced each number. One command, <code>scripts/reproduce.sh</code>, takes a fresh clone to every claim on this page.</p>
+  </div>
+</section>
+
+<section id="inside">
+  <div class="wrap">
+    <div class="head">
+      <div class="label"><span class="n">04</span> · Inside</div>
+      <div>
+        <h2>Four engines behind one call, chosen by the problem class.</h2>
+        <p><code>solve(const Model&amp;, const Options&amp;) → Solution</code> is the one entry point and the seam where later engines plug in. A model read from MPS, LP or QPS goes through presolve, is scaled, is dispatched by class, and comes back through postsolve to be re-measured against the original model before anything is written.</p>
+      </div>
+    </div>
+    <div class="engines">
+      <div><div class="label">LP · default</div><h3>Dual simplex</h3><p>Bounded-variable revised simplex, sparse Markowitz LU with hyper-sparse solves, Devex pricing, product-form updates with a residual check. Produces a basis, so it is the node engine for branch-and-bound.</p></div>
+      <div><div class="label">LP · primal</div><h3>Primal simplex</h3><p>Composite phase 1, no big-M. The hand-over engine when the dual's basis needs repair, and the reference the dual is measured against.</p></div>
+      <div><div class="label">LP · opt-in</div><h3>Interior point</h3><p>Mehrotra predictor-corrector on normal equations through a from-scratch sparse LDLᵀ with an approximate-minimum-degree ordering written from the 1996 paper. The engine that scales; produces no basis.</p></div>
+      <div><div class="label">LP · first-order</div><h3>Restarted PDHG</h3><p>Two sparse matrix-vector products and a projection per iteration, no serial dependency: the shape a GPU wants. Its answer is finished by the interior point from its own point. This is the GPU story.</p></div>
+      <div><div class="label">MILP · MIQP</div><h3>Branch and bound</h3><p>Reliability branching with pseudocosts and strong branching, dive-then-best-bound, warm-started dual node LPs, root Gomory and lifted cover cuts (off by default, by measurement).</p></div>
+      <div><div class="label">QP</div><h3>Condat-Vũ primal-dual</h3><p>Convexity decided by an LDLᵀ test before any arithmetic. A non-convex Hessian is refused with the negative pivot as the certificate, never solved to a local point and reported as global.</p></div>
+    </div>
+    <div class="cols" style="margin-top:36px">
+      <div>
+        <h3>Verification as architecture</h3>
+        <p>An exact rational oracle in the tests. An independent checker on every written answer. Certificates for the two verdicts that have no point to check. Postsolve re-measures the recovered point against the original model, so a wrong dual surfaces as a violation rather than as a quiet wrong number.</p>
+      </div>
+      <div>
+        <h3>What a planner gets back</h3>
+        <p>The objective, the primal point, the shadow price of every row, cost and right-hand-side ranging with the basis's degeneracy stated, an irreducible infeasible subsystem with witnesses when there is no plan, and a JSON stats blob. Exit codes mean something: 0 optimal, 1 a limit or a proven verdict, 3 unreadable, 5 numerical.</p>
+      </div>
+      <div>
+        <h3>Layout</h3>
+        <pre class="tree"><b>include/sankhya/</b>  Model, Solution, Options, tolerances, the C API
+<b>src/core</b>          solve() dispatcher, certificates
+<b>src/la</b>            sparse LU, LDLᵀ, FTRAN/BTRAN
+<b>src/simplex</b>       primal and dual, ranging
+<b>src/ipm  src/pdhg</b>  interior point, first-order
+<b>src/mip  src/qp</b>   branch and bound, convex QP
+<b>src/presolve</b>      reductions + postsolve stack
+<b>src/gpu</b>           CUDA, behind SANKHYA_ENABLE_CUDA
+<b>bindings/python</b>   ctypes over the C API
+<b>tools/</b>            the independent verifier</pre>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="product">
+  <div class="wrap">
+    <div class="head">
+      <div class="label"><span class="n">05</span> · The product</div>
+      <div>
+        <h2>What it is at the end: an engine, three ways to call it, and the evidence beside it.</h2>
+        <p>No GUI. The deliverable is the thing a refinery's planning tools would link against, plus the proof that it is right.</p>
+      </div>
+    </div>
+    <ol class="steps">
+      <li><div><b>The solver core, as a static library.</b><p>LP, MILP, convex QP and MIQP behind one <code>solve()</code>. Presolve, scaling, four LP engines, branch-and-bound over LP and QP relaxations. Zero solver dependencies; fmt, CLI11, nlohmann/json and zlib are the whole list.</p></div></li>
+      <li><div><b>A command line.</b><p><code>sankhya solve model.mps --write-sol plan.sol --stats plan.json</code>. Reads MPS, LP and QPS, including gzip. Writes the solution file with prices, ranges, certificates and the IIS; streams progress as JSON lines; stops cleanly on Ctrl-C with the best point so far.</p></div></li>
+      <li><div><b>A C API and Python bindings.</b><p>An FFI-safe surface with no C++ types crossing, and a Python package that is <code>ctypes</code> over it, so there is nothing to compile on the caller's side. Callbacks, interruption, and the same options table as the CLI.</p></div></li>
+      <li><div><b>The independent verifier.</b><p>A Python program that shares no code with the solver, checks every written answer against the original model, and is what the benchmark pass rates are counted by.</p></div></li>
+      <li><div><b>The evidence, committed.</b><p>Every CSV in <code>bench/results/</code>, the generated <code>docs/BENCHMARKS.md</code>, the provenance file, the SPDX bill of materials, and a reproduction script that takes a fresh clone to every claim. A judge with a laptop can regenerate the page you are reading.</p></div></li>
+      <li><div><b>The GPU backend, when the card exists.</b><p>The CUDA port of the first-order engine is written and unmeasured. The plan for the day hardware arrives is in <code>docs/GPU_PLAN.md</code>: intake, the order of three pull requests, the agreement test against the CPU path to 1e-9, and a published CPU-versus-GPU crossover including the region where the GPU loses. No speed-up is claimed before that table exists.</p></div></li>
+    </ol>
+    <div class="cols" style="margin-top:40px">
+      <div>
+        <h3>Demonstrated on refinery-shaped models</h3>
+        <p>A crude-blending LP with a sulphur specification and a CDU throughput window, a QP variant with price impact, a unit-scheduling MILP, and a generated multi-period refinery planning model rolled out by the month, the day and the hour. Also power dispatch, supply chain and lot sizing from the case-study set.</p>
+      </div>
+      <div>
+        <h3>Reproduce it</h3>
+        <pre><code>git clone https://github.com/thegoodengineers/SANKHYA
+cd SANKHYA
+scripts/reproduce.sh</code></pre>
+        <p class="small">Builds, runs the tests, the Netlib benchmark with verification, the HiGHS comparison and the PS26119 walkthrough, offline. Any step that cannot run on your machine says why.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="use">
+  <div class="wrap">
+    <div class="head">
+      <div class="label"><span class="n">06</span> · How to use it</div>
+      <div>
+        <h2>Build once, then call it from the shell, from Python, or from C.</h2>
+        <p>Requires CMake 3.20 or newer, Ninja and a C++20 compiler. The configure script picks a capable compiler rather than trusting PATH order, which matters on Windows machines carrying an old MinGW. No CUDA is needed for the CPU build.</p>
+      </div>
+    </div>
+    <div class="cols">
+      <div>
+        <h3>Build and test</h3>
+        <pre><code>git clone https://github.com/thegoodengineers/SANKHYA
+cd SANKHYA
+scripts/configure.sh build Release
+cmake --build build -j
+ctest --test-dir build --output-on-failure</code></pre>
+        <p class="small">On Windows use Git Bash or MSYS2. <code>scripts/preflight.sh</code> names the two things that go wrong quietly there: a Microsoft Store python3 stub, and Smart App Control refusing a freshly linked binary.</p>
+      </div>
+      <div>
+        <h3>Command line</h3>
+        <pre><code>./build/sankhya info  model.mps
+./build/sankhya solve model.mps \
+    --write-sol plan.sol --stats plan.json
+./build/sankhya solve model.mps --ranging
+./build/sankhya solve model.mps \
+    --option algorithm=ipm --option time_limit=60
+./build/sankhya solve model.mps \
+    --progress-out progress.jsonl
+./build/sankhya options</code></pre>
+        <p class="small">Reads MPS, free MPS, LP and QPS, gzipped or not. <code>--option name=value</code> takes any option in the table; <code>options</code> prints them all with defaults and the measurement behind each default.</p>
+      </div>
+      <div>
+        <h3>Check the answer independently</h3>
+        <pre><code>python tools/verify_solution.py model.mps plan.sol</code></pre>
+        <p class="small">Re-derives feasibility, duality, integrality and the gap from the model and the solution file alone. Proves the Farkas certificate of an infeasible verdict and the ray of an unbounded one. Shares no code with the solver.</p>
+        <h3 style="margin-top:22px">Exit codes</h3>
+        <p class="small"><code>0</code> optimal · <code>1</code> a limit was hit, or infeasible / unbounded proven · <code>3</code> the file could not be read · <code>5</code> numerical or model error.</p>
+      </div>
+    </div>
+    <div class="cols" style="margin-top:36px">
+      <div>
+        <h3>Python</h3>
+        <pre><code>export PYTHONPATH=bindings/python   # nothing to compile
+
+import sankhya
+
+m = sankhya.Model(maximize=True)
+x = m.add_column(cost=3.0, upper=3.0, name="x")
+y = m.add_column(cost=2.0, name="y")
+m.add_row({x: 1.0, y: 1.0}, upper=4.0)
+m.add_row({x: 1.0, y: 3.0}, upper=6.0)
+
+r = m.solve()
+print(r.status, r.objective, r.x)
+# optimal 11.0 [3.0, 1.0]
+
+m = sankhya.Model.read("data/netlib/afiro.mps")
+r = m.solve(sankhya.Options(time_limit=30))
+print(r.row_duals, r.primal_infeasibility)</code></pre>
+        <p class="small">The bindings are <code>ctypes</code> over the C API, so the shared library the build produces is the whole dependency. A failed call raises; an infeasible model is a successful call whose status says so. The result also carries the measured quality of the point, recomputed from the returned vectors rather than asserted by the engine.</p>
+      </div>
+      <div>
+        <h3>C</h3>
+        <pre><code>#include &lt;sankhya/sankhya.h&gt;
+
+sankhya_model*   m = sankhya_model_create();
+sankhya_model_read(m, "model.mps");
+
+sankhya_options* o = sankhya_options_create();
+sankhya_options_set_double(o, "time_limit", 60.0);
+sankhya_options_set_string(o, "algorithm", "dual-simplex");
+
+sankhya_solution* s = NULL;
+sankhya_solve(m, o, &amp;s);
+printf("%s %.10g\n",
+       sankhya_solution_message(s),
+       sankhya_solution_objective(s));
+
+sankhya_solution_free(s);
+sankhya_options_free(o);
+sankhya_model_free(m);</code></pre>
+        <p class="small">No C++ types cross the boundary. <code>sankhya_set_callback</code> gets progress at most ten times a second and can stop the solve by returning non-zero; <code>sankhya_model_interrupt</code> does the same from another thread. An unknown option name is an error return, not a crash.</p>
+      </div>
+      <div>
+        <h3>The options that matter</h3>
+        <div class="table-wrap"><table class="table">
+          <tbody>
+            <tr><td class="n">algorithm</td><td>auto (the dual simplex), simplex, dual-simplex, pdhg, ipm</td></tr>
+            <tr><td class="n">time_limit</td><td>seconds; reaches inside the interior point's factorization</td></tr>
+            <tr><td class="n">mip_relative_gap</td><td>1e-4; a search that meets it reports optimal within the gap</td></tr>
+            <tr><td class="n">presolve, scaling</td><td>on by default; postsolve re-measures the point on the original model</td></tr>
+            <tr><td class="n">enable_root_cuts</td><td>off by default, by measurement on MIPLIB</td></tr>
+            <tr><td class="n">threads</td><td>1; N runs the column loops under OpenMP with bit-identical results</td></tr>
+            <tr><td class="n">pdhg_polish</td><td>on; the interior point finishes the first-order answer from its own point</td></tr>
+            <tr><td class="n">gpu</td><td>warns and falls back until a build carries the CUDA backend</td></tr>
+          </tbody>
+        </table></div>
+        <p class="small">Tolerances live in one header, <code>include/sankhya/tolerances.hpp</code>: primal and dual feasibility 1e-7, integrality 1e-6, pivot drop 1e-11. No magic numbers elsewhere.</p>
+      </div>
+    </div>
+    <div class="cols" style="margin-top:36px">
+      <div>
+        <h3>The demo</h3>
+        <pre><code>demo/run_sih_demo.sh          # the PS26119 walkthrough
+demo/run_sih_demo.sh --quick
+demo/run_demo.sh --list
+demo/run_demo.sh share2b      # solve, then verify</code></pre>
+        <p class="small">Walks the problem statement in its own order: blending LP with prices and ranges, the QP variant, the scheduling MILP corroborated by exhaustion, the three robustness hazards, the Netlib set with verification, the HiGHS comparison, and the list of what is not done. Every number it prints comes from a command it just ran. Offline.</p>
+      </div>
+      <div>
+        <h3>What the solution file holds</h3>
+        <p class="small">Status and objective; the primal point; the shadow price of every row and the reduced cost of every column; cost and right-hand-side ranging when asked, with the basis's degeneracy stated; the certificate of an infeasible or unbounded verdict; the irreducible infeasible subsystem with one witness per element; the gap the run was asked for and the gap it achieved. All of it is what the verifier reads.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="gaps">
+  <div class="wrap">
+    <div class="head">
+      <div class="label"><span class="n">07</span> · What it does not do</div>
+      <div>
+        <h2>Stated here, because a solver that is vague about its limits is not one a plant can plan around.</h2>
+      </div>
+    </div>
+    <div class="table-wrap">
+      <table class="table">
+        <thead><tr><th>Not yet</th><th>Where it stands</th></tr></thead>
+        <tbody>
+          <tr><td class="k">GPU acceleration</td><td>The first-order engine it needs exists and is verified on CPU. The CUDA backend is a pull request that has never been compiled by the team, for lack of a GPU. <code>--gpu</code> warns and falls back.</td></tr>
+          <tr><td class="k">Speed at Mittelmann size</td><td>0 of 8 inside 300 s. The dual simplex's cost per iteration at 20,000 rows and above is the open engineering line, with per-phase timing committed and two of the three levers already pulled.</td></tr>
+          <tr><td class="k">Branch-and-cut proper</td><td>Root cuts exist; MIR cuts and cuts below the root do not. This is why MIPLIB proves 9 of 30.</td></tr>
+          <tr><td class="k">Crossover</td><td>The interior point's answer has no basis, so it cannot certify infeasibility or warm-start the tree. Pushing its point to a vertex is designed and not built.</td></tr>
+          <tr><td class="k">Warm start through the API</td><td>The dual simplex re-solves from a basis in a handful of pivots inside branch-and-bound; the public API does not expose it yet.</td></tr>
+          <tr><td class="k">NLP and MINLP</td><td>The seam dispatches four problem classes cleanly. No nonlinear engine sits behind it.</td></tr>
+          <tr><td class="k">Non-convex QP</td><td>Refused deliberately, with a certificate. Reporting a local optimum as global is the one thing this solver will not do.</td></tr>
+          <tr><td class="k">Parallelism</td><td>OpenMP over the column loops, deterministic and bit-identical at 1 and 8 threads, and measured with no speed-up at Netlib scale. The tree runs on one core.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section id="team">
+  <div class="wrap">
+    <div class="head">
+      <div class="label"><span class="n">08</span> · The team</div>
+      <div>
+        <h2>Six students, Bengaluru.</h2>
+        <p>Organised as <a href="https://github.com/thegoodengineers">thegoodengineers</a> on GitHub. What each person worked on is what the commit history says, not a title.</p>
+      </div>
+    </div>
+    <div class="team">
+      <div class="card">
+        <div class="name">Chirag Honnyal</div>
+        <div class="handle"><a href="https://github.com/Chirag6722">@Chirag6722</a> · team lead</div>
+        <p>The simplex engines and the sparse LU, the benchmark runners and every committed measurement, the scale generators, the verifier's certificate checks, the README and the evidence discipline.</p>
+      </div>
+      <div class="card">
+        <div class="name">Abhijeet Sharma</div>
+        <div class="handle"><a href="https://github.com/thegoodengineer">@thegoodengineer</a></div>
+        <p>The public headers and the model layer, options and logging, provenance documentation, CI, the C API certificates work, the solution pool and the interior-point measurement passes.</p>
+      </div>
+      <div class="card">
+        <div class="name">Bhumika Gurav</div>
+        <div class="handle"><a href="https://github.com/Bhumika-1432006">@Bhumika-1432006</a></div>
+        <p>Readers and writers, the core model and utilities, simplex test coverage, and the acceptance work on the packaging and coverage issues.</p>
+      </div>
+      <div class="card">
+        <div class="name">Deekshith R K</div>
+        <div class="handle"><a href="https://github.com/Deekshith2205">@Deekshith2205</a></div>
+        <p>Branch-and-bound and simplex fixes, the Python bindings, test isolation across processes and deterministic benchmark selection.</p>
+      </div>
+      <div class="card">
+        <div class="name">Ayush V Upadhye</div>
+        <div class="handle"><a href="https://github.com/AyushVUpadhye">@AyushVUpadhye</a></div>
+        <p>The CUDA backend for the first-order engine, written ahead of the hardware, and the portable quick mode of the demo.</p>
+      </div>
+      <div class="card">
+        <div class="name">Anjankumar L N</div>
+        <div class="handle"><a href="https://github.com/ALN-web">@ALN-web</a></div>
+        <p>Testing on a second machine and the final read of the submission against the problem statement.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div>SANKHYA · Smart India Hackathon 2026 · PS SIH26119 · Apache-2.0</div>
+    <div><a href="https://github.com/thegoodengineers/SANKHYA">Source</a> · <a href="https://github.com/thegoodengineers/SANKHYA/blob/main/docs/BENCHMARKS.md">Benchmarks</a> · <a href="https://github.com/thegoodengineers/SANKHYA/blob/main/docs/PROVENANCE.md">Provenance</a> · <a href="https://github.com/thegoodengineers/SANKHYA/blob/main/docs/PS26119_COVERAGE.md">Coverage tracker</a></div>
+  </div>
+</footer>
+
+</body>
+</html>
