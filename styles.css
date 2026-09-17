@@ -289,3 +289,22 @@ footer a { text-decoration: none; }
 .faces-cell a { display: block; line-height: 0; }
 .faces-cell img { width: 56px; height: 56px; border-radius: 12px; background: var(--paper-2); }
 @media (min-width: 700px) { .faces-cell { grid-column: span 2; } }
+
+/* evaluator page and sources */
+.steps { display: grid; gap: 14px; }
+.stepcard { display: grid; grid-template-columns: 44px 1fr; gap: 16px; background: #fff; border: 1px solid var(--rule); padding: 20px; }
+.stepcard .num { font-family: var(--serif); font-size: 1.6rem; color: var(--accent); line-height: 1; padding-top: 2px; }
+.stepcard h3 { margin: 0 0 10px; font-size: 1.05rem; }
+.stepcard h3 small { font-family: var(--mono); font-size: 0.7rem; color: var(--ink-3); letter-spacing: 0.08em; text-transform: uppercase; font-weight: 400; }
+.stepcard pre { margin: 0 0 10px; }
+.stepcard p { margin: 0; }
+.glossary { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1px; background: var(--rule); border: 1px solid var(--rule); margin: 0; }
+.glossary > div { background: #fff; padding: 16px 18px; }
+.glossary dt { font-family: var(--serif); font-size: 1.05rem; font-weight: 500; margin-bottom: 6px; }
+.glossary dd { margin: 0; font-size: 0.9rem; color: var(--ink-2); line-height: 1.5; }
+sup.fn { font-size: 0.7em; line-height: 0; }
+sup.fn a { color: var(--accent); text-decoration: none; font-family: var(--mono); }
+.sources { padding-left: 1.4em; margin: 0; font-size: 0.9rem; color: var(--ink-2); line-height: 1.55; }
+.sources li { margin-bottom: 8px; }
+.sources a { font-family: var(--mono); font-size: 0.85em; overflow-wrap: anywhere; }
+@media (max-width: 640px) { .stepcard { grid-template-columns: 1fr; gap: 6px; } }

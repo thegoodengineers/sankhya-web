@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light">
+<title>For evaluators — SANKHYA</title>
+<meta name="description" content="A fifteen-minute checklist for the SIH26119 panel: check the provenance, build it, verify an answer independently, run a benchmark, and a plain-language glossary.">
+<meta property="og:title" content="For evaluators — SANKHYA">
+<meta property="og:description" content="A fifteen-minute checklist for the SIH26119 panel: check the provenance, build it, verify an answer independently, run a benchmark, and a plain-language glossary.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://sankhya-solver.vercel.app/evaluate">
+<link rel="canonical" href="https://sankhya-solver.vercel.app/evaluate">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='4' fill='%231b1913'/%3E%3Ctext x='16' y='22' text-anchor='middle' font-family='Georgia,serif' font-size='18' fill='%23f5f1ea'%3ES%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=IBM+Plex+Sans:wght@400;500&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+<nav class="nav">
+  <div class="wrap">
+    <a class="brand" href="/">SANKHYA <small>SIH26119</small></a>
+    <ul><li><a href="/">Home</a></li><li><a href="/evaluate" aria-current="page">For evaluators</a></li><li><a href="/problem">Problem</a></li><li><a href="/solver">Solver</a></li><li><a href="/evidence">Evidence</a></li><li><a href="/run">Run it</a></li><li><a href="/roadmap">Limits</a></li><li><a href="/team">Team</a></li></ul>
+    <a class="gh" href="https://github.com/thegoodengineers/SANKHYA"><span class="long">github.com/thegoodengineers/SANKHYA</span><span class="short">GitHub</span></a>
+  </div>
+  <div class="subnav"><a href="/">Home</a><a href="/evaluate" aria-current="page">For evaluators</a><a href="/problem">Problem</a><a href="/solver">Solver</a><a href="/evidence">Evidence</a><a href="/run">Run it</a><a href="/roadmap">Limits</a><a href="/team">Team</a></div>
+</nav>
+
+<header class="page"><div class="wrap"><div class="label"><span class="n">00</span> · For evaluators</div><h1 style="margin-top:12px">Fifteen minutes, in order, and what each step should print.</h1><p class="lede">Written for the panel of SIH26119. Nothing below asks you to take our word for anything: each step ends with a file you can open or a program you can run that we did not write.</p></div></header>
+
+<section id="scratch">
+  <div class="wrap">
+    <div class="head"><div class="label"><span class="n">Question 1</span> · two minutes</div><div><h2>Is it really not built on another solver?</h2><p>The problem statement's hard requirement. Three places to look, none of them a README.</p></div></div>
+    <div class="tiles">
+      <div class="tile"><b>1</b><span>Open the <a href="https://github.com/thegoodengineers/SANKHYA/actions/workflows/ci.yml">CI runs</a>. The job called <em>provenance</em> prints the full link line of the binary and fails the build if a solver library ever appears in it.</span><small>.github/workflows/ci.yml</small></div>
+      <div class="tile"><b>2</b><span>Open <a href="https://github.com/thegoodengineers/SANKHYA/blob/main/docs/PROVENANCE.md">docs/PROVENANCE.md</a>. The dependency table has five entries, each with one line on why it is not a solver, and the algorithm table names the paper or textbook each engine was written from.</span><small>docs/PROVENANCE.md</small></div>
+      <div class="tile"><b>3</b><span>Search the source for the name of any solver you know. The only hits are in the comparison harness, which runs HiGHS in a separate process, and in the rule that forbids reading their code.</span><small>ENGINEERING_RULES.md, the red line</small></div>
+    </div>
+  </div>
+</section>
+
+<section id="right">
+  <div class="wrap">
+    <div class="head"><div class="label"><span class="n">Question 2</span> · eight minutes</div><div><h2>Are the answers right?</h2><p>Build it, then let a program that shares no code with the solver check what it says. The build is five commands on Windows, Ubuntu or macOS; the <a href="/run">Run it</a> page has the toolchain line for each.</p></div></div>
+    <div class="steps">
+      <div class="stepcard"><div class="num">1</div><div><h3>Build and run the tests <small>· five minutes</small></h3><pre><code>git clone https://github.com/thegoodengineers/SANKHYA &amp;&amp; cd SANKHYA
+scripts/configure.sh build Release
+cmake --build build -j
+ctest --test-dir build --output-on-failure</code></pre><p class="small">Expect the build to finish with no warnings and ctest to end with <code>100% tests passed</code>. The suite includes a fuzz test that compares the simplex against an exact rational-arithmetic oracle on random models.</p></div></div>
+      <div class="stepcard"><div class="num">2</div><div><h3>Solve a blending model and check it independently <small>· one minute</small></h3><pre><code>./build/sankhya solve demo/crude_blend.mps --write-sol blend.sol --ranging
+python tools/verify_solution.py demo/crude_blend.mps blend.sol</code></pre><p class="small">The checker reads only the model file and the solution file, re-derives feasibility and optimality in its own arithmetic and prints its verdict with the residuals. Open <code>blend.sol</code>: every row has its shadow price and its range.</p></div></div>
+      <div class="stepcard"><div class="num">3</div><div><h3>Watch an impossible model get a proof, not an excuse <small>· one minute</small></h3><pre><code>./build/sankhya solve demo/crude_blend_infeasible.mps --write-sol no.sol
+python tools/verify_solution.py demo/crude_blend_infeasible.mps no.sol</code></pre><p class="small">The status is <code>infeasible</code>, the solution file carries a Farkas certificate and the smallest conflicting set of constraints, and the checker verifies the certificate against the model. A verdict that has no certificate says so in its message rather than staying silent.</p></div></div>
+      <div class="stepcard"><div class="num">4</div><div><h3>Run a public benchmark through the same checker <small>· one minute</small></h3><pre><code>demo/run_demo.sh --list
+demo/run_demo.sh share2b</code></pre><p class="small">Classic Netlib models, committed in the repository so nothing is downloaded. Each solve prints our objective against the published optimum and ends with the checker's verdict; the benchmark runners in <code>bench/runners/</code> do the same for the full set and write a CSV with the commit hash and your machine's tag.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<section id="compare">
+  <div class="wrap">
+    <div class="head"><div class="label"><span class="n">Question 3</span> · three minutes</div><div><h2>How does it compare, and what does it not do?</h2></div></div>
+    <div class="two">
+      <div><p>Against HiGHS, the strongest open-source LP code: the same answer on all 50 medium Netlib models, at about twice its wall time, measured with HiGHS in a separate process on the same machine. Against the published Netlib optima: 80 of 89 matched and verified; of the nine others, eight are cases where the published table itself is the outlier and HiGHS agrees with us.</p><p>On mixed-integer models it reaches the published optimum on 13 of 30 MIPLIB easy instances and proves it on 9. On the eight smallest Mittelmann LPs it finishes none inside 300 seconds. The GPU backend is written and has never been compiled, because the team has no GPU.</p><p><a class="section-link" href="/evidence">Every number above, with its CSV →</a> &nbsp; <a class="section-link" href="/roadmap">The full list of limits →</a></p></div>
+      <div class="tiles"><div class="tile"><b>80 / 89</b><span>Netlib, matched and verified</span></div><div class="tile"><b>50 / 50</b><span>agree with HiGHS, medium tier</span></div><div class="tile"><b>2.0x</b><span>our wall time over HiGHS's</span></div><div class="tile"><b>0 / 8</b><span>Mittelmann inside 300 s</span></div></div>
+    </div>
+  </div>
+</section>
+
+<section id="glossary">
+  <div class="wrap">
+    <div class="head"><div class="label"><span class="n">Glossary</span></div><div><h2>The words on this site, in plain language.</h2></div></div>
+    <dl class="glossary">
+      <div><dt>Linear program (LP)</dt><dd>Choose quantities to make a cost as small as possible while staying inside limits that are all straight-line rules. "Buy crudes to minimise cost, subject to capacity and quality limits" is one.</dd></div>
+      <div><dt>Mixed-integer LP (MILP)</dt><dd>An LP where some choices must be whole numbers or yes/no: which unit runs this week, how many batches. Much harder, because rounding an LP answer is usually wrong.</dd></div>
+      <div><dt>Quadratic program (QP)</dt><dd>An LP whose cost has a squared term, such as a penalty for deviating from a target blend. Convex means it has one lowest point; a non-convex one can trap a solver at a false bottom, so this solver refuses those rather than guess.</dd></div>
+      <div><dt>Simplex</dt><dd>The classical method: walk from corner to corner of the feasible region, improving each step. Exact at the end, and it produces a basis, the object that makes warm starts and mixed-integer search possible.</dd></div>
+      <div><dt>Interior point</dt><dd>A method that moves through the middle of the region instead of along its edges. Fewer, heavier steps; the engine of choice at large size. It does not produce a basis.</dd></div>
+      <div><dt>First-order method (PDHG)</dt><dd>A method that uses only matrix-vector products, the operation a GPU does well. Converges to a tolerance rather than to an exact corner, so here it is finished by the interior point.</dd></div>
+      <div><dt>Presolve</dt><dd>Simplifications applied before solving: dropping rows that cannot bind, fixing variables that have no choice. Postsolve reverses them, and here the result is re-measured against the original model.</dd></div>
+      <div><dt>Shadow price</dt><dd>What one more unit of a limit is worth: how much the cost would fall if a tank were one barrel bigger. Ranging says how far that price stays valid.</dd></div>
+      <div><dt>Certificate</dt><dd>A short proof that can be checked without re-solving. For an impossible model it is a Farkas vector: weights on the rules that, added up, contradict each other. For an unbounded one it is a direction along which the cost never stops improving.</dd></div>
+      <div><dt>IIS</dt><dd>Irreducible infeasible subsystem: the smallest set of rules that still cannot all hold. What a planner reads to find out which constraint to relax.</dd></div>
+      <div><dt>Verifier</dt><dd>The Python program in <code>tools/verify_solution.py</code>. It reads the model file and the solution file, nothing else, and decides for itself whether the answer is feasible, optimal and proved.</dd></div>
+      <div><dt>Netlib, MIPLIB, Mittelmann</dt><dd>Public collections of hard models with published answers, used for decades to test solvers. Netlib is classical LPs, MIPLIB is mixed-integer, Mittelmann is the large LPs used in the standard solver comparisons.</dd></div>
+    </dl>
+  </div>
+</section>
+<footer>
+  <div class="wrap">
+    <div>SANKHYA · Smart India Hackathon 2026 · PS SIH26119 · Apache-2.0 · <a href="https://sankhya-solver.vercel.app">sankhya-solver.vercel.app</a></div>
+    <div><a href="https://github.com/thegoodengineers/SANKHYA">Source</a> · <a href="https://github.com/thegoodengineers/SANKHYA/blob/main/docs/BENCHMARKS.md">Benchmarks</a> · <a href="https://github.com/thegoodengineers/SANKHYA/blob/main/docs/PROVENANCE.md">Provenance</a> · <a href="https://github.com/thegoodengineers/SANKHYA/blob/main/docs/PS26119_COVERAGE.md">Coverage tracker</a></div>
+  </div>
+</footer>
+</body>
+</html>

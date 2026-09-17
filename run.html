@@ -21,10 +21,10 @@
 <nav class="nav">
   <div class="wrap">
     <a class="brand" href="/">SANKHYA <small>SIH26119</small></a>
-    <ul><li><a href="/">Home</a></li><li><a href="/problem">Problem</a></li><li><a href="/solver">Solver</a></li><li><a href="/evidence">Evidence</a></li><li><a href="/run" aria-current="page">Run it</a></li><li><a href="/roadmap">Roadmap</a></li><li><a href="/team">Team</a></li></ul>
+    <ul><li><a href="/">Home</a></li><li><a href="/evaluate">For evaluators</a></li><li><a href="/problem">Problem</a></li><li><a href="/solver">Solver</a></li><li><a href="/evidence">Evidence</a></li><li><a href="/run" aria-current="page">Run it</a></li><li><a href="/roadmap">Limits</a></li><li><a href="/team">Team</a></li></ul>
     <a class="gh" href="https://github.com/thegoodengineers/SANKHYA"><span class="long">github.com/thegoodengineers/SANKHYA</span><span class="short">GitHub</span></a>
   </div>
-  <div class="subnav"><a href="/">Home</a><a href="/problem">Problem</a><a href="/solver">Solver</a><a href="/evidence">Evidence</a><a href="/run" aria-current="page">Run it</a><a href="/roadmap">Roadmap</a><a href="/team">Team</a></div>
+  <div class="subnav"><a href="/">Home</a><a href="/evaluate">For evaluators</a><a href="/problem">Problem</a><a href="/solver">Solver</a><a href="/evidence">Evidence</a><a href="/run" aria-current="page">Run it</a><a href="/roadmap">Limits</a><a href="/team">Team</a></div>
 </nav>
 
 <header class="page"><div class="wrap"><div class="label"><span class="n">04</span> · Run it</div><h1 style="margin-top:12px">From a fresh clone to a verified answer, on any machine.</h1><p class="lede">Needs a C++20 compiler, CMake 3.20+, Ninja, Python 3 and git. No CUDA, no internet after the clone: the Netlib instances are committed.</p></div></header>
@@ -62,7 +62,7 @@ cd SANKHYA
 scripts/configure.sh build Release
 cmake --build build -j
 ctest --test-dir build --output-on-failure</code></pre>
-      <div><p class="small"><b>What you should see:</b> the configure script names the compiler it picked (it checks the version rather than trusting PATH order), the build finishes with no warnings under <code>-Wall -Wextra -Werror</code>, and ctest reports <code>100% tests passed</code> out of 497. Windows sometimes blocks a freshly linked binary through Smart App Control; <code>scripts/preflight.sh</code> names the fix.</p><p class="small">Or skip straight to everything: <code>scripts/reproduce.sh</code> does the build, the tests, the Netlib benchmark with verification, the HiGHS comparison (if <code>pip install highspy</code> is present) and the PS26119 demo.</p></div>
+      <div><p class="small"><b>What you should see:</b> the configure script names the compiler it picked (it checks the version rather than trusting PATH order), the build finishes with no warnings under <code>-Wall -Wextra -Werror</code>, and ctest reports <code>100% tests passed</code> out of 515. Windows sometimes blocks a freshly linked binary through Smart App Control; <code>scripts/preflight.sh</code> names the fix.</p><p class="small">Or skip straight to everything: <code>scripts/reproduce.sh</code> does the build, the tests, the Netlib benchmark with verification, the HiGHS comparison (if <code>pip install highspy</code> is present) and the PS26119 demo.</p></div>
     </div>
   </div>
 </section>

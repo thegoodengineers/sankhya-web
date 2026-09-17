@@ -21,10 +21,10 @@
 <nav class="nav">
   <div class="wrap">
     <a class="brand" href="/">SANKHYA <small>SIH26119</small></a>
-    <ul><li><a href="/">Home</a></li><li><a href="/problem">Problem</a></li><li><a href="/solver" aria-current="page">Solver</a></li><li><a href="/evidence">Evidence</a></li><li><a href="/run">Run it</a></li><li><a href="/roadmap">Roadmap</a></li><li><a href="/team">Team</a></li></ul>
+    <ul><li><a href="/">Home</a></li><li><a href="/evaluate">For evaluators</a></li><li><a href="/problem">Problem</a></li><li><a href="/solver" aria-current="page">Solver</a></li><li><a href="/evidence">Evidence</a></li><li><a href="/run">Run it</a></li><li><a href="/roadmap">Limits</a></li><li><a href="/team">Team</a></li></ul>
     <a class="gh" href="https://github.com/thegoodengineers/SANKHYA"><span class="long">github.com/thegoodengineers/SANKHYA</span><span class="short">GitHub</span></a>
   </div>
-  <div class="subnav"><a href="/">Home</a><a href="/problem">Problem</a><a href="/solver" aria-current="page">Solver</a><a href="/evidence">Evidence</a><a href="/run">Run it</a><a href="/roadmap">Roadmap</a><a href="/team">Team</a></div>
+  <div class="subnav"><a href="/">Home</a><a href="/evaluate">For evaluators</a><a href="/problem">Problem</a><a href="/solver" aria-current="page">Solver</a><a href="/evidence">Evidence</a><a href="/run">Run it</a><a href="/roadmap">Limits</a><a href="/team">Team</a></div>
 </nav>
 
 <header class="page"><div class="wrap"><div class="label"><span class="n">02</span> · The solver</div><h1 style="margin-top:12px">Four engines behind one call, and a checker that trusts none of them.</h1><p class="lede"><code>solve(const Model&amp;, const Options&amp;) → Solution</code> is the one entry point. Everything below plugs into it.</p></div></header>
@@ -88,7 +88,7 @@
   </div>
 </section>
 
-<section>
+<section id="compared">
   <div class="wrap">
     <div class="head"><div class="label"><span class="n">Compared</span></div><div><h2>Ahead and behind, on the same evidence.</h2><p>Three kinds of solver exist: open-source simplex codes, commercial ones, GPU first-order codes.</p></div></div>
     <div class="ledger">

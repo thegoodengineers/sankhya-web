@@ -21,10 +21,10 @@
 <nav class="nav">
   <div class="wrap">
     <a class="brand" href="/">SANKHYA <small>SIH26119</small></a>
-    <ul><li><a href="/">Home</a></li><li><a href="/problem" aria-current="page">Problem</a></li><li><a href="/solver">Solver</a></li><li><a href="/evidence">Evidence</a></li><li><a href="/run">Run it</a></li><li><a href="/roadmap">Roadmap</a></li><li><a href="/team">Team</a></li></ul>
+    <ul><li><a href="/">Home</a></li><li><a href="/evaluate">For evaluators</a></li><li><a href="/problem" aria-current="page">Problem</a></li><li><a href="/solver">Solver</a></li><li><a href="/evidence">Evidence</a></li><li><a href="/run">Run it</a></li><li><a href="/roadmap">Limits</a></li><li><a href="/team">Team</a></li></ul>
     <a class="gh" href="https://github.com/thegoodengineers/SANKHYA"><span class="long">github.com/thegoodengineers/SANKHYA</span><span class="short">GitHub</span></a>
   </div>
-  <div class="subnav"><a href="/">Home</a><a href="/problem" aria-current="page">Problem</a><a href="/solver">Solver</a><a href="/evidence">Evidence</a><a href="/run">Run it</a><a href="/roadmap">Roadmap</a><a href="/team">Team</a></div>
+  <div class="subnav"><a href="/">Home</a><a href="/evaluate">For evaluators</a><a href="/problem" aria-current="page">Problem</a><a href="/solver">Solver</a><a href="/evidence">Evidence</a><a href="/run">Run it</a><a href="/roadmap">Limits</a><a href="/team">Team</a></div>
 </nav>
 
 <header class="page"><div class="wrap"><div class="label"><span class="n">01</span> · The problem</div><h1 style="margin-top:12px">A refinery asked for a sovereign alternative to CPLEX and Xpress.</h1><p class="lede">Problem statement SIH26119, Mangalore Refinery and Petrochemicals Ltd. Below: what a refinery model looks like, what the statement demands, and why "not built on another solver" is the hard part.</p></div></header>
@@ -73,30 +73,8 @@
 <section>
   <div class="wrap">
     <div class="head"><div class="label"><span class="n">The statement</span></div><div><h2>What SIH26119 asks for, against what exists on main.</h2><p>From the coverage tracker in the repository, checked against the source.</p></div></div>
-    <div class="legend"><span><i style="background:#2f6b3a"></i>done</span><span><i style="background:#d9a441"></i>partial</span><span><i style="background:#d9d2c5;border:1px solid #7d7869"></i>not started</span></div>
-    <div class="two">
-      <ul class="status">
-        <li class="done"><i></i><div><b>Linear programming</b> <span>· revised simplex, primal and dual</span></div></li>
-        <li class="done"><i></i><div><b>Mixed-integer LP</b> <span>· branch and bound, reliability branching</span></div></li>
-        <li class="done"><i></i><div><b>Convex QP and MIQP</b> <span>· Condat-Vũ; non-convex refused with a certificate</span></div></li>
-        <li class="part"><i></i><div><b>Modular for NLP / MINLP</b> <span>· the seam exists, no nonlinear engine yet</span></div></li>
-        <li class="done"><i></i><div><b>First-order method</b> <span>· restarted PDHG, finished by the interior point</span></div></li>
-        <li class="done"><i></i><div><b>Interior point</b> <span>· Mehrotra, sparse LDLᵀ, opt-in</span></div></li>
-        <li class="done"><i></i><div><b>Presolve, cutting planes, heuristics</b> <span>· cuts off by default, by measurement</span></div></li>
-        <li class="done"><i></i><div><b>Sensitivity ranging</b> <span>· cost and RHS, degeneracy stated</span></div></li>
-      </ul>
-      <ul class="status">
-        <li class="done"><i></i><div><b>Sparse linear algebra</b> <span>· Markowitz LU, hyper-sparse solves, LDLᵀ</span></div></li>
-        <li class="done"><i></i><div><b>Multi-core</b> <span>· OpenMP column loops, bit-identical at any thread count</span></div></li>
-        <li class="no"><i></i><div><b>GPU acceleration</b> <span>· backend written, never built: no GPU yet</span></div></li>
-        <li class="done"><i></i><div><b>Netlib, MIPLIB, Mittelmann benchmarks</b> <span>· all three run and committed</span></div></li>
-        <li class="done"><i></i><div><b>Compared with an established solver</b> <span>· HiGHS, separate process</span></div></li>
-        <li class="done"><i></i><div><b>Robustness: degenerate, ill-conditioned, weak relaxations</b> <span>· all three demonstrated</span></div></li>
-        <li class="part"><i></i><div><b>Thousands to millions of variables</b> <span>· reached at a million on generated families, exact at 32,485 rows on the refinery year</span></div></li>
-        <li class="done"><i></i><div><b>Not built on any existing solver</b> <span>· enforced in CI</span></div></li>
-      </ul>
-    </div>
-    <p class="small" style="margin-top:18px">31 checkable requirements: 27 done, 3 partial, 1 not started. <a href="https://github.com/thegoodengineers/SANKHYA/blob/main/docs/PS26119_COVERAGE.md">The tracker</a> cites the commit and CSV behind each row.</p>
+    <div class="legend"><span><i style="background:#2f6b3a"></i>done</span><span><i style="background:#d9a441"></i>partial</span><span><i style="background:#d9d2c5;border:1px solid #7d7869"></i>not started</span></div><div class="two"><ul class="status"><li class="done"><i></i><div><b>Linear programming</b> <span>· revised simplex, primal and dual</span></div></li><li class="done"><i></i><div><b>Mixed-integer LP</b> <span>· branch and bound, reliability branching</span></div></li><li class="done"><i></i><div><b>Convex QP and MIQP</b> <span>· non-convex refused with a certificate</span></div></li><li class="part"><i></i><div><b>Modular for NLP / MINLP</b> <span>· the seam exists, no nonlinear engine yet</span></div></li><li class="done"><i></i><div><b>First-order method</b> <span>· restarted PDHG, finished by the interior point</span></div></li><li class="done"><i></i><div><b>Interior point</b> <span>· Mehrotra, sparse LDLᵀ, opt-in</span></div></li><li class="done"><i></i><div><b>Presolve, cutting planes, heuristics</b> <span>· cuts off by default, by measurement</span></div></li><li class="done"><i></i><div><b>Sensitivity ranging</b> <span>· cost and right-hand side, degeneracy stated</span></div></li></ul><ul class="status"><li class="done"><i></i><div><b>Sparse linear algebra</b> <span>· Markowitz LU, hyper-sparse solves, LDLᵀ</span></div></li><li class="done"><i></i><div><b>Multi-core</b> <span>· OpenMP column loops, bit-identical at any thread count</span></div></li><li class="no"><i></i><div><b>GPU acceleration</b> <span>· backend written, never built: no GPU yet</span></div></li><li class="done"><i></i><div><b>Netlib, MIPLIB, Mittelmann benchmarks</b> <span>· all three run and committed</span></div></li><li class="done"><i></i><div><b>Compared with an established solver</b> <span>· HiGHS, separate process</span></div></li><li class="done"><i></i><div><b>Robustness: degenerate, ill-conditioned, weak relaxations</b> <span>· all three demonstrated</span></div></li><li class="part"><i></i><div><b>Thousands to millions of variables</b> <span>· a million rows on generated families; 32,485 rows of the refinery year exactly</span></div></li><li class="done"><i></i><div><b>Not built on any existing solver</b> <span>· enforced in CI</span></div></li></ul></div>
+    <p class="small" style="margin-top:18px">32 checkable requirements: 28 done, 3 partial, 1 not started. <a href="https://github.com/thegoodengineers/SANKHYA/blob/main/docs/PS26119_COVERAGE.md">The tracker</a> cites the commit and CSV behind each row.</p>
   </div>
 </section>
 

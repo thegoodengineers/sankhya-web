@@ -21,10 +21,10 @@
 <nav class="nav">
   <div class="wrap">
     <a class="brand" href="/">SANKHYA <small>SIH26119</small></a>
-    <ul><li><a href="/" aria-current="page">Home</a></li><li><a href="/problem">Problem</a></li><li><a href="/solver">Solver</a></li><li><a href="/evidence">Evidence</a></li><li><a href="/run">Run it</a></li><li><a href="/roadmap">Roadmap</a></li><li><a href="/team">Team</a></li></ul>
+    <ul><li><a href="/" aria-current="page">Home</a></li><li><a href="/evaluate">For evaluators</a></li><li><a href="/problem">Problem</a></li><li><a href="/solver">Solver</a></li><li><a href="/evidence">Evidence</a></li><li><a href="/run">Run it</a></li><li><a href="/roadmap">Limits</a></li><li><a href="/team">Team</a></li></ul>
     <a class="gh" href="https://github.com/thegoodengineers/SANKHYA"><span class="long">github.com/thegoodengineers/SANKHYA</span><span class="short">GitHub</span></a>
   </div>
-  <div class="subnav"><a href="/" aria-current="page">Home</a><a href="/problem">Problem</a><a href="/solver">Solver</a><a href="/evidence">Evidence</a><a href="/run">Run it</a><a href="/roadmap">Roadmap</a><a href="/team">Team</a></div>
+  <div class="subnav"><a href="/" aria-current="page">Home</a><a href="/evaluate">For evaluators</a><a href="/problem">Problem</a><a href="/solver">Solver</a><a href="/evidence">Evidence</a><a href="/run">Run it</a><a href="/roadmap">Limits</a><a href="/team">Team</a></div>
 </nav>
 
 <header class="hero home" id="top">
@@ -45,8 +45,8 @@ witnesses        checked</pre></div>
     <div class="center">
       <div class="label"><span class="n">Smart India Hackathon 2026</span> · PS SIH26119 · MRPL</div>
       <h1>An optimization solver<br>written <em>from the mathematics.</em></h1>
-      <p class="lede">LP, MILP and convex QP. Four engines behind one call. Every answer checked by a program that shares no code with the solver. Zero lines from any existing solver, and a CI job that proves it.</p>
-      <div class="cta"><a class="btn primary" href="/run">Run it on your machine</a><a class="btn ghost" href="/evidence">See the evidence</a></div>
+      <p class="lede">A solver for the decisions a refinery makes every week: which crudes to buy, how hard to run each unit, how to blend. Linear, mixed-integer and convex quadratic programs, in C++ from the textbooks, with no code from any existing solver, and every answer re-checked by a separate program before it is reported.</p>
+      <div class="cta"><a class="btn primary" href="/evaluate">Evaluate it in fifteen minutes</a><a class="btn ghost" href="/evidence">See the evidence</a></div>
     </div>
   </div>
 </header>
@@ -54,7 +54,7 @@ witnesses        checked</pre></div>
 <section class="strip-section">
   <div class="wrap">
     <div class="label" style="text-align:center;margin-bottom:14px">Measured against</div>
-    <div class="logos"><span>Netlib <b>80/89</b></span><span>MIPLIB 2017 <b>13/30</b></span><span>Mittelmann <b>0/8</b></span><span>HiGHS cross-check <b>50/50</b></span><span>Scale <b>10⁶ × 10⁶</b></span><span>Unit tests <b>497</b></span></div>
+    <div class="logos"><span>Netlib <b>80/89</b></span><span>MIPLIB 2017 <b>13/30</b></span><span>Mittelmann <b>0/8</b></span><span>HiGHS cross-check <b>50/50</b></span><span>Scale <b>10⁶ × 10⁶</b></span><span>Unit tests <b>515</b></span></div>
   </div>
 </section>
 
@@ -84,13 +84,32 @@ witnesses        checked</pre></div>
 
 <section>
   <div class="wrap">
-    <div class="head"><div class="label"><span class="n">Pick a page</span></div><div><h2>Where to start.</h2></div></div>
+    <div class="head"><div class="label"><span class="n">Scoreboard</span></div><div><h2>What the problem statement asked for, against what is on main today.</h2><p>32 checkable requirements: 28 done, 3 partial, 1 not started. Each row of the <a href="https://github.com/thegoodengineers/SANKHYA/blob/main/docs/PS26119_COVERAGE.md">coverage tracker</a> names the commit and the CSV behind it.</p></div></div>
+    <div class="legend"><span><i style="background:#2f6b3a"></i>done</span><span><i style="background:#d9a441"></i>partial</span><span><i style="background:#d9d2c5;border:1px solid #7d7869"></i>not started</span></div><div class="two"><ul class="status"><li class="done"><i></i><div><b>Linear programming</b> <span>· revised simplex, primal and dual</span></div></li><li class="done"><i></i><div><b>Mixed-integer LP</b> <span>· branch and bound, reliability branching</span></div></li><li class="done"><i></i><div><b>Convex QP and MIQP</b> <span>· non-convex refused with a certificate</span></div></li><li class="part"><i></i><div><b>Modular for NLP / MINLP</b> <span>· the seam exists, no nonlinear engine yet</span></div></li><li class="done"><i></i><div><b>First-order method</b> <span>· restarted PDHG, finished by the interior point</span></div></li><li class="done"><i></i><div><b>Interior point</b> <span>· Mehrotra, sparse LDLᵀ, opt-in</span></div></li><li class="done"><i></i><div><b>Presolve, cutting planes, heuristics</b> <span>· cuts off by default, by measurement</span></div></li><li class="done"><i></i><div><b>Sensitivity ranging</b> <span>· cost and right-hand side, degeneracy stated</span></div></li></ul><ul class="status"><li class="done"><i></i><div><b>Sparse linear algebra</b> <span>· Markowitz LU, hyper-sparse solves, LDLᵀ</span></div></li><li class="done"><i></i><div><b>Multi-core</b> <span>· OpenMP column loops, bit-identical at any thread count</span></div></li><li class="no"><i></i><div><b>GPU acceleration</b> <span>· backend written, never built: no GPU yet</span></div></li><li class="done"><i></i><div><b>Netlib, MIPLIB, Mittelmann benchmarks</b> <span>· all three run and committed</span></div></li><li class="done"><i></i><div><b>Compared with an established solver</b> <span>· HiGHS, separate process</span></div></li><li class="done"><i></i><div><b>Robustness: degenerate, ill-conditioned, weak relaxations</b> <span>· all three demonstrated</span></div></li><li class="part"><i></i><div><b>Thousands to millions of variables</b> <span>· a million rows on generated families; 32,485 rows of the refinery year exactly</span></div></li><li class="done"><i></i><div><b>Not built on any existing solver</b> <span>· enforced in CI</span></div></li></ul></div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="head"><div class="label"><span class="n">Three questions</span></div><div><h2>What an evaluator usually wants to know first.</h2></div></div>
     <div class="icons">
+      <div class="icon-card"><svg viewBox="0 0 24 24"><path d="M9 12l2 2 4-4M12 3l8 4v5c0 5-3.5 8-8 9-4.5-1-8-4-8-9V7z"/></svg><h3>Is it really from scratch?</h3><p>Yes. Five libraries are linked and none of them solves anything. A CI job prints the link line and fails if a solver library ever appears. <a href="/evaluate#scratch" class="section-link">Check it in two minutes →</a></p></div>
+      <div class="icon-card"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg><h3>Are the answers right?</h3><p>Every reported answer is re-derived by a Python checker that reads only the model file and the solution file. An infeasible verdict carries a proof the checker verifies too. <a href="/evaluate#right" class="section-link">Run the checker →</a></p></div>
+      <div class="icon-card"><svg viewBox="0 0 24 24"><path d="M3 21h18M6 17V9M11 17V4M16 17v-7M21 17v-3"/></svg><h3>How does it compare?</h3><p>Same answers as HiGHS on all 50 medium Netlib models, at about twice its wall time. Behind on large mixed-integer proofs and on the biggest LPs, and the site says by how much. <a href="/solver#compared" class="section-link">Ahead and behind →</a></p></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="head"><div class="label"><span class="n">Pick a page</span></div><div><h2>Where to go next.</h2></div></div>
+    <div class="icons">
+      <a class="icon-card" href="/evaluate"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><h3>For evaluators</h3><p>A fifteen-minute checklist in order, what each step should print, and a plain-language glossary.</p><span class="more">Read →</span></a>
       <a class="icon-card" href="/problem"><svg viewBox="0 0 24 24"><path d="M3 20h18M5 20V9l4-3 4 3 4-3 4 3v11M9 20v-5h6v5"/></svg><h3>The problem</h3><p>What MRPL asked for, why a refinery needs it, and what "sovereign" has to mean.</p><span class="more">Read →</span></a>
       <a class="icon-card" href="/solver"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg><h3>The solver</h3><p>The engines, the verification loop, and where it beats or trails the solvers that exist.</p><span class="more">Read →</span></a>
       <a class="icon-card" href="/evidence"><svg viewBox="0 0 24 24"><path d="M3 21h18M6 17V9M11 17V4M16 17v-7M21 17v-3"/></svg><h3>The evidence</h3><p>Every number, the CSV it comes from, and the chart that shows it.</p><span class="more">Read →</span></a>
       <a class="icon-card" href="/run"><svg viewBox="0 0 24 24"><path d="M4 17l6-5-6-5M12 19h8"/></svg><h3>Run it</h3><p>Windows, Ubuntu or macOS: from a fresh clone to a verified answer in five commands.</p><span class="more">Read →</span></a>
-      <a class="icon-card" href="/roadmap"><svg viewBox="0 0 24 24"><circle cx="6" cy="6" r="2"/><circle cx="18" cy="12" r="2"/><circle cx="6" cy="18" r="2"/><path d="M8 6h6a2 2 0 0 1 0 4H10a2 2 0 0 0 0 4h6"/></svg><h3>Roadmap</h3><p>What the product is at the end, what is missing, and the plan for the day a GPU arrives.</p><span class="more">Read →</span></a>
+      <a class="icon-card" href="/roadmap"><svg viewBox="0 0 24 24"><circle cx="6" cy="6" r="2"/><circle cx="18" cy="12" r="2"/><circle cx="6" cy="18" r="2"/><path d="M8 6h6a2 2 0 0 1 0 4H10a2 2 0 0 0 0 4h6"/></svg><h3>Limits</h3><p>What it does not do yet, stated with the number, and the plan for the day a GPU arrives.</p><span class="more">Read →</span></a>
       <a class="icon-card" href="/team"><svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0M16 4a3.5 3.5 0 0 1 0 7M21.5 20a6.5 6.5 0 0 0-5-6.3"/></svg><h3>Team</h3><p>Six students from Bengaluru, organised as thegoodengineers.</p><span class="more">Read →</span></a>
     </div>
   </div>

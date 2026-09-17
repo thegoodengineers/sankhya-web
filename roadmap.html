@@ -4,10 +4,10 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="color-scheme" content="light">
-<title>Roadmap — SANKHYA</title>
-<meta name="description" content="The deliverable, the gaps, and the plan for the day a GPU arrives.">
-<meta property="og:title" content="Roadmap — SANKHYA">
-<meta property="og:description" content="The deliverable, the gaps, and the plan for the day a GPU arrives.">
+<title>Limits — SANKHYA</title>
+<meta name="description" content="What SANKHYA does not do yet, stated with the number, what the deliverable is, and the plan for the day a GPU arrives.">
+<meta property="og:title" content="Limits — SANKHYA">
+<meta property="og:description" content="What SANKHYA does not do yet, stated with the number, what the deliverable is, and the plan for the day a GPU arrives.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://sankhya-solver.vercel.app/roadmap">
 <link rel="canonical" href="https://sankhya-solver.vercel.app/roadmap">
@@ -21,32 +21,17 @@
 <nav class="nav">
   <div class="wrap">
     <a class="brand" href="/">SANKHYA <small>SIH26119</small></a>
-    <ul><li><a href="/">Home</a></li><li><a href="/problem">Problem</a></li><li><a href="/solver">Solver</a></li><li><a href="/evidence">Evidence</a></li><li><a href="/run">Run it</a></li><li><a href="/roadmap" aria-current="page">Roadmap</a></li><li><a href="/team">Team</a></li></ul>
+    <ul><li><a href="/">Home</a></li><li><a href="/evaluate">For evaluators</a></li><li><a href="/problem">Problem</a></li><li><a href="/solver">Solver</a></li><li><a href="/evidence">Evidence</a></li><li><a href="/run">Run it</a></li><li><a href="/roadmap" aria-current="page">Limits</a></li><li><a href="/team">Team</a></li></ul>
     <a class="gh" href="https://github.com/thegoodengineers/SANKHYA"><span class="long">github.com/thegoodengineers/SANKHYA</span><span class="short">GitHub</span></a>
   </div>
-  <div class="subnav"><a href="/">Home</a><a href="/problem">Problem</a><a href="/solver">Solver</a><a href="/evidence">Evidence</a><a href="/run">Run it</a><a href="/roadmap" aria-current="page">Roadmap</a><a href="/team">Team</a></div>
+  <div class="subnav"><a href="/">Home</a><a href="/evaluate">For evaluators</a><a href="/problem">Problem</a><a href="/solver">Solver</a><a href="/evidence">Evidence</a><a href="/run">Run it</a><a href="/roadmap" aria-current="page">Limits</a><a href="/team">Team</a></div>
 </nav>
 
-<header class="page"><div class="wrap"><div class="label"><span class="n">05</span> · Roadmap</div><h1 style="margin-top:12px">What the product is at the end, what is missing, and the GPU plan.</h1></div></header>
+<header class="page"><div class="wrap"><div class="label"><span class="n">05</span> · Limits</div><h1 style="margin-top:12px">What it does not do, stated with the number.</h1><p class="lede">Read this page before the evidence page, not after. Nothing here is hidden elsewhere on the site.</p></div></header>
 
 <section>
   <div class="wrap">
-    <div class="head"><div class="label"><span class="n">Deliverable</span></div><div><h2>An engine, three ways to call it, and the evidence beside it.</h2><p>No GUI. The thing a refinery's planning tools would link against, plus the proof that it is right.</p></div></div>
-    <div class="stack">
-      <div class="acc"><b>Evidence</b><span>every CSV, the generated benchmarks page, provenance, SPDX SBOM, one-command reproduction</span></div>
-      <div><b>Verifier</b><span>Python, shares no code, proves certificates; the pass rates are counted by it</span></div>
-      <div><b>Python bindings</b><span>ctypes over the C API, nothing to compile</span></div>
-      <div><b>C API</b><span>FFI-safe, callbacks, interruption, the same options table</span></div>
-      <div><b>CLI</b><span>MPS / LP / QPS in, solution file with prices, ranges, certificates and IIS out</span></div>
-      <div><b>Solver core</b><span>static library: presolve, scaling, four LP engines, branch and bound over LP and QP, five non-solver dependencies</span></div>
-      <div class="acc"><b>GPU backend</b><span>CUDA port of the first-order engine, behind a build flag; claimed only when its CSV exists</span></div>
-    </div>
-  </div>
-</section>
-
-<section>
-  <div class="wrap">
-    <div class="head"><div class="label"><span class="n">Gaps</span></div><div><h2>What it does not do, with where each stands.</h2></div></div>
+    <div class="head"><div class="label"><span class="n">Gaps</span></div><div><h2>Eight things, with where each stands.</h2></div></div>
     <div class="legend"><span><i style="background:#2f6b3a"></i>designed and built</span><span><i style="background:#d9a441"></i>partly there</span><span><i style="background:#d9d2c5;border:1px solid #7d7869"></i>not started</span></div>
     <div class="two">
       <ul class="status">
@@ -61,6 +46,21 @@
         <li class="done"><i></i><div><b>Non-convex QP</b> <span>· refused deliberately with a certificate. Reporting a local optimum as global is the one thing it will not do.</span></div></li>
         <li class="part"><i></i><div><b>Parallel tree search</b> <span>· column loops run under OpenMP, bit-identical; the tree itself uses one core.</span></div></li>
       </ul>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="head"><div class="label"><span class="n">And what it is</span></div><div><h2>An engine, three ways to call it, and the evidence beside it.</h2><p>No GUI. The thing a refinery's planning tools would link against, plus the proof that it is right.</p></div></div>
+    <div class="stack">
+      <div class="acc"><b>Evidence</b><span>every CSV, the generated benchmarks page, provenance, SPDX SBOM, one-command reproduction</span></div>
+      <div><b>Verifier</b><span>Python, shares no code, proves certificates; the pass rates are counted by it</span></div>
+      <div><b>Python bindings</b><span>ctypes over the C API, nothing to compile</span></div>
+      <div><b>C API</b><span>FFI-safe, callbacks, interruption, the same options table</span></div>
+      <div><b>CLI</b><span>MPS / LP / QPS in, solution file with prices, ranges, certificates and IIS out</span></div>
+      <div><b>Solver core</b><span>static library: presolve, scaling, four LP engines, branch and bound over LP and QP, five non-solver dependencies</span></div>
+      <div class="acc"><b>GPU backend</b><span>CUDA port of the first-order engine, behind a build flag; claimed only when its CSV exists</span></div>
     </div>
   </div>
 </section>
