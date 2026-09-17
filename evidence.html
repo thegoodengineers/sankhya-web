@@ -33,7 +33,7 @@
   <div class="wrap">
     <div class="head"><div class="label"><span class="n">Linear programs</span></div><div><h2>Netlib, and the cross-check against HiGHS.</h2></div></div>
     <div class="figure"><div class="bars">
-<div class="bar"><div class="lab"><b>Netlib, full set</b><small>netlib-full-e134aeb.csv</small></div><div class="track"><div class="fill " style="width:89.9%"></div></div><div class="val">80 / 89</div></div>
+<div class="bar"><div class="lab"><b>Netlib, full set</b><small>netlib-full-b3f1660.csv</small></div><div class="track"><div class="fill " style="width:89.9%"></div></div><div class="val">80 / 89</div></div>
 <div class="bar"><div class="lab"><b>Netlib, medium tier</b><small>netlib-medium-2b4eb6b.csv</small></div><div class="track"><div class="fill " style="width:96.0%"></div></div><div class="val">48 / 50</div></div>
 <div class="bar"><div class="lab"><b>Netlib, small set (demo)</b><small>netlib-small-2b4eb6b.csv</small></div><div class="track"><div class="fill " style="width:100.0%"></div></div><div class="val">9 / 9</div></div>
 <div class="bar"><div class="lab"><b>HiGHS agreement, medium tier</b><small>compare-highs-medium-bf3df02*.csv</small></div><div class="track"><div class="fill ok" style="width:100.0%"></div></div><div class="val">50 / 50</div></div>
@@ -45,7 +45,7 @@
   <div class="wrap">
     <div class="head"><div class="label"><span class="n">Integer and large</span></div><div><h2>MIPLIB, Mittelmann, robustness.</h2></div></div>
     <div class="figure"><div class="bars">
-<div class="bar"><div class="lab"><b>MIPLIB easy, reach published optimum</b><small>miplib-bf3df02.csv · 60 s</small></div><div class="track"><div class="fill " style="width:43.3%"></div></div><div class="val">13 / 30</div></div>
+<div class="bar"><div class="lab"><b>MIPLIB easy, reach published optimum</b><small>miplib-b3f1660.csv · 60 s</small></div><div class="track"><div class="fill " style="width:46.7%"></div></div><div class="val">14 / 30</div></div>
 <div class="bar"><div class="lab"><b>MIPLIB easy, prove it</b><small>same CSV</small></div><div class="track"><div class="fill dim" style="width:30.0%"></div></div><div class="val">9 / 30</div></div>
 <div class="bar"><div class="lab"><b>Mittelmann, 8 smallest LPs, dual simplex</b><small>mittelmann-e134aeb.csv · 300 s</small></div><div class="track"><div class="fill dim" style="width:0.0%"></div></div><div class="val">0 / 8</div></div>
 <div class="bar"><div class="lab"><b>Mittelmann, same eight, first-order engine</b><small>mittelmann-pdhg-d24662f.csv · 300 s</small></div><div class="track"><div class="fill " style="width:25.0%"></div></div><div class="val">2 / 8</div></div>
@@ -81,7 +81,7 @@
       <pre><code>git clone https://github.com/thegoodengineers/SANKHYA
 cd SANKHYA
 scripts/reproduce.sh</code></pre>
-      <p class="small">Builds, runs 515 tests, the Netlib benchmark with verification, the HiGHS comparison and the PS26119 walkthrough, offline. Any step that cannot run on your machine says why and is listed again at the end, so a shorter run is never mistaken for a passing one. Commit hashes in the CSV names identify the exact solver that produced each number.</p>
+      <p class="small">Builds, runs 552 tests, the Netlib benchmark with verification, the HiGHS comparison and the PS26119 walkthrough, offline. Any step that cannot run on your machine says why and is listed again at the end, so a shorter run is never mistaken for a passing one. Commit hashes in the CSV names identify the exact solver that produced each number.</p>
     </div>
   </div>
 </section>
@@ -89,10 +89,10 @@ scripts/reproduce.sh</code></pre>
   <div class="wrap">
     <div class="head"><div class="label"><span class="n">Sources</span></div><div><h2>The files behind this page.</h2><p>All in <a href="https://github.com/thegoodengineers/SANKHYA/tree/main/bench/results">bench/results</a> on main. The seven-character suffix is the commit of the solver that produced the file.</p></div></div>
     <ol class="sources">
-      <li id="src-1"><a href="https://github.com/thegoodengineers/SANKHYA/blob/main/bench/results/netlib-full-e134aeb.csv">netlib-full-e134aeb.csv</a>, <a href="https://github.com/thegoodengineers/SANKHYA/blob/main/bench/results/netlib-medium-2b4eb6b.csv">netlib-medium-2b4eb6b.csv</a>, <a href="https://github.com/thegoodengineers/SANKHYA/blob/main/bench/results/netlib-small-2b4eb6b.csv">netlib-small-2b4eb6b.csv</a>: the Netlib pass counts, every pass also accepted by the independent checker.</li>
+      <li id="src-1"><a href="https://github.com/thegoodengineers/SANKHYA/blob/main/bench/results/netlib-full-b3f1660.csv">netlib-full-b3f1660.csv</a>, <a href="https://github.com/thegoodengineers/SANKHYA/blob/main/bench/results/netlib-medium-2b4eb6b.csv">netlib-medium-2b4eb6b.csv</a>, <a href="https://github.com/thegoodengineers/SANKHYA/blob/main/bench/results/netlib-small-2b4eb6b.csv">netlib-small-2b4eb6b.csv</a>: the Netlib pass counts, every pass also accepted by the independent checker.</li>
       <li id="src-2"><a href="https://github.com/thegoodengineers/SANKHYA/tree/main/bench/results">compare-highs-medium-bf3df02*.csv</a>: three runs of the HiGHS comparison, an hour apart, same 50 models.</li>
       <li id="src-3"><a href="https://github.com/thegoodengineers/SANKHYA/blob/main/bench/runners/robustness.py">bench/runners/robustness.py</a>: the three robustness hazards and the numbers they print.</li>
-      <li id="src-4"><a href="https://github.com/thegoodengineers/SANKHYA/blob/main/bench/results/mittelmann-e134aeb.csv">mittelmann-e134aeb.csv</a>, <a href="https://github.com/thegoodengineers/SANKHYA/blob/main/bench/results/mittelmann-pdhg-d24662f.csv">mittelmann-pdhg-d24662f.csv</a>, <a href="https://github.com/thegoodengineers/SANKHYA/blob/main/bench/results/mittelmann-ipm-d24662f.csv">mittelmann-ipm-d24662f.csv</a>, <a href="https://github.com/thegoodengineers/SANKHYA/blob/main/bench/results/miplib-bf3df02.csv">miplib-bf3df02.csv</a>: the eight smallest Mittelmann LPs at 300 s under each of the three engines, and the MIPLIB easy set at 60 s.</li>
+      <li id="src-4"><a href="https://github.com/thegoodengineers/SANKHYA/blob/main/bench/results/mittelmann-e134aeb.csv">mittelmann-e134aeb.csv</a>, <a href="https://github.com/thegoodengineers/SANKHYA/blob/main/bench/results/mittelmann-pdhg-d24662f.csv">mittelmann-pdhg-d24662f.csv</a>, <a href="https://github.com/thegoodengineers/SANKHYA/blob/main/bench/results/mittelmann-ipm-d24662f.csv">mittelmann-ipm-d24662f.csv</a>, <a href="https://github.com/thegoodengineers/SANKHYA/blob/main/bench/results/miplib-b3f1660.csv">miplib-b3f1660.csv</a>: the eight smallest Mittelmann LPs at 300 s under each of the three engines, and the MIPLIB easy set at 60 s.</li>
       <li id="src-5"><a href="https://github.com/thegoodengineers/SANKHYA/blob/main/bench/results/scale-e134aeb.csv">scale-e134aeb.csv</a>, <a href="https://github.com/thegoodengineers/SANKHYA/blob/main/bench/results/scale-refinery-e134aeb.csv">scale-refinery-e134aeb.csv</a>: the generated families under a 120 s clock and the refinery year.</li>
       <li id="src-6"><a href="https://github.com/thegoodengineers/SANKHYA/blob/main/bench/results/scale-iterations-bf3df02.csv">scale-iterations-bf3df02.csv</a>: a fixed 1,000 iterations of the first-order engine from one thousand to one million rows.</li>
     </ol>
