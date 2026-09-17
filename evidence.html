@@ -47,7 +47,7 @@
     <div class="figure"><div class="bars">
 <div class="bar"><div class="lab"><b>MIPLIB easy, reach published optimum</b><small>miplib-bf3df02.csv · 60 s</small></div><div class="track"><div class="fill " style="width:43.3%"></div></div><div class="val">13 / 30</div></div>
 <div class="bar"><div class="lab"><b>MIPLIB easy, prove it</b><small>same CSV</small></div><div class="track"><div class="fill dim" style="width:30.0%"></div></div><div class="val">9 / 30</div></div>
-<div class="bar"><div class="lab"><b>Mittelmann, 8 smallest LPs</b><small>mittelmann-bf3df02.csv · 300 s</small></div><div class="track"><div class="fill dim" style="width:0.0%"></div></div><div class="val">0 / 8</div></div>
+<div class="bar"><div class="lab"><b>Mittelmann, 8 smallest LPs</b><small>mittelmann-e134aeb.csv · 300 s</small></div><div class="track"><div class="fill dim" style="width:0.0%"></div></div><div class="val">0 / 8</div></div>
 <div class="bar"><div class="lab"><b>Robustness hazards demonstrated</b><small>bench/runners/robustness.py</small></div><div class="track"><div class="fill ok" style="width:100.0%"></div></div><div class="val">3 / 3</div></div>
 </div><div class="cap">Mittelmann is the one line where nothing finishes, stated rather than omitted. Robustness: exact rank checked over the rationals on a degenerate model, condition number 2.1e+30 with the objective provably unmoved, a 33.8% integrality gap closed.</div></div>
   </div>
@@ -56,8 +56,8 @@
 <section>
   <div class="wrap">
     <div class="two">
-      <div><div class="head" style="grid-template-columns:1fr"><div><div class="label"><span class="n">Scale</span></div><h2>To a million rows, with the optimum exact by construction.</h2><p>A fixed budget of 1,000 first-order iterations, which removes the machine from the claim. The error does not grow with the model; only the cost per iteration does. Under a 120 s clock the same engine reaches 100,000 × 100,000 to 9.1e-08.</p></div></div>
-      <div class="tiles" style="margin-top:8px"><div class="tile"><b>32,485</b><span>rows of the daily refinery year solved exactly by the interior point</span><small>scale-refinery-*.csv</small></div><div class="tile"><b>779,640</b><span>rows of the hourly year reached by PDHG to 1.1e-06, proved by nothing</span><small>same family, 8,760 periods</small></div></div></div>
+      <div><div class="head" style="grid-template-columns:1fr"><div><div class="label"><span class="n">Scale</span></div><h2>To a million rows, with the optimum exact by construction.</h2><p>A fixed budget of 1,000 first-order iterations, which removes the machine from the claim. The error does not grow with the model; only the cost per iteration does. Under a 120 s clock the same engine reaches 100,000 × 100,000 to 1.1e-07 and certifies 5,000 × 5,000 in 54 s (scale-e134aeb.csv).</p></div></div>
+      <div class="tiles" style="margin-top:8px"><div class="tile"><b>32,485</b><span>rows of the daily refinery year solved exactly by the interior point in 68 s</span><small>scale-refinery-e134aeb.csv</small></div><div class="tile"><b>779,640</b><span>rows of the hourly year reached by PDHG to 1.0e-06, proved by nothing: 6 of 9 solves</span><small>same family, 8,760 periods</small></div></div></div>
       <div class="figure"><svg class="diagram" viewBox="0 0 480 220" role="img" aria-label="Relative error after a fixed 1,000 PDHG iterations stays between 6.9e-06 and 6.1e-04 from one thousand to one million rows">
   <line x1="70" y1="170" x2="450" y2="170" class="line"/><line x1="70" y1="20" x2="70" y2="170" class="line"/>
   <text x="70.0" y="188" text-anchor="middle" class="m">10^3</text><text x="196.7" y="188" text-anchor="middle" class="m">10^4</text><text x="323.3" y="188" text-anchor="middle" class="m">10^5</text><text x="450.0" y="188" text-anchor="middle" class="m">10^6</text>
@@ -79,7 +79,7 @@
       <pre><code>git clone https://github.com/thegoodengineers/SANKHYA
 cd SANKHYA
 scripts/reproduce.sh</code></pre>
-      <p class="small">Builds, runs 490 tests, the Netlib benchmark with verification, the HiGHS comparison and the PS26119 walkthrough, offline. Any step that cannot run on your machine says why and is listed again at the end, so a shorter run is never mistaken for a passing one. Commit hashes in the CSV names identify the exact solver that produced each number.</p>
+      <p class="small">Builds, runs 497 tests, the Netlib benchmark with verification, the HiGHS comparison and the PS26119 walkthrough, offline. Any step that cannot run on your machine says why and is listed again at the end, so a shorter run is never mistaken for a passing one. Commit hashes in the CSV names identify the exact solver that produced each number.</p>
     </div>
   </div>
 </section>
