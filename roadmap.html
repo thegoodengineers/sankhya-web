@@ -41,7 +41,7 @@
         <li class="part"><i></i><div><b>Crossover</b> <span>· landed: the interior point's answer is pushed to a vertex by default, cheap on Netlib (median 41 pivots on the small set); on large degenerate models the pivots still cost as much as a cold simplex, the primal-push phase is the open line.</span></div></li>
       </ul>
       <ul class="status">
-        <li class="part"><i></i><div><b>Warm start through the API</b> <span>· exists inside branch and bound, not exposed yet.</span></div></li>
+        <li class="done"><i></i><div><b>Warm start through the API</b> <span>· landed: edit a bound or a price in place and re-solve from the previous basis, from C or Python; a tightened bound re-solves in under a fifth of the cold pivots on the models tested.</span></div></li>
         <li class="no"><i></i><div><b>NLP and MINLP</b> <span>· the seam dispatches four classes; no nonlinear engine behind it.</span></div></li>
         <li class="done"><i></i><div><b>Non-convex QP</b> <span>· refused deliberately with a certificate. Reporting a local optimum as global is the one thing it will not do.</span></div></li>
         <li class="part"><i></i><div><b>Parallel tree search</b> <span>· column loops run under OpenMP, bit-identical; the tree itself uses one core.</span></div></li>
