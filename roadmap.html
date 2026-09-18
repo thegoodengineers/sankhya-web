@@ -35,15 +35,15 @@
     <div class="legend"><span><i style="background:#2f6b3a"></i>designed and built</span><span><i style="background:#d9a441"></i>partly there</span><span><i style="background:#d9d2c5;border:1px solid #7d7869"></i>not started</span></div>
     <div class="two">
       <ul class="status">
-        <li class="part"><i></i><div><b>GPU acceleration</b> <span>· the CUDA backend is a pull request never compiled by the team, for lack of a GPU. <code>--gpu</code> warns and falls back.</span></div></li>
+        <li class="part"><i></i><div><b>GPU acceleration</b> <span>· the CUDA plumbing and the PDHG kernels are on main and compile in CI; no run on a card yet, so no number. <code>--gpu</code> falls back to the CPU on any device failure.</span></div></li>
         <li class="part"><i></i><div><b>Speed at Mittelmann size</b> <span>· 2 of 8, and only under the first-order engine; the dual simplex's cost per iteration above 20,000 rows is the open line, two of three levers pulled.</span></div></li>
-        <li class="part"><i></i><div><b>Branch-and-cut proper</b> <span>· root cuts exist; MIR cuts and cuts below the root do not. Why MIPLIB proves 9 of 30.</span></div></li>
+        <li class="part"><i></i><div><b>Branch-and-cut proper</b> <span>· MIR cuts with row aggregation, and cut rounds below the root with an aged pool, landed and were measured on MIPLIB at 60 s: the same 9 proofs, node count 0.835x, one time-limit match moved. The covering instances that stall need Chvátal-Gomory and clique cuts, which MIR provably cannot separate.</span></div></li>
         <li class="part"><i></i><div><b>Crossover</b> <span>· landed: the interior point's answer is pushed to a vertex by default, cheap on Netlib (median 41 pivots on the small set); on large degenerate models the pivots still cost as much as a cold simplex, the primal-push phase is the open line.</span></div></li>
       </ul>
       <ul class="status">
         <li class="done"><i></i><div><b>Warm start through the API</b> <span>· landed: edit a bound or a price in place and re-solve from the previous basis, from C or Python; a tightened bound re-solves in under a fifth of the cold pivots on the models tested.</span></div></li>
         <li class="no"><i></i><div><b>NLP and MINLP</b> <span>· the seam dispatches four classes; no nonlinear engine behind it.</span></div></li>
-        <li class="done"><i></i><div><b>Non-convex QP</b> <span>· refused deliberately with a certificate. Reporting a local optimum as global is the one thing it will not do.</span></div></li>
+        <li class="done"><i></i><div><b>Engine selection</b> <span>· <code>auto</code> is a rule table on rows and nonzeros, every threshold tied to a CSV; the answer carries the rule and the reason, and a declined interior point hands the rest of the budget to PDHG or the dual simplex.</span></div></li>
         <li class="part"><i></i><div><b>Parallel tree search</b> <span>· column loops run under OpenMP, bit-identical; the tree itself uses one core.</span></div></li>
       </ul>
     </div>
@@ -60,7 +60,7 @@
       <div><b>C API</b><span>FFI-safe, callbacks, interruption, the same options table</span></div>
       <div><b>CLI</b><span>MPS / LP / QPS in, solution file with prices, ranges, certificates and IIS out</span></div>
       <div><b>Solver core</b><span>static library: presolve, scaling, four LP engines, branch and bound over LP and QP, five non-solver dependencies</span></div>
-      <div class="acc"><b>GPU backend</b><span>CUDA port of the first-order engine, behind a build flag; claimed only when its CSV exists</span></div>
+      <div class="acc"><b>GPU backend</b><span>CUDA port of the first-order engine, behind a build flag, compiled in CI; claimed only when its CSV exists</span></div>
     </div>
   </div>
 </section>
@@ -70,7 +70,7 @@
     <div class="head"><div class="label"><span class="n">The GPU plan</span></div><div><h2>What happens the day the hardware arrives.</h2><p>Written down before the card exists, in <code>docs/GPU_PLAN.md</code>, so the first day is not spent deciding.</p></div></div>
     <div class="timeline">
       <div class="acc"><b>Day 0</b><span>Intake: driver, nvcc, device probe, a CPU baseline re-measured on that machine, alone.</span></div>
-      <div><b>Day 1</b><span>The plumbing: CMake guard, runtime <code>--gpu</code> flag, fallback path. CPU numbers must not move.</span></div>
+      <div class="acc"><b>Day 1</b><span>The plumbing: CMake guard, runtime <code>--gpu</code> flag, fallback path. Done on main; CPU numbers did not move.</span></div>
       <div><b>Day 2</b><span>The kernels, reviewed on the device: agreement with the CPU engine to 1e-9 on nine instances.</span></div>
       <div><b>Day 3</b><span>The evidence: CPU-versus-GPU crossover by model size, committed as a CSV, losing region included.</span></div>
       <div><b>Day 4</b><span>Documents, the demo section, the final read against the problem statement.</span></div>
