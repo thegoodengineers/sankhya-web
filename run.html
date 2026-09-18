@@ -62,7 +62,7 @@ cd SANKHYA
 scripts/configure.sh build Release
 cmake --build build -j
 ctest --test-dir build --output-on-failure</code></pre>
-      <div><p class="small"><b>What you should see:</b> the configure script names the compiler it picked (it checks the version rather than trusting PATH order), the build finishes with no warnings under <code>-Wall -Wextra -Werror</code>, and ctest reports <code>100% tests passed</code> out of 552. Windows sometimes blocks a freshly linked binary through Smart App Control; <code>scripts/preflight.sh</code> names the fix.</p><p class="small">Or skip straight to everything: <code>scripts/reproduce.sh</code> does the build, the tests, the Netlib benchmark with verification, the HiGHS comparison (if <code>pip install highspy</code> is present) and the PS26119 demo.</p></div>
+      <div><p class="small"><b>What you should see:</b> the configure script names the compiler it picked (it checks the version rather than trusting PATH order), the build finishes with no warnings under <code>-Wall -Wextra -Werror</code>, and ctest reports <code>100% tests passed</code> out of 581. Windows sometimes blocks a freshly linked binary through Smart App Control; <code>scripts/preflight.sh</code> names the fix.</p><p class="small">Or skip straight to everything: <code>scripts/reproduce.sh</code> does the build, the tests, the Netlib benchmark with verification, the HiGHS comparison (if <code>pip install highspy</code> is present) and the PS26119 demo.</p></div>
     </div>
   </div>
 </section>

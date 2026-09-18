@@ -38,7 +38,7 @@
         <li class="part"><i></i><div><b>GPU acceleration</b> <span>· the CUDA backend is a pull request never compiled by the team, for lack of a GPU. <code>--gpu</code> warns and falls back.</span></div></li>
         <li class="part"><i></i><div><b>Speed at Mittelmann size</b> <span>· 2 of 8, and only under the first-order engine; the dual simplex's cost per iteration above 20,000 rows is the open line, two of three levers pulled.</span></div></li>
         <li class="part"><i></i><div><b>Branch-and-cut proper</b> <span>· root cuts exist; MIR cuts and cuts below the root do not. Why MIPLIB proves 9 of 30.</span></div></li>
-        <li class="no"><i></i><div><b>Crossover</b> <span>· pushing the interior point's answer to a vertex, so it can certify and warm-start.</span></div></li>
+        <li class="part"><i></i><div><b>Crossover</b> <span>· landed: the interior point's answer is pushed to a vertex by default, cheap on Netlib (median 41 pivots on the small set); on large degenerate models the pivots still cost as much as a cold simplex, the primal-push phase is the open line.</span></div></li>
       </ul>
       <ul class="status">
         <li class="part"><i></i><div><b>Warm start through the API</b> <span>· exists inside branch and bound, not exposed yet.</span></div></li>

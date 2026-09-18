@@ -58,7 +58,7 @@
     <div class="engines">
       <div><div class="label">LP · default</div><h3>Dual simplex</h3><p>Bounded-variable revised simplex, sparse Markowitz LU, Devex pricing. Produces a basis: the node engine for branch and bound.</p></div>
       <div><div class="label">LP · primal</div><h3>Primal simplex</h3><p>Composite phase 1, no big-M. The hand-over engine when a basis needs repair.</p></div>
-      <div><div class="label">LP · opt-in</div><h3>Interior point</h3><p>Mehrotra predictor-corrector through a from-scratch sparse LDLᵀ with AMD ordering. The engine that scales; no basis.</p></div>
+      <div><div class="label">LP · opt-in</div><h3>Interior point</h3><p>Mehrotra predictor-corrector through a from-scratch sparse LDLᵀ with AMD ordering. The engine that scales; its answer is then pushed to a vertex by crossover, so it carries a basis.</p></div>
       <div><div class="label">LP · first-order</div><h3>Restarted PDHG</h3><p>Two sparse mat-vecs and a projection per iteration: the GPU shape. Finished by the interior point from its own point.</p></div>
       <div><div class="label">MILP · MIQP</div><h3>Branch and bound</h3><p>Reliability branching, dive then best-bound, warm-started dual node LPs, root Gomory and cover cuts.</p></div>
       <div><div class="label">QP</div><h3>Condat-Vũ</h3><p>Convexity decided by LDLᵀ before any arithmetic. A non-convex Hessian is refused, never reported as global.</p></div>
