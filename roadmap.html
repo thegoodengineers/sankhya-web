@@ -5,9 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="color-scheme" content="light">
 <title>Limits — SANKHYA</title>
-<meta name="description" content="What SANKHYA does not do yet, stated with the number, what the deliverable is, and the plan for the day a GPU arrives.">
+<meta name="description" content="What SANKHYA does not do yet, stated with the number, what the deliverable is, and what the day on a datacenter card showed.">
 <meta property="og:title" content="Limits — SANKHYA">
-<meta property="og:description" content="What SANKHYA does not do yet, stated with the number, what the deliverable is, and the plan for the day a GPU arrives.">
+<meta property="og:description" content="What SANKHYA does not do yet, stated with the number, what the deliverable is, and what the day on a datacenter card showed.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://sankhya-solver.vercel.app/roadmap">
 <link rel="canonical" href="https://sankhya-solver.vercel.app/roadmap">
@@ -35,7 +35,7 @@
     <div class="legend"><span><i style="background:#2f6b3a"></i>designed and built</span><span><i style="background:#d9a441"></i>partly there</span><span><i style="background:#d9d2c5;border:1px solid #7d7869"></i>not started</span></div>
     <div class="two">
       <ul class="status">
-        <li class="part"><i></i><div><b>GPU acceleration</b> <span>· the CUDA plumbing and the PDHG kernels are on main and compile in CI; no run on a card yet, so no number. <code>--gpu</code> falls back to the CPU on any device failure.</span></div></li>
+        <li class="done"><i></i><div><b>GPU acceleration</b> <span>· run on a laptop RTX 5050 (1.37x at 10,000x10,000) and a datacenter NVIDIA L4 (4.21x there, 6.47x-8.30x on brazil3), CSVs named in BENCHMARKS.md 1g and 1g.3; no A100 or H100 yet. <code>--gpu</code> falls back to the CPU on any device failure.</span></div></li>
         <li class="part"><i></i><div><b>Speed at Mittelmann size</b> <span>· 3 of 8 across the three engines, 2 of 8 under auto; two of the misses are engine selection (qap15 solves only on the interior point, chromaticindex1024-7 spends 136 s on one before falling back to PDHG) and two are the interior point out of memory on a 7.7 GB laptop; the dual simplex's cost per iteration above 20,000 rows is the open line; all three levers are pulled (row-wise gather, push-form transposed solve, a Forrest-Tomlin update that stays opt-in after its stability tests) and the next one is the ratio test.</span></div></li>
         <li class="part"><i></i><div><b>Branch-and-cut proper</b> <span>· MIR cuts with row aggregation, cut rounds below the root with an aged pool, clique and (0, 0.5)-Chvátal-Gomory cuts, conflict analysis and four primal heuristics all landed, each gated by the exact-oracle or enumeration sweep. Measured clean on MIPLIB at 60 s with cut selection landed, the root round proves 10 where no cuts prove 9 at 1.015x the nodes, and is on by default; rounds below the root lose that proof again and stay opt-in; the heuristics and conflicts are off until a clean A/B on main says what they buy.</span></div></li>
         <li class="part"><i></i><div><b>Crossover</b> <span>· landed: the interior point's answer is pushed to a vertex by default, cheap on Netlib (median 41 pivots on the small set); on large degenerate models the pivots still cost as much as a cold simplex, the primal-push phase is the open line.</span></div></li>
@@ -60,22 +60,22 @@
       <div><b>C API</b><span>FFI-safe, callbacks, interruption, the same options table</span></div>
       <div><b>CLI</b><span>MPS / LP / QPS in, solution file with prices, ranges, certificates and IIS out</span></div>
       <div><b>Solver core</b><span>static library: presolve, scaling, four LP engines, branch and bound over LP and QP, five non-solver dependencies</span></div>
-      <div class="acc"><b>GPU backend</b><span>CUDA port of the first-order engine, behind a build flag, compiled in CI; claimed only when its CSV exists</span></div>
+      <div class="acc"><b>GPU backend</b><span>CUDA port of the first-order engine, behind a build flag, compiled in CI; measured on two cards, the CSVs named</span></div>
     </div>
   </div>
 </section>
 
 <section>
   <div class="wrap">
-    <div class="head"><div class="label"><span class="n">The GPU plan</span></div><div><h2>What happens the day the hardware arrives.</h2><p>Written down before the card exists, in <code>docs/GPU_PLAN.md</code>, so the first day is not spent deciding.</p></div></div>
+    <div class="head"><div class="label"><span class="n">The GPU plan</span></div><div><h2>What happened the day the hardware arrived.</h2><p>Written down before the card existed, in <code>docs/GPU_PLAN.md</code>, and then followed on a rented L4 on 23 September 2026: build from a fresh clone, warm-up solve, the three runners, the CSVs stamped with the commit.</p></div></div>
     <div class="timeline">
       <div class="acc"><b>Day 0</b><span>Intake: driver, nvcc, device probe, a CPU baseline re-measured on that machine, alone.</span></div>
       <div class="acc"><b>Day 1</b><span>The plumbing: CMake guard, runtime <code>--gpu</code> flag, fallback path. Done on main; CPU numbers did not move.</span></div>
       <div><b>Day 2</b><span>The kernels, reviewed on the device: agreement with the CPU engine to 1e-9 on nine instances.</span></div>
-      <div><b>Day 3</b><span>The evidence: CPU-versus-GPU crossover by model size, committed as a CSV, losing region included.</span></div>
+      <div class="acc"><b>Day 3</b><span>The evidence: CPU-versus-GPU crossover by model size, committed as a CSV, losing region included. Done on the laptop card and again on the L4; the first L4 run was thrown away because its tree was dirty.</span></div>
       <div><b>Day 4</b><span>Documents, the demo section, the final read against the problem statement.</span></div>
     </div>
-    <p class="note" style="margin-top:24px">The claim after Step 3 is not "faster than cuPDLP". It is "a from-scratch GPU first-order engine, verified, with its crossover measured and published". That is defensible in front of a judge; a fabricated 10x is not.</p>
+    <p class="note" style="margin-top:24px">The claim is not "faster than cuPDLP". It is "a from-scratch GPU first-order engine, verified, with its crossover measured and published on two cards". That is defensible in front of a judge; a fabricated 10x is not, and 4.21x on an L4 is what the CSV says.</p>
   </div>
 </section>
 <footer>
