@@ -186,9 +186,11 @@ section .head > div > p:last-child { margin-bottom: 0; }
 /* stat boxes */
 .figures, .tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; }
 .figures > div, .tile { background: var(--white); border: 1px solid var(--rule); padding: 16px 18px; }
-.figures b, .tile b { display: block; font-weight: 400; font-size: 32px; line-height: 1.1; letter-spacing: -0.03em; }
-.figures span, .tile span { display: block; font-size: 13px; color: var(--ink-68); margin-top: 8px; }
-.figures .src, .tile small { display: block; font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.03em; color: var(--ink-45); margin-top: 8px; overflow-wrap: anywhere; }
+.figures b, .tile > b { display: block; font-weight: 400; font-size: 32px; line-height: 1.1; letter-spacing: -0.03em; white-space: nowrap; }
+.figures > div > span, .tile > span { display: block; font-size: 13px; color: var(--ink-68); margin-top: 8px; }
+.tiles.metrics { grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); }
+.tiles.metrics .tile { min-width: 0; }
+.figures .src, .tile > small { display: block; font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.03em; color: var(--ink-45); margin-top: 8px; overflow-wrap: anywhere; }
 
 /* bars, drawn as ticks */
 .bars { display: grid; gap: 18px; }
