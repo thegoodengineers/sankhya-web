@@ -1,6 +1,34 @@
 # Technical report
 
-This report is assembled, not written. Each section opens with a few sentences of connecting prose and then carries the solver's own documents, copied verbatim at build time from the pinned commit named above. Every measured figure below sits inside one of those included passages, next to the file that produced it.
+## Summary
+
+<div class="report-summary" markdown="1">
+
+**1 Architecture.** One library, one entry point: a model is read, presolved and scaled, sent by its problem class to an engine, postsolved and checked. [Go to section](#1-architecture)
+
+**2 LP engines.** Four engines for linear programs: dual and primal simplex for a basis, an interior point and a first-order method for size. [Go to section](#2-lp-engines)
+
+**3 MILP engine.** Branch and cut over the warm-started dual simplex, with its cuts, heuristics, node selection, conflict analysis and parallel tree. [Go to section](#3-milp-engine)
+
+**4 QP engines.** Two engines for convex quadratic programs; a Hessian that cannot be proved convex is refused, never solved to a local point. [Go to section](#4-qp-engines)
+
+**5 GPU acceleration.** A CUDA port of the first-order engine, where it wins and loses by model size, and what the hardware may be used to claim. [Go to section](#5-gpu-acceleration)
+
+**6 Numerical stability.** The invariants the solver rests on, and the sweep that pushes each numerical hazard until the answer or the certificate moves. [Go to section](#6-numerical-stability)
+
+**7 Independent verification.** Every answer re-derived by a separate program from the model and solution files, and what the binary links against. [Go to section](#7-independent-verification)
+
+**8 Benchmark method.** How every run is recorded and reported, what reproducibility promises, and what the numbers do not say. [Go to section](#8-benchmark-method)
+
+**9 Results.** Netlib, the larger LP sets, scale, MIPLIB, nonlinear programs and the comparison with HiGHS, as the benchmarks document states them. [Go to section](#9-results)
+
+**10 Limitations.** What was built and then demoted or withdrawn, and what the solver does not do, carried in full. [Go to section](#10-limitations)
+
+**11 Future work.** The open issues the next work comes from, each linked, with no dates and no promised results. [Go to section](#11-future-work)
+
+</div>
+
+This report is assembled, not written. Each section opens with a few sentences of connecting prose and then carries the solver's own documents, copied verbatim at build time from the pinned commit named above and folded under the name of the file and section they come from. Every measured figure below sits inside one of those included passages, next to the file that produced it.
 
 ## 1 Architecture
 
@@ -20,15 +48,19 @@ The passages below describe the shape of the code, the boundaries between its mo
 
 Linear programs have four engines: the dual simplex, the primal simplex, an interior point method and a restarted first-order method. The simplex engines produce a basis, which is what warm starts and branch and bound need; the other two reach large models the simplex cannot.
 
-The coverage table names each algorithm the problem statement asks for with the code that implements it, and the first-order section gives that engine's own record.
+The coverage rows name each LP algorithm the problem statement asks for with the code that implements it, and the first-order section gives that engine's own record.
 
-{{include docs/PS26119_COVERAGE.md section "Algorithms the PS names"}}
+{{include docs/PS26119_COVERAGE.md rows "Revised simplex" "First-order methods (PDHG)" "Interior-point methods" "Presolve" "Warm start and in-place modification" "Sensitivity ranging"}}
 
 {{include docs/BENCHMARKS.md section "1e. The first-order engine"}}
 
 ## 3 MILP engine
 
-Mixed-integer models are solved by branch and cut over the warm-started dual simplex. The passages below cover how the search learns from infeasible nodes and how the tree is spread over several workers.
+Mixed-integer models are solved by branch and cut over the warm-started dual simplex. The coverage rows below describe the search itself: branching, the cutting planes and which of them are on by default, the primal heuristics and node selection. The passages after them cover how the search learns from infeasible nodes and how the tree is spread over several workers.
+
+The measured MIPLIB record is in the [Results](#9-results) section, and is not repeated here.
+
+{{include docs/PS26119_COVERAGE.md rows "Branch-and-bound" "Branch-and-cut / cutting planes" "Heuristics" "Advanced node selection"}}
 
 {{include docs/ARCHITECTURE.md section "11. Conflict analysis"}}
 

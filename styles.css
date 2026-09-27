@@ -369,3 +369,24 @@ footer a:hover { color: var(--ink); }
   .doc-body h2 { break-before: auto; }
   footer { margin-top: 24px; }
 }
+
+/* the report: a one-screen summary, and included passages folded under their source */
+.report-summary { border: 1px solid var(--rule); padding: 14px 18px; background: var(--dots), var(--white); }
+.report-summary p { margin: 0 0 7px; font-size: 13.5px; line-height: 1.5; color: var(--ink-68); }
+.report-summary p:last-child { margin-bottom: 0; }
+.report-summary strong { color: var(--ink); }
+.report-summary a { white-space: nowrap; color: var(--blue); text-decoration: none; }
+details.included { margin: 0 0 12px; border: 1px solid var(--rule); background: var(--white); }
+details.included > summary { cursor: pointer; padding: 10px 14px; font-family: var(--mono); font-size: 11.5px; color: var(--ink-68); list-style-position: inside; overflow-wrap: anywhere; }
+details.included > summary:hover { color: var(--blue); }
+details.included[open] > summary { border-bottom: 1px dashed var(--rule-solid); }
+details.included > :not(summary) { margin-left: 16px; margin-right: 16px; }
+details.included > :nth-child(2) { margin-top: 14px; }
+details.included .table-wrap { margin-left: 16px; margin-right: 16px; }
+@media print {
+  details.included { border: 0; }
+  details.included > summary { list-style: none; padding: 0; font-size: 8pt; }
+  details.included::details-content { content-visibility: visible; display: block; block-size: auto; }
+}
+.steps > *, .stepcard > *, .card > * { min-width: 0; }
+p code, li code, dd code, td code { overflow-wrap: anywhere; }
