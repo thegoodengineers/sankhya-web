@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light">
+<title>Adding an engine · SANKHYA</title>
+<meta name="description" content="How a new engine plugs into the one solve entry point, step by step.">
+<meta property="og:title" content="Adding an engine · SANKHYA">
+<meta property="og:description" content="How a new engine plugs into the one solve entry point, step by step.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://sankhya-solver.vercel.app/docs/adding-an-engine">
+<link rel="canonical" href="https://sankhya-solver.vercel.app/docs/adding-an-engine">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%230562ef'/%3E%3Ctext x='16' y='22' text-anchor='middle' font-family='Arial,sans-serif' font-weight='600' font-size='18' fill='%23ffffff'%3ES%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/styles.css">
+<script src="/site.js" defer></script>
+</head>
+<body class="doc">
+<a class="skip" href="#content">Skip to content</a>
+<div class="shell">
+<aside class="rail">
+  <a class="brand" href="/"><span class="brand-mark" aria-hidden="true"></span>SANKHYA<small>SIH26119</small></a>
+  <nav class="doors" aria-label="Site"><a href="/">Home</a><a href="/evaluate">For evaluators</a><a href="/problem">Problem</a><a href="/solver">Solver</a><a href="/evidence">Evidence</a><a href="/docs" aria-current="page">Docs</a><a href="/run">Run it</a><a href="/team">Team</a><a class="ext" href="https://github.com/thegoodengineers/SANKHYA">GitHub</a></nav>
+  <hr class="rail-rule">
+  <nav class="here" aria-label="On this page"><a href="#1-define-the-engine">1. Define the engine</a><a href="#2-declare-capabilities">2. Declare capabilities</a><a href="#3-register-the-engine">3. Register the engine</a><a href="#4-implement-configuration">4. Implement configuration</a><a href="#5-implement-the-solve-lifecycle">5. Implement the solve lifecycle</a><a href="#6-produce-solverresult">6. Produce SolverResult</a><a href="#7-integrate-statistics-and-profiling">7. Integrate statistics and profiling</a><a href="#8-add-tests">8. Add tests</a><a href="#9-add-documentation">9. Add documentation</a></nav>
+</aside>
+<main class="col" id="content">
+<header class="page" id="top"><div class="wrap"><nav class="crumbs" aria-label="Breadcrumb"><a href="/docs">Docs</a><span aria-hidden="true">/</span>Adding an engine</nav><h1>Adding an engine</h1><p class="doc-banner">Generated from <a href="https://github.com/thegoodengineers/SANKHYA/blob/493fa1df0abfbd70f1d5cf7cbb35272da0a49b30/docs/ADDING_AN_ENGINE.md"><code>docs/ADDING_AN_ENGINE.md</code></a> at commit <a href="https://github.com/thegoodengineers/SANKHYA/commit/493fa1df0abfbd70f1d5cf7cbb35272da0a49b30"><code>493fa1d</code></a> (2026-09-27). Do not edit this page by hand.</p></div></header>
+<details class="doc-toc"><summary>Contents</summary><ol><li><a href="#1-define-the-engine">1. Define the engine</a></li><li><a href="#2-declare-capabilities">2. Declare capabilities</a></li><li><a href="#3-register-the-engine">3. Register the engine</a></li><li><a href="#4-implement-configuration">4. Implement configuration</a></li><li><a href="#5-implement-the-solve-lifecycle">5. Implement the solve lifecycle</a></li><li><a href="#6-produce-solverresult">6. Produce SolverResult</a></li><li><a href="#7-integrate-statistics-and-profiling">7. Integrate statistics and profiling</a></li><li><a href="#8-add-tests">8. Add tests</a></li><li><a href="#9-add-documentation">9. Add documentation</a></li></ol></details>
+<article class="doc-body">
+<p>The steps #297 lists, in order, with the file each one touches. The contract the engine
+inherits - ownership, thread safety, status mapping, how failures surface - is
+<code>docs/ARCHITECTURE.md</code> section 13; this page is the work. An engine is a wrapper over a free
+function that does the algorithm, in the shape the existing six already have
+(<code>src/solver_engine/builtin_engines.cpp</code>). Nothing below needs a change to another engine.</p>
+<p>Where a step touches more than the engine's own files, the page says so: an LP engine needs a
+line in <code>solve()</code>'s dispatch and in the option table, and a second engine for a class that has
+one today (QP, MILP, MIQP) needs <code>solve()</code>'s branch for that class to ask the selector, which it
+does not yet, because there has been nothing to choose between.</p>
+<h2 id="1-define-the-engine">1. Define the engine</h2>
+<p>Write the algorithm as a free function under its own directory, taking what every engine takes
+and returning a <code>Solution</code>:</p>
+<pre><code class="language-cpp">// src/myengine/myengine.hpp
+namespace sankhya::myengine {
+[[nodiscard]] Solution solve_myengine(const Model&amp; model, const Options&amp; options,
+                                      Logger&amp; logger, SolveControl* control);
+}
+</code></pre>
+<p>Read the model through <code>const Model&amp;</code> and do not keep it; keep the working state on the stack
+of the call. Print nothing: write to <code>logger</code> (<code>logger.info(...)</code>, the iteration table), which
+the caller owns and may have silenced. Draw every random number from the <code>random_seed</code> option,
+never from the clock or an address (<code>docs/ARCHITECTURE.md</code> section 7). Do not throw and do not
+exit; every ending is a status (step 6).</p>
+<p>Then the wrapper, in <code>src/solver_engine/builtin_engines.cpp</code>:</p>
+<pre><code class="language-cpp">class MyEngine final : public SolverEngine {
+ public:
+  [[nodiscard]] std::string name() const override { return &quot;myengine&quot;; }
+  [[nodiscard]] std::string summary() const override { return &quot;One sentence for `sankhya engines`&quot;; }
+  [[nodiscard]] std::string source() const override { return &quot;src/myengine/myengine.cpp&quot;; }
+  [[nodiscard]] EngineCapabilities capabilities() const override;  // step 2
+  [[nodiscard]] Solution solve_verified(const Model&amp; model, const Options&amp; options,
+                                        Logger&amp; logger, SolveControl* control) const override {
+    const Options effective = apply_deterministic_mode(options, logger);
+    return myengine::solve_myengine(model, effective, logger, control);
+  }
+};
+</code></pre>
+<p><code>solve_verified</code> is the algorithm's entry; the public <code>solve()</code> is not virtual and does the
+class gate and the <code>stopped_by</code> mapping for every engine, so a wrapper never repeats them.</p>
+<h2 id="2-declare-capabilities">2. Declare capabilities</h2>
+<p>Set only what the wrapper's own <code>solve_verified</code> delivers, on the answer it returns:</p>
+<pre><code class="language-cpp">EngineCapabilities caps;
+caps.lp = true;                          // the classes it accepts
+caps.supports_duals = true;              // row_dual and col_dual are on the answer
+caps.supports_interrupt = true;          // it checks the SolveControl at its safe points
+caps.supports_deterministic_mode = true; // it calls apply_deterministic_mode itself
+return caps;
+</code></pre>
+<p>A flag that is true only when the engine is reached through <code>solve()</code> is not the engine's:
+the interior point's <code>supports_basis</code> is honest because its wrapper runs the crossover itself.
+<code>supports_warm_start</code> means the wrapper reads <code>SolveControl::start_col_status</code> and
+<code>start_row_status</code> (#218); <code>supports_checkpoint</code> means it writes the <code>checkpoint</code> option's file
+and reads <code>resume</code> (#287); <code>supports_certificates</code> means an infeasible or unbounded answer
+carries <code>farkas_dual</code> or <code>primal_ray</code> that <code>verify_and_keep_certificate</code> accepts. Step 8's
+tests fail an engine that claims one of these and does not deliver it.</p>
+<h2 id="3-register-the-engine">3. Register the engine</h2>
+<p>One line in <code>register_builtin_engines()</code>, same file:</p>
+<pre><code class="language-cpp">registry.register_engine(std::make_shared&lt;MyEngine&gt;());
+</code></pre>
+<p><code>SolverRegistry::builtin()</code> then has it, <code>sankhya engines</code> lists it with the flags from step 2,
+and <code>registry.candidates(model)</code> offers it for every class it accepts.</p>
+<p>For an LP engine, two more places, both held by tests:</p>
+<ul>
+<li><code>SolverRegistry::algorithm_names()</code> now includes it, so <code>algorithm=myengine</code> is accepted by
+  <code>solve()</code>. The option table in <code>src/util/options.cpp</code> keeps its own <code>choices</code> list for
+  <code>algorithm</code>, because <code>src/util</code> cannot depend on the engines;
+  <code>OptionsAndRegistry.AlgorithmChoicesAreAutoPlusTheRegistrysAlgorithmNames</code> fails until the
+  name is added there.</li>
+<li><code>solve()</code>'s LP branch (<code>src/core/solve.cpp</code>) runs the chosen engine by name, and refuses a
+  registered engine it has no branch for rather than running another under its name. Add the
+  branch beside the simplex, PDHG and interior-point ones.</li>
+</ul>
+<p>For <code>algorithm=auto</code> to choose it, add a rule to the table in <code>src/core/engine_selection.cpp</code>
+(#284), with the CSV that justifies its threshold named in the rule's reason, as every existing
+rule does. Without a rule it is reached only by name.</p>
+<h2 id="4-implement-configuration">4. Implement configuration</h2>
+<p>Engine options go in the one option table, <code>src/util/options.cpp</code>: a name, a type, a default,
+a description, and a range or a list of choices. The table checks all of them when a value is
+set from text - the CLI's <code>--option</code>, the C API - so a bad value is refused before any solve
+starts, and <code>sankhya options</code> documents it with no further work. Read them inside the engine
+with <code>options.get_int(...)</code>, <code>get_double</code>, <code>get_bool</code>, <code>get_string</code>. Name them after the engine
+(<code>pdhg_*</code>, <code>ipm_*</code>, <code>mip_*</code>) so a reader can tell whose they are.</p>
+<p>A combination the engine cannot honour is said, not ignored: a warning naming the value, as
+<code>--gpu</code> without PDHG is (<code>src/core/solve.cpp</code>), or a <code>kNotSolved</code> answer naming why.</p>
+<h2 id="5-implement-the-solve-lifecycle">5. Implement the solve lifecycle</h2>
+<p>There is no configure, initialize or finalize to write: construction is registration, and a
+solve is one call. Inside the call, obey the shared limits through the shared checker rather
+than reading <code>time_limit</code> yourself:</p>
+<pre><code class="language-cpp">const Timer timer;
+const ResourceLimits limits(options, logger);       // src/core/resource_limits.hpp
+StopController stop(control, timer, limits);       // src/core/stop_controller.hpp
+while (...) {
+  SolveStatus why;
+  if (stop.should_stop([&amp;] { return progress_now(); }, &amp;why)) { status = why; break; }
+  if (limits.iterations_exhausted(iterations)) { status = SolveStatus::kIterationLimit; break; }
+  ...
+}
+</code></pre>
+<p>Check at a safe point - between iterations, between nodes - so that stopping leaves a point to
+report. The precedence between the limits is section 8's: interrupt, then time, then
+iterations, then nodes.</p>
+<h2 id="6-produce-solverresult">6. Produce SolverResult</h2>
+<p>The result is a <code>Solution</code> (<code>include/sankhya/model.hpp</code>); the engine layer has no other result
+type. Allocate it for the model, fill what the engine has, and leave the rest at its default,
+which means "not produced":</p>
+<ul>
+<li><code>status</code>: one <code>SolveStatus</code>, mapped from the algorithm's own ending as the table in
+  <code>docs/ARCHITECTURE.md</code> section 13 does. A limit is a limit status, never <code>kNumericalError</code>;
+  <code>kOptimal</code> is claimed only against the project's tolerances (<code>include/sankhya/tolerances.hpp</code>),
+  and a first-order method that met its own request but not those reports <code>kFeasible</code>.</li>
+<li><code>col_value</code>, and <code>objective</code> at that point; <code>row_dual</code> and <code>col_dual</code> if step 2 declared
+  duals; <code>col_status</code> and <code>row_status</code> if it declared a basis; <code>iterations</code>, <code>nodes</code>;
+  <code>algorithm</code>, the name the answer carries into the stats JSON; <code>message</code>, the reason in words.</li>
+<li>Call <code>solution.recompute_quality(model)</code> last, so the feasibility and duality numbers on the
+  answer are measured from the vectors rather than asserted by the engine.</li>
+</ul>
+<p><code>stopped_by</code> is filled from the status for you (step 1). Postsolve, the status guards, ranging
+and the independent verifier run on the answer after the engine returns; none of them is the
+engine's job.</p>
+<h2 id="7-integrate-statistics-and-profiling">7. Integrate statistics and profiling</h2>
+<p>Counts that every engine has go on the <code>Solution</code> (<code>iterations</code>, <code>nodes</code>). What is particular to
+the engine goes to the profiler riding on the logger, which costs a null-pointer test when
+profiling is off:</p>
+<pre><code class="language-cpp">{
+  ProfileScope timed(logger.profiler(), &quot;myengine step&quot;, ProfileMode::kDetailed);
+  ...
+}
+if (Profiler* p = logger.profiler()) p-&gt;count(&quot;myengine restarts&quot;, restarts);
+</code></pre>
+<p><code>--option profile=basic|detailed</code> prints the tree and <code>profile_out</code> writes it as JSON
+(<code>docs/ARCHITECTURE.md</code> section 10). <code>bench/runners/engine_dispatch.py</code> reads the <code>engine</code>
+region beside the dispatch regions; add a case for the new engine there.</p>
+<h2 id="8-add-tests">8. Add tests</h2>
+<ul>
+<li>Nothing to write for the common contract: <code>tests/unit/test_solver_engine_conformance.cpp</code>
+  runs over every registered engine and every class it declares, and checks the answer against
+  its own measurement of the point, each declared capability against the answer, the limit
+  statuses and <code>stopped_by</code> under a zero budget, a zero time limit and an interrupt, and two
+  identical runs under <code>deterministic=true</code>. Run it first; it is the quickest way to find a
+  capability the wrapper claims and does not deliver.</li>
+<li>The algorithm's own tests go in <code>tests/unit/test_myengine.cpp</code>, added to <code>tests/CMakeLists.txt</code>:
+  known optima, the edge cases the method is known to have, and a comparison against the exact
+  oracle in <code>tests/oracles/</code> where the class allows it.</li>
+<li>Solve the committed instances through the benchmark runner for the class, with
+  <code>--solver-option algorithm=myengine</code>, and let <code>tools/verify_solution.py</code> check every answer.</li>
+</ul>
+<h2 id="9-add-documentation">9. Add documentation</h2>
+<ul>
+<li>A row in <code>docs/ARCHITECTURE.md</code> section 2 for the new directory, and the engine in section 5.</li>
+<li>The algorithm's citations in <code>docs/PROVENANCE.md</code>: every method named in the code is cited.</li>
+<li>Any number you quote comes from a CSV in <code>bench/results/</code>, measured on <code>main</code>, and is
+  reported in <code>docs/BENCHMARKS.md</code> through <code>bench/runners/make_benchmarks_doc.py</code>, never typed.</li>
+<li>The coverage tracker, <code>docs/PS26119_COVERAGE.md</code>, says what the engine does and, just as
+  plainly, what it does not.</li>
+</ul>
+</article>
+<footer>
+<!-- fragment:footer -->
+<div class="wrap">
+    <div>SANKHYA · Smart India Hackathon 2026 · PS SIH26119 · Apache-2.0 · <a href="https://sankhya-solver.vercel.app">sankhya-solver.vercel.app</a></div>
+    <div>Every figure on this site was last checked against SANKHYA <a href="https://github.com/thegoodengineers/SANKHYA/tree/493fa1df0abfbd70f1d5cf7cbb35272da0a49b30">main at <span data-fact="sankhya_commit">493fa1d</span></a>.</div>
+    <div><a href="https://github.com/thegoodengineers/SANKHYA">Source</a> · <a href="/docs">Docs</a> · <a href="/docs/benchmarks">Benchmarks</a> · <a href="/docs/provenance">Provenance</a> · <a href="/docs/coverage">Coverage tracker</a></div>
+  </div>
+<!-- /fragment:footer -->
+</footer>
+</main>
+</div>
+</body>
+</html>

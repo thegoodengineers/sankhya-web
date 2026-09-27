@@ -1,0 +1,361 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light">
+<title>GPU plan · SANKHYA</title>
+<meta name="description" content="The plan written before the GPU existed, and what the hardware lets the project claim.">
+<meta property="og:title" content="GPU plan · SANKHYA">
+<meta property="og:description" content="The plan written before the GPU existed, and what the hardware lets the project claim.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://sankhya-solver.vercel.app/docs/gpu-plan">
+<link rel="canonical" href="https://sankhya-solver.vercel.app/docs/gpu-plan">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%230562ef'/%3E%3Ctext x='16' y='22' text-anchor='middle' font-family='Arial,sans-serif' font-weight='600' font-size='18' fill='%23ffffff'%3ES%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/styles.css">
+<script src="/site.js" defer></script>
+</head>
+<body class="doc">
+<a class="skip" href="#content">Skip to content</a>
+<div class="shell">
+<aside class="rail">
+  <a class="brand" href="/"><span class="brand-mark" aria-hidden="true"></span>SANKHYA<small>SIH26119</small></a>
+  <nav class="doors" aria-label="Site"><a href="/">Home</a><a href="/evaluate">For evaluators</a><a href="/problem">Problem</a><a href="/solver">Solver</a><a href="/evidence">Evidence</a><a href="/docs" aria-current="page">Docs</a><a href="/run">Run it</a><a href="/team">Team</a><a class="ext" href="https://github.com/thegoodengineers/SANKHYA">GitHub</a></nav>
+  <hr class="rail-rule">
+  <nav class="here" aria-label="On this page"><a href="#1-what-exists-today">1. What exists today</a><a href="#2-day-0-intake-before-any-code">2. Day 0: intake, before any code</a><a href="#3-the-order-of-work">3. The order of work</a><a href="#step-1---16-the-plumbing-carved-out-of-274" class="sub">Step 1 - #16, the plumbing, carved out of #274</a><a href="#step-2---17-the-kernels-on-a-device" class="sub">Step 2 - #17, the kernels, on a device</a><a href="#step-3---19-the-evidence" class="sub">Step 3 - #19, the evidence</a><a href="#step-4---the-documents-and-the-demo" class="sub">Step 4 - the documents and the demo</a><a href="#4-what-to-test-as-one-list">4. What to test, as one list</a><a href="#5-what-the-hardware-lets-us-claim-and-what-it-does-not">5. What the hardware lets us claim, and what it does not</a><a href="#6-better-than-the-existing-solvers---where-that-is-true-and-where-it-is-not">6. Better than the existing solvers - where that is true, and where it is not</a><a href="#7-the-novelty-for-the-pitch">7. The novelty, for the pitch</a><a href="#8-timeline-against-20-september">8. Timeline against 20 September</a><a href="#9-risks-named">9. Risks, named</a></nav>
+</aside>
+<main class="col" id="content">
+<header class="page" id="top"><div class="wrap"><nav class="crumbs" aria-label="Breadcrumb"><a href="/docs">Docs</a><span aria-hidden="true">/</span>GPU plan</nav><h1>GPU plan</h1><p class="doc-banner">Generated from <a href="https://github.com/thegoodengineers/SANKHYA/blob/493fa1df0abfbd70f1d5cf7cbb35272da0a49b30/docs/GPU_PLAN.md"><code>docs/GPU_PLAN.md</code></a> at commit <a href="https://github.com/thegoodengineers/SANKHYA/commit/493fa1df0abfbd70f1d5cf7cbb35272da0a49b30"><code>493fa1d</code></a> (2026-09-27). Do not edit this page by hand.</p></div></header>
+<details class="doc-toc"><summary>Contents</summary><ol><li><a href="#1-what-exists-today">1. What exists today</a></li><li><a href="#2-day-0-intake-before-any-code">2. Day 0: intake, before any code</a></li><li><a href="#3-the-order-of-work">3. The order of work</a></li><li class="sub"><a href="#step-1---16-the-plumbing-carved-out-of-274">Step 1 - #16, the plumbing, carved out of #274</a></li><li class="sub"><a href="#step-2---17-the-kernels-on-a-device">Step 2 - #17, the kernels, on a device</a></li><li class="sub"><a href="#step-3---19-the-evidence">Step 3 - #19, the evidence</a></li><li class="sub"><a href="#step-4---the-documents-and-the-demo">Step 4 - the documents and the demo</a></li><li><a href="#4-what-to-test-as-one-list">4. What to test, as one list</a></li><li><a href="#5-what-the-hardware-lets-us-claim-and-what-it-does-not">5. What the hardware lets us claim, and what it does not</a></li><li><a href="#6-better-than-the-existing-solvers---where-that-is-true-and-where-it-is-not">6. Better than the existing solvers - where that is true, and where it is not</a></li><li><a href="#7-the-novelty-for-the-pitch">7. The novelty, for the pitch</a></li><li><a href="#8-timeline-against-20-september">8. Timeline against 20 September</a></li><li><a href="#9-risks-named">9. Risks, named</a></li></ol></details>
+<article class="doc-body">
+<p>The team has asked for GPU-accelerated hardware. This is what to do with it the day it comes,
+in what order, with what tests, and what it will and will not let us claim. It is written
+against <code>main</code> at <code>b58a77d</code> (2026-09-16) and the four GPU issues that already define the
+track: <a href="https://github.com/thegoodengineers/SANKHYA/issues/16">#16</a> plumbing,
+<a href="https://github.com/thegoodengineers/SANKHYA/issues/17">#17</a> kernels,
+<a href="https://github.com/thegoodengineers/SANKHYA/issues/18">#18</a> large instances (done),
+<a href="https://github.com/thegoodengineers/SANKHYA/issues/19">#19</a> evidence. Nothing here replaces
+those; it sequences them for a machine we do not have yet and a deadline of 20 September.</p>
+<p>The rules that bind every step are the ones in <code>ENGINEERING_RULES.md</code>: no number is reported that was
+not produced by a command in the session reporting it; every benchmark writes a CSV to
+<code>bench/results/</code>; <code>docs/BENCHMARKS.md</code> is generated from those CSVs; the CPU build works with
+zero CUDA installed; no solver source is read or copied - the GPU design references are the
+papers named in #17, not cuPDLP's code.</p>
+<h2 id="1-what-exists-today">1. What exists today</h2>
+<div class="table-wrap"><table class="doc-table">
+<thead>
+<tr>
+<th>piece</th>
+<th>state</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>The engine to accelerate</td>
+<td>Restarted PDHG on the CPU, <code>src/pdhg/pdhg.cpp</code> (747 lines): Ruiz + Pock-Chambolle scaling, adaptive step size, primal weight, restarts, a convergence test every 40 iterations, an interior-point polish of its answer by default (#229). 9 of 9 committed Netlib instances to <code>optimal</code> at 1e-8 on <code>main</code> at <code>4177ae6</code> (<code>bench/results/pdhg-4177ae6.csv</code>).</td>
+</tr>
+<tr>
+<td>The instances that make a GPU comparison mean something</td>
+<td><code>bench/runners/generate_large_lp.py</code> (#18, done): random and staircase families to a million rows with the optimum exact by construction; <code>generate_refinery_lp.py</code> (#211): a refinery planning LP at 12, 365 and 8,760 periods (1,068 / 32,485 / 779,640 rows). Measured on the CPU in <code>bench/results/scale-*.csv</code>.</td>
+</tr>
+<tr>
+<td>The CUDA backend</td>
+<td>PR <a href="https://github.com/thegoodengineers/SANKHYA/pull/274">#274</a> (Ayush; continues #153, which the history rewrite closed): <code>src/gpu/pdhg_cuda.cu</code> (1,143 lines), a device probe, CSR and CSC on the device, fused primal/dual/interaction kernels, batches of 40 iterations between host syncs, a CPU fallback below 20,000 post-presolve nonzeros, a compile-only CUDA CI job. It has never been built, run or measured inside this repository's evidence chain, its description carries no terminal output, and it is 75 commits behind <code>main</code> with a 555-line change to the CPU engine's file.</td>
+</tr>
+<tr>
+<td>The build switch</td>
+<td><code>SANKHYA_ENABLE_CUDA</code> in <code>CMakeLists.txt</code>, default OFF; <code>--gpu</code> warns and runs on the CPU.</td>
+</tr>
+<tr>
+<td>What the documents say</td>
+<td>README, <code>docs/PS26119_COVERAGE.md</code> and the demo's section 6 all say the same thing in the same words since #213: GPU acceleration is not on <code>main</code>, PR #274 is open and not yet built or measured on a GPU, and no speed-up is claimed. That stays true until section 5 below produces a CSV.</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="2-day-0-intake-before-any-code">2. Day 0: intake, before any code</h2>
+<p>Two hours, and the output is a file, <code>docs/GPU_MACHINE.md</code>, that names the machine the GPU
+numbers will belong to. Every later CSV row carries a machine tag, and this is what the tag
+points at.</p>
+<ol>
+<li><strong>Record the hardware and the toolchain.</strong> <code>nvidia-smi</code> (driver version, card, VRAM),
+   <code>nvcc --version</code>, the compute capability (Ada is 8.9; a different card needs a different
+   <code>CMAKE_CUDA_ARCHITECTURES</code>), the host compiler <code>nvcc</code> will use, the OS. Paste the real
+   output into the file.</li>
+<li><strong>Know the host-compiler trap before it costs a day.</strong> On Windows, <code>nvcc</code> accepts MSVC as
+   its host compiler and not MinGW; this repository builds with MSYS2 GCC on the dev boxes.
+   Either the GPU machine runs Linux (simplest: <code>g++</code> is a supported host), or the CUDA build
+   is configured with Visual Studio Build Tools as the host compiler while the CPU build
+   keeps GCC. Decide on Day 0, write it down, and do not let the two toolchains share a build
+   directory.</li>
+<li><strong>Prove the CPU build still works there with zero CUDA in play.</strong> <code>scripts/configure.sh
+   build Release &amp;&amp; cmake --build build -j</code>, then <code>ctest</code>. This is the machine's baseline and
+   the rule #16 calls non-negotiable.</li>
+<li><strong>Run the CPU evidence once on that machine</strong>, alone, on mains: <code>bench/runners/netlib.py</code>
+   (small tier), <code>bench/runners/pdhg_report.py</code>, and <code>scale.py --engines pdhg</code> on the random
+   family. These CSVs are the CPU side of every GPU comparison; without them a GPU number has
+   nothing honest to be compared against, because the laptop the existing CSVs came from is a
+   different machine.</li>
+<li><strong>Windows only:</strong> confirm the freshly linked binaries run. Smart App Control has blocked
+   new executables on the dev box repeatedly (<code>scripts/preflight.sh</code> explains the escape
+   hatch); on a machine that blocks them, a Debug build or a signed build is needed before
+   anything else.</li>
+</ol>
+<h2 id="3-the-order-of-work">3. The order of work</h2>
+<p>Each step is one PR, merged before the next starts, per the repository's workflow. The
+owners are the ones on the issues; the reviewer runs everything listed under "gate" before
+merging - the reviews this month found that a description's claims and a branch's behaviour
+are different things.</p>
+<h3 id="step-1---16-the-plumbing-carved-out-of-274">Step 1 - #16, the plumbing, carved out of #274</h3>
+<p>Bring only the build and probe parts of #274 to <code>main</code> first: the CMake guard with the real
+architecture, <code>src/gpu/device.{hpp,cu}</code>, <code>sankhya version</code> reporting whether CUDA is compiled
+in and whether a device is visible, <code>--gpu</code> naming the device or logging once and running on
+the CPU, the compile-only CI job, and cuSPARSE/cuBLAS in <code>docs/PROVENANCE.md</code> with the line
+that they are matrix arithmetic, not a solver.</p>
+<p>Gate: the four "done when" boxes of #16, with terminal output pasted; the seven existing
+CPU-only CI jobs green; <code>sankhya solve data/netlib/afiro.mps --option algorithm=pdhg --option
+gpu=true</code> returning <code>-4.6475314286e+02</code> on the CPU with the "no kernels" path.</p>
+<h3 id="step-2---17-the-kernels-on-a-device">Step 2 - #17, the kernels, on a device</h3>
+<p>Rebase the rest of #274 onto that. Review it on the machine, in this order:</p>
+<ol>
+<li><strong>The CPU engine must be unchanged in what it computes.</strong> #274 touches <code>src/pdhg/pdhg.cpp</code>
+   heavily. Run <code>bench/runners/pdhg_report.py</code> on the branch with the GPU off and diff it
+   against the Day-0 CPU CSV: identical iteration counts and objectives on every instance,
+   or the diff is explained line by line. A refactor that moves CPU numbers is not a GPU
+   backend, it is a different engine.</li>
+<li><strong>Agreement, not resemblance.</strong> The test #17 asks for: the same instance solved both ways,
+   objectives within 1e-9 relative, skipped cleanly with no device. Run it on all nine
+   committed Netlib instances and on the 10,000-row random instance.</li>
+<li><strong>The verifier passes on GPU output.</strong> <code>tools/verify_solution.py</code> on every <code>.sol</code> the GPU
+   path writes, including the polished ones: the interior-point polish runs on the CPU after
+   the GPU iterations and must still see a point it can finish.</li>
+<li><strong>The fallback threshold is a measured number or it goes.</strong> #274 falls back to the CPU
+   below 20,000 nonzeros. That is exactly the crossover #19 is supposed to measure; a number
+   chosen before the measurement is a guess. Keep the switch, make its default come from
+   section 5's table, and say in the option's help where the number came from.</li>
+<li><strong>Batching of 40 iterations between syncs must not change the mathematics.</strong> The restart
+   and the convergence test read the iterate every 40 iterations on the CPU too; check that
+   the batch boundary is that boundary, so the GPU run takes the same decisions on the same
+   iterates, up to floating-point reduction order.</li>
+<li><strong>Determinism, stated.</strong> GPU reductions are not associative; the PR says what is
+   asserted (agreement to a tolerance) and what is not (bit identity), as #17 asks.</li>
+<li><strong>Out of memory is a status, not a crash.</strong> #246 found the interior point dying of
+   <code>std::bad_alloc</code> with no stats file; a <code>cudaMalloc</code> failure on a model that does not fit
+   6 GB must come back as <code>numerical_error</code> with a message naming the size, and the solve
+   must not leave the process. Test it with the million-row instance if it does not fit.</li>
+</ol>
+<p>Gate: #17's five correctness boxes; every CPU-only CI job green; the CUDA compile job green;
+the agreement test's terminal output in the PR.</p>
+<h3 id="step-3---19-the-evidence">Step 3 - #19, the evidence</h3>
+<p><code>bench/runners/gpu_report.py</code>, next to <code>pdhg_report.py</code>, writing one CSV with every column
+<code>ENGINEERING_RULES.md</code> requires plus <code>device</code>, <code>vram_bytes</code>, <code>iterations</code>, <code>gpu_seconds</code>, <code>cpu_seconds</code>
+and the tolerance the row was run at. Then a <code>gpu_section()</code> in <code>make_benchmarks_doc.py</code> so
+<code>docs/BENCHMARKS.md</code> regenerates from it. The protocol:</p>
+<ul>
+<li><strong>Alone on the machine, on mains, one run at a time</strong>, the CPU and GPU rows for an instance
+  taken back to back. One warm-up solve is run and discarded so that the first CUDA context
+  creation is not charged to an instance.</li>
+<li><strong>Instances, with rows, columns and nonzeros stated on every row:</strong> the nine Netlib
+  instances (where the GPU will lose and the table must say so), the random family at 1,000,
+  5,000, 20,000, 100,000 and 1,000,000 rows, the staircase family at the same sizes, and the
+  refinery year at 12, 365 and 8,760 periods. The ones that do not fit in VRAM are rows too,
+  with the status that says why.</li>
+<li><strong>Two tolerances, never blended:</strong> every instance at 1e-4 and at 1e-8, as
+  <code>pdhg_report.py</code> already does. A first-order method's cost depends on the accuracy asked.</li>
+<li><strong>The crossover marked.</strong> The size below which the GPU is slower and above which it is
+  faster is the result. If the GPU never wins, that is the result, published.</li>
+<li><strong>The honest 1e-8 list</strong>, kept current: the instances PDHG cannot drive to 1e-8 in its
+  iteration budget on either device (<code>share2b</code> is on it today).</li>
+<li><strong>The VRAM ceiling stated</strong> as the largest instance that fit and the first that did not.</li>
+<li><strong>Three repeats of the headline rows</strong> an hour apart before any ratio is quoted - the bar
+  #212 set for the HiGHS comparison applies here unchanged.</li>
+</ul>
+<p>Gate: the CSV committed, the section generated, every number in it from a command run in
+the session that committed it, and the README's GPU row rewritten from "not on <code>main</code>" to what
+the table says - including the losing region.</p>
+<h3 id="step-4---the-documents-and-the-demo">Step 4 - the documents and the demo</h3>
+<p>Once the CSV exists: the README status table's Phase 4 row and gaps table's GPU row,
+<code>docs/PS26119_COVERAGE.md</code>'s "GPU acceleration" line, the demo's section 6 ledger, and a
+demo section that solves the 5,000-row instance on the GPU live and prints the crossover
+table's headline rows from the CSV. #274 already carries 81 lines of demo change; they are
+rewritten to read from the CSV rather than assert.</p>
+<h2 id="4-what-to-test-as-one-list">4. What to test, as one list</h2>
+<div class="table-wrap"><table class="doc-table">
+<thead>
+<tr>
+<th>kind</th>
+<th>test</th>
+<th>where</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Build</td>
+<td>CPU-only build and every CI job green with no CUDA present; CUDA build compiles and links on the CI runner</td>
+<td>#16</td>
+</tr>
+<tr>
+<td>Probe</td>
+<td><code>sankhya version</code> names the device; <code>--gpu</code> with no device logs once and solves on the CPU; <code>--gpu</code> with a device names it</td>
+<td>#16</td>
+</tr>
+<tr>
+<td>Agreement</td>
+<td>same instance, CPU and GPU, objectives within 1e-9 relative, on the nine Netlib instances and the 10,000-row random instance; skipped cleanly without a device</td>
+<td>#17, <code>tests/unit/test_pdhg.cpp</code></td>
+</tr>
+<tr>
+<td>Unchanged CPU path</td>
+<td><code>pdhg_report.py</code> on the branch with the GPU off is identical to the Day-0 CPU CSV</td>
+<td>Step 2</td>
+</tr>
+<tr>
+<td>Verification</td>
+<td><code>tools/verify_solution.py</code> passes on every GPU <code>.sol</code>, polished and unpolished</td>
+<td>#17</td>
+</tr>
+<tr>
+<td>Batching</td>
+<td>restart and convergence decisions taken on the same iterates as the CPU run</td>
+<td>Step 2</td>
+</tr>
+<tr>
+<td>Failure modes</td>
+<td>out of VRAM is a status with a message; a CUDA error mid-solve is a status, never an abort; Ctrl-C (#223) still interrupts a GPU solve at the next batch boundary</td>
+<td>Step 2</td>
+</tr>
+<tr>
+<td>Fallback threshold</td>
+<td>the CPU/GPU switch default comes from the measured crossover, and its help text says so</td>
+<td>Step 2 and 3</td>
+</tr>
+<tr>
+<td>Performance</td>
+<td>the protocol in Step 3: alone, mains, warm-up discarded, both tolerances, three repeats of headline rows, CSV with machine tag</td>
+<td>#19</td>
+</tr>
+<tr>
+<td>Scale</td>
+<td>the largest instance that fits and the first that does not, as rows</td>
+<td>#19</td>
+</tr>
+<tr>
+<td>Honesty</td>
+<td>the losing region and the 1e-8 list are in the generated table; the README quotes nothing the CSV does not contain</td>
+<td>#19, <code>make_benchmarks_doc.py</code></td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="5-what-the-hardware-lets-us-claim-and-what-it-does-not">5. What the hardware lets us claim, and what it does not</h2>
+<p>The claim the problem statement's title invites is "GPU-accelerated". After Step 3 the
+sentence we can write is of this shape: <em>on instances above N rows the first-order engine on
+the GPU reaches 1e-4 in a fraction F of the CPU's time, on this machine; below N the GPU is
+slower; at 1e-8 the picture is T.</em> Every letter in that sentence comes from the CSV. Until
+then the README's "no speed-up is claimed" stands.</p>
+<p>What the hardware does not change: the simplex is sequential and stays on the CPU, so
+Netlib-sized models get no faster; MIPLIB proofs (13 of 30 reached, 9 proved) depend on
+branch-and-cut (#221) and the parallel tree (#222), not on the GPU; Mittelmann's 0 of 8 is a
+factorization-scale problem that PDHG at 1e-4 may reach but cannot certify. Those are the
+rows in the README's "What still needs doing" that a GPU leaves where they are.</p>
+<h2 id="6-better-than-the-existing-solvers---where-that-is-true-and-where-it-is-not">6. Better than the existing solvers - where that is true, and where it is not</h2>
+<p>The honest comparison is by kind. There are three kinds of existing solver: the open-source
+simplex codes (HiGHS, CBC, GLPK), the commercial ones (CPLEX, Gurobi, Xpress), and the
+GPU first-order codes (PDLP, cuPDLP). Against each, what we have that they do not, with the
+evidence that backs it, and what they have that we do not.</p>
+<p><strong>Where we are ahead, on evidence in the repository today</strong></p>
+<ol>
+<li><strong>Every answer is checked by something that shares no code with the solver.</strong>
+   <code>tools/verify_solution.py</code> reads the <code>.sol</code> file and the model and re-derives feasibility,
+   duality, integrality and the gap. An <code>infeasible</code> verdict carries a Farkas certificate the
+   checker proves; an <code>unbounded</code> one carries a ray from a feasible point; an IIS carries the
+   subsystem's own certificate and one witness per element, so both defining properties are
+   checked by arithmetic (#239). No open-source solver ships an independent checker of its
+   own output; the commercial ones ship none at all.</li>
+<li><strong>The solution file is what a planner reads.</strong> Shadow prices, sensitivity ranges in the
+   model's own sense with the basis's degeneracy stated (#249), the smallest conflicting set
+   of constraints named when there is no plan (#239), a progress callback bounded at ten a
+   second (#234). CPLEX and Gurobi have all of this; the open-source codes have parts of it.</li>
+<li><strong>Scale evidence whose optimum is exact by construction.</strong> The random, staircase and
+   refinery families (#18, #198, #211) are built backwards from a KKT point, so a
+   million-row run is an accuracy check, not a timing loop. Public benchmarks have no such
+   families; ours are committed generators with seeds.</li>
+<li><strong>Provenance that is enforced, not asserted.</strong> <code>docs/PROVENANCE.md</code>, a CI job that fails
+   the build if a solver library appears in the binary, and a link-line dump. "Sovereign" is
+   a checked property here and a word elsewhere.</li>
+<li><strong>An honest ledger as part of the product.</strong> The README's gaps table, the demo's section
+   6, the coverage tracker and the "What still needs doing" section say what is missing with
+   the number. This is unusual, and a judge who has met vendor benchmarks knows it.</li>
+</ol>
+<p><strong>Where we are behind, on the same evidence</strong></p>
+<ol>
+<li>Raw simplex speed: about twice HiGHS's time on the Netlib medium tier
+   (<code>bench/results/compare-highs-medium-bf3df02*.csv</code>), and HiGHS's devex takes fewer
+   iterations.</li>
+<li>MILP: 9 of 30 MIPLIB proofs; no MIR cuts, no cuts below the root, one core.</li>
+<li>Large LPs: Mittelmann 0 of 8; the interior point runs out of memory on the 100,000-row
+   random model (#246); the dual simplex reaches the optimum only at 1,000 rows on the scale
+   families (#210, #243).</li>
+<li>Against PDLP and cuPDLP specifically: they exist, they are published, and they are faster
+   than a first port will be. Our GPU engine's claim is not "faster than cuPDLP"; it is "a
+   from-scratch GPU first-order engine, verified, with its crossover measured and published
+   including where it loses". That is defensible in Q&A; a fabricated 10x is not.</li>
+</ol>
+<p><strong>Where the GPU changes the comparison, if Step 3's table comes out as the design predicts:</strong>
+the open-source simplex codes have no GPU path at all, so on models above the crossover
+size, at 1e-4, a GPU PDHG run is a capability they do not have. That is the one "better
+than" the hardware can add, and it is worth exactly what the table shows.</p>
+<h2 id="7-the-novelty-for-the-pitch">7. The novelty, for the pitch</h2>
+<p>Say these, in this order, each with the file that proves it:</p>
+<ol>
+<li>Written from the mathematics, cited above every algorithm (<code>docs/PROVENANCE.md</code>), with a
+   CI job that would fail the build if that stopped being true.</li>
+<li>Verification as architecture: an exact rational oracle in the tests, an independent
+   checker on every written answer, certificates for the two verdicts that have no point,
+   and an IIS that proves both of its own properties.</li>
+<li>A solver that tells the planner what to do next: which constraints fight, which prices
+   the plan survives, which capacity is worth expanding - in the solution file, checked.</li>
+<li>Scale evidence with exact optima, to a million rows, on three families including a
+   refinery year, with the engine-by-engine ceiling stated rather than hidden.</li>
+<li>Four engines behind one seam (simplex, dual simplex, interior point, PDHG) plus branch and
+   bound over LP and QP relaxations, chosen by the problem class, with the first-order engine
+   finished by the interior point.</li>
+<li>After Step 3: a GPU first-order engine whose crossover against its own CPU path is
+   measured and published, losing region included.</li>
+</ol>
+<p>Do not say: "GPU-accelerated" before the CSV exists; "faster than CPLEX/Gurobi/HiGHS" on
+anything but the specific rows a CSV shows; "solves NLP" (the seam exists, the engine does
+not, #226).</p>
+<h2 id="8-timeline-against-20-september">8. Timeline against 20 September</h2>
+<p>If the hardware arrives with four or more working days left: Day 0 intake; Day 1 Step 1
+merged; Day 2 Step 2 reviewed on the device and merged; Day 3 Step 3's runs and CSV, alone
+on the machine; Day 4 documents, the demo section, the final read (#213). If it arrives with
+less: do Day 0, Step 1 and the agreement test only, and the submission says "the CUDA backend
+compiles, links, and agrees with the CPU to 1e-9 on nine instances; its speed is not yet
+measured" - which is true, checkable, and better than a number nobody can defend. If it does
+not arrive before the deadline, the plan is unchanged and runs after it; the README's GPU row
+already says so.</p>
+<h2 id="9-risks-named">9. Risks, named</h2>
+<ul>
+<li><strong>Toolchain on Windows</strong> (section 2, item 2): the most likely way to lose a day.</li>
+<li><strong>A card other than an RTX 4050</strong>: change the architecture in CMake and the VRAM ceiling
+  in the plan; nothing else assumes the card.</li>
+<li><strong>#274's CPU-path changes</strong>: the Step 2 gate exists because of them.</li>
+<li><strong>Reduction order</strong>: agreement to a tolerance is the assertion; do not chase bit identity.</li>
+<li><strong>The clock</strong>: a measured crossover on one machine beats a claimed speed-up on none.</li>
+</ul>
+</article>
+<footer>
+<!-- fragment:footer -->
+<div class="wrap">
+    <div>SANKHYA · Smart India Hackathon 2026 · PS SIH26119 · Apache-2.0 · <a href="https://sankhya-solver.vercel.app">sankhya-solver.vercel.app</a></div>
+    <div>Every figure on this site was last checked against SANKHYA <a href="https://github.com/thegoodengineers/SANKHYA/tree/493fa1df0abfbd70f1d5cf7cbb35272da0a49b30">main at <span data-fact="sankhya_commit">493fa1d</span></a>.</div>
+    <div><a href="https://github.com/thegoodengineers/SANKHYA">Source</a> · <a href="/docs">Docs</a> · <a href="/docs/benchmarks">Benchmarks</a> · <a href="/docs/provenance">Provenance</a> · <a href="/docs/coverage">Coverage tracker</a></div>
+  </div>
+<!-- /fragment:footer -->
+</footer>
+</main>
+</div>
+</body>
+</html>

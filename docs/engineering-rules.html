@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light">
+<title>Engineering rules · SANKHYA</title>
+<meta name="description" content="The rules the team works under: provenance, evidence, tolerances and the definition of done.">
+<meta property="og:title" content="Engineering rules · SANKHYA">
+<meta property="og:description" content="The rules the team works under: provenance, evidence, tolerances and the definition of done.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://sankhya-solver.vercel.app/docs/engineering-rules">
+<link rel="canonical" href="https://sankhya-solver.vercel.app/docs/engineering-rules">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%230562ef'/%3E%3Ctext x='16' y='22' text-anchor='middle' font-family='Arial,sans-serif' font-weight='600' font-size='18' fill='%23ffffff'%3ES%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/styles.css">
+<script src="/site.js" defer></script>
+</head>
+<body class="doc">
+<a class="skip" href="#content">Skip to content</a>
+<div class="shell">
+<aside class="rail">
+  <a class="brand" href="/"><span class="brand-mark" aria-hidden="true"></span>SANKHYA<small>SIH26119</small></a>
+  <nav class="doors" aria-label="Site"><a href="/">Home</a><a href="/evaluate">For evaluators</a><a href="/problem">Problem</a><a href="/solver">Solver</a><a href="/evidence">Evidence</a><a href="/docs" aria-current="page">Docs</a><a href="/run">Run it</a><a href="/team">Team</a><a class="ext" href="https://github.com/thegoodengineers/SANKHYA">GitHub</a></nav>
+  <hr class="rail-rule">
+  <nav class="here" aria-label="On this page"><a href="#what-this-is">What this is</a><a href="#deadline">Deadline</a><a href="#dependency-and-provenance-policy">Dependency and provenance policy</a><a href="#red-line--the-only-hard-rule" class="sub">Red line — the only hard rule</a><a href="#explicitly-allowed--use-freely-dont-ask" class="sub">Explicitly ALLOWED — use freely, don&#x27;t ask</a><a href="#provenance-discipline" class="sub">Provenance discipline</a><a href="#evidence-rules--the-most-important-section">Evidence rules — the most important section</a><a href="#definition-of-done-for-any-unit-of-work">Definition of done for any unit of work</a><a href="#numerical-conventions--no-magic-numbers-all-in-includesankhyatoleranceshpp">Numerical conventions — no magic numbers, all in include/sankhya/tolerances.hpp</a><a href="#frozen-interfaces--never-change-without-saying-so-explicitly">Frozen interfaces — never change without saying so explicitly</a><a href="#layout">Layout</a><a href="#workflow">Workflow</a><a href="#local-toolchain-note-windows-dev-boxes">Local toolchain note (Windows dev boxes)</a></nav>
+</aside>
+<main class="col" id="content">
+<header class="page" id="top"><div class="wrap"><nav class="crumbs" aria-label="Breadcrumb"><a href="/docs">Docs</a><span aria-hidden="true">/</span>Engineering rules</nav><h1>Engineering rules</h1><p class="doc-banner">Generated from <a href="https://github.com/thegoodengineers/SANKHYA/blob/493fa1df0abfbd70f1d5cf7cbb35272da0a49b30/ENGINEERING_RULES.md"><code>ENGINEERING_RULES.md</code></a> at commit <a href="https://github.com/thegoodengineers/SANKHYA/commit/493fa1df0abfbd70f1d5cf7cbb35272da0a49b30"><code>493fa1d</code></a> (2026-09-27). Do not edit this page by hand.</p></div></header>
+<details class="doc-toc"><summary>Contents</summary><ol><li><a href="#what-this-is">What this is</a></li><li><a href="#deadline">Deadline</a></li><li><a href="#dependency-and-provenance-policy">Dependency and provenance policy</a></li><li class="sub"><a href="#red-line--the-only-hard-rule">Red line — the only hard rule</a></li><li class="sub"><a href="#explicitly-allowed--use-freely-dont-ask">Explicitly ALLOWED — use freely, don&#x27;t ask</a></li><li class="sub"><a href="#provenance-discipline">Provenance discipline</a></li><li><a href="#evidence-rules--the-most-important-section">Evidence rules — the most important section</a></li><li><a href="#definition-of-done-for-any-unit-of-work">Definition of done for any unit of work</a></li><li><a href="#numerical-conventions--no-magic-numbers-all-in-includesankhyatoleranceshpp">Numerical conventions — no magic numbers, all in include/sankhya/tolerances.hpp</a></li><li><a href="#frozen-interfaces--never-change-without-saying-so-explicitly">Frozen interfaces — never change without saying so explicitly</a></li><li><a href="#layout">Layout</a></li><li><a href="#workflow">Workflow</a></li><li><a href="#local-toolchain-note-windows-dev-boxes">Local toolchain note (Windows dev boxes)</a></li></ol></details>
+<article class="doc-body">
+<h2 id="what-this-is">What this is</h2>
+<p>A mathematical optimization solver core (LP, MILP, convex QP) written from scratch in C++20
+for Smart India Hackathon 2026 PS26119, issued by Mangalore Refinery and Petrochemicals.
+Judges are industrial optimization people. Deliverable = solver engine + C API + CLI +
+Python bindings + benchmark evidence. No GUI.</p>
+<p>Two LP engines: revised simplex (CPU, exact, produces a basis, is the node solver for
+branch &amp; cut) and restarted PDHG (CPU + CUDA, first-order, this is the GPU story).
+Architecture must stay modular enough to add MIQP, NLP and MINLP later.</p>
+<h2 id="deadline">Deadline</h2>
+<p>20 September 2026. When choosing between "more correct" and "more features", choose more
+correct. A wrong answer scores zero; a missing feature scores partial.</p>
+<h2 id="dependency-and-provenance-policy">Dependency and provenance policy</h2>
+<h3 id="red-line--the-only-hard-rule">Red line — the only hard rule</h3>
+<p>No source code from an optimization SOLVER may be copied, vendored, linked, or read:
+CBC, Clp, HiGHS, SCIP, SoPlex, GLPK, lp_solve, OSQP, PDLP, cuPDLP / cuPDLP-C / cuPDLPx,
+OR-Tools GLOP or CP-SAT, Gurobi, CPLEX, Xpress. Not their simplex, not their cuts, not
+even their MPS reader. If you land on one of those repos, stop and back out.</p>
+<h3 id="explicitly-allowed--use-freely-dont-ask">Explicitly ALLOWED — use freely, don't ask</h3>
+<ol>
+<li><strong>Your own knowledge.</strong> You know these algorithms. Write them from what you know plus
+   the literature. Cite the paper or textbook above each implementation for the judges,
+   not because you needed to look it up.</li>
+<li>Papers, theses, textbooks, lecture notes, solver user manuals.</li>
+<li>Non-solver libraries, licence permitting: zlib, fmt, spdlog, CLI11, nlohmann/json,
+   GoogleTest, pybind11, cuSPARSE / cuBLAS / cuSOLVER (vendor BLAS, not solvers).
+   Graph ordering routines (AMD, COLAMD, RCM) if permissively licensed — check the
+   per-module licence, SuiteSparse modules differ from each other.
+   Eigen in TESTS ONLY as a reference oracle, never in src/.</li>
+<li>Copy freely from non-solver repos: CMake patterns, CI YAML, benchmark and plotting
+   scripts, docs site config, .clang-format, issue templates.</li>
+<li>API shape. Imitating the surface of a known solver API (create/set/solve/query, string
+   options, callback signatures) is interface compatibility, not derivation. It makes us
+   drop-in adoptable. Use public header docs and manuals, not source.</li>
+<li>Benchmark instances and published reference optima: MIPLIB, Netlib, QPLIB, Mittelmann —
+   plus Mittelmann's reporting methodology.</li>
+</ol>
+<h3 id="provenance-discipline">Provenance discipline</h3>
+<p>Maintain docs/PROVENANCE.md continuously, not at the end:
+- dependency table: name, version, licence, one line on why it is not a solver
+- algorithm table: every major algorithm, its citation, the file it lives in
+- <code>ldd build/sankhya-cli</code> output and the full CMake link line
+- SPDX SBOM generated in CI</p>
+<p>If unsure whether something crosses the red line, log it under "Judgement calls" with your
+reasoning and tell me. Never silently decide either way.</p>
+<h2 id="evidence-rules--the-most-important-section">Evidence rules — the most important section</h2>
+<ul>
+<li>NEVER report a benchmark number, pass rate, or speedup you did not just produce by
+  running a command in this session. Paste the real terminal output.</li>
+<li>If a test fails, say it failed. Do not "fix" it by loosening a tolerance without saying
+  so explicitly and giving the numerical justification.</li>
+<li>Every benchmark run writes a CSV to bench/results/ with: instance, sha256 of the instance
+  file, our objective, published reference objective, absolute and relative gap, status,
+  wall time, iterations or nodes, git commit, machine tag. No CSV, no claim.</li>
+<li>docs/BENCHMARKS.md is generated from those CSVs by a script so it cannot drift.</li>
+<li>Never mark a task done on "it should work". Compile it and run it.</li>
+<li>This is numerical code. Wrong answers compile, run, print, and look completely correct.
+  There is no stack trace. Assume output is wrong until a benchmark or the rational oracle
+  says otherwise.</li>
+</ul>
+<h2 id="definition-of-done-for-any-unit-of-work">Definition of done for any unit of work</h2>
+<ul>
+<li>[ ] <code>cmake --build build -j</code> clean with -Wall -Wextra -Werror</li>
+<li>[ ] <code>ctest --test-dir build --output-on-failure</code> passes</li>
+<li>[ ] ASan/UBSan clean on the touched path</li>
+<li>[ ] Netlib pass-rate did not drop</li>
+<li>[ ] Rational oracle fuzz still reports 0 mismatches</li>
+<li>[ ] Algorithm cited in a code comment</li>
+<li>[ ] docs/PROVENANCE.md updated if a dependency or algorithm was added</li>
+<li>[ ] Conventional commit, one logical change</li>
+</ul>
+<h2 id="numerical-conventions--no-magic-numbers-all-in-includesankhyatoleranceshpp">Numerical conventions — no magic numbers, all in include/sankhya/tolerances.hpp</h2>
+<p>primal feasibility 1e-7 · dual feasibility 1e-7 · integrality 1e-6 · MIP relative gap 1e-4,
+absolute 1e-6 · pivot/zero drop 1e-11 · Markowitz threshold 0.01 · PDHG reported at both
+1e-4 and 1e-8. Double precision everywhere. No <code>float</code> in the numerical core.</p>
+<h2 id="frozen-interfaces--never-change-without-saying-so-explicitly">Frozen interfaces — never change without saying so explicitly</h2>
+<ul>
+<li><code>sankhya::Model</code> — what readers produce and every solver consumes</li>
+<li><code>sankhya::Solution</code> — what every solver produces</li>
+<li><code>solve(const Model&amp;, const Options&amp;) -&gt; Solution</code> — the one entry point both engines
+  implement, and the seam where QP/MIQP/NLP engines plug in later</li>
+</ul>
+<p>tools/verify_solution.py consumes the written .sol file only. It never links our C++.</p>
+<h2 id="layout">Layout</h2>
+<pre><code>include/sankhya/   public headers, model.hpp, tolerances.hpp, sankhya.h (C API)
+src/core           Model/Solution implementation and the solve() dispatcher (the seam)
+src/util           logging, timers, arena allocator, options table
+src/la             sparse CSC/CSR, LU, FTRAN/BTRAN
+src/io             MPS + LP readers, solution and JSON writers
+src/presolve       reductions + postsolve stack
+src/simplex        primal &amp; dual revised simplex
+src/pdhg           restarted PDHG (CPU)
+src/ipm            interior point
+src/qp             convex QP
+src/mip            branch &amp; cut
+src/gpu            CUDA kernels, guarded by SANKHYA_ENABLE_CUDA
+src/api            C API
+apps/sankhya-cli · bindings/python · tools/ · tests/ · bench/ · data/casestudies/ · docs/
+</code></pre>
+<h2 id="workflow">Workflow</h2>
+<p>Branch per task, PR into main, squash merge. No file over ~600 lines.</p>
+<p>CI gates formatting with clang-format <strong>22.1.8</strong> from pip, and clang-format's output changes
+between major versions, so a distro clang-format will "fix" the tree into a state CI then
+rejects. Run the pinned one before pushing - it provisions itself on first use:</p>
+<pre><code>scripts/format.sh            # rewrite in place
+scripts/format.sh --check    # exactly what CI runs
+</code></pre>
+<p>The CPU build must work with zero CUDA installed — all GPU code behind
+<code>#ifdef SANKHYA_ENABLE_CUDA</code> plus a runtime <code>--gpu</code> flag that warns and falls back to the CPU.</p>
+<h2 id="local-toolchain-note-windows-dev-boxes">Local toolchain note (Windows dev boxes)</h2>
+<p>Do not trust PATH order for the compiler. Boxes seen so far:</p>
+<ul>
+<li>MSYS2 UCRT64, <code>C:\msys64\ucrt64\bin\g++.exe</code> (GCC 16.1.0) - current primary</li>
+<li>Strawberry Perl MinGW-W64, <code>C:\Strawberry\c\bin\g++.exe</code> (GCC 13.2.0)</li>
+<li>a stale MinGW 6.3.0 that predates C++20 entirely and must never be selected</li>
+</ul>
+<p><code>scripts/configure.sh</code> probes these in order, checks <code>-dumpversion &gt;= 10</code>, and prepends the
+chosen toolchain's bin directory to PATH so the cmake/ninja shipped beside the compiler win
+over any unrelated one. Always configure through it:</p>
+<pre><code>scripts/configure.sh build Release
+</code></pre>
+<p>If cmake or ninja are missing on an MSYS2 box:</p>
+<pre><code>pacman -S --needed mingw-w64-ucrt-x86_64-cmake mingw-w64-ucrt-x86_64-ninja
+</code></pre>
+<p>CI is ubuntu-latest and is the authority on <code>-Werror</code> cleanliness; Windows is the
+convenience build.</p>
+</article>
+<footer>
+<!-- fragment:footer -->
+<div class="wrap">
+    <div>SANKHYA · Smart India Hackathon 2026 · PS SIH26119 · Apache-2.0 · <a href="https://sankhya-solver.vercel.app">sankhya-solver.vercel.app</a></div>
+    <div>Every figure on this site was last checked against SANKHYA <a href="https://github.com/thegoodengineers/SANKHYA/tree/493fa1df0abfbd70f1d5cf7cbb35272da0a49b30">main at <span data-fact="sankhya_commit">493fa1d</span></a>.</div>
+    <div><a href="https://github.com/thegoodengineers/SANKHYA">Source</a> · <a href="/docs">Docs</a> · <a href="/docs/benchmarks">Benchmarks</a> · <a href="/docs/provenance">Provenance</a> · <a href="/docs/coverage">Coverage tracker</a></div>
+  </div>
+<!-- /fragment:footer -->
+</footer>
+</main>
+</div>
+</body>
+</html>

@@ -1,0 +1,1322 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light">
+<title>Provenance · SANKHYA</title>
+<meta name="description" content="Every dependency and algorithm with its licence or citation, and why none of them is a solver.">
+<meta property="og:title" content="Provenance · SANKHYA">
+<meta property="og:description" content="Every dependency and algorithm with its licence or citation, and why none of them is a solver.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://sankhya-solver.vercel.app/docs/provenance">
+<link rel="canonical" href="https://sankhya-solver.vercel.app/docs/provenance">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%230562ef'/%3E%3Ctext x='16' y='22' text-anchor='middle' font-family='Arial,sans-serif' font-weight='600' font-size='18' fill='%23ffffff'%3ES%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/styles.css">
+<script src="/site.js" defer></script>
+</head>
+<body class="doc">
+<a class="skip" href="#content">Skip to content</a>
+<div class="shell">
+<aside class="rail">
+  <a class="brand" href="/"><span class="brand-mark" aria-hidden="true"></span>SANKHYA<small>SIH26119</small></a>
+  <nav class="doors" aria-label="Site"><a href="/">Home</a><a href="/evaluate">For evaluators</a><a href="/problem">Problem</a><a href="/solver">Solver</a><a href="/evidence">Evidence</a><a href="/docs" aria-current="page">Docs</a><a href="/run">Run it</a><a href="/team">Team</a><a class="ext" href="https://github.com/thegoodengineers/SANKHYA">GitHub</a></nav>
+  <hr class="rail-rule">
+  <nav class="here" aria-label="On this page"><a href="#1-the-red-line">1. The red line</a><a href="#2-dependency-table">2. Dependency table</a><a href="#2b-toolchains-this-has-been-built-and-tested-with">2b. Toolchains this has been built and tested with</a><a href="#3-algorithm-citation-table">3. Algorithm citation table</a><a href="#4-machine-checkable-evidence">4. Machine-checkable evidence</a><a href="#41-what-the-binary-actually-links-against" class="sub">4.1 What the binary actually links against</a><a href="#42-the-full-link-line" class="sub">4.2 The full link line</a><a href="#42b-the-opt-in-cudss-build-489" class="sub">4.2b The opt-in cuDSS build (#489)</a><a href="#43-sbom" class="sub">4.3 SBOM</a><a href="#5-judgement-calls">5. Judgement calls</a><a href="#6-reproducing-this">6. Reproducing this</a></nav>
+</aside>
+<main class="col" id="content">
+<header class="page" id="top"><div class="wrap"><nav class="crumbs" aria-label="Breadcrumb"><a href="/docs">Docs</a><span aria-hidden="true">/</span>Provenance</nav><h1>Provenance</h1><p class="doc-banner">Generated from <a href="https://github.com/thegoodengineers/SANKHYA/blob/493fa1df0abfbd70f1d5cf7cbb35272da0a49b30/docs/PROVENANCE.md"><code>docs/PROVENANCE.md</code></a> at commit <a href="https://github.com/thegoodengineers/SANKHYA/commit/493fa1df0abfbd70f1d5cf7cbb35272da0a49b30"><code>493fa1d</code></a> (2026-09-27). Do not edit this page by hand.</p></div></header>
+<details class="doc-toc"><summary>Contents</summary><ol><li><a href="#1-the-red-line">1. The red line</a></li><li><a href="#2-dependency-table">2. Dependency table</a></li><li><a href="#2b-toolchains-this-has-been-built-and-tested-with">2b. Toolchains this has been built and tested with</a></li><li><a href="#3-algorithm-citation-table">3. Algorithm citation table</a></li><li><a href="#4-machine-checkable-evidence">4. Machine-checkable evidence</a></li><li class="sub"><a href="#41-what-the-binary-actually-links-against">4.1 What the binary actually links against</a></li><li class="sub"><a href="#42-the-full-link-line">4.2 The full link line</a></li><li class="sub"><a href="#42b-the-opt-in-cudss-build-489">4.2b The opt-in cuDSS build (#489)</a></li><li class="sub"><a href="#43-sbom">4.3 SBOM</a></li><li><a href="#5-judgement-calls">5. Judgement calls</a></li><li><a href="#6-reproducing-this">6. Reproducing this</a></li></ol></details>
+<article class="doc-body">
+<p>This document exists so that the claim "built from mathematical foundations, not wrapped
+around an existing solver" can be <strong>checked</strong> rather than believed. It is maintained
+continuously, not written at the end.</p>
+<p>Last updated: <strong>Phase 6</strong> (sparse LU), with the HiGHS comparison run. Every number and every command output below was
+produced by running the command shown, on the machine described, at the commit recorded.</p>
+<hr>
+<h2 id="1-the-red-line">1. The red line</h2>
+<p>No source code from an optimization <strong>solver</strong> is copied, vendored, linked, or read. That
+list explicitly includes CBC, Clp, HiGHS, SCIP, SoPlex, GLPK, lp_solve, OSQP, PDLP,
+cuPDLP / cuPDLP-C / cuPDLPx, OR-Tools GLOP and CP-SAT, Gurobi, CPLEX and Xpress — not their
+simplex, not their cuts, not their MPS readers.</p>
+<p>HiGHS appears in this project <strong>only</strong> as the comparison baseline in
+<code>bench/runners/compare.py</code>. It runs either as an externally installed command-line binary or,
+where none is present, through the <code>highspy</code> pip package in a separate Python process. It is
+never linked into SANKHYA, never a build dependency, and no part of its source informs ours.
+The comparison results are in <code>docs/BENCHMARKS.md</code> section 3.</p>
+<hr>
+<h2 id="2-dependency-table">2. Dependency table</h2>
+<p>Every dependency is a general-purpose library. None of them solves an optimization problem.</p>
+<div class="table-wrap"><table class="doc-table">
+<thead>
+<tr>
+<th>Dependency</th>
+<th>Version</th>
+<th>Licence</th>
+<th>Linked?</th>
+<th>Why it is not a solver</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>fmt</strong></td>
+<td>10.2.1</td>
+<td>MIT</td>
+<td>yes, static</td>
+<td>String formatting. Produces text from values.</td>
+</tr>
+<tr>
+<td><strong>CLI11</strong></td>
+<td>2.4.2</td>
+<td>BSD-3-Clause</td>
+<td>header-only</td>
+<td>Command-line argument parsing.</td>
+</tr>
+<tr>
+<td><strong>nlohmann/json</strong></td>
+<td>3.11.3</td>
+<td>MIT</td>
+<td>header-only</td>
+<td>JSON serialisation for the <code>--stats</code> result blob.</td>
+</tr>
+<tr>
+<td><strong>OpenMP runtime</strong> (libgomp with GCC, libomp with Clang)</td>
+<td>as shipped by the compiler</td>
+<td>GPL-3.0 with the GCC Runtime Library Exception / Apache-2.0 with LLVM exception</td>
+<td>optional, found by CMake</td>
+<td>The compiler's own thread runtime for <code>#pragma omp parallel for</code>. Schedules loops; contains no numerical code of any kind.</td>
+</tr>
+<tr>
+<td><strong>zlib</strong></td>
+<td>1.3.1</td>
+<td>zlib</td>
+<td>yes, static</td>
+<td>DEFLATE decompression, for <code>.mps.gz</code> inputs (Phase 2).</td>
+</tr>
+<tr>
+<td><strong>GoogleTest</strong></td>
+<td>1.14.0</td>
+<td>BSD-3-Clause</td>
+<td>test binary only</td>
+<td>Unit test framework. Never linked into <code>sankhya_core</code>.</td>
+</tr>
+<tr>
+<td><strong>CUDA runtime (cudart)</strong></td>
+<td>as shipped with CUDA Toolkit</td>
+<td>NVIDIA SDK Licence</td>
+<td>yes, when <code>SANKHYA_ENABLE_CUDA=ON</code></td>
+<td>Device enumeration and the probe in <code>src/gpu/device.cu</code>. No kernel launch, no transfer.</td>
+</tr>
+<tr>
+<td><strong>cuSPARSE</strong></td>
+<td>as shipped with CUDA Toolkit</td>
+<td>NVIDIA SDK Licence</td>
+<td>yes, when <code>SANKHYA_ENABLE_CUDA=ON</code></td>
+<td>Sparse matrix-vector products on GPU (<code>cusparseSpMV</code>). Supplies the A x and A^T y arithmetic primitives called by the GPU PDHG iteration in <code>src/gpu/pdhg_gpu.cu</code> (#17), in the same way that a BLAS supplies <code>dgemv</code> to a simplex without being a simplex. Not an optimisation algorithm.</td>
+</tr>
+<tr>
+<td><strong>cuDSS</strong></td>
+<td>0.8.0 tested (<code>nvidia-cudss-cu12</code> 0.8.0.10 wheel from PyPI)</td>
+<td>NVIDIA Math Libraries SDK Licence (v. 10 Feb 2022)</td>
+<td>optional, dynamic, only when <code>SANKHYA_ENABLE_CUDSS=ON</code> (default OFF, needs <code>SANKHYA_ENABLE_CUDA</code>); found on the system through <code>CUDSS_ROOT</code>, never vendored or redistributed</td>
+<td>Sparse direct solution of A x = b on the GPU: reordering, symbolic and numeric LDL^T, triangular solves (<code>src/gpu/cudss_factor.cpp</code>). The interior point hands it the normal equations it has assembled, as it hands them to the CPU LDL^T; it formulates and solves no optimization problem. Licence analysis: judgement call 28.</td>
+</tr>
+<tr>
+<td><strong>cuBLAS</strong></td>
+<td>as shipped with CUDA Toolkit</td>
+<td>NVIDIA SDK Licence</td>
+<td><strong>not linked</strong></td>
+<td>Dense linear algebra on GPU. Not needed by the current GPU backend; listed here so the absence is a decision, not an oversight.</td>
+</tr>
+<tr>
+<td><strong>CUB (CCCL)</strong></td>
+<td>as shipped with CUDA Toolkit</td>
+<td>BSD-3-Clause</td>
+<td>header-only, when <code>SANKHYA_ENABLE_CUDA=ON</code></td>
+<td>Device-wide parallel reductions (<code>DeviceReduce::Sum</code>) used by the GPU PDHG movement and interaction scalars in <code>src/gpu/pdhg_gpu.cu</code> (#17). Ships inside the CUDA Toolkit as part of NVIDIA CCCL; no separate fetch or link step. Not an optimisation algorithm.</td>
+</tr>
+<tr>
+<td><strong>highspy</strong></td>
+<td>pip, benchmark only</td>
+<td>MIT</td>
+<td><strong>never linked</strong></td>
+<td>The HiGHS solver, used ONLY as the comparison baseline in <code>bench/runners/compare.py</code>. It runs in a separate Python process, is not a build dependency, and nothing in <code>src/</code> knows it exists. Its source does not inform ours - see the red line in section 1.</td>
+</tr>
+<tr>
+<td><strong>PuLP</strong></td>
+<td>3.3.2 and 4.0.0, pip, optional</td>
+<td>MIT</td>
+<td><strong>never linked</strong></td>
+<td>A modelling library, not a solver (the CBC binary bundled with 3.x is never invoked here; 4.x stores the model in its own Rust extension and bundles no solver - see judgement call 20). #536's <code>bindings/python/sankhya/adapters/pulp_solver.py</code> implements PuLP's own <code>LpSolver</code> interface and walks <code>LpProblem</code> to build a <code>sankhya.Model</code>; SANKHYA is the only thing that solves anything. Optional: importing <code>sankhya</code> never imports <code>pulp</code>.</td>
+</tr>
+<tr>
+<td><strong>Pyomo</strong></td>
+<td>6.10.1, pip, optional</td>
+<td>BSD-3-Clause</td>
+<td><strong>never linked</strong></td>
+<td>A modelling library. #536's <code>bindings/python/sankhya/adapters/pyomo_plugin.py</code> registers against <code>pyomo.contrib.solver</code>'s <code>SolverBase</code> interface and reads coefficients via Pyomo's own public <code>generate_standard_repn</code> utility (<code>pyomo/repn/standard_repn.py</code>, the same one Pyomo's built-in LP/NL writers use) - not by writing or reading any file Pyomo or SANKHYA produces. Optional, same as PuLP.</td>
+</tr>
+<tr>
+<td><strong>CVXPY</strong></td>
+<td>1.9.3, pip, optional</td>
+<td>Apache-2.0</td>
+<td><strong>never linked</strong></td>
+<td>A modelling library whose OWN solver plugins hook into its internal cone-canonicalization reduction chain - #536's <code>bindings/python/sankhya/adapters/cvxpy_solver.py</code> deliberately does not, to stay stable across CVXPY releases, and instead walks <code>Problem.variables()</code> / <code>.constraints</code> / <code>.objective</code> (CVXPY's public surface) directly, registered through CVXPY's own documented <code>solve(method=...)</code> escape hatch. Optional, same as PuLP.</td>
+</tr>
+</tbody>
+</table></div>
+<p>Considered, and not present. Each was allowed by the policy above; none turned out to be
+needed, and none is linked, vendored or fetched:</p>
+<div class="table-wrap"><table class="doc-table">
+<thead>
+<tr>
+<th>Dependency</th>
+<th>Licence</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>pybind11</td>
+<td>BSD-3-Clause</td>
+<td>Not used. The Python bindings (#59, #129) are <code>ctypes</code> over the C API and compile nothing.</td>
+</tr>
+<tr>
+<td>AMD / COLAMD ordering</td>
+<td>per-module</td>
+<td>Not used as a library. The sparse LDL^T (#70) carries its own ordering, written from the AMD paper (Amestoy, Davis &amp; Duff 1996) for #193 - approximate minimum degree on a quotient graph - with no code from SuiteSparse or anywhere else; the LU orders by Markowitz counts.</td>
+</tr>
+<tr>
+<td>Eigen</td>
+<td>MPL-2.0</td>
+<td>Not used. <code>DenseLu</code> (<code>src/simplex/dense_lu.cpp</code>) is the reference oracle the sparse LU is tested against.</td>
+</tr>
+<tr>
+<td>NCCL</td>
+<td>BSD-3-Clause</td>
+<td>Not used (#295). NVIDIA's collective-communication library, not a solver, so allowed; for two cards on one node an all-gather of the A^T y partials over <code>cudaMemcpyPeerAsync</code> moves the bytes a ring all-reduce moves over the same NVLink, and NCCL picks its reduction order by its own algorithm selection, which would tie the multi-GPU answer to NCCL's tuning instead of a fixed order. Judgement call 29.</td>
+</tr>
+</tbody>
+</table></div>
+<p>Benchmark data that carries a licence of its own. Instance data is not code and not a
+solver; it is listed here because its licence asks for attribution.</p>
+<div class="table-wrap"><table class="doc-table">
+<thead>
+<tr>
+<th>Dataset</th>
+<th>Version</th>
+<th>Licence</th>
+<th>Committed?</th>
+<th>What it is and how it is used</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>QPLIB</strong> (#492)</td>
+<td>as fetched: <code>data/qplib/reference.json</code> records the URL and sha256 of the listing, <code>qplib.solu</code>, every instance page, <code>.qplib</code> file and solution point read</td>
+<td>CC-BY 4.0. Every page of https://qplib.zib.de states "QPLIB is licensed under CC-BY 4.0." (linking https://creativecommons.org/licenses/by/4.0/), and the site's history dates it: "August, 30, 2021: QPLIB is now licensed under CC-BY 4.0." The attribution the licence asks for is the article the site asks users to cite: Furini et al., <em>QPLIB: a library of quadratic programming instances</em>, Mathematical Programming Computation 11 (2019), DOI 10.1007/s12532-018-0147-4</td>
+<td>the manifest; and, as test fixtures in <code>bench/runners/testdata/qplib/</code>, one instance file and its solution point (QPLIB_0018) byte for byte plus short excerpts of four site pages, each headed by its URL, fetch date and the page's sha256</td>
+<td>Quadratic programming instances and their best known objective values. <code>bench/runners/fetch_qplib.py</code> downloads them at run time; <code>bench/runners/qplib_format.py</code> converts <code>.qplib</code> to QPS; nothing is linked. The site's footer also says "Website (c) 2017-2025 by Zuse Institute Berlin and GAMS. All rights reserved.": see judgement call 30 on the page excerpts.</td>
+</tr>
+</tbody>
+</table></div>
+<hr>
+<h2 id="2b-toolchains-this-has-been-built-and-tested-with">2b. Toolchains this has been built and tested with</h2>
+<p>PS26119 asks for a foundation someone else can pick up, and "it builds here" is not that.
+These are the toolchains the evidence in <code>docs/BENCHMARKS.md</code> was actually produced with, and
+the ones CI exercises on every push. <code>scripts/preflight.sh</code> reports what it finds on the
+machine it runs on, and <code>scripts/configure.sh</code> chooses among them rather than trusting the
+order of <code>PATH</code>.</p>
+<div class="table-wrap"><table class="doc-table">
+<thead>
+<tr>
+<th>Where</th>
+<th>Compiler</th>
+<th>Build system</th>
+<th>Python</th>
+<th>What it is the authority on</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CI, <code>ubuntu-latest</code></td>
+<td>the runner's default GCC</td>
+<td>CMake &gt;= 3.20, Ninja</td>
+<td>3.x as shipped</td>
+<td><code>-Wall -Wextra -Werror</code> cleanliness, the ASan/UBSan run, and the Netlib gates. A portability claim rests on the Linux build.</td>
+</tr>
+<tr>
+<td>Development, Windows 11</td>
+<td>GCC 16.1.0, MSYS2 UCRT64 (<code>C:\msys64\ucrt64\bin\g++.exe</code>)</td>
+<td>CMake 4.3.3, Ninja 1.13.2</td>
+<td>3.11.9</td>
+<td>Every benchmark CSV in <code>bench/results/</code> whose <code>machine</code> column reads <code>Windows-AMD64</code>.</td>
+</tr>
+<tr>
+<td>Development, Windows 11 (fallback)</td>
+<td>GCC 13.2.0, Strawberry Perl MinGW-W64</td>
+<td>as shipped</td>
+<td>3.x</td>
+<td>A second Windows compiler the configure script accepts; no committed CSV comes from it.</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>One toolchain must never be selected</strong>: a MinGW 6.3.0 that predates C++20 and sits on
+<code>PATH</code> on at least one development box. <code>scripts/configure.sh</code> rejects any <code>g++</code> reporting a
+major version below 10, which is why it exists rather than the build simply calling <code>cmake</code>.</p>
+<p>Third-party sources are pinned by tag in <code>CMakeLists.txt</code>, and <code>docs/sbom.spdx.json</code> - the
+SPDX 2.3 bill of materials - is generated from those pins by <code>tools/make_sbom.py</code>. CI runs
+<code>tools/make_sbom.py --check</code>, so a dependency added to the build without an entry in the
+table above turns the tree red instead of passing quietly.</p>
+<h2 id="3-algorithm-citation-table">3. Algorithm citation table</h2>
+<p>Every algorithm we implement is cited at its implementation site as well as here. The
+citation records where the <em>mathematics</em> came from; the code is written from the
+mathematics, not transcribed from anyone's implementation.</p>
+<div class="table-wrap"><table class="doc-table">
+<thead>
+<tr>
+<th>Algorithm</th>
+<th>Citation</th>
+<th>File</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Compressed-column storage, counting-sort transpose</td>
+<td>Davis, <em>Direct Methods for Sparse Linear Systems</em> (SIAM, 2006), ch. 2</td>
+<td><code>src/la/sparse.cpp</code></td>
+</tr>
+<tr>
+<td>Dense-accumulator sparse vector (FTRAN/BTRAN result pattern)</td>
+<td>Davis, ibid.; Hall &amp; McKinnon on hyper-sparsity</td>
+<td><code>include/sankhya/sparse.hpp</code>, <code>src/la/sparse.cpp</code></td>
+</tr>
+<tr>
+<td>Markowitz threshold pivoting (constant only, so far)</td>
+<td>Suhl &amp; Suhl, <em>Computing sparse LU factorizations for large-scale linear programming bases</em></td>
+<td><code>include/sankhya/tolerances.hpp</code></td>
+</tr>
+<tr>
+<td>MPS format: sections, RANGES and BOUNDS semantics</td>
+<td>IBM MPS specification; Maros, <em>Computational Techniques of the Simplex Method</em> (Kluwer, 2003), appendix A</td>
+<td><code>src/io/mps_reader.cpp</code></td>
+</tr>
+<tr>
+<td>CPLEX LP format</td>
+<td>Public CPLEX and Gurobi reference manuals (documentation only)</td>
+<td><code>src/io/lp_reader.cpp</code></td>
+</tr>
+<tr>
+<td>Dense LU with partial pivoting; transposed triangular solves</td>
+<td>Golub &amp; Van Loan, <em>Matrix Computations</em> (4th ed.), sections 3.2 and 3.4</td>
+<td><code>src/simplex/dense_lu.cpp</code></td>
+</tr>
+<tr>
+<td>Sparse LU with Markowitz pivoting and threshold stability</td>
+<td>Markowitz, <em>The elimination form of the inverse and its application to linear programming</em>, Management Science 3 (1957); Suhl &amp; Suhl, <em>Computing sparse LU factorizations for large-scale linear programming bases</em>, ORSA J. Computing 2 (1990); Duff, Erisman &amp; Reid, <em>Direct Methods for Sparse Matrices</em> (2nd ed., 2017), ch. 7-8</td>
+<td><code>src/la/lu.cpp</code>, <code>src/la/lu_eliminate.cpp</code></td>
+</tr>
+<tr>
+<td>LU singleton fast path (#463): a column-singleton pivot takes its U row from a row-wise copy of the values instead of opening every column its row crosses, and the threshold test reads a cached column maximum; the same pivots, factors and solves as the general update, bit for bit (tested against the reference elimination and <code>DenseLu</code>)</td>
+<td>Suhl &amp; Suhl, <em>Computing sparse LU factorizations for large-scale linear programming bases</em>, ORSA J. Computing 2 (1990); Koberstein, <em>The dual simplex method, techniques for a fast and stable implementation</em>, PhD thesis, Paderborn (2005), sec. 5.3</td>
+<td><code>src/la/lu_eliminate.cpp</code>, <code>src/la/lu_workspace.hpp</code></td>
+</tr>
+<tr>
+<td>Basis update, product form of the inverse</td>
+<td>Dantzig &amp; Orchard-Hays, <em>The product form for the inverse in the simplex method</em>, Mathematical Tables and Other Aids to Computation 8 (1954)</td>
+<td><code>src/la/lu.cpp</code></td>
+</tr>
+<tr>
+<td>Basis update, Forrest-Tomlin (#279) - a row eta computed by a partial BTRAN through U, applied between L and U, in place of an eta appended outside both</td>
+<td>Forrest &amp; Tomlin, <em>Updated triangular factors of the basis to maintain sparsity in the product form simplex method</em>, Mathematical Programming 2 (1972); the implementable form followed here is Huangfu &amp; Hall, <em>Novel update techniques for the revised simplex method</em>, ERGO 13-001 (2012), sec. 2.1</td>
+<td><code>src/la/lu.cpp</code> (<code>update_forrest_tomlin</code>)</td>
+</tr>
+<tr>
+<td>Bounded-variable revised primal simplex</td>
+<td>Dantzig, <em>Linear Programming and Extensions</em> (1963); Chvátal, <em>Linear Programming</em> (1983), ch. 3 and 8</td>
+<td><code>src/simplex/primal_simplex.cpp</code></td>
+</tr>
+<tr>
+<td>Piecewise-linear (composite) phase 1, no artificial variables</td>
+<td>Maros, <em>Computational Techniques of the Simplex Method</em>, ch. 9</td>
+<td><code>src/simplex/primal_simplex.cpp</code></td>
+</tr>
+<tr>
+<td>Bounded-variable revised dual simplex with the bound-flipping ratio test, dual devex pricing, artificial bounds for dual infeasibility, warm start from a basis (#65; <code>--option algorithm=dual-simplex</code>, and the branch-and-bound node engine)</td>
+<td>Lemke, <em>The dual method of solving the linear programming problem</em>, Naval Research Logistics Quarterly 1 (1954); Maros, <em>Computational Techniques of the Simplex Method</em>, ch. 10; Koberstein, <em>The dual simplex method, techniques for a fast and stable implementation</em>, PhD thesis, Paderborn (2005), sec. 3.3 and 4.5; Forrest &amp; Goldfarb (1992), above, sec. 3 for the dual weights</td>
+<td><code>src/simplex/dual_simplex.cpp</code>, shared state in <code>src/simplex/simplex_core.hpp</code></td>
+</tr>
+<tr>
+<td>Bland's anti-cycling rule</td>
+<td>Chvátal, <em>Linear Programming</em>, ch. 3</td>
+<td><code>src/simplex/primal_simplex.cpp</code></td>
+</tr>
+<tr>
+<td>Devex pricing (default since #66 was re-measured; <code>--option pricing=dantzig</code> selects the old rule)</td>
+<td>Forrest &amp; Goldfarb, <em>Steepest-edge simplex algorithms for linear programming</em>, Mathematical Programming 57 (1992); the approximation is Harris (1973), below</td>
+<td><code>src/simplex/primal_simplex.cpp</code></td>
+</tr>
+<tr>
+<td>Harris two-pass ratio test, long-step bound flipping (opt-in; <code>--option ratio_test=harris</code>, #67)</td>
+<td>Harris, P.M.J., <em>Pivot selection methods of the Devex LP code</em>, Mathematical Programming 5 (1973), 1-28; long-step generalises the piecewise-linear phase 1 already cited to Maros below</td>
+<td><code>src/simplex/primal_simplex.cpp</code></td>
+</tr>
+<tr>
+<td>Exact rational tableau simplex (test oracle)</td>
+<td>Chvátal, <em>Linear Programming</em>, ch. 2–3</td>
+<td><code>tests/oracles/rational_simplex.cpp</code></td>
+</tr>
+<tr>
+<td>Primal-dual hybrid gradient (the base iteration)</td>
+<td>Chambolle &amp; Pock, <em>A first-order primal-dual algorithm for convex problems with applications to imaging</em>, JMIV 40(1), 2011, Algorithm 1</td>
+<td><code>src/pdhg/pdhg.cpp</code></td>
+</tr>
+<tr>
+<td>Adaptive step size, primal weight, restarts</td>
+<td>Applegate et al., <em>Practical Large-Scale Linear Programming using Primal-Dual Hybrid Gradient</em> (PDLP), NeurIPS 2021, sections 3.1, 3.2, 4.3</td>
+<td><code>src/pdhg/pdhg.cpp</code></td>
+</tr>
+<tr>
+<td>Geometric off-tick evaluation schedule (opt-in; <code>--option pdhg_geometric_evaluation</code>, #480)</td>
+<td>GitHub Issue #480</td>
+<td><code>src/pdhg/pdhg.cpp</code></td>
+</tr>
+<tr>
+<td>GPU-oriented restarted PDHG (design reference)</td>
+<td>Lu &amp; Yang, <em>cuPDLP.jl</em>, arXiv:2311.12180</td>
+<td><code>src/pdhg/pdhg.cpp</code></td>
+</tr>
+<tr>
+<td>GPU PDHG on-device iteration loop via CUDA Graphs (#478, option <code>gpu_on_device_loop</code>, off by default): one iteration captured as a CUDA graph and replayed <code>kPdhgDeviceLoopBlock</code> times per host synchronisation; the adaptive step rule and the commit of an accepted step on the device; convergence evaluation stays on the host on a stride of accepted steps</td>
+<td>Lu &amp; Yang, <em>cuPDLP.jl</em>, arXiv:2311.12180; NVIDIA, <em>CUDA C++ Programming Guide</em>, chapter "CUDA Graphs"</td>
+<td><code>src/gpu/pdhg_graph.cu</code></td>
+</tr>
+<tr>
+<td>Fixed-order device reductions and a deterministic GPU PDHG (#478, #383): each block's sum written to its own slot and the slots summed by one block in an order fixed by the thread index (no atomics, every GPU run); under <code>deterministic=true</code> both sparse products as non-transpose <code>CUSPARSE_SPMV_CSR_ALG2</code> products on A and on an explicit A^T in CSR</td>
+<td>Higham, <em>Accuracy and Stability of Numerical Algorithms</em>, 2nd ed., SIAM 2002, section 4.1 (summation order); NVIDIA cuSPARSE documentation, <code>cusparseSpMV</code> (the algorithms and which of them are bit-wise repeatable); NVIDIA CUB documentation, <code>cub::BlockReduce</code></td>
+<td><code>src/gpu/pdhg_reduce.cuh</code>, <code>src/gpu/pdhg_gpu.cu</code>, <code>src/gpu/pdhg_graph.cu</code></td>
+</tr>
+<tr>
+<td>PDHG convergence evaluation on the device (#478 item 3, option <code>gpu_device_evaluation</code>, on by default): the unscaled KKT residuals, duality gap, complementarity and restart distances of the current and the average iterate formed on the card from the scaled products (A x = Dr^-1 Ahat xhat, A^T y = Dc^-1 Ahat^T yhat), reduced per block into slots and summed by one block per total in a fixed order; only the totals reach the host, and the best point and restart reference stay on the device. The host evaluation (<code>pdhg::evaluate</code>) stays as the reference and judges the final point</td>
+<td>Applegate et al., PDLP, NeurIPS 2021, sections 3.3, 4.3; Lu &amp; Yang, <em>cuPDLP.jl</em>, arXiv:2311.12180; Higham, <em>Accuracy and Stability of Numerical Algorithms</em>, 2nd ed., SIAM 2002, sections 3.1, 4.1 (the rounding bound the test holds it to)</td>
+<td><code>src/gpu/pdhg_device_eval.cu</code></td>
+</tr>
+<tr>
+<td>Restarted PDHG on the device (#17): the same iteration with cuSPARSE SpMV, elementwise CUDA kernels for the coordinate updates and CUB reductions for the movement and interaction terms; preconditioning, residuals and restarts on the host; every device failure falls back to the CPU engine</td>
+<td>Chambolle &amp; Pock (2011) and Applegate et al. (PDLP, 2021) as above; Lu &amp; Yang, arXiv:2311.12180, for the host/device split only</td>
+<td><code>src/gpu/pdhg_gpu.cu</code></td>
+</tr>
+<tr>
+<td>Batched PDHG node bounds (#520; <code>gpu_batch_nodes</code> and <code>gpu_batch_strong_branching</code>, off by default): K LPs that share A and differ in their column boxes (open branch-and-bound nodes, or the 2K children of K strong-branching candidates) iterated together as n x K and m x K blocks - Chambolle-Pock with extrapolation, Ruiz plus Pock-Chambolle scaling, a constant step 0.9 /</td>
+<td></td>
+<td>A</td>
+</tr>
+<tr>
+<td>Multi-GPU restarted PDHG by row blocks (#295, <code>gpu_devices</code> with two or more ids): contiguous row blocks balanced by nonzeros plus rows, the primal iterate replicated and the dual partitioned; A^T y summed across the cards by an all-gather of the per-card partials (<code>cudaMemcpyPeerAsync</code> over P2P where every pair allows it and <code>gpu_peer_access</code> is true, else staged through pinned host memory) and a sum in slot order on every card; movement and interaction reduced per block then in block order (no <code>atomicAdd</code>), both products cuSPARSE <code>CSR_ALG2</code> on explicitly stored A_k and A_k^T; the run is bitwise reproducible and the same for either transport</td>
+<td>Chambolle &amp; Pock (2011) and Applegate et al. (PDLP, 2021) as above; Lu &amp; Yang, arXiv:2311.12180, for the device layout; Saad, <em>Iterative Methods for Sparse Linear Systems</em>, 2nd ed., SIAM (2003), ch. 11, for the row-block distributed product</td>
+<td><code>src/gpu/pdhg_multi_gpu.cu</code>, <code>src/gpu/pdhg_multi_gpu_device.cu</code>, <code>src/gpu/multi_gpu_exchange.cu</code>, <code>src/gpu/multi_device.cpp</code> (<code>partition_rows_by_nonzeros</code>)</td>
+</tr>
+<tr>
+<td>Multi-GPU PDHG convergence evaluation on the cards (#478 item 3, #295; <code>gpu_device_evaluation</code>, on by default): each card reduces the row side of the unscaled KKT residuals over its own rows, card 0 the column side from A^T y formed by the same slot-order exchange, and the per-card totals are added on the host in slot order, so runs stay bitwise repeatable and a device list on one card gives the bits it gives on K; best point and restart reference stay on the cards</td>
+<td>Applegate et al., PDLP, NeurIPS 2021, sections 3.3, 4.3; Lu &amp; Yang, <em>cuPDLP.jl</em>, arXiv:2311.12180; Saad, <em>Iterative Methods for Sparse Linear Systems</em>, 2nd ed., SIAM 2003, ch. 11</td>
+<td><code>src/gpu/pdhg_multi_gpu_eval.cu</code></td>
+</tr>
+<tr>
+<td>Ruiz equilibration</td>
+<td>Ruiz, <em>A scaling algorithm to equilibrate both rows and columns norms in matrices</em>, RAL-TR-2001-034</td>
+<td><code>src/la/scaling.cpp</code></td>
+</tr>
+<tr>
+<td>Cut efficacy (violation over the Euclidean norm) as the selection test, and the support floor on the density cap (<code>cut_efficacy_test</code>, <code>cut_support_floor</code>, #496)</td>
+<td>Wesselmann &amp; Suhl, <em>Implementing cutting plane management and selection techniques</em>, University of Paderborn, 2012; Achterberg, <em>Constraint Integer Programming</em>, PhD thesis, TU Berlin, 2007, section 8.10</td>
+<td><code>src/mip/cuts.cpp</code></td>
+</tr>
+<tr>
+<td>Bounded admission of dense cuts at the root (<code>cut_dense_max</code>, <code>cut_dense_nonzero_share</code>, #496): a cut refused for its density alone is admitted when it passed every other test and a tighter dynamism cap, most efficacious first, at most <code>cut_dense_max</code> of them while their nonzeros together stay within <code>cut_dense_nonzero_share</code> of the model's own; nothing about a cut changes on admission</td>
+<td>Achterberg, <em>Constraint Integer Programming</em>, PhD thesis, TU Berlin, 2007, ch. 8 (bounded separation effort); Wesselmann &amp; Suhl (2012), above, for efficacy as the ranking; Cornuejols, Margot &amp; Nannicini, <em>On the safety of Gomory cut generators</em>, Math. Programming Computation 5 (2013), for the dynamism cap</td>
+<td><code>src/mip/branch_and_bound_cuts.cpp</code>, <code>src/mip/cuts.cpp</code></td>
+</tr>
+<tr>
+<td>Row-parallel sparse matrix-vector product (CSR gather, one output per thread, static partition; <code>pdhg_parallel_spmv</code>, #487)</td>
+<td>Saad, <em>Iterative Methods for Sparse Linear Systems</em>, 2nd ed., SIAM 2003, section 3.5</td>
+<td><code>src/pdhg/pdhg.cpp</code>, <code>src/la/sparse.cpp</code></td>
+</tr>
+<tr>
+<td>Parallel PDHG vector updates with thread-count-independent sums (<code>pdhg_parallel_updates</code>, #487): the projected primal and dual updates, the extrapolation and the running sums over a static partition; the step rule's movement and interaction sums in fixed chunks of <code>kPdhgParallelChunk</code> entries, chunk totals added in chunk order, so the bits do not depend on the thread count</td>
+<td>Higham, <em>Accuracy and Stability of Numerical Algorithms</em>, 2nd ed., SIAM 2002, section 4.1 (summation order); the iteration itself Chambolle &amp; Pock (2011) and Applegate et al. (PDLP, 2021) as above</td>
+<td><code>src/pdhg/pdhg_parallel.cpp</code></td>
+</tr>
+<tr>
+<td>Two sparse products per PDHG iteration instead of three (<code>pdhg_two_matvec</code>, #479; the default <code>cpu</code> takes two products on the CPU engine and keeps three on the CUDA engine, from the A/B <code>bench/results/pdhg-two-matvec-58a8374.csv</code>: CPU per-iteration time 0.74 to 0.84 of three products on 14 of 14 instances, the device 0.62 to 1.26, slower on kkt_1000x1000 and kkt_5000x5000; <code>true</code> takes two on both, <code>false</code> three on both): A x_k is carried between iterations, A x_{k+1} is computed once, and A xbar = 2 A x_{k+1} - A x_k and A dx = A x_{k+1} - A x_k are derived by linearity; the cache is recomputed at every restart. Held iterate by iterate against the three-product path in <code>tests/unit/test_pdhg_two_matvec.cpp</code> (lockstep window, and the cache bitwise A x_k at every iterate of 10,000)</td>
+<td>Chambolle &amp; Pock, JMIV 40(1), 2011, Algorithm 1 (the extrapolation xbar = 2 x_{k+1} - x_k); Applegate et al. (PDLP), NeurIPS 2021, section 3.1 (the interaction term (y' - y)' A (x' - x) of the step-size rule); the derivation itself is the linearity of A</td>
+<td><code>src/pdhg/pdhg.cpp</code>, <code>src/gpu/pdhg_gpu.cu</code> (<code>k_derive_products</code>), <code>src/gpu/pdhg_graph.cu</code></td>
+</tr>
+<tr>
+<td>Diagonal preconditioning, alpha = 1</td>
+<td>Pock &amp; Chambolle, <em>Diagonal preconditioning for first order primal-dual algorithms</em>, ICCV 2011, section 4</td>
+<td><code>src/la/scaling.cpp</code></td>
+</tr>
+<tr>
+<td>Moreau decomposition for the support-function prox</td>
+<td>Rockafellar, <em>Convex Analysis</em>, theorem 31.5</td>
+<td><code>src/pdhg/pdhg.cpp</code></td>
+</tr>
+<tr>
+<td>Branch and bound</td>
+<td>Land &amp; Doig, <em>An automatic method of solving discrete programming problems</em>, Econometrica 28(3), 1960; Wolsey, <em>Integer Programming</em>, ch. 7</td>
+<td><code>src/mip/branch_and_bound.cpp</code></td>
+</tr>
+<tr>
+<td>Node propagation from row activities</td>
+<td>Savelsbergh, <em>Preprocessing and probing for MIP</em>, ORSA J. Computing 6(4), 1994</td>
+<td><code>src/mip/branch_and_bound.cpp</code></td>
+</tr>
+<tr>
+<td>Search shape: propagation at nodes, incumbent as cutoff</td>
+<td>Achterberg, <em>Constraint Integer Programming</em> (thesis, 2007), ch. 5–6</td>
+<td><code>src/mip/branch_and_bound.cpp</code></td>
+</tr>
+<tr>
+<td>Hyper-sparse back-substitution through U in the FTRAN, U stored by column as well as by row, zero results skipped; the row-wise gather kept as the reference the push form is tested against (#68)</td>
+<td>Gilbert &amp; Peierls, <em>Sparse partial pivoting in time proportional to arithmetic operations</em>, SIAM J. Sci. Stat. Comput. 9 (1988)</td>
+<td><code>src/la/lu.cpp</code> (<code>solve</code>, <code>solve_reference</code>)</td>
+</tr>
+<tr>
+<td>Hyper-sparse FTRAN and BTRAN by symbolic reach (#464; <code>lu_hyper_sparse</code>, off by default until its A/B): a breadth-first search over the graphs of L and U (FTRAN) or of U^T and L^T (BTRAN) from the right-hand side's nonzeros finds every step the result can reach, and the numeric passes run over those steps only, sorted into the order the full loops use so the results are identical to the bit; a right-hand side or a reach above 10% of the rows takes the full loops. Every solve's result density is binned and reported at verbose level and to the profiler</td>
+<td>Gilbert &amp; Peierls, <em>Sparse partial pivoting in time proportional to arithmetic operations</em>, SIAM J. Sci. Stat. Comput. 9(5) (1988); Hall &amp; McKinnon, <em>Hyper-sparsity in the revised simplex method and how to exploit it</em>, Computational Optimization and Applications 32 (2005)</td>
+<td><code>src/la/lu_hyper.cpp</code>, <code>src/simplex/simplex_report.cpp</code></td>
+</tr>
+<tr>
+<td>Sparse symmetric LDL^T: approximate minimum degree ordering on the quotient graph (#193), elimination tree, symbolic pattern once, up-looking numeric factorization with diagonal regularization (#70)</td>
+<td>Davis, <em>Direct Methods for Sparse Linear Systems</em>, SIAM (2006), ch. 4; Liu, <em>The role of elimination trees in sparse factorization</em>, SIAM J. Matrix Anal. Appl. 11 (1990); Tinney &amp; Walker, Proc. IEEE 55 (1967); Amestoy, Davis &amp; Duff, <em>An approximate minimum degree ordering algorithm</em>, SIAM J. Matrix Anal. Appl. 17 (1996); Altman &amp; Gondzio, Optim. Methods Softw. 11 (1999)</td>
+<td><code>src/la/ldl.cpp</code></td>
+</tr>
+<tr>
+<td>Supernodal numeric factorization for the sparse LDL^T (#470, option <code>ipm_supernodal</code>, off by default; first slice, sequential): fundamental supernodes from the elimination tree and the column counts, a left-looking supernodal factorization whose updates are dense products over each source supernode's contiguous columns and whose diagonal blocks are factored by a dense right-looking LDL^T under the scalar path's pivot floor, all kernels written here (no vendor BLAS); the factor is written back into the scalar layout, the scalar up-looking path is the oracle</td>
+<td>Liu, Ng &amp; Peyton, <em>On finding supernodes for sparse matrix computations</em>, SIAM J. Matrix Anal. Appl. 14 (1993); Ng &amp; Peyton, <em>Block sparse Cholesky algorithms on advanced uniprocessor computers</em>, SIAM J. Sci. Comput. 14 (1993); Liu, SIAM J. Matrix Anal. Appl. 11 (1990); Davis, <em>Direct Methods for Sparse Linear Systems</em>, SIAM (2006), ch. 4; Altman &amp; Gondzio, Optim. Methods Softw. 11 (1999)</td>
+<td><code>src/la/ldl_supernodal.cpp</code></td>
+</tr>
+<tr>
+<td>Interior point normal equations factored on the device by NVIDIA cuDSS (#489, <code>ipm_linear_solver=cudss</code>, off by default): analysis once per pattern, numeric LDL^T every iteration with pivoting off and a static pivot epsilon equal to the CPU factor's regularization, a factor holding a negative pivot redone on the CPU, the Newton iteration and the iterative refinement unchanged on the host</td>
+<td>Shin et al., <em>MadIPM GPU interior point</em>, arXiv:2508.16094 (paper only); NVIDIA cuDSS documentation. Licence: judgement call 28 in section 5</td>
+<td><code>src/gpu/cudss_factor.cpp</code>, <code>src/ipm/ipm.cpp</code></td>
+</tr>
+<tr>
+<td>Primal-dual interior-point method, Mehrotra predictor-corrector on the normal equations of the bounded-variable form; no basis, no infeasibility certificate (#56; <code>--option algorithm=ipm</code>)</td>
+<td>Mehrotra, SIAM J. Optim. 2 (1992); Wright, <em>Primal-Dual Interior-Point Methods</em>, SIAM (1997), ch. 10–11; Altman &amp; Gondzio (1999) for the regularization</td>
+<td><code>src/ipm/ipm.cpp</code></td>
+</tr>
+<tr>
+<td>Proximal primal-dual regularization of the LP interior point (#473, option <code>ipm_proximal_regularization</code>, off by default): the regularized augmented system <code>[-(Theta^-1 + rho I), A'; A, diag(theta_s) + delta I]</code> (logicals eliminated first) in place of the normal equations and their fixed 1e-10 floor, quasi-definite for any rho, delta &gt; 0 and factored by the signed LDL^T the QP interior point uses (<code>SparseLdl::factorize_quasidefinite</code>), rho = delta following mu down to 1e-8 and raised x100 when a pivot is lifted; the unregularized Newton system solved from those factors by iterative refinement, a correction kept only while the unregularized residual falls; a solve whose residual relative to the larger of 1 and the right-hand side's infinity norm stays above 1e-8 is counted, reported, and shrinks rho for the next factorization; a non-finite direction raises the rho floor x100 per recovery to a cap of 1e-4</td>
+<td>Altman &amp; Gondzio, <em>Regularized symmetric indefinite systems in interior point methods for linear and quadratic optimization</em>, Optim. Methods Softw. 11 (1999); Friedlander &amp; Orban, <em>A primal-dual regularized interior-point method for convex quadratic programs</em>, Math. Program. Comput. 4 (2012); Vanderbei, <em>Symmetric quasidefinite matrices</em>, SIAM J. Optim. 5(1) (1995); Higham, <em>Accuracy and Stability of Numerical Algorithms</em>, 2nd ed., SIAM (2002), ch. 12</td>
+<td><code>src/ipm/proximal_system.cpp</code>, <code>src/ipm/ipm.cpp</code> (<code>factorize</code>, <code>proximal_newton_direction</code>)</td>
+</tr>
+<tr>
+<td>Gondzio's multiple centrality correctors in the LP interior point (#472, option <code>ipm_centrality_correctors</code>, 0 = off): after the Mehrotra direction, from a trial point at the aspiration step min(1.5 alpha + 0.3, 1) the complementarity products outside [0.1, 10] sigma mu are pulled back towards that band (a large one by at most 10 sigma mu) through one more solve with the same factors; a corrector is kept only when its solve is finite and accurate (dense-column or n x n conjugate gradients converged, proximal refinement met its target, both judged per corrector and a refused one leaving the loop's flags as they were), it lengthens alpha_p + alpha_d by 1%, and at the point the step reaches neither the worst product in the stopping test's measure nor the spread (largest product over the mean) grows and the floor (smallest product over the mean) does not fall, the first refusal ending that iteration's correctors; the number tried is capped by the option and grows with the factor's estimated factorization-to-solve cost ratio, never with a clock, and is at most 1 on the dense-column and n x n paths and at most 2 on the proximal path (whose ratio is divided by its refinement's solves); off, the iteration is the one without it</td>
+<td>Gondzio, <em>Multiple centrality corrections in a primal-dual method for linear programming</em>, Computational Optimization and Applications 6 (1996); Colombo &amp; Gondzio, <em>Further development of multiple centrality correctors for interior point methods</em>, Computational Optimization and Applications 41 (2008)</td>
+<td><code>src/ipm/centrality.cpp</code>, <code>src/ipm/ipm.cpp</code> (<code>centrality_correctors</code>)</td>
+</tr>
+<tr>
+<td>Crossover from the interior point to a vertex (#219): classify each column and row of the interior point's answer as at-bound (within a relative tolerance, reduced cost agreeing) or interior, take the m interior entries with the most slack as a basis guess, warm-start the dual simplex from it and keep its vertex when it reaches optimal; the guess is a heuristic and nothing rests on it, the simplex proves the vertex</td>
+<td>Bixby, <em>Solving real-world linear programs: a decade and more of progress</em>, Operations Research 50 (2002), sec. 4; Andersen &amp; Ye, <em>Combining interior-point and pivoting algorithms for linear programming</em>, Management Science 42 (1996)</td>
+<td><code>src/simplex/crossover.cpp</code></td>
+</tr>
+<tr>
+<td>The primal push of the crossover (#343): every nonbasic variable starts at the interior point's value and is pushed to its nearer bound along <code>B^-1 a_k</code> with a ratio test against the basic variables, a blocking basic leaving the basis, so the point stays feasible and the primal loop finishes from a vertex of the optimal face</td>
+<td>Bixby, Operations Research 50 (2002), sec. 4; Andersen &amp; Ye, Management Science 42 (1996); Megiddo, <em>On finding primal- and dual-optimal bases</em>, ORSA J. Computing 3 (1991)</td>
+<td><code>src/simplex/simplex_push.cpp</code> (<code>Simplex::run_push</code>)</td>
+</tr>
+<tr>
+<td>Crossover from an interior point that is not optimal (#474, option <code>crossover_from_nonoptimal</code>, off by default): a <code>feasible</code>, time-limited or iteration-limited answer, or the best iterate the interior point attaches to a numerical error, is handed to the same guess, push and primal loop when its scaled primal and dual infeasibility are at most <code>tol::kCrossoverStartInfeasibility</code> (1e-4); only the simplex vertex, measured by the status guard, may be reported optimal, and an iterate nothing used is withdrawn from the numerical error</td>
+<td>Megiddo, <em>On finding primal- and dual-optimal bases</em>, ORSA J. Computing 3(1) (1991); Bixby &amp; Saltzman, <em>Recovering an optimal LP basis from an interior point solution</em>, Operations Research Letters 15 (1994)</td>
+<td><code>src/simplex/crossover.cpp</code> (<code>crossover_when_wanted</code>, <code>crossover_start_is_usable</code>), <code>src/ipm/ipm.cpp</code> (<code>finish</code>)</td>
+</tr>
+<tr>
+<td>Verifier-gated concurrent engine race under <code>algorithm=auto</code> (#476, option <code>engine_race</code>, off by default): the dual simplex, the interior point with crossover and PDHG run at once, each through its own presolve and postsolve, on its own thread, logger and out-of-memory guard; an answer wins only when an in-process KKT check against the original model at the project tolerances passes (or, for an infeasibility, its Farkas certificate checks out), a rejected answer neither wins nor stops the others, the first accepted one cancels the rest; deterministic mode or one core runs the same engines in a fixed order</td>
+<td>Concurrent optimization as documented in the IBM ILOG CPLEX User's Manual ("Concurrent optimizer") and the Gurobi Reference Manual (parameter <code>Method</code> = 3 and 4) - user-facing behaviour only; the KKT conditions of LP, Nocedal &amp; Wright, <em>Numerical Optimization</em>, 2nd ed. (2006), thm. 13.1</td>
+<td><code>src/core/engine_race.cpp</code></td>
+</tr>
+<tr>
+<td>Engine-selection features and a learned choice (#477, tooling only, not wired into <code>algorithm=auto</code>): m, n, nnz, density, the longest column, a dense-column count (more than <code>kIpmDenseColumnFactor</code> sqrt(m) entries, the interior point's own test), rows per column, equality-row, integer, boxed, free and fixed shares, and a pattern-only upper bound on nnz(A A^T), printed by <code>sankhya info --features</code> with the rule table's choice; our own CART (Gini impurity, depth 4, at least 3 rows per leaf, deterministic ties) trained on generated instances disjoint from every reported set and split by shape (every seed of a held-out shape is held out, one shape per generator), emitting readable C++ only when at least 60 training and 20 held-out rows from at least 8 and 4 distinct shapes exist, no shape is on both sides of the split, and the tree loses less time than the rule table on the held-out rows</td>
+<td>Rice, <em>The algorithm selection problem</em>, Advances in Computers 15 (1976); Kotthoff, <em>Algorithm selection for combinatorial search problems: a survey</em>, AI Magazine 35(3) (2014); Breiman, Friedman, Olshen &amp; Stone, <em>Classification and Regression Trees</em> (1984); Andersen, Gondzio, Meszaros &amp; Xu, <em>Implementation of interior point methods for large scale linear programming</em>, in Terlaky (ed.), Interior Point Methods of Mathematical Programming, Kluwer (1996) (dense columns)</td>
+<td><code>src/core/engine_features.cpp</code>, <code>bench/runners/engine_selection_data.py</code>, <code>bench/runners/engine_selection_cart.py</code></td>
+</tr>
+<tr>
+<td>PDHG infeasibility/unboundedness detection from restart iterate differences (#484, option <code>pdhg_detect_infeasibility</code>, off by default): at each restart, the period's iterate difference (already computed for the primal-weight update, at no extra cost when this is off) is handed directly to this project's own certificate checker - <code>ray_proves_unbounded</code>/<code>farkas_proves_infeasible</code>, the same functions every other engine's proof is held to - rather than re-deriving the paper's own numerical thresholds; accepted only when the checker confirms the direction, so a wrong guess declines and cannot lie. Measured on 29 Netlib infeasible instances with presolve off (isolating PDHG's own detection): 5 of 29 detected with a certificate <code>tools/verify_solution.py</code> accepts within 60s (<code>bgdbg1</code>, <code>galenet</code>, <code>itest2</code>, <code>itest6</code>, <code>mondou2</code> - all small); the rest hit the time limit without a confirmable ray, an honest limitation of first-order detection speed the cited paper itself notes, not a false claim either way. Confirmed to never falsely claim infeasible/unbounded over the nine committed optimal Netlib instances (<code>tests/unit/test_pdhg_infeasibility_detection.cpp</code>)</td>
+<td>Applegate, Diaz, Lu &amp; Lubin, <em>Infeasibility detection with primal-dual hybrid gradient for large-scale linear programming</em>, SIAM J. Optim. 34(1) (2024) (arXiv 2102.04592)</td>
+<td><code>src/pdhg/pdhg.cpp</code> (<code>detect_certificate_from_restart</code>)</td>
+</tr>
+<tr>
+<td>Exact rational verification of a reported optimal LP basis (#521, option <code>exact</code>, off by default): the basis a double-precision LP engine reports rebuilt in exact rational arithmetic over <code>__int128</code> - every model coefficient converted bit-exactly from the double the reader already produced, never rounded - and checked for exact primal and dual feasibility by a dense exact Gaussian elimination; declines (never a false verdict) on an <code>__int128</code> overflow, a basis larger than its row cap, an integer column or a quadratic objective. A narrower, self-contained piece of the cited papers' pipeline: it checks the ONE basis double precision found rather than iteratively refining toward a better one. Measured: naive rational elimination over <code>__int128</code> overflows on almost any realistic decimal-coefficient model, even a 3-row one (<code>demo/crude_blend.mps</code> declines) - it verifies correctly on integer-coefficient LPs (<code>tests/unit/test_exact_verify.cpp</code>, including two hand-built bases proven infeasible/singular to confirm rejection, not rubber-stamping) but a wider arithmetic backing than <code>__int128</code> would be needed before this verifies most real instances</td>
+<td>Gleixner, Steffy &amp; Wolter, <em>Iterative refinement for linear programming</em>, INFORMS J. Computing 28(3) (2016); Gleixner &amp; Steffy, <em>Linear programming using limited-precision oracles</em>, Math. Programming 183 (2020)</td>
+<td><code>src/exact/rational.hpp</code>, <code>src/exact/exact_verify.cpp</code></td>
+</tr>
+<tr>
+<td>In-process KKT check of an LP optimum, a C++ reimplementation of the checks <code>tools/verify_solution.py</code> makes (bounds and recomputed row activities relative to their terms, activity and objective agreement, reduced costs against c - A^T y, multiplier signs, complementary slackness, the basis, strong duality with per-item accounting) so the race can judge an answer inside the process while the Python verifier stays independent and never links the solver</td>
+<td>Nocedal &amp; Wright, <em>Numerical Optimization</em>, 2nd ed. (2006), thm. 13.1; the scalings are those argued in <code>tools/verify_solution.py</code></td>
+<td><code>src/core/kkt_check.cpp</code></td>
+</tr>
+<tr>
+<td>Dense columns in the interior point's normal equations (#467, option <code>ipm_dense_columns</code>, off by default): columns with more than <code>ipm_dense_column_factor</code> * sqrt(m) entries left out of A Theta A^T, the rank-k correction applied by Sherman-Morrison-Woodbury with the scaled k x k Schur complement I + V^T M_s^-1 V, used as the preconditioner of conjugate gradients on the whole system (the sparse factor alone when the Schur complement is not positive definite), stopped on the normwise backward error; and the size of A Theta A^T counted from the pattern of A before assembly (largest column clique, sum of cliques, exact marker count with early exit), refused over the factor budget</td>
+<td>Andersen, Gondzio, Meszaros &amp; Xu, <em>Implementation of interior point methods for large scale linear programming</em>, in Terlaky (ed.), Interior Point Methods of Mathematical Programming, Kluwer (1996), sec. 5; Wright, <em>Primal-Dual Interior-Point Methods</em>, SIAM (1997), ch. 11; Hestenes &amp; Stiefel, J. Res. Nat. Bur. Standards 49 (1952); Golub &amp; Van Loan, <em>Matrix Computations</em>, 4th ed. (2013), sec. 11.5; Higham, <em>Accuracy and Stability of Numerical Algorithms</em>, 2nd ed. (2002), sec. 7.1; Davis, <em>Direct Methods for Sparse Linear Systems</em>, SIAM (2006), sec. 2.8</td>
+<td><code>src/ipm/dense_columns.cpp</code>, <code>src/la/normal_pattern.cpp</code>, <code>src/ipm/ipm.cpp</code> (<code>factorize</code>, <code>solve_normal</code>)</td>
+</tr>
+<tr>
+<td>The interior point's normal equations on the n x n side (#469, option <code>ipm_normal_side</code> = rows / columns / auto, default rows): N = Theta^-1 + A^T D^-1 A factored by the same sparse LDL^T, M dy = r solved by conjugate gradients on M preconditioned with the Woodbury identity M^-1 = D^-1 - D^-1 A N^-1 A^T D^-1 on N's factors, D floored at 1e-8 of each row's A Theta A^T diagonal in the preconditioner, an unconverged solve handled as an unconverged dense-column solve is; auto counts both lower triangles from the pattern of A with early exit (#467's count) and orders both, keeping the smaller symbolic factor, or, when the rows do not outnumber the columns, takes the column side only when the row side's count is over the factor budget; the choice runs under the set-up share; not combined with the proximal or dense-column paths</td>
+<td>Woodbury, <em>Inverting modified matrices</em>, Memorandum Report 42, Statistical Research Group, Princeton (1950); Golub &amp; Van Loan, <em>Matrix Computations</em>, 4th ed. (2013), sec. 2.1.4 and 11.5; Wright, <em>Primal-Dual Interior-Point Methods</em>, SIAM (1997), ch. 11; Zanetti &amp; Gondzio, arXiv:2508.04370 (2025), for choosing the system by predicted factor size; Higham, <em>Accuracy and Stability of Numerical Algorithms</em>, 2nd ed. (2002), sec. 7.1</td>
+<td><code>src/ipm/column_side.cpp</code> (<code>ColumnSide::choose</code>), <code>src/ipm/ipm.cpp</code> (<code>choose_side</code>, <code>solve_normal</code>)</td>
+</tr>
+<tr>
+<td>Dual purification at the interior point's finish (#209): the least-squares correction of y over the strictly interior variables, <code>dy = (A_I A_I^T + eps I)^-1 A_I (c_I - A_I^T y)</code>, through the same normal equations, accepted only if the interior reduced costs shrink and no sign condition breaks - the dual half of a crossover, without the primal half</td>
+<td>Bixby, <em>Solving real-world linear programs: a decade and more of progress</em>, Operations Research 50 (2002), sec. 4; Andersen &amp; Ye, <em>Combining interior-point and pivoting algorithms for linear programming</em>, Management Science 42 (1996)</td>
+<td><code>src/ipm/ipm.cpp</code> (<code>purify_duals</code>)</td>
+</tr>
+<tr>
+<td>Reliability branching: pseudocosts, strong branching on unreliable candidates with capped warm-started dual probes, product score (#69; <code>--option mip_branching=most-fractional</code> keeps the old rule)</td>
+<td>Achterberg, Koch &amp; Martin, <em>Branching rules revisited</em>, Operations Research Letters 33 (2005), 42–54</td>
+<td><code>src/mip/branch_and_bound.cpp</code></td>
+</tr>
+<tr>
+<td>Node LP factor reuse (#501; <code>mip_node_factor_cache</code>, off by default until its A/B): the LU of a node LP's starting basis, kept after a first factorization that needed neither the Markowitz ladder nor a repair, keyed by the scaled matrix's id and the basis in seed order, and handed to the next node LP (a strong-branching probe, a child) that starts from the same basis; the copy is the factorization that solve would compute, so the tree is unchanged, node for node</td>
+<td>Achterberg, <em>Constraint Integer Programming</em>, PhD thesis, TU Berlin (2007), on warm-starting node LPs from the parent's basis; Koberstein, <em>The dual simplex method, techniques for a fast and stable implementation</em>, PhD thesis, Paderborn (2005), on bound changes in the bounded dual simplex</td>
+<td><code>src/simplex/factor_cache.cpp</code></td>
+</tr>
+<tr>
+<td>Iterative refinement of the final basis, primal and dual, residual in compensated arithmetic (#72)</td>
+<td>Wilkinson, <em>Rounding Errors in Algebraic Processes</em> (1963), ch. 4; Ogita, Rump &amp; Oishi, <em>Accurate sum and dot product</em>, SIAM J. Sci. Comput. 26 (2005)</td>
+<td><code>src/simplex/primal_simplex.cpp</code> (<code>refine_final_basis</code>)</td>
+</tr>
+<tr>
+<td>Cost perturbation on a dual-degenerate stall, nonbasic costs only so dual feasibility is preserved by construction</td>
+<td>Maros, <em>Computational Techniques of the Simplex Method</em>, ch. 9 (the bound-shifting scheme, applied to the dual's costs); Koberstein (2005), above, sec. 6.2</td>
+<td><code>src/simplex/dual_ratio.cpp</code></td>
+</tr>
+<tr>
+<td>Dual simplex cost perturbation at the start (#465; <code>dual_perturb_costs_at_start</code>, off by default until its A/B): when the caller's structural costs take fewer than n/4 distinct values, every nonbasic structural cost moves by (1e-5 + 1e-5 |c_j|) times a deterministic per-column factor in [0.5, 1], in the direction that keeps the basis dual feasible; the exact costs are restored at the end and the primal simplex finishes. Taken from the thesis text only (judgement call 12)</td>
+<td>Koberstein, <em>The dual simplex method, techniques for a fast and stable implementation</em>, PhD thesis, Paderborn (2005), ch. 6; Maros (2003), ch. 9</td>
+<td><code>src/simplex/dual_ratio.cpp</code></td>
+</tr>
+<tr>
+<td>Harris two-pass step inside the dual bound-flipping ratio test, with cost shifting (#465; <code>dual_ratio_test=harris</code>, the default for LP solves since its A/B, <code>auto</code>; branch-and-bound LPs keep <code>textbook</code> unless the option is set explicitly): breakpoints grouped under the tightest breakpoint with every reduced cost relaxed by a tenth of the dual tolerance, a boxed group the slope can pay for flipped whole, the largest pivot of the first group it cannot pass entering; an entering reduced cost on the wrong side of zero is removed by shifting its cost, and every shift is undone before an answer leaves the dual loop</td>
+<td>Harris, <em>Pivot selection methods of the Devex LP code</em>, Math. Programming 5 (1973); Koberstein (2005), above, ch. 6; Maros (2003), ch. 10</td>
+<td><code>src/simplex/dual_ratio.cpp</code></td>
+</tr>
+<tr>
+<td>Robustness suite: the classic cycling examples, adversarial families judged by the exact oracle, and the conditioning / near-parallel / cost-ratio / redundancy / degeneracy sweeps with an optimum known by construction (#71)</td>
+<td>Beale, <em>Cycling in the dual simplex algorithm</em>, Naval Research Logistics Quarterly 2 (1955); Kuhn's example as given in Chvátal, <em>Linear Programming</em> (1983), ch. 3; the KKT construction is the oracle fuzz's (above)</td>
+<td><code>tests/robustness/test_robustness.cpp</code>, <code>bench/runners/robustness.py</code></td>
+</tr>
+<tr>
+<td>Solution pool: every integer-feasible point the search finds, deduplicated by integer assignment, bounded and best first; <code>pool_complete</code> continues past integral nodes (three-way split on an unfixed integer column) and prunes on the pool's worst member so the pool provably holds the k best; <code>pool_diversity</code> evicts by nearest Hamming distance (#225)</td>
+<td>Danna, Fenelon, Gu &amp; Wunderling, <em>Generating multiple solutions for mixed integer programming problems</em>, IPCO 2007, LNCS 4513; Glover, Lokketangen &amp; Woodruff, <em>Scatter search to generate diverse MIP solutions</em>, in <em>Computing Tools for Modeling, Optimization and Simulation</em> (2000)</td>
+<td><code>src/mip/solution_pool.cpp</code>, <code>src/mip/branch_and_bound.cpp</code></td>
+</tr>
+<tr>
+<td>Feasibility pump whose L1 projection is solved by restarted PDHG, on the CUDA device when there is one (#509; <code>gpu_pump</code>, off by default, at the MIP root): the projection LP is built once - two-valued integer columns by a +/-1 cost, general integers by one auxiliary column and two rows each - and only its costs and row sides move per round; a repeated rounding flips T/2..3T/2 columns, a cycle within the last R rounds is restarted; the continuous columns are completed by an LP with the integer columns fixed, and every point is checked against the model's rows and bounds before the search checks it again</td>
+<td>Fischetti, Glover &amp; Lodi, <em>The feasibility pump</em>, Mathematical Programming 104 (2005); Bertacco, Fischetti &amp; Lodi, <em>A feasibility pump heuristic for general mixed-integer problems</em>, Discrete Optimization 4 (2007); Mexi et al., arXiv:2307.03466; Corduk et al., arXiv:2510.20499</td>
+<td><code>src/mip/pdhg_heuristics.cpp</code></td>
+</tr>
+<tr>
+<td>Fix-and-propagate (#509; <code>gpu_fix_and_prop</code>, off by default, at the MIP root): integer columns fixed least fractional first to the integer nearest the relaxation inside the current domain, in batches that double on success and halve on a proved-empty box, with the #510 synchronous propagator (CUDA or CPU, identical bounds) after each batch; a bounded number of back-ups; completion LP for the continuous columns; Feasibility Jump repair</td>
+<td>Gamrath, Berthold, Heinz &amp; Winkler, <em>Structure-based primal heuristics for mixed integer programming</em>, Optimization in the Real World, Springer (2016); Corduk et al., arXiv:2510.20499</td>
+<td><code>src/mip/pdhg_heuristics.cpp</code>, <code>src/mip/domain_propagation.cpp</code>, <code>src/gpu/domain_prop.cu</code></td>
+</tr>
+<tr>
+<td>Feasibility Jump (#506), MILP primal heuristic, off by default (<code>mip_heur_fj</code>): weighted local search over the original rows with no LP; each column's jump value is the exact minimiser of its convex piecewise-linear weighted violation, found by sorting the breakpoints; the best of 25 sampled jumps is taken; at a local minimum every violated row's weight gains 1 (the objective's, when none is violated). Runs before the root LP and from the rounded root relaxation; every point goes through offer_incumbent()</td>
+<td>Luteberget and Sartor, <em>Feasibility Jump: an LP-free Lagrangian MIP heuristic</em>, Mathematical Programming Computation 15 (2023); written from the paper (see judgement call 17)</td>
+<td><code>src/mip/feasibility_jump.cpp</code>, <code>src/mip/branch_and_bound_heuristics.cpp</code></td>
+</tr>
+<tr>
+<td>GPU Feasibility Jump (#508), off by default (<code>gpu_feasibility_jump</code>, where <code>mip_heur_fj</code> runs FJ): the CPU search above, one per CUDA block (two blocks per multiprocessor, each its own seed): the point, activities, row weights and violated list on the device; each of a block's 8 warps scores 4 sampled columns, lanes striding over the column's nonzeros with shuffle reductions; the first breakpoint where the slope turns non-negative is found by a randomised selection over the breakpoints (least-hash pivot, one reduction for the slope right of it) instead of a sort; a two-valued integer column scores its flip alone; the move updates the activities in parallel; the weight update at a local minimum as in the paper. No atomics, counter-based hashing for every draw, so a run is reproducible for a seed. Every point is verified on the host against the original model (<code>feasibility_jump_point_is_feasible</code>) before it is handed to offer_incumbent(); without a device the CPU search runs</td>
+<td>Luteberget and Sartor, <em>Feasibility Jump: an LP-free Lagrangian MIP heuristic</em>, Mathematical Programming Computation 15 (2023); Corduk, Sielski, Boucher &amp; Aatish, <em>GPU-accelerated primal heuristics for mixed integer programming</em>, arXiv:2510.20499; written from the papers and the CPU reference, no solver source read</td>
+<td><code>src/gpu/gpu_fj.cu</code>, <code>src/gpu/gpu_fj_device.cuh</code>, <code>src/mip/branch_and_bound_heuristics.cpp</code></td>
+</tr>
+<tr>
+<td>Local-MIP improvement heuristic (#507, <code>mip_local_mip</code>, off by default): after finding an incumbent, run lift moves (shift an integer variable ±1 in the objective-improving direction, provided all row activities stay feasible), tight/breakthrough moves (at an infeasible working point, the move with the greatest reduction in weighted constraint violations, where a virtual objective-cutoff row <code>c^T x ≤ z*−1</code> is added with the same FJ weights), a tabu list of (variable, direction) pairs with tenure 3+rand(10), and multiplicative weight updates with additive smoothing decay</td>
+<td>Lin, Zou and Cai, <em>Local-MIP: efficient local search for mixed integer programming</em>, CP 2024, LIPIcs 307</td>
+<td><code>src/mip/heuristics.cpp</code> (<code>local_mip_improve</code>), <code>src/mip/branch_and_bound_heuristics.cpp</code></td>
+</tr>
+<tr>
+<td>Conflict analysis (#292, off by default): from a node proved infeasible, the subset of its branching decisions that the rows and the global bounds cannot satisfy, re-proved from the global bounds by propagation or by the node LP's Farkas multipliers evaluated conservatively, shrunk by a bounded deletion filter, stored as a bound disjunction and used in node propagation to prune and to fix bounds</td>
+<td>Achterberg, <em>Conflict analysis in mixed integer programming</em>, Discrete Optimization 4(1) (2007); Witzig, Berthold &amp; Heinz, <em>Experiments with conflict analysis in mixed integer programming</em>, CPAIOR 2017; Junker, <em>QuickXplain</em>, AAAI 2004</td>
+<td><code>src/mip/conflict.cpp</code>, <code>src/mip/branch_and_bound_conflicts.cpp</code></td>
+</tr>
+<tr>
+<td>Conflict analysis from cutoff nodes (#503, <code>conflict_cutoff</code>, off by default, needs <code>conflict_analysis</code>): from a node pruned by bound, after it is left, the subset of its branching decisions over which the node LP's row duals prove, from the global bounds, that no point reaches the cutoff (incumbent less <code>mip_absolute_gap</code>): by propagation, or by the Neumaier-Shcherbina safe bound of those duals over the literal box exceeding the cutoff; the same deletion-filter minimisation as for infeasible nodes; the cutoff is stored with the conflict and exported. Not for MIQP or <code>pool_complete</code></td>
+<td>Achterberg, <em>Conflict analysis in mixed integer programming</em>, Discrete Optimization 4(1) (2007); Witzig, Berthold &amp; Heinz, <em>Experiments with conflict analysis in mixed integer programming</em>, CPAIOR 2017; Neumaier &amp; Shcherbina, <em>Safe bounds in linear and mixed-integer linear programming</em>, Math. Programming 99 (2004)</td>
+<td><code>src/mip/branch_and_bound_conflicts.cpp</code>, <code>src/mip/conflict.cpp</code>, <code>tests/unit/test_conflict_cutoff.cpp</code></td>
+</tr>
+<tr>
+<td>Safe LP bounds (#519, option <code>safe_bounds</code>, off by default): a lower bound on the LP relaxation from ANY row multipliers y, by weak duality for the Lagrangian with y fixed (row sides priced by the sign of y, reduced costs c - A'y priced over the column box), computed in interval arithmetic by round-to-nearest plus a one-ulp outward step, with exact sums detected by TwoSum; a multiplier on a missing row side is set to zero, and a column whose reduced cost needs a missing bound gets one implied by a single row, else the bound is -inf. Branch and bound prunes and orders on it and logs the largest believed-minus-safe gap</td>
+<td>Neumaier &amp; Shcherbina, <em>Safe bounds in linear and mixed-integer linear programming</em>, Math. Programming 99 (2004) 283-296; Knuth, <em>The Art of Computer Programming</em> vol. 2, sec. 4.2.2 (TwoSum); Savelsbergh, <em>Preprocessing and probing for mixed integer programming problems</em>, ORSA J. Computing 6(4) (1994) (row-implied bounds)</td>
+<td><code>src/core/safe_bound.cpp</code>, <code>src/mip/branch_and_bound_safe.cpp</code></td>
+</tr>
+<tr>
+<td>MILP optimality certificates (#518, option <code>write_certificate</code>, off by default): the branch-and-bound tree written as a VIPR derivation - each leaf's bound is the safe bound (#519) of its LP duals over the box its branching assumptions define, with the row-implied column bounds it uses derived as steps of their own, an infeasible leaf a contradiction from its Farkas multipliers (re-solved by the primal simplex when the dual's does not prove it exactly), each branching node the unsplit of its children's bounds over x &lt;= d or x &gt;= d + 1, and a final Chvatal-Gomory rounding when the objective is integral; every number is the exact decimal of the double. Checked by an independent Python checker in exact rational arithmetic (<code>fractions.Fraction</code>), with one stated extension to the format (a lin step is completed over the column bounds)</td>
+<td>Cheung, Gleixner &amp; Steffy, <em>Verifying integer programming results</em>, IPCO 2017, LNCS 10328 (the VIPR format and its reasons); Eifler &amp; Gleixner, <em>A computational status update for exact rational mixed integer programming</em>, Math. Programming 197 (2023); Neumaier &amp; Shcherbina (2004) for the leaf bounds; Chvatal, <em>Edmonds polytopes and a hierarchy of combinatorial problems</em>, Discrete Math. 4 (1973) (rounding)</td>
+<td><code>src/mip/certificate_writer.cpp</code>, <code>src/mip/branch_and_bound_certificate.cpp</code>, <code>tools/verify_certificate.py</code>, <code>tools/verify_certificate_model.py</code></td>
+</tr>
+<tr>
+<td>Cut rows in MILP certificates (#518, within <code>write_certificate</code>): every root cut the node LPs carry is derived from the model before any leaf uses it. Knapsack covers (one row, the multiplier minimising the rounded bound over the row's breakpoints) and {0,1/2}-cuts (multipliers 1/2) as Chvatal-Gomory <code>rnd</code> steps; Gomory mixed-integer cuts (the tableau row's disjunction, the nonnegativity of each nonbasic logical weighted by what the cut's coefficient exceeds the tableau's) and MIR cuts (the aggregation's rows, the divisor's disjunction) as splits: two assumptions, a <code>lin</code> under each and the <code>uns</code> that discharges them. The generator only proposes multipliers; the right-hand side each side proves is computed with the safe bound (outward rounding) over the model's column box, a cut it does not reach is dropped, one it reaches up to <code>kCertificateCutSlack</code> gets that right-hand side before it becomes a row. Clique, flow cover, implied-bound and c-MIR cuts state no derivation and are not separated in this mode; tree cut rounds are off</td>
+<td>Cheung, Gleixner &amp; Steffy, IPCO 2017 (sec. 3: CG cuts as <code>rnd</code>, split cuts through <code>asm</code>/<code>uns</code>); Chvatal (1973); Nemhauser &amp; Wolsey, <em>A recursive procedure to generate all cuts for 0-1 mixed integer programs</em>, Math. Programming 46 (1990) and Cornuejols, <em>Valid inequalities for mixed integer linear programs</em>, Math. Programming 112 (2008), sec. 5 (GMI and MIR as split cuts); Caprara &amp; Fischetti, <em>{0,1/2}-Chvatal-Gomory cuts</em>, Math. Programming 74 (1996); Neumaier &amp; Shcherbina (2004)</td>
+<td><code>src/mip/cut_derivation.cpp</code>, <code>src/mip/certificate_cuts.cpp</code>, <code>tools/test_verify_certificate_cuts.py</code></td>
+</tr>
+<tr>
+<td>Restarted, reflected Halpern iteration and a PID primal weight in the first-order QP engine (#493, CPU; options <code>qp_halpern</code>, off by default, and <code>qp_primal_weight_pid</code>, on by default since the Maros-Meszaros A/B <code>bench/results/maros-meszaros-493-{off,pid,both}-58a8374.csv</code>: 19 of 138 pass against 2 off, <code>hs76</code> lost; Halpern with it passes 16): z &lt;- w((1+rho) T z - rho z) + (1-w) z_anchor, w = (k+1)/(k+2), on the Condat-Vu step T (Q x once per iteration); the reflection rho kept below delta - 1 = (1/tau - L/2)/(1/tau + L/2) from Condat's relaxation bound; restart when</td>
+<td></td>
+<td>T z - z</td>
+</tr>
+<tr>
+<td>MIQP: branch and bound over convex QP node relaxations</td>
+<td>Gupta &amp; Ravindran, <em>Branch and bound experiments in convex nonlinear integer programming</em>, Management Science 31(12), 1985</td>
+<td><code>src/mip/branch_and_bound.cpp</code></td>
+</tr>
+<tr>
+<td>MIQP node IPM (#494, <code>miqp_node_ipm</code>, off by default): the proximal QP interior point (#490) as the node relaxation solver, capped at its own 200-iteration ceiling; each node pruned on a bound valid for any primal point p and row duals y: the convex objective linearised at p (F(x) &gt;= F(p) + g'(x - p)), the linear part bounded by the Neumaier-Shcherbina formula with outward rounding; a node the IPM does not finish is decided by its LP (same feasible set) when infeasible, else re-solved by Condat-Vu. No warm start (the IPM has no warm-start entry yet)</td>
+<td>Friedlander &amp; Orban, <em>A primal-dual regularized interior-point method for convex quadratic programs</em>, Math. Program. Comput. 4 (2012); Neumaier &amp; Shcherbina, <em>Safe bounds in linear and mixed-integer linear programming</em>, Math. Programming 99 (2004); Gupta &amp; Ravindran, <em>Branch and bound experiments in convex nonlinear integer programming</em>, Management Science 31(12) (1985)</td>
+<td><code>src/mip/branch_and_bound_miqp.cpp</code>, <code>tests/unit/test_miqp_node_ipm.cpp</code></td>
+</tr>
+<tr>
+<td>Parallel tree search (#222, <code>mip_threads</code>): each worker runs the sequential search on a subtree, sharing the incumbent, the node count, the pool and the pseudocosts; an idle worker takes a subtree another gives away; the driver detects the formulation symmetry (#413) once and every worker appends the same ordering rows the sequential search appends, so every subtree is a subtree of one restricted problem</td>
+<td>Ralphs, Shinano, Berthold &amp; Koch, <em>Parallel Solvers for Mixed Integer Linear Optimization</em>, in Hamadi &amp; Sais (eds.), <em>Handbook of Parallel Constraint Reasoning</em>, Springer, 2018</td>
+<td><code>src/mip/branch_and_bound_parallel.cpp</code></td>
+</tr>
+<tr>
+<td>Exact rational branch and bound (test oracle)</td>
+<td>as above, in exact arithmetic</td>
+<td><code>tests/oracles/rational_simplex.cpp</code></td>
+</tr>
+<tr>
+<td>Shifted geometric mean benchmark reporting</td>
+<td>Mittelmann, plato.asu.edu benchmark methodology</td>
+<td><code>bench/runners/make_benchmarks_doc.py</code></td>
+</tr>
+<tr>
+<td>Performance-variability control for MILP benchmarks: each instance re-run under seeded row and column permutations of its MPS file, per-instance matched and proved counts over the seeds, shifted geometric mean time (shift 10 s, unproved runs charged the limit); time to first feasible and the primal integral from the solver's incumbent trace (#504)</td>
+<td>Lodi and Tramontani, <em>Performance variability in mixed-integer programming</em>, INFORMS TutORials in Operations Research (2013); Berthold, <em>Measuring the impact of primal heuristics</em>, Operations Research Letters 41 (2013)</td>
+<td><code>bench/runners/miplib_seeds.py</code>, <code>bench/runners/miplib.py</code>, <code>src/mip/branch_and_bound_node.cpp</code></td>
+</tr>
+<tr>
+<td>Multi-period refinery LP/MILP case study: staircase mass-balance structure, crude distillation unit and downstream unit capacities, quality budget constraints for product-pool blending, delivery commitments; binary crude-purchase decisions in the MILP variant; synthetic data, KKT-verified LP optimum by construction</td>
+<td>Floudas, C.A. and Lin, X., <em>Mixed Integer Linear Programming in Process Scheduling: Modeling, Algorithms, and Applications</em>, Annals of Operations Research 139(1), 2005; Pochet, Y. and Wolsey, L.A., <em>Production Planning by Mixed Integer Programming</em>, Springer, 2006</td>
+<td><code>bench/case_studies/refinery/generator.py</code>, <code>bench/case_studies/refinery/run_case_study.py</code>, <code>docs/case_studies/refinery.md</code></td>
+</tr>
+<tr>
+<td>LP duality checks (feasibility, complementary slackness, strong duality)</td>
+<td>Chvátal, <em>Linear Programming</em>, ch. 5</td>
+<td><code>tools/verify_solution.py</code></td>
+</tr>
+<tr>
+<td>The <code>.qplib</code> file format, read and converted to QPS for the QPLIB benchmark (#492): the section order and omissions by problem type, and the quadratic convention the files use - 0.5 x'Q x with Q the lower triangle as listed (the website's reading), so an off-diagonal is halved into QPS's symmetric QUADOBJ - established by evaluating QPLIB's published points, not by choice</td>
+<td>Furini et al., <em>QPLIB: a library of quadratic programming instances</em>, Mathematical Programming Computation 11 (2019), Appendix B, Table 8; https://qplib.zib.de/doc.html (the triangular Q^i and its footnote)</td>
+<td><code>bench/runners/qplib_format.py</code>, checked per instance by <code>bench/runners/fetch_qplib.py</code></td>
+</tr>
+<tr>
+<td>QP optimality measures for the Maros-Meszaros benchmark (#491): primal residual, dual residual (distance of the row multipliers and the derived reduced costs from the admissible signs) and duality gap against the Dorn dual, absolute and relative, success at 1e-6 and 1e-9</td>
+<td>Dorn, <em>Duality in quadratic programming</em>, Quarterly of Applied Mathematics 18 (1960); Nocedal &amp; Wright, <em>Numerical Optimization</em>, 2nd ed., ch. 12 and 16; the measures and levels of the published qpbenchmark Maros-Meszaros report (Caron et al., <code>qpsolvers/maros_meszaros_qpbenchmark</code>, <code>results/maros_meszaros.md</code>)</td>
+<td><code>bench/runners/qp_residuals.py</code>, <code>bench/runners/maros_meszaros.py</code></td>
+</tr>
+<tr>
+<td>Pooling problem formulations for the standard instances (#516): the P-formulation (pool qualities as columns, bilinear quality balances), the Q-formulation (source proportions, path flows v = q*y as columns with bilinear defining rows) and the PQ-formulation (Q plus the RLT rows sum_i v_ilj = y_lj and sum_j v_ilj &lt;= cap_l q_il)</td>
+<td>Haverly, <em>Studies of the behavior of recursion for the pooling problem</em>, ACM SIGMAP Bulletin 25 (1978); Ben-Tal, Eiger &amp; Gershovitz, <em>Global minimization by reducing the duality gap</em>, Math. Programming 63 (1994); Quesada &amp; Grossmann, <em>Global optimization of bilinear process networks with multicomponent flows</em>, Comput. Chem. Eng. 19 (1995); Tawarmalani &amp; Sahinidis, <em>Convexification and Global Optimization in Continuous and Mixed-Integer Nonlinear Programming</em>, Kluwer (2002), ch. 9</td>
+<td><code>bench/runners/pooling_models.py</code>, models in <code>data/pooling/</code></td>
+</tr>
+<tr>
+<td>Spatial branch and bound for products of columns (#514; <code>--option nonconvex=global</code>, off by default): best-bound search over boxes, branching on a column of the most violated product at a point mixing the relaxation value and the box midpoint, <code>optimal</code> only when the proven bound closes <code>mip_relative_gap</code> / <code>mip_absolute_gap</code></td>
+<td>Falk &amp; Soland, <em>An algorithm for separable nonconvex programming problems</em>, Management Science 15 (1969); Tawarmalani &amp; Sahinidis, <em>Convexification and Global Optimization in Continuous and Mixed-Integer Nonlinear Programming</em>, Kluwer (2002); Belotti, Lee, Liberti, Margot &amp; Wachter, <em>Branching and bounds tightening techniques for non-convex MINLP</em>, Optimization Methods and Software 24 (2009), sec. 5</td>
+<td><code>src/global/spatial_bnb.cpp</code></td>
+</tr>
+<tr>
+<td>McCormick envelopes of x_a x_b over a box (four inequalities; a secant and three tangents for a square), and a lower bound from ANY LP multipliers by weak duality, so an LP solved to tolerance can only weaken the node bound</td>
+<td>McCormick, <em>Computability of global solutions to factorable nonconvex programs: Part I</em>, Math. Programming 10 (1976); Al-Khayyal &amp; Falk, <em>Jointly constrained biconvex programming</em>, Math. Oper. Res. 8 (1983); Neumaier &amp; Shcherbina, <em>Safe bounds in linear and mixed-integer linear programming</em>, Math. Programming 99 (2004)</td>
+<td><code>src/global/relaxation.cpp</code></td>
+</tr>
+<tr>
+<td>Feasibility-based bound tightening over rows with products, and over objective &lt;= incumbent, with outward-relaxed bounds</td>
+<td>Belotti, Lee, Liberti, Margot &amp; Wachter (2009), above, sec. 3</td>
+<td><code>src/global/fbbt.cpp</code></td>
+</tr>
+<tr>
+<td>Upper bounds for the global search: the alternating LP (fix one side of a bipartite product graph, solve the LP in the rest, alternate; a vertex cover when the graph is not bipartite), started from the relaxation point and from the factor values that make its products exact; every point re-checked against the original rows</td>
+<td>Haverly, <em>Studies of the behavior of recursion for the pooling problem</em>, ACM SIGMAP Bulletin 25 (1978); Audet, Brimberg, Hansen, Le Digabel &amp; Mladenovic, <em>Pooling problem: alternate formulations and solution methods</em>, Management Science 50 (2004)</td>
+<td><code>src/global/local_search.cpp</code></td>
+</tr>
+<tr>
+<td>QCMATRIX quadratic rows in MPS (full symmetric matrix, no factor 1/2; (i, j) and (j, i) folded into one product)</td>
+<td>IBM ILOG CPLEX file-format reference, QCMATRIX section; Gurobi reference manual, MPS format</td>
+<td><code>src/io/mps_quadratic.cpp</code>, <code>tools/verify_solution_mps.py</code></td>
+</tr>
+<tr>
+<td>Lifted knapsack cover cuts at the root, exact sequential lifting through a 0/1 knapsack dynamic programme (#159; <code>--option enable_root_cuts=true</code>, off by default by measurement)</td>
+<td>Balas, <em>Facets of the knapsack polytope</em>, Math. Programming 8 (1975); Wolsey, <em>Faces for a linear inequality in 0-1 variables</em>, ibid.; Zemel, <em>Easily computable facets of the knapsack polytope</em>, Math. Oper. Res. 14 (1989); Crowder, Johnson &amp; Padberg, Oper. Res. 31 (1983); Gu, Nemhauser &amp; Savelsbergh, INFORMS J. Computing 10 (1998)</td>
+<td><code>src/mip/cuts.cpp</code></td>
+</tr>
+<tr>
+<td>LP engine selection behind <code>algorithm=auto</code> (#284): a rule table on rows, nonzeros and the presence of a starting basis, every threshold tied to a CSV in <code>bench/results/</code>; a selected interior point that declines falls back to the dual simplex</td>
+<td>no algorithm: a policy; the measurements are in <code>docs/BENCHMARKS.md</code> sections 1a and 1f</td>
+<td><code>src/core/engine_selection.cpp</code></td>
+</tr>
+<tr>
+<td>Mixed-integer rounding (MIR) cuts at the root from single model rows: bound substitution to the nearer bound, divisors 1 and the fractional integer coefficients, the most violated member kept (#221; part of <code>enable_root_cuts</code>, <code>enable_mir_cuts</code> isolates the family)</td>
+<td>Nemhauser &amp; Wolsey, <em>A recursive procedure to generate all cuts for 0-1 mixed integer programs</em>, Math. Programming 46 (1990); Marchand &amp; Wolsey, <em>Aggregation and mixed integer rounding to solve MIPs</em>, Oper. Res. 49 (2001)</td>
+<td><code>src/mip/mir_cuts.cpp</code></td>
+</tr>
+<tr>
+<td>c-MIR (#498; <code>mir_cmir</code>, off by default): each continuous column of an MIR base row substituted by its closest simple or variable bound (x &lt;= u y + c or x &gt;= l y + c, read off two-nonzero rows), divisors 1 and</td>
+<td>a_j</td>
+<td>of the integer columns strictly inside their bounds, then delta/2, /4, /8 after the best, complementation of the integer columns nearest their midpoint, the most efficacious cut kept; coefficients under the zero drop paid for over the global box</td>
+</tr>
+<tr>
+<td>Flow cover cuts for the fixed-charge structure: variable upper bounds read off two-nonzero rows x &lt;= u y, a cover of the switched inflows chosen at the LP point, each outflow on the right in its smaller form, unlifted; validity checked in exact arithmetic over every switch assignment (#419; <code>enable_flow_cover_cuts</code>, off by default)</td>
+<td>Padberg, Van Roy &amp; Wolsey, <em>Valid linear inequalities for fixed charge problems</em>, Oper. Res. 33 (1985); Gu, Nemhauser &amp; Savelsbergh, <em>Lifted flow cover inequalities for mixed 0-1 integer programs</em>, Math. Programming 85 (1999), for the lifting not built</td>
+<td><code>src/mip/flow_cover_cuts.cpp</code></td>
+</tr>
+<tr>
+<td>Implied-bound cuts: on a row with one continuous and one binary column, the line through the continuous column's bounds at the binary's two values, each capped by the column's own bound; tighter than the row exactly when a cap binds; both sides of a ranged row, case bounds widened by the feasibility tolerance (#499; <code>mip_implied_bound_cuts</code>, off by default)</td>
+<td>Savelsbergh, <em>Preprocessing and probing techniques for mixed integer programming problems</em>, ORSA J. Computing 6 (1994); Achterberg, <em>Constraint Integer Programming</em>, PhD thesis, TU Berlin (2007), sec. 8.3</td>
+<td><code>src/mip/implied_bound_cuts.cpp</code></td>
+</tr>
+<tr>
+<td>Activity-based bound propagation in synchronous (Jacobi) rounds: every row read against the bounds the round began with, each column taking the tightest implied bound, integer bounds rounded inward, to a fixpoint or a round cap; a CPU reference and a CUDA version (one thread per row, one per column, atomic min/max, explicit round-to-nearest arithmetic so no fused multiply-add) that return identical bounds (#510; <code>gpu_domain_prop</code>, off by default, at the MIP root)</td>
+<td>Savelsbergh, <em>Preprocessing and probing techniques for mixed integer programming problems</em>, ORSA J. Computing 6 (1994); Sofranac, Gleixner &amp; Pokutta, <em>Accelerated domain propagation for mixed-integer linear programs on GPUs</em>, arXiv:2009.07785 (2020), Algorithm 1</td>
+<td><code>src/mip/domain_propagation.cpp</code>, <code>src/gpu/domain_prop.cu</code></td>
+</tr>
+<tr>
+<td>Cut selection: score by efficacy, objective parallelism and integer support, a greedy pick under a per-round cap with an orthogonality filter against the round's chosen set, the rest kept waiting for the next round (#415; <code>cut_max_per_round</code>, <code>cut_max_parallelism</code>)</td>
+<td>Wesselmann &amp; Suhl, <em>Implementing cutting plane management and selection techniques</em>, technical report, University of Paderborn (2012); Achterberg, <em>Constraint Integer Programming</em>, thesis, TU Berlin (2007), ch. 8</td>
+<td><code>src/mip/cut_selection.cpp</code></td>
+</tr>
+<tr>
+<td>Root separation loop (#495; <code>root_cut_loop</code>, off by default): after the first root round, separate every enabled family again at the new LP point (Gomory from the new basis, the waiting cuts re-offered), select, append, re-solve warm with the dual simplex, and stop when the last 3 rounds moved the bound by at most 1e-3 of the gap (or of max(1,</td>
+<td>bound</td>
+<td>) with no incumbent), after 20 rounds, at 20 percent of the time limit, on a round that takes nothing, or once the loop has added max(100, m) rows in all, m the rows before the first cut (the row budget, a round that would pass it taking its best cuts up to it); one log line per round</td>
+</tr>
+<tr>
+<td>Dual steepest-edge pricing (#411; <code>pricing=dual-steepest-edge</code>, not the default until its A/B): the leaving row priced by the exact squared norm of its row of the basis inverse, maintained through the Forrest-Goldfarb update with one extra FTRAN per pivot, the leaving row's norm re-read from the iteration's own BTRAN, exact at the start on warm bases up to 2,000 rows; the maintained weights are held to recomputed norms to a relative 1e-9 in the unit test</td>
+<td>Forrest &amp; Goldfarb, <em>Steepest-edge simplex algorithms for linear programming</em>, Math. Programming 57 (1992); Koberstein, <em>The dual simplex method, techniques for a fast and stable implementation</em>, thesis, Universitaet Paderborn (2005), ch. 5</td>
+<td><code>src/simplex/dual_simplex.cpp</code></td>
+</tr>
+<tr>
+<td>Gomory mixed-integer cuts at the root, from tableau rows reconstructed off the final basis (#159)</td>
+<td>Gomory, <em>An algorithm for the mixed integer problem</em>, RAND RM-2597 (1960); Balas, Ceria, Cornuéjols &amp; Natraj, <em>Gomory cuts revisited</em>, Oper. Res. Letters 19 (1996); Marchand &amp; Wolsey, <em>Aggregation and mixed integer rounding to solve MIPs</em>, Oper. Res. 49 (2001)</td>
+<td><code>src/mip/cuts.cpp</code></td>
+</tr>
+<tr>
+<td>GMI safety (#496 item 4; <code>gmi_safety</code>, off by default): no Gomory cut from a source row whose basic value is within 0.01 of an integer (every coefficient is divided by f0 or 1 - f0), and every emitted cut's right-hand side loosened by 1e-9 + 1e-9 abs(rhs); the maximum dynamism is the filter's existing coefficient-ratio cap of 1e6, applied to every family</td>
+<td>Cornuejols, Margot &amp; Nannicini, <em>On the safety of Gomory cut generators</em>, Math. Programming Computation 5 (2013)</td>
+<td><code>src/mip/cuts.cpp</code></td>
+</tr>
+<tr>
+<td>Bound rounding on integral rows; cut filtering by density, coefficient range and violation, duplicates dropped</td>
+<td>Chvátal, <em>Edmonds polytopes and a hierarchy of combinatorial problems</em>, Discrete Math. 4 (1973); Achterberg, <em>Constraint Integer Programming</em> (thesis, 2007), ch. 8</td>
+<td><code>src/mip/cuts.cpp</code></td>
+</tr>
+<tr>
+<td>Cut pool (#497; <code>mip_cut_pooling</code>, off by default): a cut row freed by age (<code>mip_cut_age_limit</code> consecutive node solves with its slack basic, default 50) keeps its cut, and when a later node's LP point violates it by more than the cut filter's violation tolerance its right-hand side is re-imposed and the node re-solved from its own basis. Rows are freed in place, not deleted, so every stored basis stays valid. Fuzzed in ctest under the debug-solution check (#500) at an age limit of 1 on binary knapsack and covering instances whose unique optimum is found by enumeration, with the option off as the control</td>
+<td>Achterberg, <em>Constraint Integer Programming</em> (thesis, TU Berlin, 2007), ch. 8</td>
+<td><code>src/mip/branch_and_bound_cuts.cpp</code>, <code>tests/unit/test_debug_solution.cpp</code></td>
+</tr>
+<tr>
+<td>Cut validity gate: every family checked in exact arithmetic against the rational oracle's optimum, with a deliberately invalid cut as the negative control</td>
+<td>as above, in exact arithmetic</td>
+<td><code>tests/unit/test_cuts.cpp</code></td>
+</tr>
+<tr>
+<td>Debug-solution check (#500; <code>--option debug_solution=&lt;file&gt;</code>, off by default): a known feasible or optimal point read by column name, and every presolve reduction, integral row rounding, cut candidate and cut row (root and tree), node propagation, node LP bound and reduced-cost fixing checked against it; the first that removes it aborts naming the family, round, node and row. Fuzzed in ctest on random and binary MILPs whose unique optimum is found by exhaustive enumeration, with every family and reduction on, and a planted invalid cut and a planted invalid presolve reduction as the negative controls</td>
+<td>The debug-solution mechanism as solver user manuals describe it, implemented from that description; validity of an inequality as in Nemhauser &amp; Wolsey, <em>Integer and Combinatorial Optimization</em> (Wiley, 1988), ch. II.1</td>
+<td><code>src/mip/debug_solution.cpp</code>, <code>src/mip/branch_and_bound_debug.cpp</code>, <code>tests/unit/test_debug_solution.cpp</code></td>
+</tr>
+<tr>
+<td>Certificate of infeasibility (Farkas): row multipliers whose aggregate no point in the column box satisfies, checked against the ORIGINAL model before it is published (#191)</td>
+<td>Farkas, J., <em>Theorie der einfachen Ungleichungen</em>, J. reine angew. Math. 124 (1902); Schrijver, <em>Theory of Linear and Integer Programming</em> (1986), section 7.3</td>
+<td><code>src/core/certificate.cpp</code>, <code>include/sankhya/certificate.hpp</code></td>
+</tr>
+<tr>
+<td>Irreducible Infeasible Subsystem (IIS): deletion filter starting from the Farkas certificate support (O(k) re-solves where k is the number of named constraints); each candidate is freed and re-solved — redundant if still infeasible, necessary otherwise (#217)</td>
+<td>Chinneck, J.W. and Dravnieks, E.W., <em>Locating minimal infeasible constraint sets in linear programs</em>, ORSA Journal on Computing 3(2), 1991, pp. 157–168</td>
+<td><code>src/core/iis.cpp</code>, <code>include/sankhya/model.hpp</code></td>
+</tr>
+<tr>
+<td>Certificate of unboundedness: a recession direction no bound blocks along which the objective strictly improves, reported with the feasible point it starts from (#191)</td>
+<td>Schrijver, ibid., section 8.2; Chvatal, <em>Linear Programming</em> (1983), ch. 3 on the ratio test that exhibits the ray</td>
+<td><code>src/core/certificate.cpp</code>, <code>src/simplex/primal_simplex.cpp</code></td>
+</tr>
+<tr>
+<td>Convex QP by a primal-dual proximal method with a forward step for the smooth 0.5 x'Qx term (#55; the LP engine's iteration with the gradient added)</td>
+<td>Condat, <em>A primal-dual splitting method for convex optimization involving Lipschitzian, proximable and linear composite terms</em>, J. Optim. Theory Appl. 158 (2013); Vũ, <em>A splitting algorithm for dual monotone inclusions involving cocoercive operators</em>, Adv. Comput. Math. 38 (2013); Chambolle &amp; Pock (2011) for the Q = 0 case</td>
+<td><code>src/qp/qp_condat_vu.cpp</code></td>
+</tr>
+<tr>
+<td>Convex QP by a proximal (primal-dual regularized) interior point (#490, <code>qp_algorithm=ipm</code>, off by default): rows as equalities with slack columns, Mehrotra predictor-corrector with sigma = (mu_aff/mu)^3 and fraction-to-boundary 0.995, proximal centres at the current iterate, the regularized quasi-definite augmented system factored by the signed LDL^T with the AMD ordering (<code>SparseLdl::factorize_quasidefinite</code>)</td>
+<td>Friedlander &amp; Orban, <em>A primal-dual regularized interior-point method for convex quadratic programs</em>, Math. Program. Comput. 4 (2012); Schwan, Jiang, Kuhn &amp; Jones, <em>PIQP: a proximal interior-point quadratic programming solver</em>, arXiv 2304.00290 (2023), paper only; Mehrotra, SIAM J. Optim. 2(4) (1992); Vanderbei, <em>Symmetric quasidefinite matrices</em>, SIAM J. Optim. 5(1) (1995)</td>
+<td><code>src/qp/qp_ipm.cpp</code>, <code>src/qp/qp_ipm_system.cpp</code>, <code>src/la/ldl.cpp</code></td>
+</tr>
+<tr>
+<td>Convexity decided before any arithmetic: LDL^T without interchanges on sense · Q, a negative pivot returned as the certificate; dense, and above 2000 columns it reports unverified rather than guessing</td>
+<td>Golub &amp; Van Loan, <em>Matrix Computations</em> (4th ed.), section 4.1; Higham, <em>Accuracy and Stability of Numerical Algorithms</em> (2nd ed.), ch. 10</td>
+<td><code>src/qp/convexity.cpp</code></td>
+</tr>
+<tr>
+<td>Presolve: empty, singleton, redundant and forcing rows, fixed and empty columns (#43), free column singletons and doubleton equations (#92), dual fixing (#412; <code>presolve_dual_fixing</code>, off by default: a column whose entries can only push their rows away from a finite bound one way, and whose cost never rewards that way, is fixed at the other bound and replayed nonbasic there), parallel rows (#412; <code>presolve_parallel_rows</code>, off by default: a row that is a scalar multiple of an earlier one folds its scaled bounds into that row and goes, its dual handed back to it when the bound that binds was its own), implied-integer detection (#513; <code>presolve_implied_integer</code>, off by default until an A/B on main; exact integer data only, and only in a model that already has integer columns: a continuous variable in an equality row where every other live variable is already integer with an integer coefficient and the remaining coefficient divides both the RHS and all other coefficients is promoted to integer and treated as such by the engine; runs to a fixpoint); every reduction pushes a record and postsolve replays the stack in reverse, with the round-trip asserted against the rational oracle</td>
+<td>Brearley, Mitra &amp; Williams, <em>Analysis of mathematical programming problems prior to applying the simplex algorithm</em>, Math. Programming 8 (1975); Andersen &amp; Andersen, <em>Presolving in linear programming</em>, Math. Programming 71 (1995); Achterberg et al., <em>Presolve reductions in mixed integer programming</em>, INFORMS J. Computing 32 (2020)</td>
+<td><code>src/presolve/presolve.cpp</code></td>
+</tr>
+<tr>
+<td>Presolve, bound propagation from row activity (#485; <code>presolve_bound_propagation</code>, off by default): on each live inequality row with two or more columns, each column's bounds implied by the row's bounds and the activity range of the other columns, loosened by a bound on its own rounding error ((terms + 3) eps of the row's magnitude, Higham's gamma_n; none for exact integer data), rounded inward on an integer column, written only on a <code>kPresolveBoundMinStep</code> improvement; a column singleton in an inequality row and a doubleton inequality are special cases; rows that are combinations of original rows (fill-in, parallel merge) and doubleton-fold columns are left alone. Each tightened bound is a <code>kImpliedBound</code> record: when the engine ends a column on it, postsolve moves the reduced cost onto the implying row (y_i += d_j / a_ij, in the dual passes' fixed point, a bound propagated from a propagated bound undone first) and restores a basis of the original model around the column</td>
+<td>Brearley, Mitra &amp; Williams, <em>Analysis of mathematical programming problems prior to applying the simplex algorithm</em>, Math. Programming 8 (1975); Andersen &amp; Andersen, <em>Presolving in linear programming</em>, Math. Programming 71 (1995); Higham, <em>Accuracy and Stability of Numerical Algorithms</em> (2nd ed.), sec. 3.1 (gamma_n); Cederberg and Boyd, <em>Presolve for first-order LP methods</em>, arXiv 2604.23951 (paper only, judgement call 13)</td>
+<td><code>src/presolve/presolve.cpp</code>, <code>src/presolve/implied_bounds.cpp</code></td>
+</tr>
+<tr>
+<td>Presolve, coefficient tightening and big-M strengthening on integer rows (#511; <code>presolve_coefficient_tightening</code>, off by default): on a row whose maximum activity M over the box exceeds its bound b by g = M - b, an integer column's coefficient larger than g is reduced to g and b moved to match, so x &lt;= M y with x &lt;= U &lt; M becomes x &lt;= U y; alternates with activity-based bound propagation whose bounds are written into the reduced model; no postsolve record, the integer points are unchanged, checked by enumerating every integer point of random models before and after and against the exact MILP oracle</td>
+<td>Savelsbergh, <em>Preprocessing and probing techniques for mixed integer programming problems</em>, ORSA J. Computing 6(4) (1994); Achterberg, Bixby, Gu, Rothberg &amp; Weninger, <em>Presolve reductions in mixed integer programming</em>, INFORMS J. Computing 32(2) (2020), sec. 3</td>
+<td><code>src/presolve/coef_tightening.cpp</code></td>
+</tr>
+<tr>
+<td>Binary probing with a clique table (#512; <code>presolve_probing</code>, off by default): each binary, most constrained first within a work limit, fixed to 0 and to 1 with the rows propagated; one value infeasible fixes the other, a bound both values agree on is tightened, a binary one value fixes is a conflict between two literals; conflicts merged greedily into maximal cliques; the fixings and tightenings become the reduced model's bounds, and in the search the literal conflicts (complemented literals included) join the graph the clique separator reads, a clique over literals giving sum x_j + sum (1 - x_k) &lt;= 1; every deduction checked against every integer point of random models</td>
+<td>Savelsbergh, <em>Preprocessing and probing techniques for mixed integer programming problems</em>, ORSA J. Computing 6(4) (1994); Atamturk, Nemhauser &amp; Savelsbergh, <em>Conflict graphs in solving integer programming problems</em>, European J. Operational Research 121 (2000); Achterberg, Bixby, Gu, Rothberg &amp; Weninger, <em>Presolve reductions in mixed integer programming</em>, INFORMS J. Computing 32(2) (2020)</td>
+<td><code>src/presolve/probing.cpp</code>, <code>src/mip/combinatorial_cuts.cpp</code></td>
+</tr>
+<tr>
+<td>Root diving heuristic: fix the least-fractional integer column, re-solve, to a bounded depth, so the search starts with an incumbent (#25)</td>
+<td>Achterberg, <em>Constraint Integer Programming</em> (thesis, 2007), ch. 6; Berthold, <em>Primal heuristics for mixed integer programs</em> (diploma thesis, TU Berlin, 2006)</td>
+<td><code>src/mip/branch_and_bound.cpp</code></td>
+</tr>
+<tr>
+<td>Singular-basis repair: the LU reports dependent columns by position, the simplex evicts them for their logicals, and a budget of stalled repairs stops a solve that is being carried by repair alone (#34, #174)</td>
+<td>Maros, <em>Computational Techniques of the Simplex Method</em>, section 9.4; Suhl &amp; Suhl, <em>Computing sparse LU factorizations for large-scale linear programming bases</em>, ORSA J. Computing 2 (1990)</td>
+<td><code>src/la/lu.cpp</code>, <code>src/simplex/simplex_core.hpp</code></td>
+</tr>
+<tr>
+<td>Nonlinear expression DAG: hash-consed construction, safe simplification, constant folding (#296)</td>
+<td>Standard common-subexpression elimination by value numbering; written from the definition</td>
+<td><code>src/nlp/expression.cpp</code></td>
+</tr>
+<tr>
+<td>Exact gradients (reverse-mode AD) and Hessians (forward-over-reverse, second-order adjoints) (#296)</td>
+<td>Griewank &amp; Walther, <em>Evaluating Derivatives</em>, 2nd ed. (SIAM, 2008), ch. 3 and 5</td>
+<td><code>src/nlp/derivatives.cpp</code></td>
+</tr>
+<tr>
+<td>Convexity by composition rules over interval ranges (#296)</td>
+<td>Grant, Boyd &amp; Ye, "Disciplined convex programming", in <em>Global Optimization</em> (Springer, 2006); Boyd &amp; Vandenberghe, <em>Convex Optimization</em> (2004), sec. 3.2.4</td>
+<td><code>src/nlp/convexity.cpp</code></td>
+</tr>
+<tr>
+<td>Structural sparsity of an expression's Hessian by index-domain propagation of nonlinear interactions (NLP stage 1): a product adds domain(a) x domain(b), a quotient also domain(b)^2, a power or a unary function domain(a)^2, a sum or negation nothing; a superset of every numerical pattern, so the factorization's symbolic analysis runs once</td>
+<td>Walther, "Computing sparse Hessians with automatic differentiation", <em>ACM Transactions on Mathematical Software</em> 34(1) (2008); Griewank &amp; Walther, <em>Evaluating Derivatives</em>, 2nd ed. (SIAM, 2008), ch. 7</td>
+<td><code>src/nlp/sparsity.cpp</code></td>
+</tr>
+<tr>
+<td>Compiled expression tapes: each expression renumbered onto its own tape, gradient by one reverse sweep, Hessian by forward-over-reverse swept only over the columns of its structural pattern; the per-node value and derivative rules shared with the graph evaluator in one header, sin and cos added (NLP stage 1)</td>
+<td>Griewank &amp; Walther, <em>Evaluating Derivatives</em>, 2nd ed. (SIAM, 2008), ch. 2, 3 and 5</td>
+<td><code>src/nlp/tape.cpp</code>, <code>src/nlp/derivative_rules.hpp</code></td>
+</tr>
+<tr>
+<td>A nonlinear model as the smooth NLP min f(x) s.t. g_L &lt;= g(x) &lt;= g_U, x_L &lt;= x &lt;= x_U, with the Jacobian on a fixed row pattern and the Hessian of the Lagrangian sigma d2f + sum lambda_i d2g_i on a fixed lower-triangle pattern (NLP stage 1)</td>
+<td>The problem form of Wachter &amp; Biegler, "On the implementation of an interior-point filter line-search algorithm for large-scale nonlinear programming", <em>Mathematical Programming</em> 106(1) (2006)</td>
+<td><code>src/nlp/nlp_problem.cpp</code></td>
+</tr>
+<tr>
+<td>Reader for AMPL's text <code>.nl</code> format: header, the C/O/V/J/G/r/b/x/d/k/S segments, expression graphs in prefix notation read iteratively, integer columns from the variable-ordering tables; non-smooth and logical operators, imported functions, complementarity and the binary form refused by name (NLP stage 1)</td>
+<td>Gay, "Writing .nl Files", Sandia report SAND2005-7907P (2005), secs. 2-4 and Tables 4, 6, 8, 11, 13, 17; Gay, "Hooking Your Solver to AMPL" (AT&amp;T Bell Laboratories, 1993, rev. 1997), Tables 3 and 4</td>
+<td><code>src/nlp/nl_reader.cpp</code></td>
+</tr>
+<tr>
+<td>Primal-dual interior-point method with a filter line search for general smooth NLP (NLP stage 2): barrier subproblems with the monotone mu update, the Newton step of the primal-dual equations, fraction to the boundary, the multiplier safeguard, the filter with switching condition and Armijo test, the smallest step, the least-squares multiplier estimate and the bound push of the start. No second-order correction, no watchdog</td>
+<td>Wachter &amp; Biegler, "On the implementation of an interior-point filter line-search algorithm for large-scale nonlinear programming", <em>Mathematical Programming</em> 106(1) (2006), Algorithm A, sec. 2-3, eq. 5-23, 36</td>
+<td><code>src/nlp/filter_ipm.cpp</code>, <code>src/nlp/filter_ipm_step.cpp</code></td>
+</tr>
+<tr>
+<td>Feasibility restoration phase: the l1 minimum-violation problem with a proximity term, started from the closed-form p, n of eq. 33, solved by the same method; a restoration that converges with the violation positive reports local infeasibility</td>
+<td>Wachter &amp; Biegler (2006), sec. 3.3, eq. 29-33</td>
+<td><code>src/nlp/filter_ipm_restoration.cpp</code>, <code>src/nlp/barrier_nlp.cpp</code></td>
+</tr>
+<tr>
+<td>Inertia correction (Algorithm IC) with the inertia CERTIFIED by the quasidefinite LDL^T: no pivot replaced means an exact factorization whose D has n positive and m negative entries, hence the matrix's inertia by Sylvester's law; an uncertified factorization is treated as wrong inertia. The (2,2) regularization is undone by iterative refinement</td>
+<td>Wachter &amp; Biegler (2006), sec. 3.1; Vanderbei, "Symmetric quasidefinite matrices", <em>SIAM J. Optim.</em> 5(1) (1995); Sylvester's law of inertia; Golub &amp; Van Loan, <em>Matrix Computations</em>, 4th ed., sec. 3.5.3</td>
+<td><code>src/nlp/nlp_kkt.cpp</code></td>
+</tr>
+<tr>
+<td>KKT check of a nonlinear model at a point in the model's own terms (the LP measures of <code>tools/verify_solution.py</code> with the gradient and Jacobian at x in place of c and A), which decides <code>optimal</code> (a KKT point of a model proved convex) versus <code>locally_optimal</code>, and the independent Python checker with its own .nl reader and forward-mode dual-number derivatives</td>
+<td>Nocedal &amp; Wright, <em>Numerical Optimization</em>, 2nd ed. (2006), thm. 12.1 and 12.6; Griewank &amp; Walther (2008), ch. 3</td>
+<td><code>src/nlp/nlp_kkt_check.cpp</code>, <code>src/nlp/nlp_solve.cpp</code>, <code>tools/verify_solution_nl.py</code>, <code>tools/verify_solution_nlp.py</code></td>
+</tr>
+<tr>
+<td>NLP-based branch and bound for convex MINLP (NLP stage 3): best-bound node order, each node's continuous relaxation solved by the NLP interior point, dichotomy branching on the most fractional integer column, an integral relaxation taken as a candidate after fixing the integers and re-solving the rest; the MIP gap test; run only when the relaxation is proved convex, refused otherwise (a heuristic, never <code>optimal</code>, under <code>nlp_assume_convex</code>)</td>
+<td>Gupta &amp; Ravindran, "Branch and bound experiments in convex nonlinear integer programming", <em>Management Science</em> 31(12) (1985); Dakin, "A tree-search algorithm for mixed integer programming problems", <em>The Computer Journal</em> 8(3) (1965)</td>
+<td><code>src/nlp/minlp_bnb.cpp</code></td>
+</tr>
+<tr>
+<td>Certified pruning of an infeasible node: the convex minimum-violation problem min sum(p + n) s.t. L &lt;= g(x) + p - n &lt;= U over the node's box, solved to a global optimum; a positive minimum proves the node empty</td>
+<td>The l1 feasibility (phase-one) problem, e.g. Nocedal &amp; Wright, <em>Numerical Optimization</em>, 2nd ed. (2006), sec. 17.2 on exact l1 penalties; global because convex (Boyd &amp; Vandenberghe 2004, sec. 4.2.2)</td>
+<td><code>src/nlp/minlp_bnb.cpp</code></td>
+</tr>
+<tr>
+<td>Optimality-based bound tightening (OBBT) at the root (#515): for each non-fixed variable solve min/max x_j over the LP relaxation augmented with c'x &lt;= incumbent - epsilon, writing tighter bounds back before the search begins</td>
+<td>Gleixner, Berthold, Muller and Weltge, <em>Three enhancements for optimization-based bound tightening</em>, J. Global Optimization 67 (2017), sec. 2</td>
+<td><code>src/mip/obbt.cpp</code></td>
+</tr>
+<tr>
+<td>Strong-branch fixing: a probe that proves one side of a column infeasible fixes the column to the other side for the whole subtree (the fixes hang under the children as never-opened link nodes), the node LP is re-solved and the decision retaken, for a bounded number of rounds; both sides infeasible fathoms the node (<code>mip_strong_branch_fix</code>, off by default, #502)</td>
+<td>Achterberg, Koch &amp; Martin, <em>Branching rules revisited</em>, Operations Research Letters 33 (2005), 42–54; Achterberg, <em>Constraint Integer Programming</em> (thesis, TU Berlin, 2007), ch. 5</td>
+<td><code>src/mip/branch_and_bound_fixpoint.cpp</code>, <code>src/mip/branch_and_bound_node.cpp</code></td>
+</tr>
+<tr>
+<td>Incremental node propagation to a fixpoint: a worklist of the rows whose columns' bounds moved, under a work budget, in place of three full sweeps (<code>mip_incremental_propagation</code>, off by default, #502)</td>
+<td>Achterberg, <em>Constraint Integer Programming</em> (thesis, TU Berlin, 2007), ch. 7; Savelsbergh, <em>Preprocessing and probing techniques for mixed integer programming problems</em>, ORSA J. Computing 6(4), 1994</td>
+<td><code>src/mip/branch_and_bound_fixpoint.cpp</code></td>
+</tr>
+<tr>
+<td>Binary-heap open list: O(log n) next-node selection for best-bound and best-estimate, with the linear scan's key and tie-break so the search is unchanged (<code>mip_heap_open_list</code>, off by default, #502)</td>
+<td>Achterberg, <em>Constraint Integer Programming</em> (thesis, TU Berlin, 2007), ch. 6; Cormen, Leiserson, Rivest &amp; Stein, <em>Introduction to Algorithms</em>, 3rd ed. (2009), ch. 6</td>
+<td><code>src/mip/branch_and_bound_fixpoint.cpp</code>, <code>src/mip/branch_and_bound_node.cpp</code></td>
+</tr>
+</tbody>
+</table></div>
+<p>Of the work once listed here as "Phases 6 onwards", restarted PDHG, the Mehrotra
+predictor-corrector, Gomory mixed-integer and lifted cover cuts, Devex pricing (#66, the
+default) and the Harris ratio test (#67, opt-in) have all landed and are in the table
+above. Not landed: the Forrest-Tomlin update (Forrest &amp; Tomlin 1972; what ships is the
+product form of the inverse with refactorization forced by an accuracy check),
+mixed-integer rounding cuts, and cuts below the root.</p>
+<hr>
+<h2 id="4-machine-checkable-evidence">4. Machine-checkable evidence</h2>
+<h3 id="41-what-the-binary-actually-links-against">4.1 What the binary actually links against</h3>
+<p>Regenerated at <strong>Phase 2</strong>, commit <code>12fa98b</code>. The Phase 1 text predicted that zlib would
+appear here once the gzip MPS path became real; it now does, on both platforms, which is
+what that prediction was for.</p>
+<p>Windows 11, <strong>GCC 16.1.0 (MSYS2 UCRT64), Release</strong>:</p>
+<pre><code>$ objdump -p build/sankhya.exe | grep &quot;DLL Name&quot; | sort -u
+        DLL Name: KERNEL32.dll
+        DLL Name: api-ms-win-crt-convert-l1-1-0.dll
+        DLL Name: api-ms-win-crt-environment-l1-1-0.dll
+        DLL Name: api-ms-win-crt-filesystem-l1-1-0.dll
+        DLL Name: api-ms-win-crt-heap-l1-1-0.dll
+        DLL Name: api-ms-win-crt-locale-l1-1-0.dll
+        DLL Name: api-ms-win-crt-math-l1-1-0.dll
+        DLL Name: api-ms-win-crt-private-l1-1-0.dll
+        DLL Name: api-ms-win-crt-runtime-l1-1-0.dll
+        DLL Name: api-ms-win-crt-stdio-l1-1-0.dll
+        DLL Name: api-ms-win-crt-string-l1-1-0.dll
+        DLL Name: api-ms-win-crt-time-l1-1-0.dll
+        DLL Name: api-ms-win-crt-utility-l1-1-0.dll
+        DLL Name: zlib1.dll
+</code></pre>
+<p>The Windows C runtime plus <strong>zlib1.dll</strong>. Note that the <code>-static</code> flag added in Phase 1 does
+not cover this one: MSYS2 provides zlib as an import library (<code>libz.dll.a</code>), so the Windows
+<code>.exe</code> is no longer self-contained. That is recorded rather than fixed. Windows is the
+convenience build; Linux is what CI gates and what the claim rests on. It is logged as
+judgement call 7 below.</p>
+<p>The Linux build is the authoritative one. Produced by the <code>provenance</code> job on
+<strong>ubuntu-latest, GCC (runner default), Release</strong>, run 32867892122:</p>
+<pre><code>$ ldd build/sankhya
+        linux-vdso.so.1 (0x00007f2012bf2000)
+        libz.so.1 =&gt; /lib/x86_64-linux-gnu/libz.so.1 (0x00007f2012b07000)
+        libstdc++.so.6 =&gt; /lib/x86_64-linux-gnu/libstdc++.so.6 (0x00007f2012800000)
+        libm.so.6 =&gt; /lib/x86_64-linux-gnu/libm.so.6 (0x00007f2012717000)
+        libgcc_s.so.1 =&gt; /lib/x86_64-linux-gnu/libgcc_s.so.1 (0x00007f2012ad9000)
+        libc.so.6 =&gt; /lib/x86_64-linux-gnu/libc.so.6 (0x00007f2012400000)
+        /lib64/ld-linux-x86-64.so.2 (0x00007f2012bf4000)
+
+$ ldd build/sankhya | grep -Ei 'cbc|clp|highs|scip|soplex|glpk|lpsolve|osqp|ortools|gurobi|cplex|xpress'
+OK: no solver library is linked
+</code></pre>
+<p>zlib, the C++ runtime, libc and libm - and, on a build with <code>SANKHYA_WITH_OPENMP</code> on (the
+default, #57), the compiler's own OpenMP runtime, <code>libgomp</code> with GCC, which the listing
+above predates. Nothing else.</p>
+<p>That grep is a <strong>gate</strong>, not a comment: the <code>provenance</code> job in <code>.github/workflows/ci.yml</code>
+exits non-zero if any linked library name matches a known solver. The claim cannot silently
+rot.</p>
+<h3 id="42-the-full-link-line">4.2 The full link line</h3>
+<p>Asked of Ninja directly so it cannot drift from what was really executed.</p>
+<p>Linux, from the CI <code>provenance</code> job (run 32867892122):</p>
+<pre><code>$ ninja -C build -t commands sankhya | tail -1
+/usr/bin/c++ -O3 -DNDEBUG -Wl,--dependency-file=CMakeFiles/sankhya-cli.dir/link.d     CMakeFiles/sankhya-cli.dir/apps/sankhya-cli/main.cpp.o     -o sankhya     libsankhya_core.a     _deps/fmt-build/libfmt.a     /usr/lib/x86_64-linux-gnu/libz.so
+</code></pre>
+<p>Windows, same command on the local tree:</p>
+<pre><code>$ ninja -C build -t commands sankhya-cli | tail -1
+g++ -O3 -DNDEBUG -static-libgcc -static-libstdc++ -static     CMakeFiles/sankhya-cli.dir/apps/sankhya-cli/main.cpp.obj     -o sankhya.exe     -Wl,--out-implib,libsankhya.dll.a     libsankhya_core.a     _deps/fmt-build/libfmt.a     C:/msys64/ucrt64/lib/libz.dll.a
+</code></pre>
+<p>Three artifacts on each platform: our own core, fmt, and the system zlib. CLI11 and
+nlohmann/json are header-only and appear as includes rather than archives; they are in the
+dependency table above and visible in <code>CMakeLists.txt</code>.</p>
+<h3 id="42b-the-opt-in-cudss-build-489">4.2b The opt-in cuDSS build (#489)</h3>
+<p>Not the default and not what CI gates: a build configured with <code>-DSANKHYA_ENABLE_CUDA=ON
+-DSANKHYA_CUDA_ARCHITECTURES=70 -DSANKHYA_ENABLE_CUDSS=ON -DCUDSS_ROOT=&lt;site-packages&gt;/nvidia/cu12</code>
+at commit <code>40255e2</code>, on an NVIDIA V100 box (Ubuntu 22.04, GCC 11.4.0, CMake 3.22.1, CUDA 12.4,
+driver 550.127.08), cuDSS from NVIDIA's <code>nvidia-cudss-cu12</code> 0.8.0.10 wheel. The <code>libcudss.so</code>
+the link line names is a symlink made beside the wheel's <code>libcudss.so.0</code>; without it CMake finds
+<code>libcudss.so.0</code> itself.</p>
+<pre><code>$ ninja -C build-cudss -t commands sankhya | tail -1
+/usr/bin/c++ -O3 -DNDEBUG  CMakeFiles/sankhya-cli.dir/apps/sankhya-cli/main.cpp.o -o sankhya -L/usr/local/cuda/targets/x86_64-linux/lib -Wl,-rpath,/usr/local/cuda/lib64:/usr/local/lib/python3.10/dist-packages/nvidia/cu12/lib  libsankhya_core.a  _deps/fmt-build/libfmt.a  /usr/local/cuda/lib64/libcusparse.so  /usr/local/cuda/lib64/libcudart.so  /usr/local/lib/python3.10/dist-packages/nvidia/cu12/lib/libcudss.so  /usr/lib/x86_64-linux-gnu/libz.so  /usr/lib/gcc/x86_64-linux-gnu/11/libgomp.so  /usr/lib/x86_64-linux-gnu/libpthread.a  -lcudadevrt  -lcudart_static  -lrt  -lpthread  -ldl
+
+$ ldd build-cudss/sankhya
+        linux-vdso.so.1
+        libcusparse.so.12 =&gt; /usr/local/cuda/lib64/libcusparse.so.12
+        libcudart.so.12 =&gt; /usr/local/cuda/lib64/libcudart.so.12
+        libcudss.so.0 =&gt; /usr/local/lib/python3.10/dist-packages/nvidia/cu12/lib/libcudss.so.0
+        libz.so.1 =&gt; /lib/x86_64-linux-gnu/libz.so.1
+        libgomp.so.1 =&gt; /lib/x86_64-linux-gnu/libgomp.so.1
+        libstdc++.so.6 =&gt; /lib/x86_64-linux-gnu/libstdc++.so.6
+        libm.so.6 =&gt; /lib/x86_64-linux-gnu/libm.so.6
+        libgcc_s.so.1 =&gt; /lib/x86_64-linux-gnu/libgcc_s.so.1
+        libc.so.6 =&gt; /lib/x86_64-linux-gnu/libc.so.6
+        libnvJitLink.so.12 =&gt; /usr/local/cuda/lib64/libnvJitLink.so.12
+        libpthread.so.0 =&gt; /lib/x86_64-linux-gnu/libpthread.so.0
+        librt.so.1 =&gt; /lib/x86_64-linux-gnu/librt.so.1
+        libdl.so.2 =&gt; /lib/x86_64-linux-gnu/libdl.so.2
+        /lib64/ld-linux-x86-64.so.2
+        libcublas.so.12 =&gt; /usr/local/cuda/targets/x86_64-linux/lib/libcublas.so.12
+        libcublasLt.so.12 =&gt; /usr/local/cuda/targets/x86_64-linux/lib/libcublasLt.so.12
+</code></pre>
+<p>(load addresses dropped). Against the CUDA build, three more libraries: <code>libcudss.so.0</code> itself,
+and <code>libcublas.so.12</code> and <code>libcublasLt.so.12</code>, which cuDSS loads for its dense kernels (the
+cuBLAS row of section 2 still holds for our own code: nothing in <code>src/</code> calls cuBLAS). None
+matches the solver-name grep of 4.1.</p>
+<h3 id="43-sbom">4.3 SBOM</h3>
+<p>An SPDX SBOM is generated in CI by the <code>provenance</code> job and attached as a build artifact
+(<code>sankhya-sbom.spdx.json</code>).</p>
+<hr>
+<h2 id="5-judgement-calls">5. Judgement calls</h2>
+<p>Decisions where the dependency policy needed interpretation. Per <code>ENGINEERING_RULES.md</code>, these are
+recorded rather than silently made.</p>
+<div class="table-wrap"><table class="doc-table">
+<thead>
+<tr>
+<th>#</th>
+<th>Question</th>
+<th>Decision</th>
+<th>Reasoning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Does imitating a familiar solver <em>log layout</em> (iteration / objective / primal inf / dual inf / time) cross the line?</td>
+<td>Allowed</td>
+<td>Interface familiarity, not derivation. The layout is visible in published user manuals and screenshots; no source was consulted. It makes the output readable to the industrial audience that reads such logs daily. Same reasoning as the API-shape allowance in <code>ENGINEERING_RULES.md</code>.</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Does a string-keyed option table with typed values imitate a solver's API?</td>
+<td>Allowed</td>
+<td>Explicitly permitted by <code>ENGINEERING_RULES.md</code> item 5 (API shape). The shape is create/set/solve/query with string options; the registry, parser and storage are our own.</td>
+</tr>
+<tr>
+<td>3</td>
+<td>System zlib is picked up in preference to a fetched copy. Does that weaken the provenance claim?</td>
+<td>Acceptable, and recorded</td>
+<td>zlib is a compression library under a permissive licence, present on essentially every system. The exact resolved path appears in the link line above, so which copy was used is always visible.</td>
+</tr>
+<tr>
+<td>4</td>
+<td>The Windows build links libstdc++ and libgcc <strong>statically</strong> (<code>-static</code>).</td>
+<td>Deliberate</td>
+<td>It removes a start-up failure caused by an older MinGW earlier on PATH, and it makes the dependency list above shorter and easier to audit, not longer. It has no effect on the Linux build, which CI treats as authoritative.</td>
+</tr>
+<tr>
+<td>5</td>
+<td>The MPS reader imitates the <em>file format</em> of CPLEX/Xpress inputs, and the LP reader imitates the CPLEX LP format.</td>
+<td>Allowed</td>
+<td>A file format is an interface, not an implementation. <code>ENGINEERING_RULES.md</code> item 5 covers API shape for the same reason, and reading a format everyone's solver reads is what makes us drop-in adoptable. Both readers were written from the published format specification and from the textbook reference above; <strong>no solver's reader source was consulted</strong>, which <code>ENGINEERING_RULES.md</code> calls out by name as forbidden.</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Netlib distributes its LP test set in a packed <code>emps</code> encoding, not as plain MPS, and expanding it requires the <code>emps</code> decoder Netlib ships alongside the data. Does fetching that decoder cross the red line?</td>
+<td><strong>RESOLVED — allowed, and not vendored.</strong> See row 8, which records how it is actually done.</td>
+<td>Logged as OPEN while Phase 2 was in progress, and Phase 2 correctly claimed no Netlib result at the time. It was settled when <code>bench/runners/fetch_data.py</code> was written: the decoder is DOWNLOADED AND COMPILED at fetch time rather than committed, so this repository contains no third-party source, and the sha256 of everything downloaded is recorded. <code>emps</code> is a file-format converter, not a solver, so it sits outside the red line, and <code>ENGINEERING_RULES.md</code> item 6 permits the Netlib dataset of which this is the delivery mechanism. Nothing it produces is linked into SANKHYA. The Netlib results in <code>docs/BENCHMARKS.md</code> rest on this decision. See issue #62.</td>
+</tr>
+<tr>
+<td>7</td>
+<td>The Windows <code>.exe</code> dynamically links <code>zlib1.dll</code>, so the Phase 1 claim that it is self-contained no longer holds.</td>
+<td>Recorded, not fixed</td>
+<td>MSYS2 ships zlib only as an import library, and <code>-static</code> cannot statically link what has no static archive. Fixing it would mean forcing the bundled zlib build on Windows, which trades an audit-surface improvement for a divergence between the two platforms' dependency sets. Linux is what CI gates and what the provenance claim rests on; Windows is the convenience build. Revisit at Phase 10 packaging if we ship a Windows binary.</td>
+</tr>
+<tr>
+<td>8</td>
+<td><code>bench/runners/fetch_data.py</code> downloads Netlib's <code>emps.c</code> decoder and COMPILES it at fetch time. Is that third-party source in the project?</td>
+<td>Allowed, and not vendored</td>
+<td>Netlib distributes its LP set in a custom compressed encoding, and <code>emps.c</code> is the decoder they publish beside it. It is a file-format converter, not a solver, so it is outside the red line. It is downloaded at fetch time rather than committed, so this repository contains no third-party source; its sha256 is recorded in <code>data/netlib/reference.json</code>. Nothing it produces is linked into SANKHYA - it runs once, offline, to turn an archive format into plain MPS.</td>
+</tr>
+<tr>
+<td>9</td>
+<td>MPS says a negative <code>UP</code> bound with no explicit lower bound implies <code>lower = -inf</code>. That is documented for continuous columns and <strong>implementation-defined for integer ones</strong>, where established readers disagree. Which reading do we take?</td>
+<td>Apply the convention to integer columns too, and warn</td>
+<td>Declining to choose was tried first and was worse than either choice: leaving <code>lower = 0</code> produces <code>[0, -5]</code>, an empty interval, so <code>Model::validate()</code> rejected the model and the file could not be loaded <strong>at all</strong> - and the resulting error named crossed bounds, which is the symptom rather than the cause. It also put the C++ reader at odds with <code>tools/verify_solution.py</code>, which already applies the convention; two components disagreeing about what the same bytes mean is exactly what that verifier exists to catch, so the disagreement sitting inside the pair weakened the check against every instance carrying such a bound. The warning is kept so the ambiguity stays visible in the log. See issue #8.</td>
+</tr>
+<tr>
+<td>10</td>
+<td>The device PDHG (#17) cites the cuPDLP paper for its host/device split, and cuPDLP.jl / cuPDLP-C / cuPDLPx are named on the red line.</td>
+<td>Allowed, and recorded</td>
+<td>The red line forbids reading solver SOURCE. The arXiv paper is a publication, allowed under item 2 of the policy, and it is the only cuPDLP artefact consulted: no repository of any of the three was opened, and the kernels, the CSR upload and the reduction scheme were written from the paper's description and the CUDA / cuSPARSE / CUB documentation. The iteration itself is the CPU engine's, from CP11 and PDLP.</td>
+</tr>
+<tr>
+<td>11</td>
+<td>Auditing the 2026 SIH PS26119 field meant READING ten competitors' public repositories at source level, and nine of the ten turn out to contain genuine from-scratch optimization solvers - their simplex implementations, cut generators and PDHG kernels. The red line forbids reading solver source. Does reading a <em>competitor's</em> solver cross it?</td>
+<td><strong>Recorded as a judgement call, not silently decided.</strong> The reading was done; nothing from any of those repositories may enter <code>src/</code>, and nothing has.</td>
+<td>The red line in <code>ENGINEERING_RULES.md</code> enumerates established solvers - CBC, Clp, HiGHS, SCIP, SoPlex, GLPK, lp_solve, OSQP, PDLP, cuPDLP, OR-Tools, Gurobi, CPLEX, Xpress - and its purpose is to keep our implementation free of derivation from mature codebases we might otherwise lean on. Ten hackathon repositories a few weeks old are not on that list and are not a plausible source of technique for us; the audit's output is a competitive assessment - threat ranking, evidence discipline, capability gaps - not an algorithm. Every reader agent was instructed to detect any VENDORED solver tree and report its path WITHOUT opening it, precisely so the audit could not launder red-line source through a competitor's repository; no vendored tree was found in any of the ten. The contrary reading is that a from-scratch competitor solver is still a solver, and that the rule is about the act of reading rather than the maturity of what is read. That reading is defensible, which is why this is logged rather than assumed. Two consequences are accepted regardless of how it is resolved: no competitor code is referenced, adapted or cited in <code>src/</code>, and if the audit is ever cited externally, this row is the disclosure.</td>
+</tr>
+<tr>
+<td>12</td>
+<td>The dual simplex cost perturbation planned in #465 is taken from Koberstein's thesis (2005), whose text remarks that it is similar to the perturbation in an open solver named on the red line. Does learning it from the thesis cross the line?</td>
+<td>Allowed, and recorded before implementation</td>
+<td>The thesis is a publication, allowed under item 2 of the policy, and the perturbation is specified in it completely (sizes, signs, when to apply and remove it). The resemblance is the author's remark about someone else's code; nobody on this project reads that code, and the implementation is written from the thesis text and Maros (2003) alone.</td>
+</tr>
+<tr>
+<td>13</td>
+<td>The first-order presolve planned in #485 follows a 2026 arXiv paper whose authors also publish a presolve library, and that library ships inside GPU LP solvers named on the red line.</td>
+<td>Paper only, and recorded before implementation</td>
+<td>The paper describes each reduction in enough detail to implement it, and presolve reductions are textbook material (Andersen and Andersen 1995). The library is treated as red-line source because it is distributed inside red-line solvers: it is not opened, and our reductions are written from the paper and from the presolve already in <code>src/presolve/</code>.</td>
+</tr>
+<tr>
+<td>14</td>
+<td>METIS (#471) would be the first graph-ordering library linked into <code>src/</code>.</td>
+<td>Allowed, optional, recorded before it is added</td>
+<td>METIS partitions graphs; it does not solve an optimization problem, and the policy names graph orderings (AMD, COLAMD, RCM) as allowed when permissively licensed. METIS 5 is Apache-2.0. It is added behind a build option, the CPU build must keep working without it, and the dependency table, SBOM and <code>ldd</code> output are updated in the same PR.</td>
+</tr>
+<tr>
+<td>15</td>
+<td>cuDSS (#489) is a sparse direct factorization library shipped by NVIDIA, which also ships an optimization solver.</td>
+<td>Allowed as a vendor numerical library; <strong>licence checked, see row 28</strong></td>
+<td>The policy allows vendor numerical libraries such as cuSPARSE, cuBLAS and cuSOLVER; cuDSS is the same kind of library and solves linear systems, not optimization problems. The licence check this row waited for is recorded in row 28.</td>
+</tr>
+<tr>
+<td>16</td>
+<td>Agreement runs against size-limited commercial editions (#533).</td>
+<td><strong>Allowed as external processes only — licence terms checked 2026-09-24; Gurobi requires an academic licence.</strong></td>
+<td>The same arrangement as the HiGHS comparison: each solver is invoked as a separate process on the same MPS files; nothing is linked, vendored, or read. Licence terms checked and recorded: <strong>(a) Gurobi</strong> — the standard EULA forbids publishing benchmark or comparison results; the exception is an <strong>academic</strong> licence, which does permit it. The size-limited free trial is NOT an academic licence and does not carry the benchmarking exception. <code>bench/runners/commercial_agreement.py</code> skips Gurobi unless the runner is instructed to confirm an academic licence is in use (<code>--gurobi-academic</code>); no Gurobi CSV is committed without that flag. Size limit ≤2000 variables + constraints enforced in the runner. <strong>(b) CPLEX Community Edition (IBM)</strong> — free for academic non-commercial use; the Community Edition EULA permits benchmarking results to be published for academic or research purposes; size limit ≤1000 variables + constraints enforced in the runner. <strong>(c) GLPK</strong> — GPL-3.0, no size limit, benchmarking always permitted. The runner invokes each as an external subprocess (<code>gurobi_cl</code>, <code>cplex</code>, <code>glpsol</code>), and the comparison output is committed as a CSV naming the instance sha256, our build commit, and the comparison solver version. Nothing from any of these solvers may enter <code>src/</code>.</td>
+</tr>
+<tr>
+<td>17</td>
+<td>The local-search MIP heuristic planned in #507 follows a CP 2024 paper whose authors publish their implementation, and that implementation is itself a MIP solver.</td>
+<td>Paper only, recorded before implementation</td>
+<td>The red line exists to keep solver code out of our derivation, and a published local-search MIP solver is a solver whether or not it is on the enumerated list. The paper specifies the moves, weights and tabu rule; the implementation is written from it, and the repository is not opened. The same applies to the Feasibility Jump paper (#506).</td>
+</tr>
+<tr>
+<td>18</td>
+<td>The MILP proof certificates planned in #518 use the VIPR certificate format from Cheung, Gleixner and Steffy (2017). A reference checker for that format exists.</td>
+<td>Format allowed; our own checker</td>
+<td>A certificate format is an interface, like the MPS format (row 5). The checker in <code>tools/</code> is written by us in exact rational arithmetic from the paper's definition of the format and never links our C++, the same arrangement as <code>tools/verify_solution.py</code>. The reference checker is not read, so that a bug in our reading of the format cannot be masked by copying theirs.</td>
+</tr>
+<tr>
+<td>19</td>
+<td>The Maros-Meszaros benchmark (#491) takes its reference objectives from the set's own readme, whose OPT column is the output of BPMPD, an interior-point QP solver, and follows the success criteria of qpbenchmark, a repository that benchmarks QP solvers through a Python wrapper. Does either cross the red line?</td>
+<td>Allowed, and recorded</td>
+<td>The OPT values are published benchmark data, item 6 of the policy, in the same position as Netlib's readme values for the LP set: they are parsed from <code>00README.QP</code> by <code>bench/runners/fetch_maros_meszaros.py</code>, never typed, and every one carries its source in <code>data/maros-meszaros/reference.json</code>. No BPMPD code exists in this repository or was consulted. Of qpbenchmark only the published results page (<code>results/maros_meszaros.md</code>: the three measures, the 1e-6 and 1e-9 levels, the 1000 s limit and the shift of 10) was read; none of its code, the wrapper's code or any solver it calls was opened, and its converted <code>.mat</code> copies of the set are not used - the instances come from Maros's own archives, with their sha256 recorded.</td>
+</tr>
+<tr>
+<td>20</td>
+<td>PuLP (#536) is pip-installed as an optional modelling library for the adapter, and the wheel ships a CBC binary (a solver named on the red line) alongside it. Does installing it cross the line?</td>
+<td>Allowed; the binary is never invoked, and recorded here</td>
+<td>The policy forbids copying, vendoring, linking or reading solver source; a binary that pip drops next to a modelling library and that nothing in this repository executes is none of those. The adapter implements PuLP's own <code>LpSolver</code> interface and hands the model to <code>sankhya.Model</code>; PuLP's default solver is never selected, <code>test_adapters.py</code> solves through SANKHYA only, and no benchmark or result in this repository comes from CBC. If a PuLP call ever routed to CBC it would be a bug, not a judgement call. PuLP 4.0.0 (#690) bundles no solver binary, but its <code>pulp/__init__.py</code> loads highspy's compiled <code>_core</code> library into the process with <code>ctypes.CDLL(..., RTLD_GLOBAL)</code> whenever highspy is installed - and in CI it is, as a dependency of CVXPY. That is PuLP loading a HiGHS binary, not this repository linking, calling or reading one: the adapter never selects a PuLP solver and nothing calls into the loaded library. Recorded here for the same reason as the CBC binary.</td>
+</tr>
+<tr>
+<td>21</td>
+<td><code>bench/runners/gpu_pdlp_compare.py</code> runs OR-Tools PDLP (a named red-line solver) as a comparison target, installed from the published <code>ortools</code> PyPI wheel. Does using the wheel cross the red line?</td>
+<td><strong>Allowed — same pattern as highspy, logged here.</strong></td>
+<td>OR-Tools is named on the red line because its source, if consulted, could inform our implementation. The benchmark runs it as a separate Python process through its published API, precisely as <code>bench/runners/cross_check_highs.py</code> runs HiGHS: no source repository is cloned, no header or object file is linked into SANKHYA, and <code>src/</code> remains unaware that OR-Tools exists. The published wheel is a binary artefact, not source. The comparison output is committed as a CSV naming the instance, our build commit and the ortools version; it measures competitive positioning, not an algorithm. Nothing from OR-Tools may enter <code>src/</code>. This row is the disclosure.</td>
+</tr>
+<tr>
+<td>22</td>
+<td>The restarted Halpern iteration (the paper's reflection step is not implemented) for LP PDHG (#481) follows Lu &amp; Yang, "Restarted Halpern PDHG for linear programming", arXiv:2407.16144, 2024, and uses restart constants and safeguards from Chen, Sun, Yuan, Zhang &amp; Zhao, "HPR-LP", arXiv:2408.12179, 2024. The original Halpern fixed-point result is Halpern, "Fixed points of nonexpanding maps", Bull. AMS 73, 1967. Are any of the reference implementations (cuPDLP.jl, HPR-LP) on the red line?</td>
+<td><strong>Papers only — no reference code read. Recorded before implementation.</strong></td>
+<td>cuPDLP.jl is a Julia LP solver and HPR-LP is an LP solver; both are on the red line by class. Only the three papers above were read. The iteration formula, restart rule (fixed-point residual</td>
+</tr>
+<tr>
+<td>23</td>
+<td>The two-mat-vec optimisation (#479) caches A*x_k between iterations to eliminate a redundant sparse product. The idea is standard in first-order methods; it is also described in the context of the Halpern form in Lu &amp; Yang, arXiv:2407.16144 (row 22). No separate reference implementation exists.</td>
+<td><strong>No red-line contact. Recorded for completeness.</strong></td>
+<td>The optimisation is a straightforward consequence of the iteration algebra: A<em>x_{k+1} is computed once, then A</em>x_bar and A*dx are derived by vector operations. No solver source was read. Implementation is behind <code>pdhg_two_matvec=false</code> (default OFF) until an A/B on CPU and GPU confirms per-iteration time savings.</td>
+</tr>
+<tr>
+<td>24</td>
+<td>The standard pooling instances (#516) take their network data from Alfaki and Haugland's published GAMS data files (the directory also holds their GAMS formulation files, and its readme names a commercial global solver as the default), and their reference optima from MINLPLib's instance pages, which list the dual bounds of several global solvers named on the red line or commercial. Does either cross the line?</td>
+<td>Allowed, and recorded</td>
+<td>The data files hold sets, tables and parameters only (arc costs, adjacency, qualities, capacities): instance data, item 6 of the policy. They are parsed by <code>bench/runners/fetch_pooling.py</code>, never typed, with each file's sha256 in <code>data/pooling/instances/</code>; the formulation files (<code>pqmodel.gms</code>, <code>tpmodel.gms</code>, <code>stpmodel.gms</code>) were not downloaded or read, and the P-, Q- and PQ-models are written from the papers cited in the algorithm table. From MINLPLib only the published numbers were read (primal bound, the dual bounds that prove it optimal, and the instance size counts used as a structural cross-check in <code>bench/runners/test_pooling.py</code>); the flattened instance listing an instance page shows was seen, but no model file or solver code from MINLPLib is used. Licence: the data files carry none; they are numerical problem data from published papers, redistributed here with attribution as benchmark data, on the same basis MINLPLib republishes them.</td>
+</tr>
+<tr>
+<td>25</td>
+<td>The proximal interior point for convex QP (#490, #614) takes one idea from the PIQP paper (Schwan, Jiang, Kuhn &amp; Jones, arXiv 2304.00290, 2023): the proximal centres move to the current iterate, so the regularization changes the matrix and never the residual. PIQP is also an open-source solver, which is why this is logged: the paper was read, the solver's code was not. The constants around it are this project's own choices, named in <code>tolerances.hpp</code> (<code>kQpIpmPivotShare</code>, <code>kQpIpmRegularizationRaise</code> x100, <code>kQpIpmRegularizationAttempts</code> 8, <code>kQpIpmComplementarityShare</code>), picked on the Maros-Meszaros smallest 40 and not taken from PIQP.</td>
+<td>Allowed: a paper, not source.</td>
+<td></td>
+</tr>
+<tr>
+<td>26</td>
+<td>The MILP certificate (#518) uses the VIPR file format, whose authors also publish a reference checker and an exact MIP solver that writes it.</td>
+<td>Format from the paper only</td>
+<td>The format is an interface described in Cheung, Gleixner and Steffy (IPCO 2017); the writer and <code>tools/verify_certificate.py</code> were written from that description. The reference checker's source and the source of every exact MIP solver were deliberately not opened. Where the paper left a detail open (the <code>OBJ</code> shorthand in a derived constraint, completing a <code>lin</code> step over column bounds) our choice is stated in the checker's docstring as ours, and conformance with other VIPR tools is not claimed.</td>
+</tr>
+<tr>
+<td>27</td>
+<td>CI's Netlib jobs fall back to tracked copies when netlib.org does not answer (<code>fetch_data.py --offline-fallback</code>), which needs Netlib's <code>readme</code> tracked in <code>data/netlib/</code> beside the instances. Is that readme third-party material in the project?</td>
+<td>Allowed, recorded</td>
+<td>The readme is Netlib's published description of its LP set and the source of the published optima, benchmark data under item 6 of the policy, in the same position as the tracked <code>.mps</code> instances; it contains no code. While netlib.org answers, the live readme is parsed and written over the tracked copy, so the published optima still come from Netlib and an edit to the tracked copy cannot move one. Only in an outage are the tracked copies used, with a warning in the log.</td>
+</tr>
+<tr>
+<td>28</td>
+<td>Licence check for NVIDIA cuDSS (#489), which the GPU interior point links when built with <code>SANKHYA_ENABLE_CUDSS=ON</code>. Read from the <code>LICENSE.txt</code> inside the <code>nvidia-cudss-cu12</code> 0.8.0.10 wheel on PyPI (published by NVIDIA, <code>License-Expression: LicenseRef-Nvidia-cuDSS-License</code>, wheel sha256 <code>602eb6e394c6595a698ed10b74cf5e251a0fbbd6e84da9a755e02fafb6c60ef1</code>) and cross-checked against the same agreement on docs.nvidia.com/cuda/cudss/license.html.</td>
+<td><strong>Allowed: link dynamically, optional, default OFF, never vendored or redistributed.</strong></td>
+<td>The licence is the <em>License Agreement for NVIDIA Math Libraries Software Development Kits</em> (v. February 10, 2022), with third-party notices for SuiteSparse AMD and COLAMD (BSD-3-Clause), METIS (Apache-2.0), fmt (MIT) and HSL. <strong>Linking from an Apache-2.0 project:</strong> s1.1(i) grants the right to install and use the SDK, and building our code against its header and shared library is use. s2.6 forbids using the SDK so that it becomes subject to an open-source licence (one requiring source disclosure, derivative-work rights or free redistribution of the SDK); Apache-2.0 is not copyleft and places no terms on a separately distributed library our code calls, and no cuDSS header or binary is committed here, so that clause is not engaged. <strong>Redistribution:</strong> s1.1(ii) and s1.2 allow shipping the cuDSS binaries and headers only inside an application with material additional functionality, accessed only by that application, under terms consistent with the agreement; s2.3 forbids any other copying or distribution. We take the conservative reading: the repository, the CI artefacts and any wheel we publish contain no cuDSS file, and a user who builds with the option installs cuDSS from NVIDIA themselves. Bundling it into a release would need this row revisited first. <strong>The header's own notice:</strong> <code>cudss.h</code> carries NVIDIA's standard header notice (the same one <code>cusparse.h</code> carries, and cuSPARSE is already linked): it forbids disclosing the header to third parties without consent, which not vendoring it satisfies, and asks that software using it carry NVIDIA's disclaimer and U.S. Government End Users notice in its documentation and code comments. <code>src/gpu/cudss_factor.cpp</code> and this row point to that notice in the installed header rather than copying it; whether it must be reproduced verbatim is left open here, and applies equally to the existing cuSPARSE use. <strong>Benchmarking and publication:</strong> the agreement has no clause restricting benchmarking, performance measurement or publication of results; the only related restriction is s2.4, no claim that the application is sponsored or endorsed by NVIDIA, which we do not make. <strong>Other terms that bind us:</strong> s2.1 (applications for systems with NVIDIA GPUs: this is the GPU backend and the CPU build does not touch cuDSS); s2.2 (no reverse engineering: we call the documented C API only); s1.4 (cuDSS 0.x is a preview release, not for production: one more reason the backend is opt-in, falls back to the CPU factor on any failure, and is not a default). <strong>Not a solver:</strong> cuDSS solves A x = b for a sparse matrix; it does not formulate or solve an optimization problem, so it sits with cuSOLVER, not with the red line. NVIDIA also ships an optimization solver (cuOpt), and cuDSS's third-party notices name HSL; neither's source was opened, the cuDSS package contains headers and shared libraries only, and our IPM (search direction, step, centrality, termination) stays in <code>src/ipm/</code>, written from the papers cited in section 3.</td>
+</tr>
+<tr>
+<td>29</td>
+<td>Should the multi-GPU PDHG (#295) sum A^T y across the cards with NCCL? NCCL is an NVIDIA communication library, not a solver, and would be allowed as an optional dependency.</td>
+<td>Not used; CUDA peer copies instead</td>
+<td>Two reasons, neither about licence. The multi-GPU answer must be bitwise reproducible and the same for every transport, which needs a summation order the code fixes; NCCL chooses ring or tree by message size and topology, so its order is not ours to fix. And on the two-card NVLink box #295 is measured on, an all-gather of the partials by <code>cudaMemcpyPeerAsync</code> moves the same bytes over the same link as NCCL's two-rank all-reduce. Revisit for more than one node, where peer copies do not reach.</td>
+</tr>
+<tr>
+<td>30</td>
+<td>QPLIB (#492): three things needed a decision. (a) The paper's Appendix B and the files on the site disagree on the quadratic convention: the paper takes Q symmetric (its worked example lists <code>2 1 -1.0</code> for a term -x1 x2), while doc.html defines the Q^i as lower-triangular matrices under 0.5 x'Qx, with the footnote that the paper assumed them symmetric. (b) QPLIB's objective values are best known points (<code>=best=</code> in <code>qplib.solu</code>), not proven optima. (c) The test fixtures include short excerpts of QPLIB's web pages, whose footer reserves the website's rights while stating that QPLIB is CC-BY 4.0.</td>
+<td>(a) the site's reading, by measurement; (b) compared against, labelled as best known; (c) allowed, recorded, and yours to overrule</td>
+<td>(a) At QPLIB's own published points the triangle reading reproduces the published objective and the symmetric one does not (QPLIB_0018: -6.386014981598351 against -6.38601498159835 published, symmetric -12.87; QPLIB_8845: 10907992.493998824 against 10907992.4939988, symmetric 13461747.4), and the site's GAMS model of QPLIB_0018 writes the file's <code>2 1 -19.8356</code> as <code>-9.9178*x2*x3</code>. <code>fetch_qplib.py</code> repeats the check on every instance through the converted QPS and the verifier's reader, and the runner does not solve an instance where it fails. The GAMS file was read as instance data; GAMS is a modelling system and no solver source was opened. (b) Every CSV row carries <code>reference_source</code> saying so, and an objective below the best known value by more than 1e-6 is reported as a disagreement, not a win. (c) The excerpts hold the instance table rows and identifier tables for the parser tests - data the site publishes under CC-BY 4.0 - plus the two lines of index.html stating the instance counts and the licence; no page is copied whole. If that reading of the footer is too generous, the fixtures can be replaced by synthetic pages in the same markup at the cost of testing against the site's own.</td>
+</tr>
+<tr>
+<td>31</td>
+<td>NLP stage 1 (the <code>.nl</code> reader, the Hessian of the Lagrangian, the compiled tapes): what was read, given that the .nl format belongs to AMPL and the reference reader ships inside the AMPL/solver interface library, and that several NLP solvers read .nl files?</td>
+<td>Written from two documents only; no solver source read</td>
+<td>The reader is written from Gay's "Writing .nl Files" (SAND2005-7907P), a technical report describing the format for people writing it without AMPL, and the variable-ordering tables of Gay's "Hooking Your Solver to AMPL", a manual; both were read as PDFs from ampl.github.io. The AMPL/solver interface library (netlib <code>ampl/solvers</code>), which both documents point to as the reference implementation, was NOT read: it is an interface library rather than a solver, but it is distributed together with solver drivers, and the specification was sufficient. Three operator codes AMPL is known to emit (the specialised powers) are not in either document and are refused rather than guessed. No solver's .nl reader or NLP code was opened: not Ipopt, KNITRO, CONOPT, SNOPT, Bonmin, Couenne, BARON, filterSQP, SCIP, or any solver on the red line of section 1. The derivatives are written from Griewank &amp; Walther and Walther (2008); no AD tool's source (ADOL-C, CppAD, CasADi) was read either, though none is a solver.</td>
+</tr>
+<tr>
+<td>32</td>
+<td>NLP stage 2 (the interior point, its tests): what was read, and where the Hock-Schittkowski problems come from?</td>
+<td>Written from the paper; test problems parsed from published AMPL models and written as .nl by Pyomo; HS book pages not cited</td>
+<td>The method is written from Wachter &amp; Biegler (2006), a journal paper. The source of Ipopt - the paper's own implementation - was NOT read, nor that of KNITRO, CONOPT, SNOPT, Bonmin, Couenne, BARON, filterSQP, PIQP or any solver on the red line of section 1. The 70 Hock-Schittkowski problems in <code>data/nlp/hs/</code> are Vanderbei's published AMPL transcriptions (vanderbei.princeton.edu/ampl/nlmodels/cute/, instance data with the published optimal objective, item 6 of the policy), PARSED by <code>bench/runners/hs_mod_to_nl.py</code> rather than retyped, and written as .nl by Pyomo 6.10.1 (a modeling language, not a solver; used at data-generation time only, never linked). The sha256 of every downloaded model is in <code>data/nlp/hs/REFERENCE.csv</code>. The HS book itself (Hock &amp; Schittkowski, LNEMS 187, 1981) and Schittkowski's collection report could not be retrieved (every source returned 403), so reference values are cited by problem number and model file, NOT by book page; no page number was invented. The specialised power opcodes aside, Pyomo's .nl files use only operators the reader accepts.</td>
+</tr>
+<tr>
+<td>33</td>
+<td>NLP stage 3 (convex MINLP): what was read, and are MINLPLib's files usable as test data?</td>
+<td>Written from the papers; MINLPLib instances used as published data</td>
+<td>The method is written from Gupta &amp; Ravindran (1985) and Dakin (1965). The source of Bonmin, Couenne, BARON, SCIP, DICOPT, Knitro's MINLP, or any solver on the red line was NOT read. Outer approximation (Duran &amp; Grossmann 1986, Fletcher &amp; Leyffer 1994; #528) is a different method and is not implemented here. The 17 instances in <code>data/nlp/minlplib/</code> are MINLPLib's published <code>.nl</code> files, downloaded unchanged from www.minlplib.org/nl/, with the published primal and dual bounds and MINLPLib's convexity flag read from its public <code>instancedata.csv</code> (instance data and published reference values, item 6 of the policy; judgement call 24 already covers MINLPLib's published numbers). The sha256 of every file is in <code>data/nlp/minlplib/REFERENCE.csv</code>. MINLPLib's convexity flag is recorded but not relied on: the branch and bound runs only where this solver's own composition rules prove the relaxation convex.</td>
+</tr>
+</tbody>
+</table></div>
+<hr>
+<h2 id="6-reproducing-this">6. Reproducing this</h2>
+<pre><code class="language-bash">scripts/configure.sh build Release
+cmake --build build -j
+ctest --test-dir build --output-on-failure
+</code></pre>
+<p>On Linux, <code>ldd build/sankhya</code>. On Windows, <code>objdump -p build/sankhya.exe | grep "DLL Name"</code>.</p>
+<p>To reproduce the Phase 2 end-to-end result:</p>
+<pre><code class="language-bash">build/sankhya info demo/crude_blend.mps
+build/sankhya solve demo/crude_blend.mps --write-sol blend.sol --stats blend.json
+build/sankhya solve demo/crude_blend.lp
+</code></pre>
+<p>The MPS and LP files describe the same model; the two solutions must be identical.</p>
+</article>
+<footer>
+<!-- fragment:footer -->
+<div class="wrap">
+    <div>SANKHYA · Smart India Hackathon 2026 · PS SIH26119 · Apache-2.0 · <a href="https://sankhya-solver.vercel.app">sankhya-solver.vercel.app</a></div>
+    <div>Every figure on this site was last checked against SANKHYA <a href="https://github.com/thegoodengineers/SANKHYA/tree/493fa1df0abfbd70f1d5cf7cbb35272da0a49b30">main at <span data-fact="sankhya_commit">493fa1d</span></a>.</div>
+    <div><a href="https://github.com/thegoodengineers/SANKHYA">Source</a> · <a href="/docs">Docs</a> · <a href="/docs/benchmarks">Benchmarks</a> · <a href="/docs/provenance">Provenance</a> · <a href="/docs/coverage">Coverage tracker</a></div>
+  </div>
+<!-- /fragment:footer -->
+</footer>
+</main>
+</div>
+</body>
+</html>

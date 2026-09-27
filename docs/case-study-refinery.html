@@ -1,0 +1,379 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light">
+<title>Refinery case study · SANKHYA</title>
+<meta name="description" content="A multi-period refinery planning model: its structure, its size ladder and what a planner reads.">
+<meta property="og:title" content="Refinery case study · SANKHYA">
+<meta property="og:description" content="A multi-period refinery planning model: its structure, its size ladder and what a planner reads.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://sankhya-solver.vercel.app/docs/case-study-refinery">
+<link rel="canonical" href="https://sankhya-solver.vercel.app/docs/case-study-refinery">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%230562ef'/%3E%3Ctext x='16' y='22' text-anchor='middle' font-family='Arial,sans-serif' font-weight='600' font-size='18' fill='%23ffffff'%3ES%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/styles.css">
+<script src="/site.js" defer></script>
+</head>
+<body class="doc">
+<a class="skip" href="#content">Skip to content</a>
+<div class="shell">
+<aside class="rail">
+  <a class="brand" href="/"><span class="brand-mark" aria-hidden="true"></span>SANKHYA<small>SIH26119</small></a>
+  <nav class="doors" aria-label="Site"><a href="/">Home</a><a href="/evaluate">For evaluators</a><a href="/problem">Problem</a><a href="/solver">Solver</a><a href="/evidence">Evidence</a><a href="/docs" aria-current="page">Docs</a><a href="/run">Run it</a><a href="/team">Team</a><a class="ext" href="https://github.com/thegoodengineers/SANKHYA">GitHub</a></nav>
+  <hr class="rail-rule">
+  <nav class="here" aria-label="On this page"><a href="#what-a-planner-sees">What a planner sees</a><a href="#model-structure">Model structure</a><a href="#variables" class="sub">Variables</a><a href="#constraints" class="sub">Constraints</a><a href="#objective" class="sub">Objective</a><a href="#size-ladder">Size ladder</a><a href="#results">Results</a><a href="#interpretation">Interpretation</a><a href="#binding-quality-specifications" class="sub">Binding quality specifications</a><a href="#value-of-cdu-capacity" class="sub">Value of CDU capacity</a><a href="#binary-purchase-decisions-milp" class="sub">Binary purchase decisions (MILP)</a><a href="#references">References</a></nav>
+</aside>
+<main class="col" id="content">
+<header class="page" id="top"><div class="wrap"><nav class="crumbs" aria-label="Breadcrumb"><a href="/docs">Docs</a><span aria-hidden="true">/</span>Refinery case study</nav><h1>Refinery case study</h1><p class="doc-banner">Generated from <a href="https://github.com/thegoodengineers/SANKHYA/blob/493fa1df0abfbd70f1d5cf7cbb35272da0a49b30/docs/case_studies/refinery.md"><code>docs/case_studies/refinery.md</code></a> at commit <a href="https://github.com/thegoodengineers/SANKHYA/commit/493fa1df0abfbd70f1d5cf7cbb35272da0a49b30"><code>493fa1d</code></a> (2026-09-27). Do not edit this page by hand.</p></div></header>
+<details class="doc-toc"><summary>Contents</summary><ol><li><a href="#what-a-planner-sees">What a planner sees</a></li><li><a href="#model-structure">Model structure</a></li><li class="sub"><a href="#variables">Variables</a></li><li class="sub"><a href="#constraints">Constraints</a></li><li class="sub"><a href="#objective">Objective</a></li><li><a href="#size-ladder">Size ladder</a></li><li><a href="#results">Results</a></li><li><a href="#interpretation">Interpretation</a></li><li class="sub"><a href="#binding-quality-specifications">Binding quality specifications</a></li><li class="sub"><a href="#value-of-cdu-capacity">Value of CDU capacity</a></li><li class="sub"><a href="#binary-purchase-decisions-milp">Binary purchase decisions (MILP)</a></li><li><a href="#references">References</a></li></ol></details>
+<article class="doc-body">
+<p><strong>SYNTHETIC DATA NOTICE.</strong> Every numerical coefficient in the model files
+produced by <code>bench/case_studies/refinery/generator.py</code> is synthetic.
+Yields, qualities, costs, capacities and demand figures are pseudo-randomly
+generated from a fixed seed.  They do not represent any real refinery, crude
+oil stream, product specification or market price.  No real company data are
+included.</p>
+<hr>
+<h2 id="what-a-planner-sees">What a planner sees</h2>
+<p>A crude refinery buys several crude streams on the spot or contract market,
+runs them through a crude distillation unit (CDU) and a set of downstream
+processing units, and sells the resulting products (naphtha, middle distillate,
+fuel oil, ...) subject to minimum-quality specifications and delivery
+commitments.  The plan covers T periods (weeks or months); crude and product
+inventories carry over from one period to the next, and unused production
+capacity in one period cannot be banked.</p>
+<p>The planner's decisions are:
+- How much of each crude to purchase each period.
+- How much of each crude to run through the CDU each period.
+- How much of each product to sell, and how much to hold in tank.</p>
+<p>The objective is to minimise total cost: crude purchase costs and inventory
+holding charges, minus product revenue.</p>
+<p>When the refinery must commit to a crude purchase in advance (for example,
+to secure a tanker slot), the purchase decision becomes binary: either the
+crude is ordered or it is not.  That variant is a mixed-integer program (MILP).</p>
+<hr>
+<h2 id="model-structure">Model structure</h2>
+<p>The model follows the multi-period refinery LP/MILP structure described in
+Floudas and Lin (2005) and the staircase LP class analysed in Pochet and Wolsey
+(2006).</p>
+<h3 id="variables">Variables</h3>
+<div class="table-wrap"><table class="doc-table">
+<thead>
+<tr>
+<th>Name</th>
+<th>Meaning</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>BUY_{k}_{t}</code></td>
+<td>barrels of crude k purchased in period t</td>
+<td>continuous, ≥ 0</td>
+</tr>
+<tr>
+<td><code>RUN_{k}_{t}</code></td>
+<td>barrels of crude k run through the CDU in period t</td>
+<td>continuous, ∈ [0, CDU_cap]</td>
+</tr>
+<tr>
+<td><code>CS_{k}_{t}</code></td>
+<td>crude k stock at end of period t</td>
+<td>continuous, ∈ [0, tank_k]</td>
+</tr>
+<tr>
+<td><code>PROD_{j}_{t}</code></td>
+<td>barrels of product j made in period t</td>
+<td>continuous, ≥ 0</td>
+</tr>
+<tr>
+<td><code>SELL_{j}_{t}</code></td>
+<td>barrels of product j sold in period t</td>
+<td>continuous, ∈ [0, demand_{j,t}]</td>
+</tr>
+<tr>
+<td><code>PS_{j}_{t}</code></td>
+<td>product j stock at end of period t</td>
+<td>continuous, ∈ [0, tank_j]</td>
+</tr>
+<tr>
+<td><code>ZDEC_{k}_{t}</code></td>
+<td>1 iff crude k is purchased in period t (<strong>MILP only</strong>)</td>
+<td>binary</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="constraints">Constraints</h3>
+<div class="table-wrap"><table class="doc-table">
+<thead>
+<tr>
+<th>Name pattern</th>
+<th>Meaning</th>
+<th>Sense</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>CBAL_{k}_{t}</code></td>
+<td>crude k inventory balance: CS = CS_prev + BUY − RUN</td>
+<td>equality</td>
+</tr>
+<tr>
+<td><code>CDU_{t}</code></td>
+<td>CDU throughput capacity: Σ_k RUN_k_t ≤ cap</td>
+<td>≤</td>
+</tr>
+<tr>
+<td><code>MAKE_{j}_{t}</code></td>
+<td>production from yields: PROD_j_t = Σ_k Y[j,k] RUN_k_t</td>
+<td>equality</td>
+</tr>
+<tr>
+<td><code>PBAL_{j}_{t}</code></td>
+<td>product j inventory balance: PS = PS_prev + PROD − SELL</td>
+<td>equality</td>
+</tr>
+<tr>
+<td><code>UNIT_{u}_{t}</code></td>
+<td>unit u capacity: Σ_k H[u,k] RUN_k_t ≤ cap_u_t</td>
+<td>≤</td>
+</tr>
+<tr>
+<td><code>SPEC_{s}_{t}</code></td>
+<td>quality budget for spec s: Σ_k q[s,k] Y[j_s,k] RUN_k_t ≤ budget</td>
+<td>≤</td>
+</tr>
+<tr>
+<td><code>COMMIT_{j}_{t}</code></td>
+<td>delivery commitment: SELL_j_t ≥ commit_{j,t}</td>
+<td>≥</td>
+</tr>
+<tr>
+<td><code>ZLINK_{k}_{t}</code></td>
+<td>big-M linking (<strong>MILP only</strong>): BUY_k_t ≤ M · ZDEC_k_t</td>
+<td>≤</td>
+</tr>
+</tbody>
+</table></div>
+<p>The quality constraint uses the <em>mass-budget</em> form rather than a
+concentration cap, following the same motivation as
+<code>bench/runners/generate_refinery_lp.py</code>: a concentration cap that is exactly
+met at an integer plan is generally not a short decimal, and the LP optimum
+must be expressible in exact decimal arithmetic for the KKT verification to
+be exact.</p>
+<p>The inventory balance rows create the <em>staircase</em> sparsity pattern
+characteristic of multi-period planning models: period t's columns appear in
+both period t's rows and period (t+1)'s balance rows, and nowhere else.  This
+is the structure that a direct LU factorisation exploits (#206, #193).</p>
+<h3 id="objective">Objective</h3>
+<p>Minimise:</p>
+<pre><code>  Σ_{k,t}  c_buy[k]   · BUY_{k,t}
+− Σ_{j,t}  p_sell[j]  · SELL_{j,t}
++ Σ_{k,t}  h_crude[k] · CS_{k,t}
++ Σ_{j,t}  h_prod[j]  · PS_{j,t}
+</code></pre>
+<p>All coefficients are synthetic decimals with small denominators, so the LP
+optimum is exact when verified in rational arithmetic.</p>
+<hr>
+<h2 id="size-ladder">Size ladder</h2>
+<div class="table-wrap"><table class="doc-table">
+<thead>
+<tr>
+<th>Size</th>
+<th>Periods</th>
+<th>Crudes</th>
+<th>Products</th>
+<th>Units</th>
+<th>Specs</th>
+<th>Commits</th>
+<th>rows</th>
+<th>cols</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>small</td>
+<td>4</td>
+<td>3</td>
+<td>4</td>
+<td>5</td>
+<td>3</td>
+<td>2</td>
+<td>88</td>
+<td>84</td>
+</tr>
+<tr>
+<td>medium</td>
+<td>12</td>
+<td>8</td>
+<td>8</td>
+<td>8</td>
+<td>6</td>
+<td>4</td>
+<td>516</td>
+<td>576</td>
+</tr>
+<tr>
+<td>large</td>
+<td>52</td>
+<td>15</td>
+<td>12</td>
+<td>10</td>
+<td>10</td>
+<td>8</td>
+<td>3536</td>
+<td>4212</td>
+</tr>
+</tbody>
+</table></div>
+<p>Row and column counts are exact; they depend only on the preset dimensions, not the seed.</p>
+<p>Generate all sizes (LP and MILP) with:</p>
+<pre><code class="language-bash">python bench/case_studies/refinery/run_case_study.py --generate-only
+</code></pre>
+<p>Solve with a built sankhya binary:</p>
+<pre><code class="language-bash">python bench/case_studies/refinery/run_case_study.py --sankhya build/sankhya \
+    --out bench/case_studies/refinery/results.csv
+</code></pre>
+<hr>
+<h2 id="results">Results</h2>
+<p><strong>Placeholder — run the case study to fill this table.</strong></p>
+<p>The table below will be populated by <code>run_case_study.py</code>.  Column meanings:
+<code>solve_s</code> is wall-clock solve time in seconds; <code>status</code> is the solver status
+(<code>optimal</code>, <code>infeasible</code>, etc.); <code>objective</code> is the reported optimal value.</p>
+<div class="table-wrap"><table class="doc-table">
+<thead>
+<tr>
+<th>size</th>
+<th>type</th>
+<th>rows</th>
+<th>cols</th>
+<th>nonzeros</th>
+<th>binary</th>
+<th>status</th>
+<th>objective</th>
+<th>solve_s</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>small</td>
+<td>lp</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>0</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>small</td>
+<td>milp</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>medium</td>
+<td>lp</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>0</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>medium</td>
+<td>milp</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>large</td>
+<td>lp</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>0</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>large</td>
+<td>milp</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+</tr>
+</tbody>
+</table></div>
+<hr>
+<h2 id="interpretation">Interpretation</h2>
+<h3 id="binding-quality-specifications">Binding quality specifications</h3>
+<p>A <code>SPEC</code> row with a nonzero shadow price (dual multiplier) means the quality
+budget for that product is tight: the blend is exactly at its specification
+limit.  Relaxing the budget by one unit reduces cost by the shadow price.
+In a real refinery this tells the blender whether there is value in sourcing a
+sweeter crude or in upgrading the treating unit.</p>
+<h3 id="value-of-cdu-capacity">Value of CDU capacity</h3>
+<p>The shadow price of <code>CDU_{t}</code> quantifies how much the optimal cost would
+decrease if one additional barrel of throughput were available in period t.
+A consistently high value across periods signals a capacity bottleneck; a
+value of zero means the unit is not the limiting constraint in that period.</p>
+<h3 id="binary-purchase-decisions-milp">Binary purchase decisions (MILP)</h3>
+<p>The MILP objective is always at least as large as the LP relaxation optimum
+(since the LP is a relaxation).  The gap between the two indicates how much
+the discrete purchase commitment costs the planner compared with the ideal
+fractional schedule.  A small gap suggests the LP relaxation is a reliable
+planning tool even when decisions are binary.</p>
+<hr>
+<h2 id="references">References</h2>
+<ul>
+<li>
+<p>Floudas, C.A. and Lin, X. (2005). Mixed Integer Linear Programming in
+  Process Scheduling: Modeling, Algorithms, and Applications. <em>Annals of
+  Operations Research</em>, 139(1), 131–162.</p>
+</li>
+<li>
+<p>Pochet, Y. and Wolsey, L.A. (2006). <em>Production Planning by Mixed Integer
+  Programming</em>. Springer Series in Operations Research and Financial
+  Engineering.</p>
+</li>
+</ul>
+<p>See also <code>bench/runners/generate_refinery_lp.py</code> for the production-scale
+refinery generator used in <code>docs/BENCHMARKS.md</code>, which follows the same
+mathematical structure and carries a KKT-verified analytic optimum.</p>
+</article>
+<footer>
+<!-- fragment:footer -->
+<div class="wrap">
+    <div>SANKHYA · Smart India Hackathon 2026 · PS SIH26119 · Apache-2.0 · <a href="https://sankhya-solver.vercel.app">sankhya-solver.vercel.app</a></div>
+    <div>Every figure on this site was last checked against SANKHYA <a href="https://github.com/thegoodengineers/SANKHYA/tree/493fa1df0abfbd70f1d5cf7cbb35272da0a49b30">main at <span data-fact="sankhya_commit">493fa1d</span></a>.</div>
+    <div><a href="https://github.com/thegoodengineers/SANKHYA">Source</a> · <a href="/docs">Docs</a> · <a href="/docs/benchmarks">Benchmarks</a> · <a href="/docs/provenance">Provenance</a> · <a href="/docs/coverage">Coverage tracker</a></div>
+  </div>
+<!-- /fragment:footer -->
+</footer>
+</main>
+</div>
+</body>
+</html>
