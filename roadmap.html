@@ -11,10 +11,10 @@
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://sankhya-solver.vercel.app/roadmap">
 <link rel="canonical" href="https://sankhya-solver.vercel.app/roadmap">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='4' fill='%231b1913'/%3E%3Ctext x='16' y='22' text-anchor='middle' font-family='Georgia,serif' font-size='18' fill='%23f5f1ea'%3ES%3C/text%3E%3C/svg%3E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%230562ef'/%3E%3Ctext x='16' y='22' text-anchor='middle' font-family='Arial,sans-serif' font-weight='600' font-size='18' fill='%23ffffff'%3ES%3C/text%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=IBM+Plex+Sans:wght@400;500&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/styles.css">
 </head>
 <body>
@@ -32,7 +32,7 @@
 <section>
   <div class="wrap">
     <div class="head"><div class="label"><span class="n">Gaps</span></div><div><h2>Eight things, with where each stands.</h2></div></div>
-    <div class="legend"><span><i style="background:#2f6b3a"></i>designed and built</span><span><i style="background:#d9a441"></i>partly there</span><span><i style="background:#d9d2c5;border:1px solid #7d7869"></i>not started</span></div>
+    <div class="legend"><span><i style="background:#12a150"></i>designed and built</span><span><i style="background:#e0a326"></i>partly there</span><span><i style="background:#dfdfdf;border:1px solid #80858c"></i>not started</span></div>
     <div class="two">
       <ul class="status">
         <li class="done"><i></i><div><b>GPU acceleration</b> <span>· run on a laptop RTX 5050 (1.37x at 10,000x10,000), a datacenter NVIDIA L4 (4.21x there; brazil3 5.75x / 8.10x at 1e-4 / 1e-8 against one CPU thread, which beat 16) and an A100 (brazil3 8.91x / 10.53x against the faster CPU arm), with the GPU's answer further from HiGHS than the CPU's at 1e-8 (<a href="https://github.com/thegoodengineers/SANKHYA/blob/main/bench/results/gpu-real-l4-58a8374.csv">gpu-real-l4-58a8374.csv</a>, <a href="https://github.com/thegoodengineers/SANKHYA/blob/main/bench/results/gpu-real-a100-58a8374.csv">gpu-real-a100-58a8374.csv</a>; BENCHMARKS.md 1g and 1g.3). H100 not yet. <code>--gpu</code> falls back to the CPU on any device failure.</span></div></li>
