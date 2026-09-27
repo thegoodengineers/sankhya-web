@@ -63,7 +63,7 @@ SUB = ' class="sub"'
 FENCE = re.compile(r"^\s{0,3}(`{3,}|~{3,})")
 HEADING = re.compile(r"^(#{1,6})\s+(.*?)\s*#*\s*$")
 LINK = re.compile(r'(!?\[(?:[^\]\\]|\\.)*\])\(\s*<?([^)\s>]+)>?(\s+"[^"]*")?\s*\)')
-INCLUDE = re.compile(r'^\{\{include\s+(\S+)(?:\s+(lead|section\s+"([^"]+)"))?\s*\}\}\s*$')
+INCLUDE = re.compile(r'^\{\{include\s+(\S+)(?:\s+(lead|section\s+"([^"]+)"|rows((?:\s+"[^"]+")+)))?\s*\}\}\s*$')
 NUMBER = re.compile(r"\d+(?:[.,]\d+)*")
 
 
@@ -124,6 +124,8 @@ def canonical(target, src):
     if re.match(r"^[a-z][a-z0-9+.-]*:", target, re.I):
         return target
     path, _, anchor = target.partition("#")
+    if not path and src == REPORT_SOURCE:
+        return target
     if not path:
         resolved = src
     else:
@@ -171,6 +173,33 @@ def extract(text, mode, name, src):
     return "\n".join(lines[i:end]), level
 
 
+def extract_rows(text, names, src):
+    """The table rows whose first cell is one of names, under that table's own header."""
+    want = [n.strip() for n in names]
+    lines = text.split("\n")
+    best = None
+    i = 0
+    while i < len(lines):
+        if lines[i].lstrip().startswith("|") and i + 1 < len(lines) and re.match(r"^\s*\|?\s*:?-{3,}", lines[i + 1]):
+            j = i + 2
+            rows = []
+            while j < len(lines) and lines[j].lstrip().startswith("|"):
+                first = lines[j].strip().strip("|").split("|")[0].strip().strip("*").strip()
+                if first in want:
+                    rows.append((want.index(first), lines[j]))
+                j += 1
+            if rows and (best is None or len(rows) > len(best[1])):
+                best = (lines[i:i + 2], rows)
+            i = j
+        else:
+            i += 1
+    found = {k for k, _ in best[1]} if best else set()
+    missing = [n for k, n in enumerate(want) if k not in found]
+    if missing:
+        raise BuildError(f"{src}: no table row named {missing}")
+    return "\n".join(best[0] + [line for _, line in best[1]])
+
+
 def shift(text, delta):
     if not delta:
         return text
@@ -194,14 +223,23 @@ def assemble_report(solver):
             out.append(line)
             continue
         path, mode = m.group(1), m.group(2)
-        mode = "lead" if mode == "lead" else (None if mode is None else "section")
         body = read(solver, path)
-        piece, level = extract(body, mode, m.group(3), path)
-        piece = prepare(piece if mode == "section" else "# drop\n" + piece, path)
-        if level:
-            piece = shift(piece, 3 - level)
+        if mode and mode.startswith("rows"):
+            names = re.findall(r'"([^"]+)"', m.group(4))
+            piece = prepare("# drop\n" + extract_rows(body, names, path), path)
+            label = f"{path} · rows: {', '.join(names)}"
+        else:
+            mode = "lead" if mode == "lead" else (None if mode is None else "section")
+            piece, level = extract(body, mode, m.group(3), path)
+            piece = prepare(piece if mode == "section" else "# drop\n" + piece, path)
+            if level:
+                piece = shift(piece, 3 - level)
+            label = f"{path} · " + (m.group(3) and next(h for _, _, h in headings(body)
+                                                        if h == m.group(3) or h.startswith(m.group(3)))
+                                    or ("the opening, before the first section" if mode == "lead" else "the whole document"))
         used.append(path)
-        out.append(piece)
+        label = html.escape(re.sub(r"[`*]", "", label))
+        out.append(f'<details class="included" markdown="1">\n<summary>{label}</summary>\n\n{piece}\n\n</details>')
     return prepare("\n".join(out), REPORT_SOURCE), used
 
 
@@ -210,7 +248,9 @@ def check_report_prose(text):
     for n, line in enumerate(text.split("\n"), 1):
         if INCLUDE.match(line.strip()) or HEADING.match(line):
             continue
-        scrub = re.sub(r"https?://\S+", "", line)
+        scrub = re.sub(r"https?://\S+", "", re.sub(r"<[^>]+>", "", line))
+        scrub = re.sub(r"\]\(#[^)]*\)", "]", scrub)
+        scrub = re.sub(r"^\*\*\d+ ", "**", scrub.strip())
         scrub = re.sub(r"#\d+", "", scrub)
         if re.search(r"\d", scrub):
             raise BuildError(f"{REPORT_SOURCE}:{n}: a number in the connecting prose: {line.strip()}")
@@ -227,7 +267,7 @@ def gh_slug(text, seen):
 
 
 def to_html(md_text):
-    body = markdown.markdown(md_text, extensions=["tables", "fenced_code", "sane_lists"], output_format="html")
+    body = markdown.markdown(md_text, extensions=["tables", "fenced_code", "sane_lists", "md_in_html"], output_format="html")
     seen, toc = {}, []
 
     def head(m):

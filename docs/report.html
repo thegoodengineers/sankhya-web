@@ -25,16 +25,32 @@
   <a class="brand" href="/"><span class="brand-mark" aria-hidden="true"></span>SANKHYA<small>SIH26119</small></a>
   <nav class="doors" aria-label="Site"><a href="/">Home</a><a href="/evaluate">For evaluators</a><a href="/problem">Problem</a><a href="/solver">Solver</a><a href="/evidence">Evidence</a><a href="/docs" aria-current="page">Docs</a><a href="/run">Run it</a><a href="/team">Team</a><a class="ext" href="https://github.com/thegoodengineers/SANKHYA">GitHub</a></nav>
   <hr class="rail-rule">
-  <nav class="here" aria-label="On this page"><a href="#1-architecture">1 Architecture</a><a href="#1-the-shape-in-one-paragraph" class="sub">1. The shape in one paragraph</a><a href="#2-modules-and-their-boundaries" class="sub">2. Modules and their boundaries</a><a href="#4-how-a-solve-flows" class="sub">4. How a solve flows</a><a href="#13-the-engine-layer-what-an-engine-is-promised-and-what-it-promises" class="sub">13. The engine layer: what an engine is promised, and what it promises</a><a href="#2-lp-engines">2 LP engines</a><a href="#algorithms-the-ps-names" class="sub">Algorithms the PS names</a><a href="#1e-the-first-order-engine--pdhg" class="sub">1e. The first-order engine — PDHG</a><a href="#3-milp-engine">3 MILP engine</a><a href="#11-conflict-analysis-learning-from-infeasible-nodes" class="sub">11. Conflict analysis: learning from infeasible nodes</a><a href="#12-parallel-tree-search" class="sub">12. Parallel tree search</a><a href="#4-qp-engines">4 QP engines</a><a href="#2b-maros-meszaros-the-convex-qp-set" class="sub">2b. Maros-Meszaros, the convex QP set</a><a href="#2d-qplib-the-convex-continuous-qps" class="sub">2d. QPLIB, the convex continuous QPs</a><a href="#5-gpu-acceleration">5 GPU acceleration</a><a href="#1g-gpu-pdhg-crossover--when-the-gpu-wins" class="sub">1g. GPU PDHG crossover — when the GPU wins</a><a href="#5-what-the-hardware-lets-us-claim-and-what-it-does-not" class="sub">5. What the hardware lets us claim, and what it does not</a><a href="#6-numerical-stability">6 Numerical stability</a><a href="#3-the-two-invariants-everything-else-rests-on" class="sub">3. The two invariants everything else rests on</a><a href="#5-robustness--where-the-solver-stops-working" class="sub">5. Robustness — where the solver stops working</a><a href="#7-independent-verification">7 Independent verification</a><a href="#3-correctness-beyond-the-objective-value" class="sub">3. Correctness beyond the objective value</a><a href="#4-machine-checkable-evidence" class="sub">4. Machine-checkable evidence</a><a href="#8-benchmark-method">8 Benchmark method</a><a href="#7-reproducibility-and-what-is-actually-promised" class="sub">7. Reproducibility, and what is actually promised</a><a href="#6-what-these-numbers-do-not-say" class="sub">6. What these numbers do not say</a><a href="#9-results">9 Results</a><a href="#1c-the-full-set--the-honest-headline" class="sub">1c. The full set — the honest headline</a><a href="#1c1-the-kennington-set---the-next-rung" class="sub">1c.1 The Kennington set - the next rung</a><a href="#1d-beyond-netlib--mittelmanns-lp-set" class="sub">1d. Beyond Netlib — Mittelmann&#x27;s LP set</a><a href="#1f-scale--how-far-up-this-goes" class="sub">1f. Scale — how far up this goes</a><a href="#10-of-11-solves-under-auto-reached-the-analytic-optimum-to-a-relative-1e-06-commit-078cb24-the-engine-column-is-what-ran-which-after-a-decline-is-the-fallback-pdhg-cpu-on-a-row-that-the-rule-table-sent-to-the-interior-point-means-the-set-up-passed-ipm_setup_share-of-the-limit-and-the-first-order-method-took-the-rest-357">10 of 11 solves under auto reached the analytic optimum to a relative 1e-06 (commit 078...</a><a href="#2-miplib--the-mixed-integer-side" class="sub">2. MIPLIB — the mixed-integer side</a><a href="#2e-nonlinear-programs---hock-schittkowski-and-convex-minlplib" class="sub">2e. Nonlinear programs - Hock-Schittkowski, and convex MINLPLib</a><a href="#4-comparison-against-an-established-solver" class="sub">4. Comparison against an established solver</a><a href="#10-limitations">10 Limitations</a><a href="#1-demoted-by-a-committed-measurement" class="sub">1. Demoted by a committed measurement</a><a href="#2-demoted-by-a-measurement-made-on-a-branch-not-re-run-on-main" class="sub">2. Demoted by a measurement made on a branch, not re-run on main</a><a href="#3-built-opt-in-awaiting-the-measurement" class="sub">3. Built opt-in, awaiting the measurement</a><a href="#4-withdrawn-claims" class="sub">4. Withdrawn claims</a><a href="#adding-an-entry" class="sub">Adding an entry</a><a href="#what-this-does-not-do" class="sub">What this does NOT do</a><a href="#11-future-work">11 Future work</a></nav>
+  <nav class="here" aria-label="On this page"><a href="#summary">Summary</a><a href="#1-architecture">1 Architecture</a><a href="#1-the-shape-in-one-paragraph" class="sub">1. The shape in one paragraph</a><a href="#2-modules-and-their-boundaries" class="sub">2. Modules and their boundaries</a><a href="#4-how-a-solve-flows" class="sub">4. How a solve flows</a><a href="#13-the-engine-layer-what-an-engine-is-promised-and-what-it-promises" class="sub">13. The engine layer: what an engine is promised, and what it promises</a><a href="#2-lp-engines">2 LP engines</a><a href="#1e-the-first-order-engine--pdhg" class="sub">1e. The first-order engine — PDHG</a><a href="#3-milp-engine">3 MILP engine</a><a href="#11-conflict-analysis-learning-from-infeasible-nodes" class="sub">11. Conflict analysis: learning from infeasible nodes</a><a href="#12-parallel-tree-search" class="sub">12. Parallel tree search</a><a href="#4-qp-engines">4 QP engines</a><a href="#2b-maros-meszaros-the-convex-qp-set" class="sub">2b. Maros-Meszaros, the convex QP set</a><a href="#2d-qplib-the-convex-continuous-qps" class="sub">2d. QPLIB, the convex continuous QPs</a><a href="#5-gpu-acceleration">5 GPU acceleration</a><a href="#1g-gpu-pdhg-crossover--when-the-gpu-wins" class="sub">1g. GPU PDHG crossover — when the GPU wins</a><a href="#5-what-the-hardware-lets-us-claim-and-what-it-does-not" class="sub">5. What the hardware lets us claim, and what it does not</a><a href="#6-numerical-stability">6 Numerical stability</a><a href="#3-the-two-invariants-everything-else-rests-on" class="sub">3. The two invariants everything else rests on</a><a href="#5-robustness--where-the-solver-stops-working" class="sub">5. Robustness — where the solver stops working</a><a href="#7-independent-verification">7 Independent verification</a><a href="#3-correctness-beyond-the-objective-value" class="sub">3. Correctness beyond the objective value</a><a href="#4-machine-checkable-evidence" class="sub">4. Machine-checkable evidence</a><a href="#8-benchmark-method">8 Benchmark method</a><a href="#7-reproducibility-and-what-is-actually-promised" class="sub">7. Reproducibility, and what is actually promised</a><a href="#6-what-these-numbers-do-not-say" class="sub">6. What these numbers do not say</a><a href="#9-results">9 Results</a><a href="#1c-the-full-set--the-honest-headline" class="sub">1c. The full set — the honest headline</a><a href="#1c1-the-kennington-set---the-next-rung" class="sub">1c.1 The Kennington set - the next rung</a><a href="#1d-beyond-netlib--mittelmanns-lp-set" class="sub">1d. Beyond Netlib — Mittelmann&#x27;s LP set</a><a href="#1f-scale--how-far-up-this-goes" class="sub">1f. Scale — how far up this goes</a><a href="#10-of-11-solves-under-auto-reached-the-analytic-optimum-to-a-relative-1e-06-commit-078cb24-the-engine-column-is-what-ran-which-after-a-decline-is-the-fallback-pdhg-cpu-on-a-row-that-the-rule-table-sent-to-the-interior-point-means-the-set-up-passed-ipm_setup_share-of-the-limit-and-the-first-order-method-took-the-rest-357">10 of 11 solves under auto reached the analytic optimum to a relative 1e-06 (commit 078...</a><a href="#2-miplib--the-mixed-integer-side" class="sub">2. MIPLIB — the mixed-integer side</a><a href="#2e-nonlinear-programs---hock-schittkowski-and-convex-minlplib" class="sub">2e. Nonlinear programs - Hock-Schittkowski, and convex MINLPLib</a><a href="#4-comparison-against-an-established-solver" class="sub">4. Comparison against an established solver</a><a href="#10-limitations">10 Limitations</a><a href="#1-demoted-by-a-committed-measurement" class="sub">1. Demoted by a committed measurement</a><a href="#2-demoted-by-a-measurement-made-on-a-branch-not-re-run-on-main" class="sub">2. Demoted by a measurement made on a branch, not re-run on main</a><a href="#3-built-opt-in-awaiting-the-measurement" class="sub">3. Built opt-in, awaiting the measurement</a><a href="#4-withdrawn-claims" class="sub">4. Withdrawn claims</a><a href="#adding-an-entry" class="sub">Adding an entry</a><a href="#what-this-does-not-do" class="sub">What this does NOT do</a><a href="#11-future-work">11 Future work</a></nav>
 </aside>
 <main class="col" id="content">
 <header class="page" id="top"><div class="wrap"><nav class="crumbs" aria-label="Breadcrumb"><a href="/docs">Docs</a><span aria-hidden="true">/</span>Technical report</nav><h1>Technical report</h1><p class="doc-banner">Generated from <a href="https://github.com/thegoodengineers/sankhya-web/blob/main/content/report.md"><code>content/report.md</code></a> at commit <a href="https://github.com/thegoodengineers/SANKHYA/commit/493fa1df0abfbd70f1d5cf7cbb35272da0a49b30"><code>493fa1d</code></a> (2026-09-27). Do not edit this page by hand.</p></div></header>
-<details class="doc-toc"><summary>Contents</summary><ol><li><a href="#1-architecture">1 Architecture</a></li><li class="sub"><a href="#1-the-shape-in-one-paragraph">1. The shape in one paragraph</a></li><li class="sub"><a href="#2-modules-and-their-boundaries">2. Modules and their boundaries</a></li><li class="sub"><a href="#4-how-a-solve-flows">4. How a solve flows</a></li><li class="sub"><a href="#13-the-engine-layer-what-an-engine-is-promised-and-what-it-promises">13. The engine layer: what an engine is promised, and what it promises</a></li><li><a href="#2-lp-engines">2 LP engines</a></li><li class="sub"><a href="#algorithms-the-ps-names">Algorithms the PS names</a></li><li class="sub"><a href="#1e-the-first-order-engine--pdhg">1e. The first-order engine — PDHG</a></li><li><a href="#3-milp-engine">3 MILP engine</a></li><li class="sub"><a href="#11-conflict-analysis-learning-from-infeasible-nodes">11. Conflict analysis: learning from infeasible nodes</a></li><li class="sub"><a href="#12-parallel-tree-search">12. Parallel tree search</a></li><li><a href="#4-qp-engines">4 QP engines</a></li><li class="sub"><a href="#2b-maros-meszaros-the-convex-qp-set">2b. Maros-Meszaros, the convex QP set</a></li><li class="sub"><a href="#2d-qplib-the-convex-continuous-qps">2d. QPLIB, the convex continuous QPs</a></li><li><a href="#5-gpu-acceleration">5 GPU acceleration</a></li><li class="sub"><a href="#1g-gpu-pdhg-crossover--when-the-gpu-wins">1g. GPU PDHG crossover — when the GPU wins</a></li><li class="sub"><a href="#5-what-the-hardware-lets-us-claim-and-what-it-does-not">5. What the hardware lets us claim, and what it does not</a></li><li><a href="#6-numerical-stability">6 Numerical stability</a></li><li class="sub"><a href="#3-the-two-invariants-everything-else-rests-on">3. The two invariants everything else rests on</a></li><li class="sub"><a href="#5-robustness--where-the-solver-stops-working">5. Robustness — where the solver stops working</a></li><li><a href="#7-independent-verification">7 Independent verification</a></li><li class="sub"><a href="#3-correctness-beyond-the-objective-value">3. Correctness beyond the objective value</a></li><li class="sub"><a href="#4-machine-checkable-evidence">4. Machine-checkable evidence</a></li><li><a href="#8-benchmark-method">8 Benchmark method</a></li><li class="sub"><a href="#7-reproducibility-and-what-is-actually-promised">7. Reproducibility, and what is actually promised</a></li><li class="sub"><a href="#6-what-these-numbers-do-not-say">6. What these numbers do not say</a></li><li><a href="#9-results">9 Results</a></li><li class="sub"><a href="#1c-the-full-set--the-honest-headline">1c. The full set — the honest headline</a></li><li class="sub"><a href="#1c1-the-kennington-set---the-next-rung">1c.1 The Kennington set - the next rung</a></li><li class="sub"><a href="#1d-beyond-netlib--mittelmanns-lp-set">1d. Beyond Netlib — Mittelmann&#x27;s LP set</a></li><li class="sub"><a href="#1f-scale--how-far-up-this-goes">1f. Scale — how far up this goes</a></li><li><a href="#10-of-11-solves-under-auto-reached-the-analytic-optimum-to-a-relative-1e-06-commit-078cb24-the-engine-column-is-what-ran-which-after-a-decline-is-the-fallback-pdhg-cpu-on-a-row-that-the-rule-table-sent-to-the-interior-point-means-the-set-up-passed-ipm_setup_share-of-the-limit-and-the-first-order-method-took-the-rest-357">10 of 11 solves under auto reached the analytic optimum to a relative 1e-06 (commit 078...</a></li><li class="sub"><a href="#2-miplib--the-mixed-integer-side">2. MIPLIB — the mixed-integer side</a></li><li class="sub"><a href="#2e-nonlinear-programs---hock-schittkowski-and-convex-minlplib">2e. Nonlinear programs - Hock-Schittkowski, and convex MINLPLib</a></li><li class="sub"><a href="#4-comparison-against-an-established-solver">4. Comparison against an established solver</a></li><li><a href="#10-limitations">10 Limitations</a></li><li class="sub"><a href="#1-demoted-by-a-committed-measurement">1. Demoted by a committed measurement</a></li><li class="sub"><a href="#2-demoted-by-a-measurement-made-on-a-branch-not-re-run-on-main">2. Demoted by a measurement made on a branch, not re-run on main</a></li><li class="sub"><a href="#3-built-opt-in-awaiting-the-measurement">3. Built opt-in, awaiting the measurement</a></li><li class="sub"><a href="#4-withdrawn-claims">4. Withdrawn claims</a></li><li class="sub"><a href="#adding-an-entry">Adding an entry</a></li><li class="sub"><a href="#what-this-does-not-do">What this does NOT do</a></li><li><a href="#11-future-work">11 Future work</a></li></ol></details>
+<details class="doc-toc"><summary>Contents</summary><ol><li><a href="#summary">Summary</a></li><li><a href="#1-architecture">1 Architecture</a></li><li class="sub"><a href="#1-the-shape-in-one-paragraph">1. The shape in one paragraph</a></li><li class="sub"><a href="#2-modules-and-their-boundaries">2. Modules and their boundaries</a></li><li class="sub"><a href="#4-how-a-solve-flows">4. How a solve flows</a></li><li class="sub"><a href="#13-the-engine-layer-what-an-engine-is-promised-and-what-it-promises">13. The engine layer: what an engine is promised, and what it promises</a></li><li><a href="#2-lp-engines">2 LP engines</a></li><li class="sub"><a href="#1e-the-first-order-engine--pdhg">1e. The first-order engine — PDHG</a></li><li><a href="#3-milp-engine">3 MILP engine</a></li><li class="sub"><a href="#11-conflict-analysis-learning-from-infeasible-nodes">11. Conflict analysis: learning from infeasible nodes</a></li><li class="sub"><a href="#12-parallel-tree-search">12. Parallel tree search</a></li><li><a href="#4-qp-engines">4 QP engines</a></li><li class="sub"><a href="#2b-maros-meszaros-the-convex-qp-set">2b. Maros-Meszaros, the convex QP set</a></li><li class="sub"><a href="#2d-qplib-the-convex-continuous-qps">2d. QPLIB, the convex continuous QPs</a></li><li><a href="#5-gpu-acceleration">5 GPU acceleration</a></li><li class="sub"><a href="#1g-gpu-pdhg-crossover--when-the-gpu-wins">1g. GPU PDHG crossover — when the GPU wins</a></li><li class="sub"><a href="#5-what-the-hardware-lets-us-claim-and-what-it-does-not">5. What the hardware lets us claim, and what it does not</a></li><li><a href="#6-numerical-stability">6 Numerical stability</a></li><li class="sub"><a href="#3-the-two-invariants-everything-else-rests-on">3. The two invariants everything else rests on</a></li><li class="sub"><a href="#5-robustness--where-the-solver-stops-working">5. Robustness — where the solver stops working</a></li><li><a href="#7-independent-verification">7 Independent verification</a></li><li class="sub"><a href="#3-correctness-beyond-the-objective-value">3. Correctness beyond the objective value</a></li><li class="sub"><a href="#4-machine-checkable-evidence">4. Machine-checkable evidence</a></li><li><a href="#8-benchmark-method">8 Benchmark method</a></li><li class="sub"><a href="#7-reproducibility-and-what-is-actually-promised">7. Reproducibility, and what is actually promised</a></li><li class="sub"><a href="#6-what-these-numbers-do-not-say">6. What these numbers do not say</a></li><li><a href="#9-results">9 Results</a></li><li class="sub"><a href="#1c-the-full-set--the-honest-headline">1c. The full set — the honest headline</a></li><li class="sub"><a href="#1c1-the-kennington-set---the-next-rung">1c.1 The Kennington set - the next rung</a></li><li class="sub"><a href="#1d-beyond-netlib--mittelmanns-lp-set">1d. Beyond Netlib — Mittelmann&#x27;s LP set</a></li><li class="sub"><a href="#1f-scale--how-far-up-this-goes">1f. Scale — how far up this goes</a></li><li><a href="#10-of-11-solves-under-auto-reached-the-analytic-optimum-to-a-relative-1e-06-commit-078cb24-the-engine-column-is-what-ran-which-after-a-decline-is-the-fallback-pdhg-cpu-on-a-row-that-the-rule-table-sent-to-the-interior-point-means-the-set-up-passed-ipm_setup_share-of-the-limit-and-the-first-order-method-took-the-rest-357">10 of 11 solves under auto reached the analytic optimum to a relative 1e-06 (commit 078...</a></li><li class="sub"><a href="#2-miplib--the-mixed-integer-side">2. MIPLIB — the mixed-integer side</a></li><li class="sub"><a href="#2e-nonlinear-programs---hock-schittkowski-and-convex-minlplib">2e. Nonlinear programs - Hock-Schittkowski, and convex MINLPLib</a></li><li class="sub"><a href="#4-comparison-against-an-established-solver">4. Comparison against an established solver</a></li><li><a href="#10-limitations">10 Limitations</a></li><li class="sub"><a href="#1-demoted-by-a-committed-measurement">1. Demoted by a committed measurement</a></li><li class="sub"><a href="#2-demoted-by-a-measurement-made-on-a-branch-not-re-run-on-main">2. Demoted by a measurement made on a branch, not re-run on main</a></li><li class="sub"><a href="#3-built-opt-in-awaiting-the-measurement">3. Built opt-in, awaiting the measurement</a></li><li class="sub"><a href="#4-withdrawn-claims">4. Withdrawn claims</a></li><li class="sub"><a href="#adding-an-entry">Adding an entry</a></li><li class="sub"><a href="#what-this-does-not-do">What this does NOT do</a></li><li><a href="#11-future-work">11 Future work</a></li></ol></details>
 <article class="doc-body">
-<p>This report is assembled, not written. Each section opens with a few sentences of connecting prose and then carries the solver's own documents, copied verbatim at build time from the pinned commit named above. Every measured figure below sits inside one of those included passages, next to the file that produced it.</p>
+<h2 id="summary">Summary</h2>
+<div class="report-summary">
+<p><strong>1 Architecture.</strong> One library, one entry point: a model is read, presolved and scaled, sent by its problem class to an engine, postsolved and checked. <a href="#1-architecture">Go to section</a></p>
+<p><strong>2 LP engines.</strong> Four engines for linear programs: dual and primal simplex for a basis, an interior point and a first-order method for size. <a href="#2-lp-engines">Go to section</a></p>
+<p><strong>3 MILP engine.</strong> Branch and cut over the warm-started dual simplex, with its cuts, heuristics, node selection, conflict analysis and parallel tree. <a href="#3-milp-engine">Go to section</a></p>
+<p><strong>4 QP engines.</strong> Two engines for convex quadratic programs; a Hessian that cannot be proved convex is refused, never solved to a local point. <a href="#4-qp-engines">Go to section</a></p>
+<p><strong>5 GPU acceleration.</strong> A CUDA port of the first-order engine, where it wins and loses by model size, and what the hardware may be used to claim. <a href="#5-gpu-acceleration">Go to section</a></p>
+<p><strong>6 Numerical stability.</strong> The invariants the solver rests on, and the sweep that pushes each numerical hazard until the answer or the certificate moves. <a href="#6-numerical-stability">Go to section</a></p>
+<p><strong>7 Independent verification.</strong> Every answer re-derived by a separate program from the model and solution files, and what the binary links against. <a href="#7-independent-verification">Go to section</a></p>
+<p><strong>8 Benchmark method.</strong> How every run is recorded and reported, what reproducibility promises, and what the numbers do not say. <a href="#8-benchmark-method">Go to section</a></p>
+<p><strong>9 Results.</strong> Netlib, the larger LP sets, scale, MIPLIB, nonlinear programs and the comparison with HiGHS, as the benchmarks document states them. <a href="#9-results">Go to section</a></p>
+<p><strong>10 Limitations.</strong> What was built and then demoted or withdrawn, and what the solver does not do, carried in full. <a href="#10-limitations">Go to section</a></p>
+<p><strong>11 Future work.</strong> The open issues the next work comes from, each linked, with no dates and no promised results. <a href="#11-future-work">Go to section</a></p>
+</div>
+<p>This report is assembled, not written. Each section opens with a few sentences of connecting prose and then carries the solver's own documents, copied verbatim at build time from the pinned commit named above and folded under the name of the file and section they come from. Every measured figure below sits inside one of those included passages, next to the file that produced it.</p>
 <h2 id="1-architecture">1 Architecture</h2>
 <p>SANKHYA is one library with one entry point. A model is read, presolved and scaled, dispatched by its problem class to an engine, postsolved, and then checked by a program that shares no code with the solver.</p>
 <p>The passages below describe the shape of the code, the boundaries between its modules, how a solve flows from file to answer, and what every engine is promised by the layer that calls it.</p>
+<details class="included">
+<summary>docs/ARCHITECTURE.md · 1. The shape in one paragraph</summary>
 <h3 id="1-the-shape-in-one-paragraph">1. The shape in one paragraph</h3>
 <p>A <code>Model</code> goes in, a <code>Solution</code> comes out, through one function:</p>
 <pre><code>solve(const Model&amp;, const Options&amp;) -&gt; Solution        (src/core/solve.cpp)
@@ -67,6 +83,9 @@ That seam is what makes a new engine a bounded piece of work: it has to produce 
                                           │
                         .sol / --stats JSON (src/io)   tools/verify_solution.py
 </code></pre>
+</details>
+<details class="included">
+<summary>docs/ARCHITECTURE.md · 2. Modules and their boundaries</summary>
 <h3 id="2-modules-and-their-boundaries">2. Modules and their boundaries</h3>
 <div class="table-wrap"><table class="doc-table">
 <thead>
@@ -180,6 +199,9 @@ That seam is what makes a new engine a bounded piece of work: it has to produce 
 models, <code>simplex</code> knows nothing about integrality, <code>mip</code> knows nothing about file formats.
 No file in <code>src/</code> reads or links anything from another optimization solver; <code>docs/PROVENANCE.md</code>
 records the dependency table, the link line and the algorithm citations.</p>
+</details>
+<details class="included">
+<summary>docs/ARCHITECTURE.md · 4. How a solve flows</summary>
 <h3 id="4-how-a-solve-flows">4. How a solve flows</h3>
 <ol>
 <li><strong>Read.</strong> <code>src/io</code> produces a <code>Model</code> with column-major storage, bounds, integrality and
@@ -225,6 +247,9 @@ the CLI's result block, a per-reduction breakdown at <code>--option log_level=ve
 <code>presolve</code> object in the <code>--stats</code> JSON for the benchmark runners. The counts are derived
 from the records postsolve replays, so the report cannot drift away from the transformation
 it describes.</p>
+</details>
+<details class="included">
+<summary>docs/ARCHITECTURE.md · 13. The engine layer: what an engine is promised, and what it promises</summary>
 <h3 id="13-the-engine-layer-what-an-engine-is-promised-and-what-it-promises">13. The engine layer: what an engine is promised, and what it promises</h3>
 <p>Section 5 says where an engine registers. This section is the contract around it (#297):
 who owns what, what may run at the same time, how an engine's ending becomes a status, and
@@ -481,10 +506,12 @@ and puts every answer through <code>tools/verify_solution.py</code>.</p>
   and the guard through <code>gpu::gpu_pdhg_is_safe</code>; no engine detects hardware on its own.</li>
 <li><em>No dynamic plugins</em>, which #297 puts out of scope.</li>
 </ul>
+</details>
 <h2 id="2-lp-engines">2 LP engines</h2>
 <p>Linear programs have four engines: the dual simplex, the primal simplex, an interior point method and a restarted first-order method. The simplex engines produce a basis, which is what warm starts and branch and bound need; the other two reach large models the simplex cannot.</p>
-<p>The coverage table names each algorithm the problem statement asks for with the code that implements it, and the first-order section gives that engine's own record.</p>
-<h3 id="algorithms-the-ps-names">Algorithms the PS names</h3>
+<p>The coverage rows name each LP algorithm the problem statement asks for with the code that implements it, and the first-order section gives that engine's own record.</p>
+<details class="included">
+<summary>docs/PS26119_COVERAGE.md · rows: Revised simplex, First-order methods (PDHG), Interior-point methods, Presolve, Warm start and in-place modification, Sensitivity ranging</summary>
 <div class="table-wrap"><table class="doc-table">
 <thead>
 <tr>
@@ -510,16 +537,6 @@ and puts every answer through <code>tools/verify_solution.py</code>.</p>
 <td>#56 via #169: Mehrotra predictor-corrector on the bounded form, normal equations through a from-scratch sparse LDLᵀ (<code>src/ipm/ipm.cpp</code>, <code>src/la/ldl.cpp</code>), <code>--option algorithm=ipm</code>. Produces no basis of its own - crossover (#219, <code>crossover=true</code> by default) ends it at a vertex with one - so the node engine stays the dual simplex; <code>auto</code> routes to it above 20,000 rows or 100,000 nonzeros (#353). On the full Netlib set it verifies <strong>73/89</strong> at <code>main</code> <code>078cb24</code> alone on the machine, on AC (<code>bench/results/netlib-full-078cb24-ipm.csv</code>; 72/89 at <code>d8d434c</code>, where fit2p hit the limit on a slower pass), against 80/89 for the dual simplex at <code>adb37bb</code>. That is 69/89 at <code>8b41e71</code> (<code>netlib-full-8b41e71-ipm.csv</code>) before #389 taught the method to raise its regularization when a Newton direction comes back non-finite: degen3 and sierra moved from numerical_error to optimal and dfl001 from feasible at the limit to optimal in 67 s; fit2p, optimal on the branch run, hit the time limit inside a factorization on this pass. Since #397 the barrier-exhausted stop takes one more step on a raised regularization before declaring, which brings the worst complementarity product under the verifier's 1e-6: the 20,000-row staircase of #209 goes from <code>feasible</code> to <code>optimal</code> under <code>ipm</code> and crossover then finishes it in 3,877 pivots (11 s) where it ran past 300 s (<code>data/scale/staircase-3000-seed7.mps.gz</code> is the committed regression case). That is 51/89 at <code>64d2e9a</code> the same day, before #380 replaced the floored starting slacks with Mehrotra's shifted and balanced start: eighteen instances gained (agg, agg2, agg3, bnl2, brandy, capri, czprob, d6cube, fffff800, forplan, maros, perold, pilotnov, scfxm1, scfxm2, scfxm3, share1b, stocfor2 - the last from 300 iterations to 19), gfrd-pnc lost to a stall at iteration 35, and fit2p sits at the 120 s limit either way. The 20 that still fail are numerical failures, iteration limits and four time limits (d6cube, dfl001, fit2p, pilot87), each named in the CSV. Since #342 the interior point ends at a vertex by default (crossover, #219): on <code>main</code> at <code>77aa9e6</code> the committed small set is 9 of 9 verified with a basis on every one, median 41 crossover pivots and at most 134 (<code>bench/results/netlib-small-77aa9e6-ipm.csv</code>, <code>--solver-option algorithm=ipm</code>), and the medium tier is 38 of 50 verified with a vertex reached on all 40 instances the interior point solved, median 142 pivots and at most 2,654 (<code>bench/results/netlib-medium-77aa9e6-ipm.csv</code>; the 12 others are the interior point's own stalls before crossover, plus <code>e226</code>/<code>scrs8</code> where Netlib's table is the outlier). On a large degenerate model the pivots are not yet a small fraction of the solve (#343). The tier tables in <code>docs/BENCHMARKS.md</code> ignore these files by design, since <code>latest_result.py</code> counts only default-option runs as a tier's evidence. Under <code>auto</code> an interior point that runs out of memory now declines instead of ending the solve (#437): <code>chromaticindex1024-7</code> (67,583 rows) reported <code>numerical_error</code> after 77 s where PDHG alone is optimal in 6 s, because the memory guard sat outside the fallback it should have fed; the guard now sits inside it, the answer keeps the memory message and names the engine that ran out, and a unit test throws through the interior-point path and asserts the fallback engine answered.</td>
 </tr>
 <tr>
-<td>Branch-and-bound</td>
-<td><strong>done</strong></td>
-<td><code>src/mip/branch_and_bound.cpp</code>, domain-change stacks, no per-node copy. Since #381 the search also learns from every node it proves infeasible which of its branching decisions were to blame, and prunes or tightens later nodes that repeat them (#292, <code>src/mip/conflict.cpp</code>; <code>docs/ARCHITECTURE.md</code> section 11). A conflict is stored only after it is re-proved from the GLOBAL bounds - by propagation, or by the LP's Farkas multipliers re-evaluated conservatively here rather than taken on the LP's word - so a numerical failure, a limit or an interrupt can never produce one. <strong>Off by default by measurement</strong>, like the cut families: the A/B at 60 s on the 30 MIPLIB instances at <code>6c405f8</code> (#405; a branch commit, so the CSVs are not committed until the run is repeated on <code>main</code>) reaches the published optimum on the same 14 and proves the same 9 either way, with no status change, no verdict moved and the same 28 solutions independently verified. On the nine instances that finish, conflicts take the node count to 0.965x (2,204 against 2,285; the movement is <code>supportcase16</code> 87 against 123, <code>supportcase14</code> 102 against 115, <code>flugpl</code> 437 against 469). On the 21 stopped by the limit the node count is 0.938x in the same wall clock - nodes not reached, not search saved - with <code>enlight8</code> at 0.373x and 37.4 s of its 60 s budget spent inside the analysis. That is the whole case for leaving it off. #418 adds the first global tightening the search has, reduced-cost fixing from the root relaxation against the incumbent (<code>mip_reduced_cost_fixing</code>, re-run whenever the incumbent improves), and root restarts on it (<code>mip_restarts</code>: throw the tree away and re-solve the root once enough integer columns are fixed, keeping pseudocosts, cuts, conflicts and the incumbent), in <code>src/mip/branch_and_bound_restart.cpp</code>; both checked against enumeration and both <strong>off by default</strong> until their MIPLIB A/B on <code>main</code>. The other half of #418, branching on a split of the objective row, is behind <code>mip_objective_branching</code>, <strong>off by default</strong>: when #398 found the objective's step, the objective is appended to the working model as a free row before any cut row, and a node whose relaxation value is not a multiple of the step is split on that row (at most the multiple below, at least the multiple above) instead of on a column, so the up child leaves the plateau by construction; the row bound travels through the node chain, the dives' unwind, checkpoints and restarts as a domain change on the row's logical index, conflict analysis stands down on a chain that holds one, and enumeration agreement on random integer-cost models is the check (<code>tests/unit/test_objective_branching.cpp</code>). Whether it earns a default is the A/B on <code>main</code> against the four plateau instances.</td>
-</tr>
-<tr>
-<td>Branch-and-cut / cutting planes</td>
-<td><strong>done, on by default since <code>0018254</code></strong></td>
-<td>#159 (closes #23): root Gomory mixed-integer and lifted knapsack cover cuts, <code>src/mip/cuts.cpp</code>, validity gated in exact arithmetic against the rational oracle (<code>tests/unit/test_cuts.cpp</code>) and by the 600-instance MILP fuzz run with cuts on. Off by default by measurement: the A/B at 60 s on the 30 MIPLIB instances proves the same nine instances either way, takes the node count to 0.918x, and costs one published match (<code>noswot</code>, -39 with cuts against -41 without; <code>enlight8</code> is <code>node_limit</code> in both files, and the earlier claim that it was the lost proof was wrong) (<code>bench/results/miplib-cuts-{off,on}.csv</code>; <code>docs/BENCHMARKS.md</code> section 2). Since #348 MIR cuts run at the root (aggregation from original constraint rows, Marchand-Wolsey rounding, up to depth 6; validity gated by the rational oracle); since #351 a cut pool with age-based eviction runs cut rounds below the root down to <code>tree_cut_depth</code> (default 0; the A/B leg used <code>enable_root_cuts=true tree_cut_depth=4</code>); since #379 clique cuts and {0,1/2}-Chvatal-Gomory cuts add the families MIR cannot reach on pure-integer covering rows. Three-way A/B at 60 s on <code>main</code> at <code>078cb24</code> (<code>bench/results/miplib-cuts-{off,on,tree}.csv</code>): cuts off reaches 14 of 30 and proves 9; the root round alone reaches 13 and proves 9 (one match lost at the time limit, nodes 1.049x); root plus tree rounds (<code>tree_cut_depth=4</code>) reach 14 and prove <strong>10</strong>, <code>neos-3611689-kaihu</code> proved and the node count 0.920x of the off leg. At <code>5e78399</code>, before objective integrality, all three legs proved 9. Five instances hold the optimum without proving it under the defaults (<code>b-ball</code>, <code>neos5</code>, <code>noswot</code>, <code>opt1217</code>, <code>rlp1</code>). All cut families are off by default; the tree leg is the first A/B to gain a proof without losing one, and whether it becomes the default is the decision open on #221. Since #398 the search knows when the objective is integral (integer costs on integer columns, or one continuous objective column bounded only by rows built from integer columns, the min-max shape of <code>rlp1</code> and <code>opt1217</code>) and rounds every relaxation bound up to the next attainable value: <code>rlp1</code>'s bound moves from 13.28 to 14 and <code>opt1217</code>'s from -20.02 to -20 at 60 s, no verdict moves either way, and the rounding is exact. What the four still need is the tree, not separation: #379's probe found no clique or {0,1/2} cut on any of them, and MIR closes 27 percent of <code>b-ball</code>'s root gap and nothing on the others. #419 adds flow cover cuts (<code>src/mip/flow_cover_cuts.cpp</code>; Padberg, Van Roy and Wolsey 1985) for the fixed-charge shape of <code>ran12x21</code>, <code>ran13x13</code> and <code>k16x240b</code>: the variable upper bounds x &lt;= u y are read off the model's two-nonzero rows, the cover of switched inflows is chosen at the LP point, each outflow sits on the right in its smaller form, and validity is checked in exact arithmetic over every switch assignment of random fixed-charge models by the rational simplex oracle. Unlifted, and behind <code>enable_flow_cover_cuts</code>, <strong>off by default</strong> until its A/B on <code>main</code>. #415 adds cut selection (<code>src/mip/cut_selection.cpp</code>; Wesselmann and Suhl 2012, Achterberg 2007 ch. 8): every cut that passes the filter is scored by efficacy, objective parallelism and integer support with the weights in one place, at most <code>cut_max_per_round</code> are taken at the root (the tree rounds keep <code>tree_cut_rows_per_round</code>), a cut nearly parallel to one already taken (<code>cut_max_parallelism</code>) waits, and what is not taken is offered again at the next round rather than dropped. That re-run, at <code>0018254</code> alone on the machine (<code>bench/results/miplib-cuts-{off,on,tree}.csv</code>), turned it around: the root round proves 10 where no cuts prove 9, at 1.015x the nodes and 0.986x the wall time, losing only limit-bound incumbents, and <code>enable_root_cuts</code> is on by default from that commit; root plus tree rounds at depth 4 lose the gained proof again in fewer, dearer nodes, so <code>tree_cut_depth</code> stays 0. Since then, each behind its own option and <strong>off by default</strong> until its A/B on <code>main</code>: c-MIR with variable-bound substitution, divisor trials and complementation (#625, <code>mir_cmir</code>; Marchand and Wolsey 2001), implied-bound cuts from variable bounds and probing implications (#630, <code>mip_implied_bound_cuts</code>), the root separation loop (#621, <code>root_cut_loop</code>), which re-separates every family at each new root LP point until the bound stalls, and the cut pool (#497, <code>mip_cut_pooling</code>), which re-imposes a cut row freed by age when a later node's LP point violates it. No committed CSV measures any of the four yet.</td>
-</tr>
-<tr>
 <td>Presolve</td>
 <td><strong>done</strong></td>
 <td>#43 landed six reductions (empty row, redundant row, fixed column, empty column, singleton row, forcing row); #92, merged as <code>780d7be</code>, added the two it deferred, free-column-singleton and doubleton-equation elimination, with their dual reconstruction corrected in <code>1a60b9d</code>. On by default, and postsolve re-measures the recovered point against the original model, so a wrong dual from a bad postsolve surfaces as a feasibility violation rather than as a quiet wrong answer - which is exactly the failure class this project is built to avoid. #412 lists what is still missing against a published presolve suite (duplicate rows and columns, dual fixing, dominated columns, implied free column substitution, binary probing, coefficient tightening); its first reduction, dual fixing (<code>presolve_dual_fixing</code>: a column whose entries can only push their rows away from a finite bound one way, and whose cost never rewards that way, is fixed at the other bound), is built, replayed as a column nonbasic at that bound, checked against the exact oracle on random LPs and MILPs, and <strong>off by default</strong> until the Netlib and MIPLIB re-runs on <code>main</code> say what it changes. Its second, parallel rows (<code>presolve_parallel_rows</code>: a row that is a scalar multiple of an earlier one folds its scaled bounds into that row and goes; postsolve hands the dual back to it when the bound that binds was its own, on either sign of the scale, and the same for a Farkas weight), is checked on hand cases for which row carries the dual and against the exact oracle on random LPs with deliberately duplicated rows; <strong>off by default</strong> for the same reason. The third, dominated columns (<code>presolve_dominated_columns</code>: two columns on the same rows, one at least as cheap and row by row at least as helpful, so activity moves from the dominated one onto the dominating one; the dominated column is fixed at its lower bound when the dominating one is unbounded above, the dominating one at its upper bound when the dominated one is unbounded below, with the integrality of the move checked), is built the same way, on identical row supports only, and <strong>off by default</strong> on the same terms. Implied-free column substitution (<code>presolve_implied_free</code>; Andersen and Andersen 1995, sec. 6) generalises the free-column singleton to a continuous column whose box is never binding, the bounds its one row's activity range puts on it lying inside the box, so the same substitution removes column and row and the recovered value is inside the box by construction; built the same way, the exact oracle the judge, and <strong>off by default</strong> on the same terms.</td>
@@ -534,18 +551,11 @@ and puts every answer through <code>tools/verify_solution.py</code>.</p>
 <td><strong>done</strong></td>
 <td>#220: LP sensitivity analysis at optimality — cost ranging (interval over which each objective coefficient can move without changing the optimal basis) and RHS ranging (interval over which each row bound can move before the basis becomes infeasible). Implemented in <code>src/simplex/ranging.cpp</code> via re-factorization of B from col/row status; runs after postsolve on the original model. Opt-in with <code>--ranging</code>; results in <code>.sol</code> file and top-10 summary printed to stdout. 8 unit tests in <code>tests/unit/test_ranging.cpp</code>. Demonstrated on <code>demo/crude_blend.mps</code> in <code>demo/run_sih_demo.sh</code> (#73). Reference: Chvatal, ch. 10.</td>
 </tr>
-<tr>
-<td>Heuristics</td>
-<td><strong>done</strong></td>
-<td>#25 — diving to an incumbent, then best-bound. Since #378: lock rounding (each fractional integer column rounded in the direction no row locks), a repair search at the root (unit moves on integer columns against the worst violated row), the feasibility pump (LP-rounding alternation when nothing else found an incumbent), and RINS on <code>mip_rins_frequency</code> (fix the columns where the LP relaxation and the incumbent agree, solve the reduced MIP). #414 adds RENS at the root (Berthold 2014: fix what the relaxation has integral, box the rest to its two roundings, search that sub-MIP) and the diving family beside the fractional dive - coefficient, vector length and guided diving (Achterberg 2007, sec. 9.2), at the root and every <code>mip_dive_frequency</code> nodes, with an optional one-level backtrack - and gives every heuristic its own <code>mip_heur_*</code> switch (<code>auto</code> follows <code>mip_heuristics</code>, <code>on</code> and <code>off</code> decide alone) and a budget in units the search counts, the seconds budgets of the sub-MIP heuristics dropped under <code>deterministic=true</code>. Everything beyond rounding and the fractional root dive is <strong>off by default</strong> until the per-heuristic A/B on <code>main</code> (#414) says which earn their place.</td>
-</tr>
-<tr>
-<td>Advanced node selection</td>
-<td><strong>done</strong></td>
-<td>#69 via #166: reliability branching - pseudocosts, strong branching on the ten best candidates until each has eight observations, product score - on top of the dive-then-best-bound node order; every node LP is a warm start of the bounded dual simplex (#65 via #165).</td>
-</tr>
 </tbody>
 </table></div>
+</details>
+<details class="included">
+<summary>docs/BENCHMARKS.md · 1e. The first-order engine — PDHG</summary>
 <h3 id="1e-the-first-order-engine--pdhg">1e. The first-order engine — PDHG</h3>
 <p>The simplex is not the only continuous engine. Restarted PDHG (<code>--option algorithm=pdhg</code>) is
 a first-order method: no basis, no factorization, and a cost that depends enormously on the
@@ -707,8 +717,46 @@ NOT the project's absolute standard, which is what <code>optimal</code> in the s
 what the verifier checks. <code>nan</code> in a crossing column means the level was never reached in
 that run.</p>
 <hr>
+</details>
 <h2 id="3-milp-engine">3 MILP engine</h2>
-<p>Mixed-integer models are solved by branch and cut over the warm-started dual simplex. The passages below cover how the search learns from infeasible nodes and how the tree is spread over several workers.</p>
+<p>Mixed-integer models are solved by branch and cut over the warm-started dual simplex. The coverage rows below describe the search itself: branching, the cutting planes and which of them are on by default, the primal heuristics and node selection. The passages after them cover how the search learns from infeasible nodes and how the tree is spread over several workers.</p>
+<p>The measured MIPLIB record is in the <a href="#9-results">Results</a> section, and is not repeated here.</p>
+<details class="included">
+<summary>docs/PS26119_COVERAGE.md · rows: Branch-and-bound, Branch-and-cut / cutting planes, Heuristics, Advanced node selection</summary>
+<div class="table-wrap"><table class="doc-table">
+<thead>
+<tr>
+<th>requirement</th>
+<th>status</th>
+<th>evidence / issue</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Branch-and-bound</td>
+<td><strong>done</strong></td>
+<td><code>src/mip/branch_and_bound.cpp</code>, domain-change stacks, no per-node copy. Since #381 the search also learns from every node it proves infeasible which of its branching decisions were to blame, and prunes or tightens later nodes that repeat them (#292, <code>src/mip/conflict.cpp</code>; <code>docs/ARCHITECTURE.md</code> section 11). A conflict is stored only after it is re-proved from the GLOBAL bounds - by propagation, or by the LP's Farkas multipliers re-evaluated conservatively here rather than taken on the LP's word - so a numerical failure, a limit or an interrupt can never produce one. <strong>Off by default by measurement</strong>, like the cut families: the A/B at 60 s on the 30 MIPLIB instances at <code>6c405f8</code> (#405; a branch commit, so the CSVs are not committed until the run is repeated on <code>main</code>) reaches the published optimum on the same 14 and proves the same 9 either way, with no status change, no verdict moved and the same 28 solutions independently verified. On the nine instances that finish, conflicts take the node count to 0.965x (2,204 against 2,285; the movement is <code>supportcase16</code> 87 against 123, <code>supportcase14</code> 102 against 115, <code>flugpl</code> 437 against 469). On the 21 stopped by the limit the node count is 0.938x in the same wall clock - nodes not reached, not search saved - with <code>enlight8</code> at 0.373x and 37.4 s of its 60 s budget spent inside the analysis. That is the whole case for leaving it off. #418 adds the first global tightening the search has, reduced-cost fixing from the root relaxation against the incumbent (<code>mip_reduced_cost_fixing</code>, re-run whenever the incumbent improves), and root restarts on it (<code>mip_restarts</code>: throw the tree away and re-solve the root once enough integer columns are fixed, keeping pseudocosts, cuts, conflicts and the incumbent), in <code>src/mip/branch_and_bound_restart.cpp</code>; both checked against enumeration and both <strong>off by default</strong> until their MIPLIB A/B on <code>main</code>. The other half of #418, branching on a split of the objective row, is behind <code>mip_objective_branching</code>, <strong>off by default</strong>: when #398 found the objective's step, the objective is appended to the working model as a free row before any cut row, and a node whose relaxation value is not a multiple of the step is split on that row (at most the multiple below, at least the multiple above) instead of on a column, so the up child leaves the plateau by construction; the row bound travels through the node chain, the dives' unwind, checkpoints and restarts as a domain change on the row's logical index, conflict analysis stands down on a chain that holds one, and enumeration agreement on random integer-cost models is the check (<code>tests/unit/test_objective_branching.cpp</code>). Whether it earns a default is the A/B on <code>main</code> against the four plateau instances.</td>
+</tr>
+<tr>
+<td>Branch-and-cut / cutting planes</td>
+<td><strong>done, on by default since <code>0018254</code></strong></td>
+<td>#159 (closes #23): root Gomory mixed-integer and lifted knapsack cover cuts, <code>src/mip/cuts.cpp</code>, validity gated in exact arithmetic against the rational oracle (<code>tests/unit/test_cuts.cpp</code>) and by the 600-instance MILP fuzz run with cuts on. Off by default by measurement: the A/B at 60 s on the 30 MIPLIB instances proves the same nine instances either way, takes the node count to 0.918x, and costs one published match (<code>noswot</code>, -39 with cuts against -41 without; <code>enlight8</code> is <code>node_limit</code> in both files, and the earlier claim that it was the lost proof was wrong) (<code>bench/results/miplib-cuts-{off,on}.csv</code>; <code>docs/BENCHMARKS.md</code> section 2). Since #348 MIR cuts run at the root (aggregation from original constraint rows, Marchand-Wolsey rounding, up to depth 6; validity gated by the rational oracle); since #351 a cut pool with age-based eviction runs cut rounds below the root down to <code>tree_cut_depth</code> (default 0; the A/B leg used <code>enable_root_cuts=true tree_cut_depth=4</code>); since #379 clique cuts and {0,1/2}-Chvatal-Gomory cuts add the families MIR cannot reach on pure-integer covering rows. Three-way A/B at 60 s on <code>main</code> at <code>078cb24</code> (<code>bench/results/miplib-cuts-{off,on,tree}.csv</code>): cuts off reaches 14 of 30 and proves 9; the root round alone reaches 13 and proves 9 (one match lost at the time limit, nodes 1.049x); root plus tree rounds (<code>tree_cut_depth=4</code>) reach 14 and prove <strong>10</strong>, <code>neos-3611689-kaihu</code> proved and the node count 0.920x of the off leg. At <code>5e78399</code>, before objective integrality, all three legs proved 9. Five instances hold the optimum without proving it under the defaults (<code>b-ball</code>, <code>neos5</code>, <code>noswot</code>, <code>opt1217</code>, <code>rlp1</code>). All cut families are off by default; the tree leg is the first A/B to gain a proof without losing one, and whether it becomes the default is the decision open on #221. Since #398 the search knows when the objective is integral (integer costs on integer columns, or one continuous objective column bounded only by rows built from integer columns, the min-max shape of <code>rlp1</code> and <code>opt1217</code>) and rounds every relaxation bound up to the next attainable value: <code>rlp1</code>'s bound moves from 13.28 to 14 and <code>opt1217</code>'s from -20.02 to -20 at 60 s, no verdict moves either way, and the rounding is exact. What the four still need is the tree, not separation: #379's probe found no clique or {0,1/2} cut on any of them, and MIR closes 27 percent of <code>b-ball</code>'s root gap and nothing on the others. #419 adds flow cover cuts (<code>src/mip/flow_cover_cuts.cpp</code>; Padberg, Van Roy and Wolsey 1985) for the fixed-charge shape of <code>ran12x21</code>, <code>ran13x13</code> and <code>k16x240b</code>: the variable upper bounds x &lt;= u y are read off the model's two-nonzero rows, the cover of switched inflows is chosen at the LP point, each outflow sits on the right in its smaller form, and validity is checked in exact arithmetic over every switch assignment of random fixed-charge models by the rational simplex oracle. Unlifted, and behind <code>enable_flow_cover_cuts</code>, <strong>off by default</strong> until its A/B on <code>main</code>. #415 adds cut selection (<code>src/mip/cut_selection.cpp</code>; Wesselmann and Suhl 2012, Achterberg 2007 ch. 8): every cut that passes the filter is scored by efficacy, objective parallelism and integer support with the weights in one place, at most <code>cut_max_per_round</code> are taken at the root (the tree rounds keep <code>tree_cut_rows_per_round</code>), a cut nearly parallel to one already taken (<code>cut_max_parallelism</code>) waits, and what is not taken is offered again at the next round rather than dropped. That re-run, at <code>0018254</code> alone on the machine (<code>bench/results/miplib-cuts-{off,on,tree}.csv</code>), turned it around: the root round proves 10 where no cuts prove 9, at 1.015x the nodes and 0.986x the wall time, losing only limit-bound incumbents, and <code>enable_root_cuts</code> is on by default from that commit; root plus tree rounds at depth 4 lose the gained proof again in fewer, dearer nodes, so <code>tree_cut_depth</code> stays 0. Since then, each behind its own option and <strong>off by default</strong> until its A/B on <code>main</code>: c-MIR with variable-bound substitution, divisor trials and complementation (#625, <code>mir_cmir</code>; Marchand and Wolsey 2001), implied-bound cuts from variable bounds and probing implications (#630, <code>mip_implied_bound_cuts</code>), the root separation loop (#621, <code>root_cut_loop</code>), which re-separates every family at each new root LP point until the bound stalls, and the cut pool (#497, <code>mip_cut_pooling</code>), which re-imposes a cut row freed by age when a later node's LP point violates it. No committed CSV measures any of the four yet.</td>
+</tr>
+<tr>
+<td>Heuristics</td>
+<td><strong>done</strong></td>
+<td>#25 — diving to an incumbent, then best-bound. Since #378: lock rounding (each fractional integer column rounded in the direction no row locks), a repair search at the root (unit moves on integer columns against the worst violated row), the feasibility pump (LP-rounding alternation when nothing else found an incumbent), and RINS on <code>mip_rins_frequency</code> (fix the columns where the LP relaxation and the incumbent agree, solve the reduced MIP). #414 adds RENS at the root (Berthold 2014: fix what the relaxation has integral, box the rest to its two roundings, search that sub-MIP) and the diving family beside the fractional dive - coefficient, vector length and guided diving (Achterberg 2007, sec. 9.2), at the root and every <code>mip_dive_frequency</code> nodes, with an optional one-level backtrack - and gives every heuristic its own <code>mip_heur_*</code> switch (<code>auto</code> follows <code>mip_heuristics</code>, <code>on</code> and <code>off</code> decide alone) and a budget in units the search counts, the seconds budgets of the sub-MIP heuristics dropped under <code>deterministic=true</code>. Everything beyond rounding and the fractional root dive is <strong>off by default</strong> until the per-heuristic A/B on <code>main</code> (#414) says which earn their place.</td>
+</tr>
+<tr>
+<td>Advanced node selection</td>
+<td><strong>done</strong></td>
+<td>#69 via #166: reliability branching - pseudocosts, strong branching on the ten best candidates until each has eight observations, product score - on top of the dive-then-best-bound node order; every node LP is a warm start of the bounded dual simplex (#65 via #165).</td>
+</tr>
+</tbody>
+</table></div>
+</details>
+<details class="included">
+<summary>docs/ARCHITECTURE.md · 11. Conflict analysis: learning from infeasible nodes</summary>
 <h3 id="11-conflict-analysis-learning-from-infeasible-nodes">11. Conflict analysis: learning from infeasible nodes</h3>
 <p><code>conflict_analysis</code> (#292, <code>src/mip/conflict.hpp</code>, <code>src/mip/branch_and_bound_conflicts.cpp</code>)
 learns, from each node proved infeasible, which of its branching decisions were to blame, and
@@ -787,6 +835,9 @@ writes them and their statistics as JSON for diagnostics, with the <code>columns
 column count of the model the indices belong to, so a reader cannot quietly read them as the
 original model's. The log's <code>Conflicts:</code> line and the profiler's <code>conflict analysis</code> region
 report their cost.</p>
+</details>
+<details class="included">
+<summary>docs/ARCHITECTURE.md · 12. Parallel tree search</summary>
 <h3 id="12-parallel-tree-search">12. Parallel tree search</h3>
 <p><code>mip_threads=N</code> (#222, <code>src/mip/parallel_search.hpp</code>, <code>src/mip/branch_and_bound_parallel.cpp</code>)
 runs the branch and bound on N worker threads. Each worker runs the ordinary sequential
@@ -809,9 +860,12 @@ reads the pool at every node), a checkpoint or resume (the file holds one search
 <code>deterministic=true</code> (the tree varies with timing). <code>node_limit</code> can be overshot by at most one
 node per worker, because each counts a node before it checks. Root cuts, if enabled, are the
 root worker's own rows; other workers do not see them.</p>
+</details>
 <h2 id="4-qp-engines">4 QP engines</h2>
 <p>Convex quadratic programs have two engines, a first-order splitting method and a proximal interior point. Convexity is decided before any arithmetic, and a Hessian that cannot be proved convex is refused rather than solved to a local point.</p>
 <p>The two standard convex QP sets follow, each with the engine that ran it and what the independent verifier said.</p>
+<details class="included">
+<summary>docs/BENCHMARKS.md · 2b. Maros-Meszaros, the convex QP set</summary>
 <h3 id="2b-maros-meszaros-the-convex-qp-set">2b. Maros-Meszaros, the convex QP set</h3>
 <p>The 138 convex QPs of Maros and Meszaros, <em>A repository of convex quadratic programming
 problems</em>, Optimization Methods and Software 11-12 (1999): the set every convex QP paper
@@ -3222,6 +3276,9 @@ Commit <code>65eecbc</code> · machine <code>Windows-AMD64</code> · time limit 
 <li><strong><code>optimal</code> but not successful at 1e-9 relative</strong> (38): <code>aug2d</code>, <code>aug2dc</code>, <code>aug2dcqp</code>, <code>aug2dqp</code>, <code>aug3d</code>, <code>aug3dc</code>, <code>aug3dcqp</code>, <code>aug3dqp</code>, <code>cont-050</code>, <code>cvxqp2s</code>, <code>dpklo1</code>, <code>dtoc3</code>, <code>dual1</code>, <code>dual2</code>, <code>dual3</code>, <code>dual4</code>, <code>dualc5</code>, <code>genhs28</code>, <code>hs118</code>, <code>hs51</code>, <code>hs52</code>, <code>hs53</code>, <code>hs76</code>, <code>hues-mod</code>, <code>mosarqp1</code>, <code>mosarqp2</code>, <code>primal1</code>, <code>primal2</code>, <code>primal3</code>, <code>primal4</code>, <code>qafiro</code>, <code>qptest</code>, <code>qsc205</code>, <code>qscsd1</code>, <code>qscsd6</code>, <code>stcqp1</code>, <code>stcqp2</code>, <code>zecevic2</code>.</li>
 </ul>
 <hr>
+</details>
+<details class="included">
+<summary>docs/BENCHMARKS.md · 2d. QPLIB, the convex continuous QPs</summary>
 <h3 id="2d-qplib-the-convex-continuous-qps">2d. QPLIB, the convex continuous QPs</h3>
 <p>The convex, continuous, linearly constrained (or box- or un-constrained) instances of QPLIB
 (Furini et al., <em>QPLIB: a library of quadratic programming instances</em>, Mathematical
@@ -3628,9 +3685,12 @@ Commit <code>ad57c03</code> · machine <code>Linux-x86_64</code> · time limit 1
 <li><code>ipm</code>, <strong>no published reference</strong> (1): <code>QPLIB_9002</code>.</li>
 </ul>
 <hr>
+</details>
 <h2 id="5-gpu-acceleration">5 GPU acceleration</h2>
 <p>The first-order engine has a CUDA port. The CPU build needs no CUDA at all, and a GPU request on a machine without a usable device falls back to the CPU with a warning.</p>
 <p>Where the GPU wins and where it loses is a measurement, not a claim, and the plan written before any card existed says what the hardware may and may not be used to claim.</p>
+<details class="included">
+<summary>docs/BENCHMARKS.md · 1g. GPU PDHG crossover — when the GPU wins</summary>
 <h3 id="1g-gpu-pdhg-crossover--when-the-gpu-wins">1g. GPU PDHG crossover — when the GPU wins</h3>
 <p>The GPU backend (<code>algorithm=pdhg gpu=true</code>) offloads the matrix-vector products to CUDA.
 Small problems spend more time on data transfer than on computation; the crossover point
@@ -6538,6 +6598,9 @@ sparse products per iteration, and with the whole iteration loop kept on the dev
 </tbody>
 </table></div>
 <hr>
+</details>
+<details class="included">
+<summary>docs/GPU_PLAN.md · 5. What the hardware lets us claim, and what it does not</summary>
 <h3 id="5-what-the-hardware-lets-us-claim-and-what-it-does-not">5. What the hardware lets us claim, and what it does not</h3>
 <p>The claim the problem statement's title invites is "GPU-accelerated". After Step 3 the
 sentence we can write is of this shape: <em>on instances above N rows the first-order engine on
@@ -6549,8 +6612,11 @@ Netlib-sized models get no faster; MIPLIB proofs (13 of 30 reached, 9 proved) de
 branch-and-cut (#221) and the parallel tree (#222), not on the GPU; Mittelmann's 0 of 8 is a
 factorization-scale problem that PDHG at 1e-4 may reach but cannot certify. Those are the
 rows in the README's "What still needs doing" that a GPU leaves where they are.</p>
+</details>
 <h2 id="6-numerical-stability">6 Numerical stability</h2>
 <p>A wrong answer from numerical code looks exactly like a right one. The solver rests on two invariants, stated below, and the robustness sweep pushes each numerical hazard until the answer or the certificate moves.</p>
+<details class="included">
+<summary>docs/ARCHITECTURE.md · 3. The two invariants everything else rests on</summary>
 <h3 id="3-the-two-invariants-everything-else-rests-on">3. The two invariants everything else rests on</h3>
 <p><strong>The frozen interface.</strong> <code>Model</code>, <code>Solution</code> and <code>solve()</code> do not change without an explicit
 note in the PR that changes them. Readers produce a <code>Model</code>; every engine consumes one and
@@ -6579,6 +6645,9 @@ assembled from a prefix sum that wrapped into negative offsets.</p>
 <p><code>SparseMatrix::set_nonzero_limit()</code> lowers the ceiling per instance. It exists so the refusal
 path is testable at a handful of entries instead of 2^31, and doubles as a per-matrix memory
 cap for a caller who wants one.</p>
+</details>
+<details class="included">
+<summary>docs/BENCHMARKS.md · 5. Robustness — where the solver stops working</summary>
 <h3 id="5-robustness--where-the-solver-stops-working">5. Robustness — where the solver stops working</h3>
 <p>PS26119 asks for "a clear demonstration of numerical robustness ... involving degeneracy,
 weak LP relaxations or ill-conditioned constraint matrices". <code>data/casestudies/</code> demonstrates
@@ -6640,8 +6709,11 @@ of Beale and Kuhn.</p>
 </table></div>
 <p>Reading the table: the <code>conditioning</code> cliff is <code>kZeroDrop</code> (<code>tolerances.hpp</code>), the threshold below which a coefficient is treated as zero everywhere in the solver. At an entry spread of 1e12 the smallest coefficients fall under 1e-11, the model that gets solved is not the model that was written, and presolve then reports - correctly, about the truncated model - that a row cannot reach its bound. A model whose answer depends on a coefficient below 1e-11 is outside this solver's range; lowering the threshold would move the cliff, not remove it. The other limits are limits of the CERTIFICATE, not the answer: where the objective is right to 1e-15 and the verifier still rejects, the reduced costs or multipliers carry more rounding than its tolerances allow, which is worth knowing exactly because those tolerances are what a downstream consumer of the duals gets.</p>
 <hr>
+</details>
 <h2 id="7-independent-verification">7 Independent verification</h2>
 <p>Every answer is re-derived by a separate program that reads only the model file and the solution file. An infeasible verdict carries a certificate the same program checks, and the provenance claim is checked by what the binary actually links against.</p>
+<details class="included">
+<summary>docs/BENCHMARKS.md · 3. Correctness beyond the objective value</summary>
 <h3 id="3-correctness-beyond-the-objective-value">3. Correctness beyond the objective value</h3>
 <p>An objective that matches a published number is necessary, not sufficient — it says nothing
 about whether the reported solution is internally consistent. Two independent checks cover
@@ -7138,6 +7210,9 @@ once as a dedicated parametric simplex would; the tool's docstring says what tha
 </tbody>
 </table></div>
 <hr>
+</details>
+<details class="included">
+<summary>docs/PROVENANCE.md · 4. Machine-checkable evidence</summary>
 <h3 id="4-machine-checkable-evidence">4. Machine-checkable evidence</h3>
 <h4 id="41-what-the-binary-actually-links-against">4.1 What the binary actually links against</h4>
 <p>Regenerated at <strong>Phase 2</strong>, commit <code>12fa98b</code>. The Phase 1 text predicted that zlib would
@@ -7235,12 +7310,14 @@ matches the solver-name grep of 4.1.</p>
 <p>An SPDX SBOM is generated in CI by the <code>provenance</code> job and attached as a build artifact
 (<code>sankhya-sbom.spdx.json</code>).</p>
 <hr>
+</details>
 <h2 id="8-benchmark-method">8 Benchmark method</h2>
 <p>Every benchmark run writes a file with the instance, its hash, the published value, the gap, the status, the time, the commit and the machine. The benchmarks document is generated from those files, so it cannot drift from them.</p>
 <p>The passages below give that method, what reproducibility is and is not promised, and what the numbers do not say.</p>
+<details class="included">
+<summary>docs/BENCHMARKS.md · the opening, before the first section</summary>
 <!-- GENERATED FILE. Do not edit by hand. -->
 <!-- Regenerate with: python bench/runners/make_benchmarks_doc.py -->
-
 <p>This file is generated from the CSVs in <code>bench/results/</code>, so it cannot drift from the
 evidence. Every number below came out of a run that recorded the instance sha256, the git
 commit and the machine tag alongside it. CI checks that every CSV's commit is on <code>main</code>
@@ -7257,6 +7334,9 @@ says.</p>
 1-second shift, an explicit time limit, and failures counted and named
 rather than dropped.</p>
 <hr>
+</details>
+<details class="included">
+<summary>docs/ARCHITECTURE.md · 7. Reproducibility, and what is actually promised</summary>
 <h3 id="7-reproducibility-and-what-is-actually-promised">7. Reproducibility, and what is actually promised</h3>
 <p><code>--option deterministic=true</code> turns on the reproducible mode (#288). It is off by default:
 it refuses a wall-clock <code>time_limit</code>, and a caller who asked for one has to keep getting it.</p>
@@ -7388,6 +7468,9 @@ which fails if any cited CSV's stamp is not an ancestor of <code>main</code>. Br
 squash-merged are listed in <code>bench/results/squash-stamps.txt</code> with their squash commit;
 the checker accepts them when the squash commit is on <code>main</code>, so the chain of custody is
 preserved without re-running on a main commit.</p>
+</details>
+<details class="included">
+<summary>docs/BENCHMARKS.md · 6. What these numbers do not say</summary>
 <h3 id="6-what-these-numbers-do-not-say">6. What these numbers do not say</h3>
 <ul>
 <li><strong>The large-model evidence is sections 1d and 1f to 1f.3, and none of it is a real
@@ -7411,9 +7494,12 @@ preserved without re-running on a main commit.</p>
   <code>docs/PS26119_COVERAGE.md</code>, not here, because a run made with a non-default option is a
   measurement of that option rather than the tier's evidence. <code>docs/PROVENANCE.md</code> and issue #54 carry the full accounting.</li>
 </ul>
+</details>
 <h2 id="9-results">9 Results</h2>
 <p>The headline results follow as the benchmarks document states them: the full Netlib set and the next rung up, the large LPs, scale, the mixed-integer set, nonlinear programs, and the comparison with HiGHS.</p>
 <p>The complete tables, every instance named, are on the benchmarks page.</p>
+<details class="included">
+<summary>docs/BENCHMARKS.md · 1c. The full set — the honest headline</summary>
 <h3 id="1c-the-full-set--the-honest-headline">1c. The full set — the honest headline</h3>
 <p>Every instance in Netlib's summary table. Both tiers above are defined by a row cap, which
 makes them the easier half of the library by construction; this is the number Phase 6's
@@ -8546,6 +8632,9 @@ not quite feasible on a badly scaled model, not an infeasible primal basis and n
 relaxed unscaled retry (none ran). Not fixed here: tightening the dual tolerance to chase
 one instance is the move the evidence rules forbid without a numerical justification,
 and #548 stays open for a scale-aware reduced-cost test.</p>
+</details>
+<details class="included">
+<summary>docs/BENCHMARKS.md · 1c.1 The Kennington set - the next rung</summary>
 <h3 id="1c1-the-kennington-set---the-next-rung">1c.1 The Kennington set - the next rung</h3>
 <p>The sixteen Kennington LPs (the <code>cre</code>, <code>ken</code>, <code>osa</code> and <code>pds</code> families, Carolan et al.,
 Operations Research 38(2), 1990), larger and sparser than the core Netlib set. Fetched and
@@ -8788,6 +8877,9 @@ Commit <code>65eecbc</code> · machine <code>Windows-AMD64</code> · generated 2
 <li><strong>failed: <code>pds-20</code></strong>, kept in the table on purpose</li>
 </ul>
 <p>No per-engine option run is committed yet (<code>--solver-option algorithm=dual-simplex</code>, <code>simplex</code>, <code>pdhg</code>, <code>ipm</code>).</p>
+</details>
+<details class="included">
+<summary>docs/BENCHMARKS.md · 1d. Beyond Netlib — Mittelmann&#x27;s LP set</summary>
 <h3 id="1d-beyond-netlib--mittelmanns-lp-set">1d. Beyond Netlib — Mittelmann's LP set</h3>
 <p>Netlib's largest instance has about 6,000 rows. PS26119 asks about "thousands to millions
 of variables", and the only honest way to say where this solver stands on that is to run
@@ -9062,6 +9154,9 @@ Same 300 s limit per instance and engine; HiGHS is not re-run here.</p>
 </tbody>
 </table></div>
 <p>Finished and verified inside the limit: dual simplex <strong>5 of 12</strong>, PDHG <strong>3 of 12</strong>, interior point <strong>1 of 12</strong>.</p>
+</details>
+<details class="included">
+<summary>docs/BENCHMARKS.md · 1f. Scale — how far up this goes</summary>
 <h3 id="1f-scale--how-far-up-this-goes">1f. Scale — how far up this goes</h3>
 <p>Every tier above is Netlib-sized: the largest instance in the full set has 12,230 columns, and
 most have a few hundred, so none of them speaks to the size PS26119 asks about.</p>
@@ -9787,6 +9882,9 @@ Commit <code>e134aeb</code> · machine <code>Windows-AMD64</code> · 120.0s per 
 </tbody>
 </table></div>
 <h2 id="10-of-11-solves-under-auto-reached-the-analytic-optimum-to-a-relative-1e-06-commit-078cb24-the-engine-column-is-what-ran-which-after-a-decline-is-the-fallback-pdhg-cpu-on-a-row-that-the-rule-table-sent-to-the-interior-point-means-the-set-up-passed-ipm_setup_share-of-the-limit-and-the-first-order-method-took-the-rest-357"><strong>10 of 11</strong> solves under <code>auto</code> reached the analytic optimum to a relative 1e-06 (commit 078cb24). The engine column is what ran, which after a decline is the fallback: <code>pdhg-cpu</code> on a row that the rule table sent to the interior point means the set-up passed <code>ipm_setup_share</code> of the limit and the first-order method took the rest (#357).</h2>
+</details>
+<details class="included">
+<summary>docs/BENCHMARKS.md · 2. MIPLIB — the mixed-integer side</summary>
 <h3 id="2-miplib--the-mixed-integer-side">2. MIPLIB — the mixed-integer side</h3>
 <p>The LP tiers above say nothing about the branch and bound. This is the MILP evidence, and it
 is a harder library: MIPLIB instances are chosen to be difficult for mature solvers.</p>
@@ -10667,6 +10765,9 @@ Commit <code>54e561b</code></p>
 </table></div>
 <p><strong>Needed time</strong> (proved at 600 s, not at 60 s): none. <strong>Needs a bound</strong> (optimum reached at both limits, proved at neither): <code>b-ball</code>, <code>neos-3611689-kaihu</code>, <code>neos5</code>, <code>noswot</code>, <code>opt1217</code>, <code>rlp1</code>. <strong>Needs an incumbent</strong> (wrong answer even at 600 s): <code>ej</code>, <code>enlight8</code>, <code>enlight_hard</code>, <code>gen-ip016</code>, <code>gen-ip054</code>, <code>k16x240b</code>, <code>markshare1</code>, <code>markshare_4_0</code>, <code>markshare_5_0</code>, <code>neos-3072252-nete</code>, <code>neos-5140963-mincio</code>, <code>pk1</code>, <code>ran12x21</code>, <code>ran13x13</code>, <code>timtab1</code>.</p>
 <hr>
+</details>
+<details class="included">
+<summary>docs/BENCHMARKS.md · 2e. Nonlinear programs - Hock-Schittkowski, and convex MINLPLib</summary>
 <h3 id="2e-nonlinear-programs---hock-schittkowski-and-convex-minlplib">2e. Nonlinear programs - Hock-Schittkowski, and convex MINLPLib</h3>
 <p>The nonlinear engine behind the <code>solve()</code> seam (NLP stages 1-3): a model read from AMPL's
 <code>.nl</code> format, exact first and second derivatives by automatic differentiation, a primal-dual
@@ -11683,6 +11784,9 @@ Commit <code>ad57c03</code> · machine <code>Linux-x86_64</code> · 60.0 s per p
 python bench/runners/nlp_bench.py --data data/nlp/minlplib --match-tolerance 1e-4  # convex MINLPLib
 </code></pre>
 <hr>
+</details>
+<details class="included">
+<summary>docs/BENCHMARKS.md · 4. Comparison against an established solver</summary>
 <h3 id="4-comparison-against-an-established-solver">4. Comparison against an established solver</h3>
 <p>HiGHS is the reference. It runs as a SEPARATE PROCESS over the same MPS files; no HiGHS code
 is linked into, or read by, SANKHYA - see <code>docs/PROVENANCE.md</code>. Both sides are timed on
@@ -12173,8 +12277,11 @@ Commit <code>ad57c03</code> · machine <code>Linux-x86_64</code></p>
 </ul>
 <p>The two are <strong>within noise of each other</strong> here, at 1.00x. A narrow claim: eight small instances settle nothing about large models. HiGHS is a decade of specialist work with presolve, a dual simplex and a mature pricing scheme. This solver now has a presolve (#43, #92) and a dual simplex (#65) of its own, both defaults, so what remains between the two is the pricing and the years. The part that has to be right first is that <strong>the answers agree</strong> - the problem statement asks us to compare, not to win.</p>
 <hr>
+</details>
 <h2 id="10-limitations">10 Limitations</h2>
 <p>What the solver does not do, and what was built and then demoted or withdrawn, is carried here in full.</p>
+<details class="included">
+<summary>docs/NEGATIVE-RESULTS.md · the whole document</summary>
 <p>Features that were built, measured, and then demoted, left opt-in, or withdrawn — with the number that did it and the file the number lives in. This document exists because the decision <em>not</em> to ship something is evidence too, and it is the evidence a reader cannot recover from the code: an opt-in flag says nothing about why it is opt-in.</p>
 <p>Every entry states which of three things it is:</p>
 <ul>
@@ -12442,6 +12549,9 @@ What would earn a default above one: a measured win at the sizes where the gathe
 <hr>
 <h3 id="adding-an-entry">Adding an entry</h3>
 <p>An entry is a CSV first. Run the A/B at one <code>main</code> commit, alone on the machine, on AC, both legs in one sitting; commit the CSVs; regenerate <code>docs/BENCHMARKS.md</code>; then write the paragraph here with the file names and the number. A decision made on a branch run goes in section 2 with the re-run that would move it, not in section 1. A number that later fails to reproduce moves to section 4 with the run that replaced it — it is not deleted.</p>
+</details>
+<details class="included">
+<summary>README.md · What this does NOT do</summary>
 <h3 id="what-this-does-not-do">What this does NOT do</h3>
 <p>Stated here rather than only in the demo, because a solver that is vague about its limits is
 not one an industrial user can plan around. <a href="https://github.com/thegoodengineers/SANKHYA/issues/54">Issue #54</a>
@@ -12507,6 +12617,7 @@ branch and bound, whose trees were not re-measured under it), with #705 ordering
 breakpoints only as far as the step goes; the <code>ad57c03</code> runs above were made under
 that default. No committed CSV carries HiGHS's iteration count beside
 ours, so no iteration ratio is quoted.</p>
+</details>
 <h2 id="11-future-work">11 Future work</h2>
 <p>Only work that exists as an open issue in the tracker is listed. No dates are given and no result is promised.</p>
 <ul>
