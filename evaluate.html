@@ -16,18 +16,20 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/styles.css">
+<script src="/site.js" defer></script>
 </head>
 <body>
-<nav class="nav">
-  <div class="wrap">
-    <a class="brand" href="/">SANKHYA <small>SIH26119</small></a>
-    <ul><li><a href="/">Home</a></li><li><a href="/evaluate" aria-current="page">For evaluators</a></li><li><a href="/problem">Problem</a></li><li><a href="/solver">Solver</a></li><li><a href="/evidence">Evidence</a></li><li><a href="/run">Run it</a></li><li><a href="/roadmap">Limits</a></li><li><a href="/team">Team</a></li></ul>
-    <a class="gh" href="https://github.com/thegoodengineers/SANKHYA"><span class="long">github.com/thegoodengineers/SANKHYA</span><span class="short">GitHub</span></a>
-  </div>
-  <div class="subnav"><a href="/">Home</a><a href="/evaluate" aria-current="page">For evaluators</a><a href="/problem">Problem</a><a href="/solver">Solver</a><a href="/evidence">Evidence</a><a href="/run">Run it</a><a href="/roadmap">Limits</a><a href="/team">Team</a></div>
-</nav>
+<a class="skip" href="#content">Skip to content</a>
+<div class="shell">
+<aside class="rail">
+  <a class="brand" href="/"><span class="brand-mark" aria-hidden="true"></span>SANKHYA<small>SIH26119</small></a>
+  <nav class="doors" aria-label="Site"><a href="/">Home</a><a href="/evaluate" aria-current="page">For evaluators</a><a href="/problem">Problem</a><a href="/solver">Solver</a><a href="/evidence">Evidence</a><a href="/run">Run it</a><a href="/roadmap">Limits</a><a href="/team">Team</a><a class="ext" href="https://github.com/thegoodengineers/SANKHYA">GitHub</a></nav>
+  <hr class="rail-rule">
+  <nav class="here" aria-label="On this page"><a href="#top">Overview</a><a href="#scratch">Question 1</a><a href="#right">Question 2</a><a href="#compare">Question 3</a><a href="#glossary">Glossary</a></nav>
+</aside>
+<main class="col" id="content">
 
-<header class="page"><div class="wrap"><div class="label"><span class="n">00</span> · For evaluators</div><h1 style="margin-top:12px">Fifteen minutes, in order, and what each step should print.</h1><p class="lede">Written for the panel of SIH26119. Nothing below asks you to take our word for anything: each step ends with a file you can open or a program you can run that we did not write.</p></div></header>
+<header class="page" id="top"><div class="wrap"><div class="label"><span class="n">00</span> · For evaluators</div><h1 style="margin-top:12px">Fifteen minutes, in order, and what each step should print.</h1><p class="lede">Written for the panel of SIH26119. Nothing below asks you to take our word for anything: each step ends with a file you can open or a program you can run that we did not write.</p></div></header>
 
 <section id="scratch">
   <div class="wrap">
@@ -93,5 +95,7 @@ demo/run_demo.sh share2b</code></pre><p class="small">Classic Netlib models, com
     <div><a href="https://github.com/thegoodengineers/SANKHYA">Source</a> · <a href="https://github.com/thegoodengineers/SANKHYA/blob/main/docs/BENCHMARKS.md">Benchmarks</a> · <a href="https://github.com/thegoodengineers/SANKHYA/blob/main/docs/PROVENANCE.md">Provenance</a> · <a href="https://github.com/thegoodengineers/SANKHYA/blob/main/docs/PS26119_COVERAGE.md">Coverage tracker</a></div>
   </div>
 </footer>
+</main>
+</div>
 </body>
 </html>
