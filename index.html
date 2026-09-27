@@ -4,10 +4,10 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="color-scheme" content="light">
-<title>SANKHYA — an optimization solver written from the mathematics</title>
-<meta name="description" content="LP, MILP and convex QP from scratch in C++20 for Smart India Hackathon 2026 (PS SIH26119, MRPL). Four engines, an independent verifier, and the evidence committed beside the code.">
-<meta property="og:title" content="SANKHYA — an optimization solver written from the mathematics">
-<meta property="og:description" content="LP, MILP and convex QP from scratch in C++20 for Smart India Hackathon 2026 (PS SIH26119, MRPL). Four engines, an independent verifier, and the evidence committed beside the code.">
+<title>SANKHYA: an optimization solver written from the mathematics</title>
+<meta name="description" content="LP, MILP and convex QP from scratch in C++20 for Smart India Hackathon 2026 (PS SIH26119, MRPL). Seven engines behind one call, an independent verifier, and the evidence committed beside the code.">
+<meta property="og:title" content="SANKHYA: an optimization solver written from the mathematics">
+<meta property="og:description" content="LP, MILP and convex QP from scratch in C++20 for Smart India Hackathon 2026 (PS SIH26119, MRPL). Seven engines behind one call, an independent verifier, and the evidence committed beside the code.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://sankhya-solver.vercel.app/">
 <link rel="canonical" href="https://sankhya-solver.vercel.app/">
@@ -25,25 +25,25 @@
   <a class="brand" href="/"><span class="brand-mark" aria-hidden="true"></span>SANKHYA<small>SIH26119</small></a>
   <nav class="doors" aria-label="Site"><a href="/" aria-current="page">Home</a><a href="/evaluate">For evaluators</a><a href="/problem">Problem</a><a href="/solver">Solver</a><a href="/evidence">Evidence</a><a href="/run">Run it</a><a href="/roadmap">Limits</a><a href="/team">Team</a><a class="ext" href="https://github.com/thegoodengineers/SANKHYA">GitHub</a></nav>
   <hr class="rail-rule">
-  <nav class="here" aria-label="On this page"><a href="#top">Overview</a><a href="#one-call">One call</a><a href="#scoreboard">Scoreboard</a><a href="#three-questions">Three questions</a><a href="#pick-a-page">Pick a page</a></nav>
+  <nav class="here" aria-label="On this page"><a href="#top">Overview</a><a href="#one-call">One call</a><a href="#scoreboard">Scoreboard</a><a href="#three-questions">Three questions</a><a href="#what-is-new">What is new</a><a href="#pick-a-page">Pick a page</a></nav>
 </aside>
 <main class="col" id="content">
 
 <header class="hero home" id="top">
   <div class="wrap">
-    <div class="float f1"><div class="label"><span class="n">plan.sol</span> · shadow prices</div><pre>row  DIESEL_COMMIT   dual  +12.40
-row  SULPHUR_SPEC    dual  -318.7
-row  CDU_MAX         dual   +4.05
-ranging_basis  nondegenerate</pre></div>
-    <div class="float f2"><div class="label"><span class="n">verifier</span> · independent</div><pre>primal infeasibility  3.1e-12
-dual infeasibility    0.0e+00
-strong duality gap    2.2e-16
-verdict               OPTIMAL ✓</pre></div>
-    <div class="float f3"><div class="label"><span class="n">certificate</span> · infeasible</div><pre>farkas y · b  =  -1.000
-y ≥ 0, yᵀA ≤ 0   proved
-iis  3 rows, 2 bounds
-witnesses        checked</pre></div>
-    <div class="float f4"><div class="label"><span class="n">netlib-full</span> · 89 instances</div><div class="mini"><div style="width:87.6%"></div></div><div class="m">80 verified · 8 table outliers · 1 named</div></div>
+    <div class="float f1"><div class="label"><span class="n">blend.sol</span> · shadow prices</div><pre>row  THRUPUT  basic     dual  0
+row  DIESEL   fixed     dual  4.97297
+row  SULPHUR  at_upper  dual  1.13513
+ranging_basis  nondegenerate</pre><div class="m">demo/crude_blend.mps at <span data-fact="sankhya_commit">493fa1d</span>, objective 214.1459459</div></div>
+    <div class="float f2"><div class="label"><span class="n">verifier</span> · independent</div><pre>row activity        1.421e-14
+reduced costs       8.882e-16
+strong duality gap  0.000e+00
+VERIFIED: 14 checks passed</pre><div class="m">tools/verify_solution.py on the same blend.sol</div></div>
+    <div class="float f3"><div class="label"><span class="n">certificate</span> · infeasible</div><pre>certificate    farkas, 2 of 3 rows
+contradiction  1.245e+01
+iis            2 rows, 2 bounds
+VERIFIED: 10 checks passed</pre><div class="m">demo/crude_blend_infeasible.mps, IIS irreducible</div></div>
+    <div class="float f4"><div class="label"><span class="n">netlib-full-ad57c03</span> · <span data-fact="netlib_total">89</span> instances</div><div class="mini"><div style="width:91.0%"></div></div><div class="m"><span data-fact="netlib_matched">81</span> matched · <span data-fact="netlib_verified">89</span> verified · <span data-fact="netlib_outliers">8</span> where the published table is off</div></div>
     <div class="center">
       <div class="label"><span class="n">Smart India Hackathon 2026</span> · PS SIH26119 · MRPL</div>
       <h1>An optimization solver<br>written <em>from the mathematics.</em></h1>
@@ -56,38 +56,45 @@ witnesses        checked</pre></div>
 <section class="strip-section">
   <div class="wrap">
     <div class="label" style="text-align:center;margin-bottom:14px">Measured against</div>
-    <div class="logos"><span>Netlib <b>81/89</b> matched · <b>89/89</b> verified</span><span>MIPLIB 2017 <b>13/30</b> reach · <b>10/30</b> prove</span><span>Mittelmann <b>2/8</b> auto · <b>3/8</b> across engines</span><span>HiGHS cross-check <b>50/50</b></span><span>GPU at 10⁴×10⁴ <b>1.37×</b> laptop · <b>4.21×</b> L4</span><span>GPU brazil3 1e-8 <b>8.10×</b> L4 · <b>10.53×</b> A100</span><span>Scale <b>10⁶ × 10⁶</b></span><span>Unit tests <b>930</b></span></div>
+    <div class="logos"><span>Netlib <b><span data-fact="netlib_matched">81</span>/<span data-fact="netlib_total">89</span></b> matched · <b><span data-fact="netlib_verified">89</span>/<span data-fact="netlib_total">89</span></b> verified</span><span>MIPLIB 2017 <b><span data-fact="miplib_reach">14</span>/<span data-fact="miplib_total">30</span></b> reach · <b><span data-fact="miplib_prove">11</span>/<span data-fact="miplib_total">30</span></b> prove</span><span>Mittelmann <b><span data-fact="mittelmann_auto">2</span>/<span data-fact="mittelmann_total">8</span></b> auto · <b><span data-fact="mittelmann_any">3</span>/<span data-fact="mittelmann_total">8</span></b> across engines</span><span>HiGHS cross-check <b><span data-fact="highs_agree">50</span>/50</b></span><span>GPU at 10⁴×10⁴ <b><span data-fact="gpu_laptop_10k">1.37x</span></b> laptop · <b><span data-fact="gpu_l4_10k">4.21x</span></b> L4</span><span>GPU brazil3 1e-8 <b><span data-fact="gpu_l4_brazil3">8.10x</span></b> L4 · <b><span data-fact="gpu_a100_brazil3">10.53x</span></b> A100</span><span>Refinery year solved exactly <b><span data-fact="refinery_exact_rows">32,485</span></b> rows</span><span>Generated family <b><span data-fact="scale_rows">1,000,000</span></b> rows · fixed 1,000 iterations, no proof</span><span>Tests on main <b><span data-fact="tests_total">1324</span></b></span></div>
   </div>
 </section>
 
 <section id="one-call">
   <div class="wrap">
-    <div class="head"><div class="label"><span class="n">One call</span> · four engines</div><div><h2>A model goes in, a checked plan comes out.</h2></div></div>
-    <div class="figure"><svg class="diagram" viewBox="0 0 960 250" role="img" aria-label="One call, four engines: a model goes through presolve and scaling, is dispatched by problem class to an engine, and its answer is postsolved and verified">
+    <div class="head"><div class="label"><span class="n">One call</span> · <span data-fact="engines_total">seven</span> engines</div><div><h2>A model goes in, a checked plan comes out.</h2></div></div>
+    <div class="figure"><!-- fragment:pipeline -->
+<svg class="diagram" viewBox="0 0 960 392" role="img" aria-label="One call, seven engines: a model goes through presolve and scaling, is dispatched by problem class to an LP engine (dual simplex, primal simplex, interior point, PDHG), a QP engine (Condat-Vu, proximal interior point) or branch and cut, and its answer is postsolved and checked by an independent verifier">
   <defs><marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#4b5058"/></marker></defs>
-  <rect x="10" y="95" width="110" height="60" rx="4" class="box"/><text x="65" y="120" text-anchor="middle" class="t">MPS · LP · QPS</text><text x="65" y="138" text-anchor="middle" class="m">reader</text>
-  <rect x="150" y="95" width="110" height="60" rx="4" class="box"/><text x="205" y="120" text-anchor="middle" class="t">presolve</text><text x="205" y="138" text-anchor="middle" class="m">8 reductions</text>
-  <rect x="290" y="95" width="100" height="60" rx="4" class="box"/><text x="340" y="120" text-anchor="middle" class="t">scaling</text><text x="340" y="138" text-anchor="middle" class="m">Ruiz + P-C</text>
-  <rect x="420" y="80" width="120" height="90" rx="4" class="accbox"/><text x="480" y="112" text-anchor="middle" class="t">solve()</text><text x="480" y="130" text-anchor="middle" class="m">one entry point</text><text x="480" y="146" text-anchor="middle" class="m">dispatch by class</text>
-  <rect x="590" y="12" width="150" height="44" rx="4" class="box"/><text x="665" y="30" text-anchor="middle" class="t">dual simplex</text><text x="665" y="46" text-anchor="middle" class="m">LP default · basis</text>
-  <rect x="590" y="68" width="150" height="44" rx="4" class="box"/><text x="665" y="86" text-anchor="middle" class="t">interior point</text><text x="665" y="102" text-anchor="middle" class="m">LP at scale · LDLᵀ</text>
-  <rect x="590" y="124" width="150" height="44" rx="4" class="box"/><text x="665" y="142" text-anchor="middle" class="t">restarted PDHG</text><text x="665" y="158" text-anchor="middle" class="m">first-order · GPU shape</text>
-  <rect x="590" y="180" width="150" height="44" rx="4" class="box"/><text x="665" y="198" text-anchor="middle" class="t">branch &amp; bound</text><text x="665" y="214" text-anchor="middle" class="m">MILP · MIQP over QP</text>
-  <rect x="790" y="68" width="80" height="56" rx="4" class="box"/><text x="830" y="92" text-anchor="middle" class="t">postsolve</text><text x="830" y="108" text-anchor="middle" class="m">re-measured</text>
-  <rect x="790" y="140" width="160" height="56" rx="4" class="accbox"/><text x="870" y="163" text-anchor="middle" class="t">independent verifier</text><text x="870" y="180" text-anchor="middle" class="m">shares no code</text>
-  <path d="M120 125 H150" class="line" marker-end="url(#ar)"/><path d="M260 125 H290" class="line" marker-end="url(#ar)"/><path d="M390 125 H420" class="line" marker-end="url(#ar)"/>
-  <path d="M540 110 C565 110 565 34 590 34" class="line" marker-end="url(#ar)"/><path d="M540 118 C565 118 565 90 590 90" class="line" marker-end="url(#ar)"/><path d="M540 132 C565 132 565 146 590 146" class="line" marker-end="url(#ar)"/><path d="M540 140 C565 140 565 202 590 202" class="line" marker-end="url(#ar)"/>
-  <path d="M740 34 C765 34 765 96 790 96" class="line" marker-end="url(#ar)"/><path d="M740 90 H790" class="line" marker-end="url(#ar)"/><path d="M740 146 C765 146 765 96 790 96" class="line"/><path d="M740 202 C765 202 765 96 790 96" class="line"/>
-  <path d="M830 124 V140" class="line" marker-end="url(#ar)"/>
-  <path d="M665 224 V240 H480 V170" class="dash" marker-end="url(#ar)"/><text x="572" y="236" text-anchor="middle" class="m">node LPs warm-start the dual simplex</text>
-</svg><div class="cap">The dashed return is branch and bound warm-starting the dual simplex at every node. <a href="/solver" class="section-link">How each engine works →</a></div></div>
+  <rect x="10" y="160" width="110" height="60" rx="4" class="box"/><text x="65" y="185" text-anchor="middle" class="t">MPS · LP · QPS</text><text x="65" y="203" text-anchor="middle" class="m">reader</text>
+  <rect x="150" y="160" width="110" height="60" rx="4" class="box"/><text x="205" y="185" text-anchor="middle" class="t">presolve</text><text x="205" y="203" text-anchor="middle" class="m">8 on · 8 opt-in</text>
+  <rect x="290" y="160" width="100" height="60" rx="4" class="box"/><text x="340" y="185" text-anchor="middle" class="t">scaling</text><text x="340" y="203" text-anchor="middle" class="m">Ruiz + P-C</text>
+  <rect x="420" y="145" width="120" height="90" rx="4" class="accbox"/><text x="480" y="177" text-anchor="middle" class="t">solve()</text><text x="480" y="195" text-anchor="middle" class="m">one entry point</text><text x="480" y="211" text-anchor="middle" class="m">dispatch by class</text>
+  <rect x="570" y="10" width="190" height="40" rx="4" class="box"/><text x="665" y="27" text-anchor="middle" class="t">dual simplex</text><text x="665" y="42" text-anchor="middle" class="m">LP · auto below 20k rows</text>
+  <rect x="570" y="62" width="190" height="40" rx="4" class="box"/><text x="665" y="79" text-anchor="middle" class="t">primal simplex</text><text x="665" y="94" text-anchor="middle" class="m">LP · basis repair</text>
+  <rect x="570" y="114" width="190" height="40" rx="4" class="box"/><text x="665" y="131" text-anchor="middle" class="t">interior point</text><text x="665" y="146" text-anchor="middle" class="m">LP · auto from 20k rows</text>
+  <rect x="570" y="166" width="190" height="40" rx="4" class="box"/><text x="665" y="183" text-anchor="middle" class="t">restarted PDHG</text><text x="665" y="198" text-anchor="middle" class="m">LP · auto from 100k rows</text>
+  <rect x="570" y="218" width="190" height="40" rx="4" class="box"/><text x="665" y="235" text-anchor="middle" class="t">Condat-Vũ</text><text x="665" y="250" text-anchor="middle" class="m">QP · the default</text>
+  <rect x="570" y="270" width="190" height="40" rx="4" class="box"/><text x="665" y="287" text-anchor="middle" class="t">proximal interior point</text><text x="665" y="302" text-anchor="middle" class="m">QP · qp_algorithm=ipm</text>
+  <rect x="570" y="322" width="190" height="40" rx="4" class="box"/><text x="665" y="339" text-anchor="middle" class="t">branch and cut</text><text x="665" y="354" text-anchor="middle" class="m">MILP · MIQP · mip_threads</text>
+  <path d="M120 190 H150" class="line" marker-end="url(#ar)"/><path d="M260 190 H290" class="line" marker-end="url(#ar)"/><path d="M390 190 H420" class="line" marker-end="url(#ar)"/>
+  <path d="M540 163 C555 163 555 30 570 30" class="line" marker-end="url(#ar)"/><path d="M540 172 C555 172 555 82 570 82" class="line" marker-end="url(#ar)"/><path d="M540 181 C555 181 555 134 570 134" class="line" marker-end="url(#ar)"/><path d="M540 190 C555 190 555 186 570 186" class="line" marker-end="url(#ar)"/><path d="M540 199 C555 199 555 238 570 238" class="line" marker-end="url(#ar)"/><path d="M540 208 C555 208 555 290 570 290" class="line" marker-end="url(#ar)"/><path d="M540 217 C555 217 555 342 570 342" class="line" marker-end="url(#ar)"/>
+  <path d="M760 30 C775 30 775 178 790 178" class="line"/><path d="M760 82 C775 82 775 178 790 178" class="line"/><path d="M760 134 C775 134 775 178 790 178" class="line"/><path d="M760 186 C775 186 775 178 790 178" class="line" marker-end="url(#ar)"/><path d="M760 238 C775 238 775 178 790 178" class="line"/><path d="M760 290 C775 290 775 178 790 178" class="line"/><path d="M760 342 C775 342 775 178 790 178" class="line"/>
+  <rect x="790" y="150" width="80" height="56" rx="4" class="box"/><text x="830" y="174" text-anchor="middle" class="t">postsolve</text><text x="830" y="190" text-anchor="middle" class="m">re-measured</text>
+  <rect x="790" y="222" width="160" height="56" rx="4" class="accbox"/><text x="870" y="245" text-anchor="middle" class="t">independent verifier</text><text x="870" y="262" text-anchor="middle" class="m">shares no code</text>
+  <path d="M830 206 V222" class="line" marker-end="url(#ar)"/>
+  <path d="M665 362 V382 H480 V235" class="dash" marker-end="url(#ar)"/><text x="575" y="376" text-anchor="middle" class="m">node LPs warm-start the dual simplex</text>
+</svg>
+<!-- /fragment:pipeline --><div class="cap">The dashed return is branch and bound warm-starting the dual simplex at every node. <a href="/solver" class="section-link">How each engine works →</a></div></div>
   </div>
 </section>
 
 <section id="scoreboard">
   <div class="wrap">
-    <div class="head"><div class="label"><span class="n">Scoreboard</span></div><div><h2>What the problem statement asked for, against what is on main today.</h2><p>32 checkable requirements: 28 done, 3 partial, 1 not started. Each row of the <a href="https://github.com/thegoodengineers/SANKHYA/blob/main/docs/PS26119_COVERAGE.md">coverage tracker</a> names the commit and the CSV behind it.</p></div></div>
-    <div class="legend"><span><i style="background:#12a150"></i>done</span><span><i style="background:#e0a326"></i>partial</span><span><i style="background:#dfdfdf;border:1px solid #80858c"></i>not started</span></div><div class="two"><ul class="status"><li class="done"><i></i><div><b>Linear programming</b> <span>· revised simplex, primal and dual</span></div></li><li class="done"><i></i><div><b>Mixed-integer LP</b> <span>· branch and bound, reliability branching</span></div></li><li class="done"><i></i><div><b>Convex QP and MIQP</b> <span>· non-convex refused with a certificate</span></div></li><li class="part"><i></i><div><b>NLP / MINLP</b> <span>· local interior point, convex MINLP branch and bound: 64 of 70 Hock-Schittkowski, 14 of 17 convex MINLPLib, every answer checked</span></div></li><li class="done"><i></i><div><b>First-order method</b> <span>· restarted PDHG, finished by the interior point</span></div></li><li class="done"><i></i><div><b>Interior point</b> <span>· Mehrotra, sparse LDLᵀ, opt-in</span></div></li><li class="done"><i></i><div><b>Presolve, cutting planes, heuristics</b> <span>· cuts off by default, by measurement</span></div></li><li class="done"><i></i><div><b>Sensitivity ranging</b> <span>· cost and right-hand side, degeneracy stated</span></div></li></ul><ul class="status"><li class="done"><i></i><div><b>Sparse linear algebra</b> <span>· Markowitz LU, hyper-sparse solves, LDLᵀ</span></div></li><li class="done"><i></i><div><b>Multi-core</b> <span>· OpenMP column loops, bit-identical at any thread count</span></div></li><li class="done"><i></i><div><b>GPU acceleration</b> <span>· CUDA backend on main, run on three cards. Laptop RTX 5050: loses below ~10,000 rows, 1.37x-1.63x at 10,000x10,000 across two named runs. Datacenter NVIDIA L4 (E2E TIR, fresh clone at fdc89c5, <a href="https://github.com/thegoodengineers/SANKHYA/blob/main/bench/results/gpu-l4-fdc89c5.csv">gpu-l4-fdc89c5.csv</a>): 4.21x at 10,000x10,000 at 1e-4, 3.90x at 1e-8, against that host's CPU on one thread (this synthetic ladder has not been re-run with the multithreaded arm). On real models, fresh clone at 58a8374, against the faster of the two CPU arms: on the L4 the 16-thread arm is slower than one thread, so brazil3 is 5.75x at 1e-4 and 8.10x at 1e-8 and chromaticindex1024-7 2.92x / 2.88x, all against one thread; on an A100 brazil3 8.91x / 10.53x and chromaticindex1024-7 2.38x / 1.77x (<a href="https://github.com/thegoodengineers/SANKHYA/blob/main/bench/results/gpu-real-l4-58a8374.csv">gpu-real-l4-58a8374.csv</a>, <a href="https://github.com/thegoodengineers/SANKHYA/blob/main/bench/results/gpu-real-a100-58a8374.csv">gpu-real-a100-58a8374.csv</a>). At 1e-8 on brazil3 the GPU's answer is further from HiGHS than the CPU's, and on the 779,640-row refinery year every arm on both cards hits the 300 s limit. H100 not yet. - <a href="https://github.com/thegoodengineers/SANKHYA/blob/main/docs/BENCHMARKS.md">BENCHMARKS.md 1g and 1g.3</a></span></div></li><li class="done"><i></i><div><b>Netlib, MIPLIB, Mittelmann benchmarks</b> <span>· all three run and committed</span></div></li><li class="done"><i></i><div><b>Compared with an established solver</b> <span>· HiGHS, separate process</span></div></li><li class="done"><i></i><div><b>Robustness: degenerate, ill-conditioned, weak relaxations</b> <span>· all three demonstrated</span></div></li><li class="part"><i></i><div><b>Thousands to millions of variables</b> <span>· a million rows on generated families; 32,485 rows of the refinery year exactly</span></div></li><li class="done"><i></i><div><b>Not built on any existing solver</b> <span>· enforced in CI</span></div></li></ul></div>
+    <div class="head"><div class="label"><span class="n">Scoreboard</span></div><div><h2>What the problem statement asked for, against what is on main today.</h2><p><span data-fact="tally_total">32</span> checkable requirements: <span data-fact="tally_done">29</span> done, <span data-fact="tally_partial">3</span> partial, <span data-fact="tally_missing">0</span> not on main. Each row of the <a href="https://github.com/thegoodengineers/SANKHYA/blob/main/docs/PS26119_COVERAGE.md">coverage tracker</a> names the commit and the CSV behind it.</p></div></div>
+    <!-- fragment:scoreboard -->
+<div class="legend"><span><i style="background:#12a150"></i>done</span><span><i style="background:#e0a326"></i>partial</span></div><div class="two"><ul class="status"><li class="done"><i></i><div><b>Linear programming</b> <span>· revised simplex, primal and dual</span></div></li><li class="done"><i></i><div><b>Mixed-integer LP</b> <span>· branch and bound, reliability branching</span></div></li><li class="done"><i></i><div><b>Convex QP and MIQP</b> <span>· Condat-Vũ by default and a proximal interior point on request; non-convex refused with a certificate</span></div></li><li class="part"><i></i><div><b>NLP / MINLP</b> <span>· local interior point, convex MINLP branch and bound: 64 of 70 Hock-Schittkowski, 14 of 17 convex MINLPLib, every answer checked</span></div></li><li class="done"><i></i><div><b>First-order method</b> <span>· restarted PDHG, finished by the interior point</span></div></li><li class="done"><i></i><div><b>Interior point</b> <span>· Mehrotra, sparse LDLᵀ; auto chooses it from 20,000 rows or 100,000 nonzeros</span></div></li><li class="done"><i></i><div><b>Presolve, cutting planes, heuristics</b> <span>· <span data-fact="presolve_on">8</span> presolve reductions on by default and <span data-fact="presolve_optin">8</span> more built and off; the root cut round on by default, rounds below the root off; rounding and the fractional dive on, the other heuristics off until their A/B</span></div></li><li class="done"><i></i><div><b>Sensitivity ranging</b> <span>· cost and right-hand side, degeneracy stated</span></div></li></ul><ul class="status"><li class="done"><i></i><div><b>Sparse linear algebra</b> <span>· Markowitz LU, hyper-sparse solves, LDLᵀ</span></div></li><li class="done"><i></i><div><b>Multi-core</b> <span>· OpenMP column loops, bit-identical at any thread count; the branch-and-bound tree on mip_threads workers, one by default</span></div></li><li class="done"><i></i><div><b>GPU acceleration</b> <span>· CUDA backend on main, run on three cards. Laptop RTX 5050: loses below ~10,000 rows, <span data-fact="gpu_laptop_10k">1.37x</span>-1.63x at 10,000x10,000 across two named runs. Datacenter NVIDIA L4 (E2E TIR, fresh clone at fdc89c5, <a href="https://github.com/thegoodengineers/SANKHYA/blob/main/bench/results/gpu-l4-fdc89c5.csv">gpu-l4-fdc89c5.csv</a>): <span data-fact="gpu_l4_10k">4.21x</span> at 10,000x10,000 at 1e-4, 3.90x at 1e-8, against that host's CPU on one thread (this synthetic ladder has not been re-run with the multithreaded arm). On real models, fresh clone at 58a8374, against the faster of the two CPU arms: on the L4 the 16-thread arm is slower than one thread, so brazil3 is 5.75x at 1e-4 and <span data-fact="gpu_l4_brazil3">8.10x</span> at 1e-8 and chromaticindex1024-7 2.92x / 2.88x, all against one thread; on an A100 brazil3 8.91x / <span data-fact="gpu_a100_brazil3">10.53x</span> and chromaticindex1024-7 2.38x / 1.77x (<a href="https://github.com/thegoodengineers/SANKHYA/blob/main/bench/results/gpu-real-l4-58a8374.csv">gpu-real-l4-58a8374.csv</a>, <a href="https://github.com/thegoodengineers/SANKHYA/blob/main/bench/results/gpu-real-a100-58a8374.csv">gpu-real-a100-58a8374.csv</a>). At 1e-8 on brazil3 the GPU's answer is further from HiGHS than the CPU's, and on the <span data-fact="refinery_hourly_rows">779,640</span>-row refinery year every arm on both cards hits the 300 s limit. H100 not yet. Sections 1g and 1g.3 of <a href="https://github.com/thegoodengineers/SANKHYA/blob/main/docs/BENCHMARKS.md">BENCHMARKS.md</a></span></div></li><li class="done"><i></i><div><b>Netlib, MIPLIB, Mittelmann benchmarks</b> <span>· all three run and committed</span></div></li><li class="done"><i></i><div><b>Compared with an established solver</b> <span>· HiGHS, separate process</span></div></li><li class="done"><i></i><div><b>Robustness: degenerate, ill-conditioned, weak relaxations</b> <span>· all three demonstrated</span></div></li><li class="part"><i></i><div><b>Thousands to millions of variables</b> <span>· a million rows on one generated family under a fixed iteration budget; <span data-fact="refinery_exact_rows">32,485</span> rows of the refinery year solved exactly</span></div></li><li class="done"><i></i><div><b>Not built on any existing solver</b> <span>· enforced in CI</span></div></li></ul></div>
+<!-- /fragment:scoreboard -->
   </div>
 </section>
 
@@ -95,10 +102,29 @@ witnesses        checked</pre></div>
   <div class="wrap">
     <div class="head"><div class="label"><span class="n">Three questions</span></div><div><h2>What an evaluator usually wants to know first.</h2></div></div>
     <div class="icons">
-      <div class="icon-card"><svg viewBox="0 0 24 24"><path d="M9 12l2 2 4-4M12 3l8 4v5c0 5-3.5 8-8 9-4.5-1-8-4-8-9V7z"/></svg><h3>Is it really from scratch?</h3><p>Yes. Five libraries are linked and none of them solves anything. A CI job prints the link line and fails if a solver library ever appears. <a href="/evaluate#scratch" class="section-link">Check it in two minutes →</a></p></div>
+      <div class="icon-card"><svg viewBox="0 0 24 24"><path d="M9 12l2 2 4-4M12 3l8 4v5c0 5-3.5 8-8 9-4.5-1-8-4-8-9V7z"/></svg><h3>Is it really from scratch?</h3><p>Yes. No library the binary links is an optimization solver; the problem page lists them for the CPU and the GPU build. A CI job prints the link line and fails if a solver library ever appears. <a href="/evaluate#scratch" class="section-link">Check it in two minutes →</a></p></div>
       <div class="icon-card"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg><h3>Are the answers right?</h3><p>Every reported answer is re-derived by a Python checker that reads only the model file and the solution file. An infeasible verdict carries a proof the checker verifies too. <a href="/evaluate#right" class="section-link">Run the checker →</a></p></div>
-      <div class="icon-card"><svg viewBox="0 0 24 24"><path d="M3 21h18M6 17V9M11 17V4M16 17v-7M21 17v-3"/></svg><h3>How does it compare?</h3><p>Same answers as HiGHS on all 50 medium Netlib models, at about twice its wall time. Behind on large mixed-integer proofs and on the biggest LPs, and the site says by how much. <a href="/solver#compared" class="section-link">Ahead and behind →</a></p></div>
+      <div class="icon-card"><svg viewBox="0 0 24 24"><path d="M3 21h18M6 17V9M11 17V4M16 17v-7M21 17v-3"/></svg><h3>How does it compare?</h3><p>Same answers as HiGHS on all <span data-fact="highs_agree">50</span> medium Netlib models. Time depends on the machine: <span data-fact="highs_node_total">0.99x</span> HiGHS's in total on <span data-fact="highs_node_machine">a rented 7-vCPU EPYC 7542 node</span>, a median of <span data-fact="highs_laptop_median">2.01x to 2.12x</span> on a laptop; neither reading is quoted alone. Behind on large mixed-integer proofs and on the biggest LPs, and the site says by how much. <a href="/solver#compared" class="section-link">Ahead and behind →</a></p></div>
     </div>
+  </div>
+</section>
+
+<section id="what-is-new">
+  <div class="wrap">
+    <div class="head"><div class="label"><span class="n">What is new</span></div><div><h2>Ten additions on main, each with its default and its result.</h2><p>Each is on main at <span data-fact="sankhya_commit">493fa1d</span>. Most are off by default until a clean A/B on main says they earn it; the solver page gives every one its option, its default and its result, losing results included.</p></div></div>
+    <ul class="status">
+      <li class="done"><i></i><div><b>Verifier-gated engine race</b> <span>· three LP engines at once; an answer wins only after it passes the verifier's own check. Off.</span></div></li>
+      <li class="done"><i></i><div><b>A checkable proof of a MILP optimum</b> <span>· written in the VIPR format and checked in exact rational arithmetic by a separate program. Off.</span></div></li>
+      <li class="done"><i></i><div><b>Safe dual bounds</b> <span>· every node pruned on a bound that holds whatever the LP tolerances did. Off.</span></div></li>
+      <li class="done"><i></i><div><b>Exact rational re-check of an LP basis</b> <span>· declines more often than it verifies on realistic models, and says so. Off.</span></div></li>
+      <li class="done"><i></i><div><b>Global optimum for bilinear pooling</b> <span>· spatial branch and bound; Haverly's pool reaches the published 400. Off, non-convex models are refused by default.</span></div></li>
+      <li class="done"><i></i><div><b>GPU node bounding and GPU heuristics</b> <span>· measured on committed runs, and none earns a default there. Off.</span></div></li>
+      <li class="done"><i></i><div><b>Replayable evidence bundle</b> <span>· one zip with the model, options, binary identity, log and answer, re-checked on replay.</span></div></li>
+      <li class="done"><i></i><div><b>Parametric LP and infeasibility repair</b> <span>· walk a price or a limit across its breakpoints; find the smallest relaxation that makes a plan possible.</span></div></li>
+      <li class="done"><i></i><div><b>PuLP, Pyomo and CVXPY adapters</b> <span>· an existing model changes one line, the solver call.</span></div></li>
+      <li class="done"><i></i><div><b>Deterministic mode</b> <span>· the same numbers from two runs of one build, no decision taken on the clock. Off.</span></div></li>
+    </ul>
+    <p style="margin-top:18px"><a class="section-link" href="/solver#what-is-new">Options, defaults and results →</a></p>
   </div>
 </section>
 
@@ -108,7 +134,7 @@ witnesses        checked</pre></div>
     <div class="icons">
       <a class="icon-card" href="/evaluate"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><h3>For evaluators</h3><p>A fifteen-minute checklist in order, what each step should print, and a plain-language glossary.</p><span class="more">Read →</span></a>
       <a class="icon-card" href="/problem"><svg viewBox="0 0 24 24"><path d="M3 20h18M5 20V9l4-3 4 3 4-3 4 3v11M9 20v-5h6v5"/></svg><h3>The problem</h3><p>What MRPL asked for, why a refinery needs it, and what "sovereign" has to mean.</p><span class="more">Read →</span></a>
-      <a class="icon-card" href="/solver"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg><h3>The solver</h3><p>The engines, the verification loop, and where it beats or trails the solvers that exist.</p><span class="more">Read →</span></a>
+      <a class="icon-card" href="/solver"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg><h3>The solver</h3><p>The seven engines, what is new, the verification loop, and where it is ahead of or behind HiGHS.</p><span class="more">Read →</span></a>
       <a class="icon-card" href="/evidence"><svg viewBox="0 0 24 24"><path d="M3 21h18M6 17V9M11 17V4M16 17v-7M21 17v-3"/></svg><h3>The evidence</h3><p>Every number, the CSV it comes from, and the chart that shows it.</p><span class="more">Read →</span></a>
       <a class="icon-card" href="/run"><svg viewBox="0 0 24 24"><path d="M4 17l6-5-6-5M12 19h8"/></svg><h3>Run it</h3><p>Windows, Ubuntu or macOS: from a fresh clone to a verified answer in five commands.</p><span class="more">Read →</span></a>
       <a class="icon-card" href="/roadmap"><svg viewBox="0 0 24 24"><circle cx="6" cy="6" r="2"/><circle cx="18" cy="12" r="2"/><circle cx="6" cy="18" r="2"/><path d="M8 6h6a2 2 0 0 1 0 4H10a2 2 0 0 0 0 4h6"/></svg><h3>Limits</h3><p>What it does not do yet, stated with the number, and what the day on a datacenter card showed.</p><span class="more">Read →</span></a>
@@ -125,10 +151,13 @@ witnesses        checked</pre></div>
   </div>
 </section>
 <footer>
-  <div class="wrap">
+<!-- fragment:footer -->
+<div class="wrap">
     <div>SANKHYA · Smart India Hackathon 2026 · PS SIH26119 · Apache-2.0 · <a href="https://sankhya-solver.vercel.app">sankhya-solver.vercel.app</a></div>
+    <div>Every figure on this site was last checked against SANKHYA <a href="https://github.com/thegoodengineers/SANKHYA/tree/493fa1df0abfbd70f1d5cf7cbb35272da0a49b30">main at <span data-fact="sankhya_commit">493fa1d</span></a>.</div>
     <div><a href="https://github.com/thegoodengineers/SANKHYA">Source</a> · <a href="https://github.com/thegoodengineers/SANKHYA/blob/main/docs/BENCHMARKS.md">Benchmarks</a> · <a href="https://github.com/thegoodengineers/SANKHYA/blob/main/docs/PROVENANCE.md">Provenance</a> · <a href="https://github.com/thegoodengineers/SANKHYA/blob/main/docs/PS26119_COVERAGE.md">Coverage tracker</a></div>
   </div>
+<!-- /fragment:footer -->
 </footer>
 </main>
 </div>

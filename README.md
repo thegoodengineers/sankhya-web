@@ -8,10 +8,21 @@ Static HTML and CSS, no build step. Deployed on Vercel from `main` at https://sa
 
 ## Edit
 
-`index.html` is the whole site; `styles.css` is the whole stylesheet. Open `index.html`
-in a browser to preview. Every number on the page comes from a CSV in the solver
-repository's `bench/results/`, and the file is named beside the number; change the
-number only when the CSV changes.
+Eight pages (`index.html`, `evaluate.html`, `problem.html`, `solver.html`, `evidence.html`,
+`run.html`, `roadmap.html`, `team.html`), one stylesheet (`styles.css`) and `site.js` for
+the "On this page" list. Serve the folder with any static server to preview.
+
+**One fact, one value.** Every figure the site states is defined once in `facts.json`,
+each with the file or command it came from on SANKHYA's `main`. Pages carry it as
+`<span data-fact="key">value</span>`. Blocks that appear on more than one page (the
+scoreboard, the pipeline diagram, the footer) live once in `fragments/` and are carried as
+`<!-- fragment:name --> ... <!-- /fragment:name -->`. After editing either:
+
+    python tools/facts.py            # write the values into every page
+    python tools/facts.py --check    # what CI runs; fails if any page disagrees
+
+A number changes only when the CSV or the command output behind it changes, and the
+footer names the SANKHYA commit the site was last checked against.
 
 ## Deploy
 
