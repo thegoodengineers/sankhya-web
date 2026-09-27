@@ -42,7 +42,7 @@
       </ul>
       <ul class="status">
         <li class="done"><i></i><div><b>Warm start through the API</b> <span>· landed: edit a bound or a price in place and re-solve from the previous basis, from C or Python; a tightened bound re-solves in under a fifth of the cold pivots on the models tested.</span></div></li>
-        <li class="no"><i></i><div><b>NLP and MINLP</b> <span>· the seam dispatches four classes; no nonlinear engine behind it.</span></div></li>
+        <li class="part"><i></i><div><b>NLP and MINLP</b> <span>· a local interior point for smooth NLP and NLP-based branch and bound for convex MINLP, measured on main at ad57c03: 64 of 70 Hock-Schittkowski at the published optimum and 70 of 70 accepted by the independent checker (51 locally_optimal, 19 optimal), 14 of 17 convex MINLPLib proved optimal (nlp-hs-ad57c03.csv, nlp-minlplib-ad57c03.csv). Local means local: six HS problems end at another local optimum, jit1 ends numerical_error, and non-convex MINLP is refused.</span></div></li>
         <li class="done"><i></i><div><b>Engine selection</b> <span>· <code>auto</code> is a rule table on rows and nonzeros, every threshold tied to a CSV; the answer carries the rule and the reason, and a declined interior point hands the rest of the budget to PDHG or the dual simplex.</span></div></li>
         <li class="part"><i></i><div><b>Parallel tree search</b> <span>· column loops run under OpenMP, bit-identical; the tree itself uses one core.</span></div></li>
       </ul>
