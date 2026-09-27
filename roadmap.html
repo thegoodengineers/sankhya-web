@@ -4,9 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="color-scheme" content="light">
-<title>Limits — SANKHYA</title>
+<title>Limits · SANKHYA</title>
 <meta name="description" content="What SANKHYA does not do yet, stated with the number, what the deliverable is, and what the day on a datacenter card showed.">
-<meta property="og:title" content="Limits — SANKHYA">
+<meta property="og:title" content="Limits · SANKHYA">
 <meta property="og:description" content="What SANKHYA does not do yet, stated with the number, what the deliverable is, and what the day on a datacenter card showed.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://sankhya-solver.vercel.app/roadmap">
@@ -25,7 +25,7 @@
   <a class="brand" href="/"><span class="brand-mark" aria-hidden="true"></span>SANKHYA<small>SIH26119</small></a>
   <nav class="doors" aria-label="Site"><a href="/">Home</a><a href="/evaluate">For evaluators</a><a href="/problem">Problem</a><a href="/solver">Solver</a><a href="/evidence">Evidence</a><a href="/run">Run it</a><a href="/roadmap" aria-current="page">Limits</a><a href="/team">Team</a><a class="ext" href="https://github.com/thegoodengineers/SANKHYA">GitHub</a></nav>
   <hr class="rail-rule">
-  <nav class="here" aria-label="On this page"><a href="#top">Overview</a><a href="#gaps">Gaps</a><a href="#and-what-it-is">And what it is</a><a href="#the-gpu-plan">The GPU plan</a></nav>
+  <nav class="here" aria-label="On this page"><a href="#top">Overview</a><a href="#gaps">Gaps</a><a href="#where-this-is-going">Where this is going</a><a href="#and-what-it-is">And what it is</a><a href="#the-gpu-plan">The GPU plan</a></nav>
 </aside>
 <main class="col" id="content">
 
@@ -34,21 +34,33 @@
 <section id="gaps">
   <div class="wrap">
     <div class="head"><div class="label"><span class="n">Gaps</span></div><div><h2>Eight things, with where each stands.</h2></div></div>
-    <div class="legend"><span><i style="background:#12a150"></i>designed and built</span><span><i style="background:#e0a326"></i>partly there</span><span><i style="background:#dfdfdf;border:1px solid #80858c"></i>not started</span></div>
+    <div class="legend"><span><i style="background:#12a150"></i>designed and built</span><span><i style="background:#e0a326"></i>partly there</span></div>
     <div class="two">
       <ul class="status">
-        <li class="done"><i></i><div><b>GPU acceleration</b> <span>· run on a laptop RTX 5050 (1.37x at 10,000x10,000), a datacenter NVIDIA L4 (4.21x there; brazil3 5.75x / 8.10x at 1e-4 / 1e-8 against one CPU thread, which beat 16) and an A100 (brazil3 8.91x / 10.53x against the faster CPU arm), with the GPU's answer further from HiGHS than the CPU's at 1e-8 (<a href="https://github.com/thegoodengineers/SANKHYA/blob/main/bench/results/gpu-real-l4-58a8374.csv">gpu-real-l4-58a8374.csv</a>, <a href="https://github.com/thegoodengineers/SANKHYA/blob/main/bench/results/gpu-real-a100-58a8374.csv">gpu-real-a100-58a8374.csv</a>; BENCHMARKS.md 1g and 1g.3). H100 not yet. <code>--gpu</code> falls back to the CPU on any device failure.</span></div></li>
-        <li class="part"><i></i><div><b>Speed at Mittelmann size</b> <span>· 3 of 8 across the three engines, 2 of 8 under auto; two of the misses are engine selection (qap15 solves only on the interior point, chromaticindex1024-7 spends 136 s on one before falling back to PDHG) and two are the interior point out of memory on a 7.7 GB laptop; the dual simplex's cost per iteration above 20,000 rows is the open line; all three levers are pulled (row-wise gather, push-form transposed solve, a Forrest-Tomlin update that stays opt-in after its stability tests) and the next one is the ratio test.</span></div></li>
-        <li class="part"><i></i><div><b>Branch-and-cut proper</b> <span>· MIR cuts with row aggregation, cut rounds below the root with an aged pool, clique and (0, 0.5)-Chvátal-Gomory cuts, conflict analysis and four primal heuristics all landed, each gated by the exact-oracle or enumeration sweep. Measured clean on MIPLIB at 60 s with cut selection landed, the root round proves 10 where no cuts prove 9 at 1.015x the nodes, and is on by default; rounds below the root lose that proof again and stay opt-in; the heuristics and conflicts are off until a clean A/B on main says what they buy.</span></div></li>
+        <li class="done"><i></i><div><b>GPU acceleration</b> <span>· run on a laptop RTX 5050 (<span data-fact="gpu_laptop_10k">1.37x</span> at 10,000x10,000), a datacenter NVIDIA L4 (<span data-fact="gpu_l4_10k">4.21x</span> there; brazil3 5.75x / <span data-fact="gpu_l4_brazil3">8.10x</span> at 1e-4 / 1e-8 against one CPU thread, which beat 16) and an A100 (brazil3 8.91x / <span data-fact="gpu_a100_brazil3">10.53x</span> against the faster CPU arm), with the GPU's answer further from HiGHS than the CPU's at 1e-8 (<a href="https://github.com/thegoodengineers/SANKHYA/blob/main/bench/results/gpu-real-l4-58a8374.csv">gpu-real-l4-58a8374.csv</a>, <a href="https://github.com/thegoodengineers/SANKHYA/blob/main/bench/results/gpu-real-a100-58a8374.csv">gpu-real-a100-58a8374.csv</a>; BENCHMARKS.md 1g and 1g.3). H100 not yet. <code>--gpu</code> falls back to the CPU on any device failure.</span></div></li>
+        <li class="part"><i></i><div><b>Speed at Mittelmann size</b> <span>· <span data-fact="mittelmann_any">3</span> of <span data-fact="mittelmann_total">8</span> across the three LP engines, <span data-fact="mittelmann_auto">2</span> of <span data-fact="mittelmann_total">8</span> under auto, at 300 s on a 96 GB node (mittelmann-5c7efbc.csv and its pdhg and ipm companions). qap15 is solved by PDHG and by the interior point alone but not under auto; the interior point finishes <span data-fact="mittelmann_ipm">2</span> and declines on the other six on its ordering budget and first factorization, not for memory; the dual simplex's cost per iteration above 20,000 rows is the open line; all three levers are pulled (row-wise gather, push-form transposed solve, a Forrest-Tomlin update that stays opt-in after its stability tests) and the next one is the ratio test.</span></div></li>
+        <li class="part"><i></i><div><b>Branch-and-cut proper</b> <span>· MIR cuts with row aggregation, cut rounds below the root with an aged pool, clique and (0, 0.5)-Chvátal-Gomory cuts, conflict analysis and <span data-fact="heuristics_total">ten</span> primal heuristic switches landed (the mip_heur_* options: Feasibility Jump, lock rounding, the repair search, the feasibility pump, RINS, RENS, and fractional, coefficient, vector-length and guided diving), each gated by the exact-oracle or enumeration sweep. Only the fractional dive is on by default, with rounding at every node running either way. Measured clean on MIPLIB at 60 s with cut selection landed, the root round proves 10 where no cuts prove 9 at 1.015x the nodes, and is on by default; rounds below the root lose that proof again and stay opt-in; the heuristics and conflicts are off until a clean A/B on main says what they buy.</span></div></li>
         <li class="part"><i></i><div><b>Crossover</b> <span>· landed: the interior point's answer is pushed to a vertex by default, cheap on Netlib (median 41 pivots on the small set); on large degenerate models the pivots still cost as much as a cold simplex, the primal-push phase is the open line.</span></div></li>
       </ul>
       <ul class="status">
         <li class="done"><i></i><div><b>Warm start through the API</b> <span>· landed: edit a bound or a price in place and re-solve from the previous basis, from C or Python; a tightened bound re-solves in under a fifth of the cold pivots on the models tested.</span></div></li>
         <li class="part"><i></i><div><b>NLP and MINLP</b> <span>· a local interior point for smooth NLP and NLP-based branch and bound for convex MINLP, measured on main at ad57c03: 64 of 70 Hock-Schittkowski at the published optimum and 70 of 70 accepted by the independent checker (51 locally_optimal, 19 optimal), 14 of 17 convex MINLPLib proved optimal (nlp-hs-ad57c03.csv, nlp-minlplib-ad57c03.csv). Local means local: six HS problems end at another local optimum, jit1 ends numerical_error, and non-convex MINLP is refused.</span></div></li>
         <li class="done"><i></i><div><b>Engine selection</b> <span>· <code>auto</code> is a rule table on rows and nonzeros, every threshold tied to a CSV; the answer carries the rule and the reason, and a declined interior point hands the rest of the budget to PDHG or the dual simplex.</span></div></li>
-        <li class="part"><i></i><div><b>Parallel tree search</b> <span>· column loops run under OpenMP, bit-identical; the tree itself uses one core.</span></div></li>
+        <li class="done"><i></i><div><b>Parallel tree search</b> <span>· column loops run under OpenMP, bit-identical; since #403 the branch-and-bound tree runs on mip_threads workers, one thread by default. Four threads reached and proved the same MIPLIB instances at 60 s on the branch and were slower on the small proofs; no A/B on main is committed yet, so the default stays one.</span></div></li>
       </ul>
     </div>
+  </div>
+</section>
+
+<section id="where-this-is-going">
+  <div class="wrap">
+    <div class="head"><div class="label"><span class="n">Where this is going</span></div><div><h2>Four phases, from the open issues.</h2><p>Taken from the issues carrying the <code>finale</code> label in the tracker and the roadmap in <a href="https://github.com/thegoodengineers/SANKHYA/issues/540">#540</a>. New behaviour ships off by default until it passes a clean A/B on main.</p></div></div>
+    <ol class="steps">
+      <li><div><b>Numerical hardening.</b><p>Make every answer checkable where it is not yet: the QP answers the verifier rejects (#590), exported Farkas rays (#559), MILP proofs and safe dual bounds measured on MIPLIB (#518, #519), PDHG infeasibility detection (#484).</p></div></li>
+      <li><div><b>A faster MILP tree and QP engines.</b><p>Stronger cuts and presolve (#498, #511, #512), conflict analysis (#503), no model copy per node (#501), and the QP interior point and an MIQP node solver through their A/B (#490, #494).</p></div></li>
+      <li><div><b>GPU runs at scale, with a full benchmark report.</b><p>A device-resident PDHG loop (#478), batched PDHG nodes (#520), three-seed MIPLIB (#504), and a regenerated BENCHMARKS.md after a three-seed A/B of every off-by-default feature.</p></div></li>
+      <li><div><b>An industrial pilot on refinery models.</b><p>Pooling benchmarks (#516), warm re-solve over a rolling horizon (#524), decomposition (#525), a planner's report (#527) and convex MINLP (#528).</p></div></li>
+    </ol>
   </div>
 </section>
 
@@ -61,7 +73,7 @@
       <div><b>Python bindings</b><span>ctypes over the C API, nothing to compile</span></div>
       <div><b>C API</b><span>FFI-safe, callbacks, interruption, the same options table</span></div>
       <div><b>CLI</b><span>MPS / LP / QPS in, solution file with prices, ranges, certificates and IIS out</span></div>
-      <div><b>Solver core</b><span>static library: presolve, scaling, four LP engines, branch and bound over LP and QP, five non-solver dependencies</span></div>
+      <div><b>Solver core</b><span>static library: presolve, scaling, the LP engines (dual and primal simplex, interior point, PDHG), the QP engines (Condat-Vũ, proximal interior point), branch and cut over LP and QP; no linked library is an optimization solver</span></div>
       <div class="acc"><b>GPU backend</b><span>CUDA port of the first-order engine, behind a build flag, compiled in CI; measured on three cards, the CSVs named</span></div>
     </div>
   </div>
@@ -77,14 +89,17 @@
       <div class="acc"><b>Day 3</b><span>The evidence: CPU-versus-GPU crossover by model size, committed as a CSV, losing region included. Done on the laptop card, again on the L4, and on an A100 against both CPU arms at 58a8374; the first L4 run was thrown away because its tree was dirty.</span></div>
       <div><b>Day 4</b><span>Documents, the demo section, the final read against the problem statement.</span></div>
     </div>
-    <p class="note" style="margin-top:24px">The claim is not "faster than cuPDLP". It is "a from-scratch GPU first-order engine, verified, with its crossover measured and published on three cards". That is defensible in front of a judge because every figure is a CSV: 4.21x on an L4's synthetic ladder, 10.53x on an A100 on brazil3 at 1e-8 with the GPU's larger error there stated beside it, and the options that lose named as losing.</p>
+    <p class="note" style="margin-top:24px">The claim is not a speed record. It is "a from-scratch GPU first-order engine, verified, with its crossover measured and published on three cards". That is defensible in front of a judge because every figure is a CSV: <span data-fact="gpu_l4_10k">4.21x</span> on an L4's synthetic ladder, <span data-fact="gpu_a100_brazil3">10.53x</span> on an A100 on brazil3 at 1e-8 with the GPU's larger error there stated beside it, and the options that lose named as losing.</p>
   </div>
 </section>
 <footer>
-  <div class="wrap">
+<!-- fragment:footer -->
+<div class="wrap">
     <div>SANKHYA · Smart India Hackathon 2026 · PS SIH26119 · Apache-2.0 · <a href="https://sankhya-solver.vercel.app">sankhya-solver.vercel.app</a></div>
+    <div>Every figure on this site was last checked against SANKHYA <a href="https://github.com/thegoodengineers/SANKHYA/tree/493fa1df0abfbd70f1d5cf7cbb35272da0a49b30">main at <span data-fact="sankhya_commit">493fa1d</span></a>.</div>
     <div><a href="https://github.com/thegoodengineers/SANKHYA">Source</a> · <a href="https://github.com/thegoodengineers/SANKHYA/blob/main/docs/BENCHMARKS.md">Benchmarks</a> · <a href="https://github.com/thegoodengineers/SANKHYA/blob/main/docs/PROVENANCE.md">Provenance</a> · <a href="https://github.com/thegoodengineers/SANKHYA/blob/main/docs/PS26119_COVERAGE.md">Coverage tracker</a></div>
   </div>
+<!-- /fragment:footer -->
 </footer>
 </main>
 </div>

@@ -1,0 +1,51 @@
+{
+  "about": "Every figure the site states, once. Pages carry <span data-fact=\"key\">value</span>; run python tools/facts.py after editing this file, and python tools/facts.py --check before a PR. Paths are in thegoodengineers/SANKHYA on main at the commit in sankhya_commit.",
+  "facts": {
+    "sankhya_commit": {"value": "493fa1d", "source": "git rev-parse --short origin/main, 2026-09-28"},
+    "first_commit_date": {"value": "25 August 2026", "source": "git log --reverse --format=%ad --date=short | head -1 -> 2026-08-25"},
+    "tests_total": {"value": "1324", "source": "ctest --test-dir build -N | tail -1 -> Total Tests: 1324, Release build of 493fa1d"},
+    "engines_total": {"value": "seven", "source": "./build/sankhya engines --format json at 493fa1d: simplex, dual-simplex, pdhg, ipm, convex-qp, qp-ipm, branch-and-bound (pdhg-gpu only in a CUDA build)"},
+
+    "netlib_total": {"value": "89", "source": "bench/results/netlib-full-ad57c03.csv, 89 rows"},
+    "netlib_matched": {"value": "81", "source": "netlib-full-ad57c03.csv, matches_published = 1 on 81 rows"},
+    "netlib_verified": {"value": "89", "source": "netlib-full-ad57c03.csv, independently_verified = 1 on 89 rows"},
+    "netlib_outliers": {"value": "8", "source": "netlib-full-ad57c03.csv, matches_published = 0 on 80bau3b, e226, ganges, greenbea, greenbeb, nesm, pilot, scrs8"},
+
+    "miplib_total": {"value": "30", "source": "bench/results/miplib-ad57c03.csv, 30 rows"},
+    "miplib_reach": {"value": "14", "source": "miplib-ad57c03.csv, matched_published = 1 on 14 rows"},
+    "miplib_prove": {"value": "11", "source": "miplib-ad57c03.csv, proved_optimal = 1 on 11 rows"},
+    "miplib_seeds_proved": {"value": "9", "source": "bench/results/summary-miplib-seeds3-ad57c03.csv, seeds_proved = seeds on 9 rows"},
+
+    "mittelmann_total": {"value": "8", "source": "bench/results/mittelmann-5c7efbc.csv, 8 rows"},
+    "mittelmann_auto": {"value": "2", "source": "mittelmann-5c7efbc.csv: brazil3 (ipm, 1.9 s) and chromaticindex1024-7 (pdhg-cpu, 21.4 s) optimal and verified"},
+    "mittelmann_pdhg": {"value": "3", "source": "mittelmann-pdhg-5c7efbc.csv: brazil3, chromaticindex1024-7, qap15 (93.5 s)"},
+    "mittelmann_ipm": {"value": "2", "source": "mittelmann-ipm-5c7efbc.csv: brazil3, qap15"},
+    "mittelmann_any": {"value": "3", "source": "union of the three 5c7efbc files: brazil3, chromaticindex1024-7, qap15"},
+
+    "highs_agree": {"value": "50", "source": "bench/results/compare-highs-medium-ad57c03.csv, objectives_agree on 50 of 50"},
+    "highs_node_total": {"value": "0.99x", "source": "compare-highs-medium-ad57c03.csv, sum sankhya_seconds / sum highs_seconds"},
+    "highs_node_median": {"value": "1.02x", "source": "compare-highs-medium-ad57c03.csv, median speed_ratio_sankhya_over_highs"},
+    "highs_node_slower": {"value": "27", "source": "compare-highs-medium-ad57c03.csv, speed_ratio > 1 on 27 rows"},
+    "highs_node_overlap": {"value": "31", "source": "compare-highs-medium-ad57c03.csv, min-max envelopes of 15 timed solves overlap on 31 rows"},
+    "highs_node_machine": {"value": "a rented 7-vCPU EPYC 7542 node", "source": "README.md on main, the ad57c03 runs; the CSV machine column reads Linux-x86_64"},
+    "highs_laptop_median": {"value": "2.01x to 2.12x", "source": "compare-highs-medium-bf3df02{,-second,-third}.csv, median speed_ratio 2.01, 2.04, 2.12"},
+
+    "tally_total": {"value": "32", "source": "docs/PS26119_COVERAGE.md, Rough tally"},
+    "tally_done": {"value": "29", "source": "docs/PS26119_COVERAGE.md, Rough tally"},
+    "tally_partial": {"value": "3", "source": "docs/PS26119_COVERAGE.md, Rough tally"},
+    "tally_missing": {"value": "0", "source": "docs/PS26119_COVERAGE.md, Rough tally: 0 not on main"},
+
+    "presolve_on": {"value": "8", "source": "docs/PS26119_COVERAGE.md Presolve row: six from #43 and two from #92, on by default"},
+    "presolve_optin": {"value": "8", "source": "sankhya options at 493fa1d: eight presolve_* options, all default false"},
+    "heuristics_total": {"value": "ten", "source": "sankhya options at 493fa1d: ten mip_heur_* options"},
+
+    "gpu_laptop_10k": {"value": "1.37x", "source": "bench/results/gpu-fb72ab4.csv, 10,000 rows at 1e-4, cpu seconds / cuda seconds"},
+    "gpu_l4_10k": {"value": "4.21x", "source": "bench/results/gpu-l4-fdc89c5.csv, 10,000 rows at 1e-4"},
+    "gpu_l4_brazil3": {"value": "8.10x", "source": "bench/results/gpu-real-l4-58a8374.csv, brazil3 at 1e-8, cpu-1t / gpu"},
+    "gpu_a100_brazil3": {"value": "10.53x", "source": "bench/results/gpu-real-a100-58a8374.csv, brazil3 at 1e-8, cpu-1t / gpu"},
+
+    "refinery_exact_rows": {"value": "32,485", "source": "bench/results/scale-refinery-e134aeb.csv, ipm optimal at 32485 rows in 67.7 s"},
+    "refinery_hourly_rows": {"value": "779,640", "source": "scale-refinery-e134aeb.csv and docs/BENCHMARKS.md 1f"},
+    "scale_rows": {"value": "1,000,000", "source": "bench/results/scale-iterations-bf3df02.csv, largest rows at iteration_limit 1000"}
+  }
+}
