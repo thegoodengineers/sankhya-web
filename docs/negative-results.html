@@ -1,0 +1,314 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light">
+<title>Negative results · SANKHYA</title>
+<meta name="description" content="What was built and then demoted, left opt-in or withdrawn, and the measurement that decided it.">
+<meta property="og:title" content="Negative results · SANKHYA">
+<meta property="og:description" content="What was built and then demoted, left opt-in or withdrawn, and the measurement that decided it.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://sankhya-solver.vercel.app/docs/negative-results">
+<link rel="canonical" href="https://sankhya-solver.vercel.app/docs/negative-results">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%230562ef'/%3E%3Ctext x='16' y='22' text-anchor='middle' font-family='Arial,sans-serif' font-weight='600' font-size='18' fill='%23ffffff'%3ES%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/styles.css">
+<script src="/site.js" defer></script>
+</head>
+<body class="doc">
+<a class="skip" href="#content">Skip to content</a>
+<div class="shell">
+<aside class="rail">
+  <a class="brand" href="/"><span class="brand-mark" aria-hidden="true"></span>SANKHYA<small>SIH26119</small></a>
+  <nav class="doors" aria-label="Site"><a href="/">Home</a><a href="/evaluate">For evaluators</a><a href="/problem">Problem</a><a href="/solver">Solver</a><a href="/evidence">Evidence</a><a href="/docs" aria-current="page">Docs</a><a href="/run">Run it</a><a href="/team">Team</a><a class="ext" href="https://github.com/thegoodengineers/SANKHYA">GitHub</a></nav>
+  <hr class="rail-rule">
+  <nav class="here" aria-label="On this page"><a href="#1-demoted-by-a-committed-measurement">1. Demoted by a committed measurement</a><a href="#cut-rounds-below-the-root-tree_cut_depth" class="sub">Cut rounds below the root (tree_cut_depth)</a><a href="#flow-cover-cut-strengthening-three-layers-419" class="sub">Flow cover cut strengthening, three layers (#419)</a><a href="#the-harris-two-pass-ratio-test-ratio_testharris" class="sub">The Harris two-pass ratio test (ratio_test=harris)</a><a href="#openmp-threads-in-the-lp-engines" class="sub">OpenMP threads in the LP engines</a><a href="#the-gpu-crossover-as-a-single-run-figure" class="sub">The GPU crossover as a single-run figure</a><a href="#2-demoted-by-a-measurement-made-on-a-branch-not-re-run-on-main">2. Demoted by a measurement made on a branch, not re-run on main</a><a href="#parallel-tree-search-mip_threads" class="sub">Parallel tree search (mip_threads)</a><a href="#conflict-analysis-mip_conflict_analysis" class="sub">Conflict analysis (mip_conflict_analysis)</a><a href="#the-primal-heuristics-one-switch-each-414" class="sub">The primal heuristics, one switch each (#414)</a><a href="#the-forresttomlin-basis-update-basis_updateforrest-tomlin" class="sub">The Forrest–Tomlin basis update (basis_update=forrest-tomlin)</a><a href="#3-built-opt-in-awaiting-the-measurement">3. Built opt-in, awaiting the measurement</a><a href="#4-withdrawn-claims">4. Withdrawn claims</a><a href="#adding-an-entry">Adding an entry</a></nav>
+</aside>
+<main class="col" id="content">
+<header class="page" id="top"><div class="wrap"><nav class="crumbs" aria-label="Breadcrumb"><a href="/docs">Docs</a><span aria-hidden="true">/</span>Negative results</nav><h1>Negative results</h1><p class="doc-banner">Generated from <a href="https://github.com/thegoodengineers/SANKHYA/blob/493fa1df0abfbd70f1d5cf7cbb35272da0a49b30/docs/NEGATIVE-RESULTS.md"><code>docs/NEGATIVE-RESULTS.md</code></a> at commit <a href="https://github.com/thegoodengineers/SANKHYA/commit/493fa1df0abfbd70f1d5cf7cbb35272da0a49b30"><code>493fa1d</code></a> (2026-09-27). Do not edit this page by hand.</p></div></header>
+<details class="doc-toc"><summary>Contents</summary><ol><li><a href="#1-demoted-by-a-committed-measurement">1. Demoted by a committed measurement</a></li><li class="sub"><a href="#cut-rounds-below-the-root-tree_cut_depth">Cut rounds below the root (tree_cut_depth)</a></li><li class="sub"><a href="#flow-cover-cut-strengthening-three-layers-419">Flow cover cut strengthening, three layers (#419)</a></li><li class="sub"><a href="#the-harris-two-pass-ratio-test-ratio_testharris">The Harris two-pass ratio test (ratio_test=harris)</a></li><li class="sub"><a href="#openmp-threads-in-the-lp-engines">OpenMP threads in the LP engines</a></li><li class="sub"><a href="#the-gpu-crossover-as-a-single-run-figure">The GPU crossover as a single-run figure</a></li><li><a href="#2-demoted-by-a-measurement-made-on-a-branch-not-re-run-on-main">2. Demoted by a measurement made on a branch, not re-run on main</a></li><li class="sub"><a href="#parallel-tree-search-mip_threads">Parallel tree search (mip_threads)</a></li><li class="sub"><a href="#conflict-analysis-mip_conflict_analysis">Conflict analysis (mip_conflict_analysis)</a></li><li class="sub"><a href="#the-primal-heuristics-one-switch-each-414">The primal heuristics, one switch each (#414)</a></li><li class="sub"><a href="#the-forresttomlin-basis-update-basis_updateforrest-tomlin">The Forrest–Tomlin basis update (basis_update=forrest-tomlin)</a></li><li><a href="#3-built-opt-in-awaiting-the-measurement">3. Built opt-in, awaiting the measurement</a></li><li><a href="#4-withdrawn-claims">4. Withdrawn claims</a></li><li><a href="#adding-an-entry">Adding an entry</a></li></ol></details>
+<article class="doc-body">
+<p>Features that were built, measured, and then demoted, left opt-in, or withdrawn — with the number that did it and the file the number lives in. This document exists because the decision <em>not</em> to ship something is evidence too, and it is the evidence a reader cannot recover from the code: an opt-in flag says nothing about why it is opt-in.</p>
+<p>Every entry states which of three things it is:</p>
+<ul>
+<li><strong>Demoted by a committed measurement.</strong> The CSV is in <code>bench/results/</code>, stamped with a commit on <code>main</code>, and <code>docs/BENCHMARKS.md</code> is generated from it. This is the standard the rest of the project holds itself to.</li>
+<li><strong>Demoted by a measurement made on a branch.</strong> The number was produced and acted on, but the CSV was never re-run on <code>main</code> and is not committed. It is reported here as what it is: a decision on evidence that a reader cannot regenerate until the re-run happens.</li>
+<li><strong>Built opt-in, awaiting its measurement.</strong> Nothing has demoted it; nothing has earned it a default either. Listed so that "off by default" is never mistaken for "measured and found wanting".</li>
+</ul>
+<p>Withdrawn claims — numbers this project published and then retracted — are at the end. A withdrawn number stays named, with the run that replaced it.</p>
+<hr>
+<h2 id="1-demoted-by-a-committed-measurement">1. Demoted by a committed measurement</h2>
+<h3 id="cut-rounds-below-the-root-tree_cut_depth">Cut rounds below the root (<code>tree_cut_depth</code>)</h3>
+<p>Rounds of MIR, clique and {0,1/2} cuts at every node down to a depth, with an aged pool (#351). Off: <code>tree_cut_depth = 0</code>.</p>
+<div class="table-wrap"><table class="doc-table">
+<thead>
+<tr>
+<th>leg (30 MIPLIB instances, 60 s, <code>main</code> at <code>0018254</code>, alone on the machine)</th>
+<th style="text-align: right;">reached</th>
+<th style="text-align: right;">proved</th>
+<th style="text-align: right;">nodes</th>
+<th style="text-align: right;">wall</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>no cuts</td>
+<td style="text-align: right;">15</td>
+<td style="text-align: right;">9</td>
+<td style="text-align: right;">1.000×</td>
+<td style="text-align: right;">1.000×</td>
+</tr>
+<tr>
+<td>root round (the default since <code>0018254</code>)</td>
+<td style="text-align: right;">13</td>
+<td style="text-align: right;"><strong>10</strong></td>
+<td style="text-align: right;">1.015×</td>
+<td style="text-align: right;">0.986×</td>
+</tr>
+<tr>
+<td>root + tree rounds, depth 4</td>
+<td style="text-align: right;">12</td>
+<td style="text-align: right;">9</td>
+<td style="text-align: right;">0.850×</td>
+<td style="text-align: right;">0.999×</td>
+</tr>
+</tbody>
+</table></div>
+<p>The root round proves <code>neos-3611689-kaihu</code> (119.0, 57,576 nodes) that no cuts leaves <code>feasible</code> at the limit. Tree rounds lose it again: 120.0 <code>feasible</code> in 35,996 nodes — fewer nodes in the same wall time, because every tree round re-filters the whole waiting pool (#415). A node-count reduction that comes from dearer nodes is not a saving.</p>
+<p>Files: <code>bench/results/miplib-cuts-off.csv</code>, <code>miplib-cuts-on.csv</code>, <code>miplib-cuts-tree.csv</code>. Section 2 of <code>docs/BENCHMARKS.md</code>.
+What would earn the default: the per-node cost of the waiting pool coming down enough that depth 4 keeps the root's proof.</p>
+<h3 id="flow-cover-cut-strengthening-three-layers-419">Flow cover cut strengthening, three layers (#419)</h3>
+<p>One-row flow cover separation for the fixed-charge shape of <code>ran12x21</code>, <code>ran13x13</code> and <code>k16x240b</code> (Padberg, Van Roy &amp; Wolsey 1985), then a single-node aggregation across rows, then a bounded local search over the cover. Each layer measured against its own same-commit baseline, <code>enable_root_cuts=true</code> in both legs, 60 s. Off: <code>enable_flow_cover_cuts = false</code>.</p>
+<div class="table-wrap"><table class="doc-table">
+<thead>
+<tr>
+<th>layer</th>
+<th style="text-align: right;">baseline</th>
+<th style="text-align: right;">with the layer</th>
+<th>on the three target instances</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>one-row separation (<code>91b6c08</code>)</td>
+<td style="text-align: right;">13 / 9</td>
+<td style="text-align: right;">13 / 9</td>
+<td><code>ran12x21</code> 3832 → 3853 (worse), <code>ran13x13</code> 3319 → 3297, <code>k16x240b</code> unchanged; none reaches its optimum</td>
+</tr>
+<tr>
+<td>single-node aggregation (<code>ebafccf</code>)</td>
+<td style="text-align: right;">13 / 9</td>
+<td style="text-align: right;">13 / 9</td>
+<td>the layer's own counters read <strong>zero</strong> on all three — their rows were already clean single-node rows, so it never fired</td>
+</tr>
+<tr>
+<td>bounded local search (<code>8358f75</code>)</td>
+<td style="text-align: right;">13 / 9</td>
+<td style="text-align: right;">15 / 9</td>
+<td>the +2 did not survive a same-commit re-check: <code>neos-3611689-kaihu</code> matched in 1 of 3 baseline legs and <code>noswot</code> in 2 of 3</td>
+</tr>
+</tbody>
+</table></div>
+<p>Eight legs, every one negative on the instances the issue named. The family fires — 14 candidates on <code>ran12x21</code> alone, moving its root bound from 3157.38 to 3228.32 — and does not close enough gap in 60 s to change an outcome.</p>
+<p>Files: <code>bench/results/miplib-419-{cuts-baseline,flow-cover-on,aggregation-baseline,aggregation-on,localsearch-baseline,localsearch-on}.csv</code>; the three stamps are branch commits carried to <code>main</code> by #454, recorded in <code>bench/results/squash-stamps.txt</code>. Section 2 of <code>docs/BENCHMARKS.md</code>.
+What would earn the default: a target instance reaching its published optimum under the family. The next lever is separation strength — exact sequential lifting (Gu, Nemhauser &amp; Savelsbergh 1999) — not the inequality or the filter.</p>
+<h3 id="the-harris-two-pass-ratio-test-ratio_testharris">The Harris two-pass ratio test (<code>ratio_test=harris</code>)</h3>
+<p>Selectable beside the default ratio test (#67). Off.</p>
+<div class="table-wrap"><table class="doc-table">
+<thead>
+<tr>
+<th>Netlib medium tier, 50 instances, <code>dba3a65</code></th>
+<th style="text-align: right;">optimal</th>
+<th style="text-align: right;">total solve time</th>
+<th style="text-align: right;">shifted geomean</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>devex (default)</td>
+<td style="text-align: right;">49 / 50</td>
+<td style="text-align: right;">8.0 s</td>
+<td style="text-align: right;">0.073 s</td>
+</tr>
+<tr>
+<td>Harris alone</td>
+<td style="text-align: right;">49 / 50</td>
+<td style="text-align: right;">154.8 s</td>
+<td style="text-align: right;">0.338 s</td>
+</tr>
+<tr>
+<td>devex + Harris</td>
+<td style="text-align: right;">49 / 50</td>
+<td style="text-align: right;">8.5 s</td>
+<td style="text-align: right;">0.078 s</td>
+</tr>
+</tbody>
+</table></div>
+<p>It changes no status and costs time: nineteen times slower alone, a rounding error beside devex. The stability it buys is not one this tier needed.</p>
+<p>Files: <code>bench/results/netlib-medium-dba3a65-{devex,harris,devex-harris}.csv</code>.
+What would earn the default: an instance class where devex goes singular and Harris does not — none in the committed sets does.</p>
+<h3 id="openmp-threads-in-the-lp-engines">OpenMP threads in the LP engines</h3>
+<p>Thread-parallel loops in the simplex and PDHG kernels, selectable by thread count. The default is one thread.</p>
+<div class="table-wrap"><table class="doc-table">
+<thead>
+<tr>
+<th>Netlib subset, 8 instances, <code>0cd08cf</code></th>
+<th style="text-align: right;">optimal</th>
+<th style="text-align: right;">total</th>
+<th style="text-align: right;">shifted geomean</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1 thread</td>
+<td style="text-align: right;">6 / 8</td>
+<td style="text-align: right;">90.1 s</td>
+<td style="text-align: right;">7.83 s</td>
+</tr>
+<tr>
+<td>8 threads</td>
+<td style="text-align: right;">6 / 8</td>
+<td style="text-align: right;">92.2 s</td>
+<td style="text-align: right;">8.70 s</td>
+</tr>
+</tbody>
+</table></div>
+<p>Eight threads are slower. At Netlib scale the per-iteration work is too small to amortise the fork, and the memory traffic of the BTRAN/FTRAN pair, not the arithmetic, is what an iteration costs.</p>
+<p>Files: <code>bench/results/netlib-0cd08cf-threads{1,8}.csv</code>.
+What would earn a default above one: a measured win at the sizes where the gather over <code>A</code> dominates — the 20,000-row staircase and above — which has not been run with threads.</p>
+<h3 id="the-gpu-crossover-as-a-single-run-figure">The GPU crossover as a single-run figure</h3>
+<p>Not a feature demoted but a <em>number</em> demoted: the CPU-vs-GPU PDHG crossover at 10,000×10,000 was published as one run. Two runs of the same protocol on the same card:</p>
+<div class="table-wrap"><table class="doc-table">
+<thead>
+<tr>
+<th>run</th>
+<th>CSV</th>
+<th style="text-align: right;">1e-4 crossover</th>
+<th style="text-align: right;">1e-8 crossover</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>#390</td>
+<td><code>gpu-a4f02b1.csv</code></td>
+<td style="text-align: right;">1.63×</td>
+<td style="text-align: right;">1.51×</td>
+</tr>
+<tr>
+<td>#424</td>
+<td><code>gpu-fb72ab4.csv</code></td>
+<td style="text-align: right;">1.37×</td>
+<td style="text-align: right;">1.54×</td>
+</tr>
+</tbody>
+</table></div>
+<p>Same instances, same card, opposite movements at the two tolerances. The spread is the honest width of a laptop-GPU measurement, and a single two-decimal figure hides it. The runner now takes N repeats per cell and reports the median with its min–max (#449); a committed repeats CSV is #445.</p>
+<hr>
+<h2 id="2-demoted-by-a-measurement-made-on-a-branch-not-re-run-on-main">2. Demoted by a measurement made on a branch, not re-run on <code>main</code></h2>
+<p>These decisions were made on numbers that are not in <code>bench/results/</code>. They are recorded as such, and each names the re-run that would move it to section 1.</p>
+<h3 id="parallel-tree-search-mip_threads">Parallel tree search (<code>mip_threads</code>)</h3>
+<p>Landed in #403: N workers, each on its own subtree with its own node LPs, sharing the incumbent, the pool and the pseudocosts. The objective and status do not depend on N; the tree explored does. Default 1.</p>
+<p>On the branch, 30 MIPLIB instances at 60 s: four threads reach the same 14 and prove the same 9 as one, explore 2× to 4× the nodes, and are slower on the small proofs — geometric mean 0.70× on the nine that finish. More nodes in the same time was not more proofs.</p>
+<p>Re-run that would settle it: the A/B on <code>main</code> with the runner's <code>--threads</code> column.</p>
+<h3 id="conflict-analysis-mip_conflict_analysis">Conflict analysis (<code>mip_conflict_analysis</code>)</h3>
+<p>Landed in #381/#292: the search learns from every node it proves infeasible which branching decisions were to blame, and prunes or tightens later nodes that repeat them; a conflict is stored only after re-proof from the global bounds. Off by default.</p>
+<p>On the branch at <code>6c405f8</code> (#405), 30 MIPLIB instances at 60 s: the same 14 reached and 9 proved either way, no verdict moved. On the nine instances that finish, conflicts take the node count to 0.965× (2,204 against 2,285). On the 21 stopped by the limit the count is 0.938× in the same wall clock — nodes not reached, not search saved — with <code>enlight8</code> at 0.373× and 37.4 s of its 60 s budget spent inside the analysis.</p>
+<p>Re-run that would settle it: the same A/B at a <code>main</code> commit, with the analysis time per instance in the CSV.</p>
+<h3 id="the-primal-heuristics-one-switch-each-414">The primal heuristics, one switch each (#414)</h3>
+<p>Rounding, fractional diving, RENS and the diving family each behind <code>mip_heur_*</code>, with a counted budget. The master switch is off because, measured together, they cost proofs; the per-heuristic A/B that would say which one is not on <code>main</code> (<code>docs/BENCHMARKS.md</code> reports "not measured on this checkout").</p>
+<p>Re-run that would settle it: <code>bench/runners/miplib_heuristics_ab.py</code> at one <code>main</code> commit, all legs in one sitting.</p>
+<h3 id="the-forresttomlin-basis-update-basis_updateforrest-tomlin">The Forrest–Tomlin basis update (<code>basis_update=forrest-tomlin</code>)</h3>
+<p>Landed in #279: the entering column folded into U with a sparse spike and one row eta, against the product-form default. The fold was measured drifting 2.5e-3 where the product form stayed at 1e-9 over a full eta file, which #396 closed with Tomlin's loss-of-significance test (<code>kFtCancellationThreshold</code>), a row-eta bound and the pivot test — the unit test now holds it to the product form's drift over six seeds and 128 updates. Still opt-in: on the branch it won iterations on <code>greenbea</code> and <code>d2q06c</code> and lost them on <code>perold</code> and <code>pilotnov</code>, and no committed run puts a number on the trade.</p>
+<p>Re-run that would settle it: the Netlib full set under both updates at one <code>main</code> commit.</p>
+<hr>
+<h2 id="3-built-opt-in-awaiting-the-measurement">3. Built opt-in, awaiting the measurement</h2>
+<p>Nothing has demoted these. Each is off by default until its A/B on <code>main</code> says what it changes, per the rule that a default is earned by a number.</p>
+<div class="table-wrap"><table class="doc-table">
+<thead>
+<tr>
+<th>feature</th>
+<th>option</th>
+<th>what it is</th>
+<th>the measurement it waits for</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Dual steepest-edge pricing (#411, #434)</td>
+<td><code>pricing=dual-steepest-edge</code></td>
+<td>exact row norms of B⁻¹ maintained through the Forrest–Goldfarb update, one extra FTRAN per pivot</td>
+<td>Netlib medium and the scale models, iterations and seconds under each rule</td>
+</tr>
+<tr>
+<td>Objective branching (#418, #438)</td>
+<td><code>mip_objective_branching</code></td>
+<td>on an integral objective, branch on a split of the objective row instead of a column</td>
+<td>the four plateau instances on MIPLIB</td>
+</tr>
+<tr>
+<td>Dual fixing (#412, #429)</td>
+<td><code>presolve_dual_fixing</code></td>
+<td>a column whose entries only push rows away from a finite bound one way, and whose cost never rewards it, fixed at the other bound</td>
+<td>Netlib and MIPLIB re-runs on <code>main</code></td>
+</tr>
+<tr>
+<td>Parallel rows (#412, #436)</td>
+<td><code>presolve_parallel_rows</code></td>
+<td>a row that is a scalar multiple of an earlier one folds its bounds into that row</td>
+<td>same</td>
+</tr>
+<tr>
+<td>Dominated columns (#412, #440)</td>
+<td><code>presolve_dominated_columns</code></td>
+<td>activity moves from a dominated column onto a dominating one; one of the two is fixed</td>
+<td>same</td>
+</tr>
+<tr>
+<td>Implied-free substitution (#412, #443)</td>
+<td><code>presolve_implied_free</code></td>
+<td>a singleton column whose row already implies its box is substituted away with its row</td>
+<td>same</td>
+</tr>
+<tr>
+<td>Coefficient tightening (#511)</td>
+<td><code>presolve_coefficient_tightening</code></td>
+<td>an integer column's coefficient larger than the row's slack at its maximum is cut to that slack (big-M to the column's implied bound), alternating with bound propagation</td>
+<td>MIPLIB root bounds and times on <code>main</code></td>
+</tr>
+<tr>
+<td>Binary probing and clique table (#512)</td>
+<td><code>presolve_probing</code></td>
+<td>each binary fixed to 0 and to 1 and propagated: fixings, tightenings, and literal conflicts fed to the clique separator</td>
+<td>MIPLIB root bounds, clique cuts and times on <code>main</code></td>
+</tr>
+</tbody>
+</table></div>
+<hr>
+<h2 id="4-withdrawn-claims">4. Withdrawn claims</h2>
+<p>Numbers this project published and then retracted, kept here by name.</p>
+<ul>
+<li><strong>"Root plus tree rounds reach 14 and prove 10."</strong> Published from the three-way at <code>078cb24</code>. The clean re-run at <code>0018254</code> — alone on the machine, apps closed — gave root + tree 12 / 9 and root alone 13 / 10. The <code>078cb24</code> tree figure did not reproduce; the default was set on the leg that did. Withdrawn in #459.</li>
+<li><strong>"1.63× faster at 10,000×10,000."</strong> Published from <code>gpu-a4f02b1.csv</code>. The re-run <code>gpu-fb72ab4.csv</code> gave 1.37× at the same tolerance. Both are now named wherever the figure is stated, and the repeats runner (#449) replaces the single-run figure. Withdrawn in #435.</li>
+<li><strong>"0 of 8 on Mittelmann."</strong> Published from <code>mittelmann-e134aeb.csv</code> for the default engine. The clean re-run at <code>0018254</code> on all three engines gave 2 of 8 under <code>auto</code> and 3 of 8 across engines; two of the eight are the interior point running out of memory on a 7.7 GB machine, and two are engine-selection misses (#417). Replaced in #459. The out-of-memory reading of that sentence is withdrawn in the next entry.</li>
+<li><strong>"The interior point is limited by memory on Mittelmann."</strong> Read from the two out-of-memory rows of the <code>0018254</code> re-run on the 7.7 GB laptop. The same eight under <code>algorithm=ipm</code> on a 96 GB node with 86 GB free (<code>mittelmann-ipm-5c7efbc.csv</code>, #575) finish the same 2 of 8, and none of the six misses is memory: three abandon the ordering in 11–22 s at <code>ipm_max_ordering_entries = 1e8</code>, a budget sized for the laptop; two decline at the first factorization's share of the limit; <code>irish-electricity</code> is <code>numerical_error</code> because its point violates a row by 1.0e-4, which the status guard measures (objective 2454405 against HiGHS's 2546254). Memory was the 7.7 GB box's limit, not the engine's. The ordering and factor budgets are now sized from the machine's physical memory, with the laptop constants as the floor (#581); whether that moves the three abandoned orderings is the next ipm leg on the node, not yet run (#576).</li>
+</ul>
+<hr>
+<h2 id="adding-an-entry">Adding an entry</h2>
+<p>An entry is a CSV first. Run the A/B at one <code>main</code> commit, alone on the machine, on AC, both legs in one sitting; commit the CSVs; regenerate <code>docs/BENCHMARKS.md</code>; then write the paragraph here with the file names and the number. A decision made on a branch run goes in section 2 with the re-run that would move it, not in section 1. A number that later fails to reproduce moves to section 4 with the run that replaced it — it is not deleted.</p>
+</article>
+<footer>
+<!-- fragment:footer -->
+<div class="wrap">
+    <div>SANKHYA · Smart India Hackathon 2026 · PS SIH26119 · Apache-2.0 · <a href="https://sankhya-solver.vercel.app">sankhya-solver.vercel.app</a></div>
+    <div>Every figure on this site was last checked against SANKHYA <a href="https://github.com/thegoodengineers/SANKHYA/tree/493fa1df0abfbd70f1d5cf7cbb35272da0a49b30">main at <span data-fact="sankhya_commit">493fa1d</span></a>.</div>
+    <div><a href="https://github.com/thegoodengineers/SANKHYA">Source</a> · <a href="/docs">Docs</a> · <a href="/docs/benchmarks">Benchmarks</a> · <a href="/docs/provenance">Provenance</a> · <a href="/docs/coverage">Coverage tracker</a></div>
+  </div>
+<!-- /fragment:footer -->
+</footer>
+</main>
+</div>
+</body>
+</html>

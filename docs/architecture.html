@@ -1,0 +1,966 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light">
+<title>Architecture · SANKHYA</title>
+<meta name="description" content="How a solve flows through the modules, and the promises every engine is held to.">
+<meta property="og:title" content="Architecture · SANKHYA">
+<meta property="og:description" content="How a solve flows through the modules, and the promises every engine is held to.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://sankhya-solver.vercel.app/docs/architecture">
+<link rel="canonical" href="https://sankhya-solver.vercel.app/docs/architecture">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%230562ef'/%3E%3Ctext x='16' y='22' text-anchor='middle' font-family='Arial,sans-serif' font-weight='600' font-size='18' fill='%23ffffff'%3ES%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/styles.css">
+<script src="/site.js" defer></script>
+</head>
+<body class="doc">
+<a class="skip" href="#content">Skip to content</a>
+<div class="shell">
+<aside class="rail">
+  <a class="brand" href="/"><span class="brand-mark" aria-hidden="true"></span>SANKHYA<small>SIH26119</small></a>
+  <nav class="doors" aria-label="Site"><a href="/">Home</a><a href="/evaluate">For evaluators</a><a href="/problem">Problem</a><a href="/solver">Solver</a><a href="/evidence">Evidence</a><a href="/docs" aria-current="page">Docs</a><a href="/run">Run it</a><a href="/team">Team</a><a class="ext" href="https://github.com/thegoodengineers/SANKHYA">GitHub</a></nav>
+  <hr class="rail-rule">
+  <nav class="here" aria-label="On this page"><a href="#1-the-shape-in-one-paragraph">1. The shape in one paragraph</a><a href="#2-modules-and-their-boundaries">2. Modules and their boundaries</a><a href="#3-the-two-invariants-everything-else-rests-on">3. The two invariants everything else rests on</a><a href="#3a-the-size-this-build-supports" class="sub">3a. The size this build supports</a><a href="#4-how-a-solve-flows">4. How a solve flows</a><a href="#4a-what-presolve-reports" class="sub">4a. What presolve reports</a><a href="#5-where-the-next-engines-plug-in">5. Where the next engines plug in</a><a href="#6-toolchain-as-tested">6. Toolchain, as tested</a><a href="#7-reproducibility-and-what-is-actually-promised">7. Reproducibility, and what is actually promised</a><a href="#8-resource-limits-and-what-each-one-means">8. Resource limits, and what each one means</a><a href="#9-nonlinear-models-the-representation-before-any-engine">9. Nonlinear models: the representation, before any engine</a><a href="#10-profiling-where-a-solves-time-goes">10. Profiling: where a solve&#x27;s time goes</a><a href="#11-conflict-analysis-learning-from-infeasible-nodes">11. Conflict analysis: learning from infeasible nodes</a><a href="#12-parallel-tree-search">12. Parallel tree search</a><a href="#13-the-engine-layer-what-an-engine-is-promised-and-what-it-promises">13. The engine layer: what an engine is promised, and what it promises</a></nav>
+</aside>
+<main class="col" id="content">
+<header class="page" id="top"><div class="wrap"><nav class="crumbs" aria-label="Breadcrumb"><a href="/docs">Docs</a><span aria-hidden="true">/</span>Architecture</nav><h1>Architecture</h1><p class="doc-banner">Generated from <a href="https://github.com/thegoodengineers/SANKHYA/blob/493fa1df0abfbd70f1d5cf7cbb35272da0a49b30/docs/ARCHITECTURE.md"><code>docs/ARCHITECTURE.md</code></a> at commit <a href="https://github.com/thegoodengineers/SANKHYA/commit/493fa1df0abfbd70f1d5cf7cbb35272da0a49b30"><code>493fa1d</code></a> (2026-09-27). Do not edit this page by hand.</p></div></header>
+<details class="doc-toc"><summary>Contents</summary><ol><li><a href="#1-the-shape-in-one-paragraph">1. The shape in one paragraph</a></li><li><a href="#2-modules-and-their-boundaries">2. Modules and their boundaries</a></li><li><a href="#3-the-two-invariants-everything-else-rests-on">3. The two invariants everything else rests on</a></li><li class="sub"><a href="#3a-the-size-this-build-supports">3a. The size this build supports</a></li><li><a href="#4-how-a-solve-flows">4. How a solve flows</a></li><li class="sub"><a href="#4a-what-presolve-reports">4a. What presolve reports</a></li><li><a href="#5-where-the-next-engines-plug-in">5. Where the next engines plug in</a></li><li><a href="#6-toolchain-as-tested">6. Toolchain, as tested</a></li><li><a href="#7-reproducibility-and-what-is-actually-promised">7. Reproducibility, and what is actually promised</a></li><li><a href="#8-resource-limits-and-what-each-one-means">8. Resource limits, and what each one means</a></li><li><a href="#9-nonlinear-models-the-representation-before-any-engine">9. Nonlinear models: the representation, before any engine</a></li><li><a href="#10-profiling-where-a-solves-time-goes">10. Profiling: where a solve&#x27;s time goes</a></li><li><a href="#11-conflict-analysis-learning-from-infeasible-nodes">11. Conflict analysis: learning from infeasible nodes</a></li><li><a href="#12-parallel-tree-search">12. Parallel tree search</a></li><li><a href="#13-the-engine-layer-what-an-engine-is-promised-and-what-it-promises">13. The engine layer: what an engine is promised, and what it promises</a></li></ol></details>
+<article class="doc-body">
+<p>How the solver is put together, where each algorithm lives, and where the next engine plugs
+in. PS26119 asks for a "transparent, extensible foundation"; this document is the map that
+claim is checked against. Every citation for an algorithm named here is in
+<code>docs/PROVENANCE.md</code>; every number is in <code>docs/BENCHMARKS.md</code>, generated from CSVs.</p>
+<h2 id="1-the-shape-in-one-paragraph">1. The shape in one paragraph</h2>
+<p>A <code>Model</code> goes in, a <code>Solution</code> comes out, through one function:</p>
+<pre><code>solve(const Model&amp;, const Options&amp;) -&gt; Solution        (src/core/solve.cpp)
+</code></pre>
+<p><code>solve()</code> classifies the model by what it contains — integrality, a quadratic objective,
+neither — and dispatches to an engine. Every engine consumes the same <code>Model</code>, produces the
+same <code>Solution</code>, and is judged by the same code afterwards: <code>Solution::recompute_quality()</code>
+re-measures feasibility, the reduced costs and the duality gap against the original model,
+and the dispatcher's status guard downgrades any claim the measurement does not support.
+That seam is what makes a new engine a bounded piece of work: it has to produce a
+<code>Solution</code>, and it gets the same audit as the ones that exist.</p>
+<pre><code>                MPS / LP file            C API            Python (pybind11)
+                       │                    │                    │
+                       └──────── readers (src/io) ───────────────┘
+                                          │
+                                        Model
+                                          │
+                              presolve (src/presolve)          ┐
+                                          │                    │  LP path
+                   ┌──────────────┬───────┴────────┬────────┐  │
+              dual simplex   primal simplex      PDHG      IPM (algorithm=ipm)
+              (default LP)   (algorithm=simplex) (pdhg)     │
+                   └──────────────┴───────┬────────┴────────┘  │
+                                       postsolve               ┘
+                                          │
+                     branch and bound (src/mip) ── node LP: warm-started dual simplex
+                     convex QP (src/qp)        ── Condat–Vũ, MIQP nodes
+                                          │
+                              Solution ── recompute_quality ── status guard
+                                          │
+                        .sol / --stats JSON (src/io)   tools/verify_solution.py
+</code></pre>
+<h2 id="2-modules-and-their-boundaries">2. Modules and their boundaries</h2>
+<div class="table-wrap"><table class="doc-table">
+<thead>
+<tr>
+<th>directory</th>
+<th>what lives there</th>
+<th>depends on</th>
+<th>lines</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>include/sankhya/</code></td>
+<td>the public headers: <code>model.hpp</code> (Model, Solution, BasisStatus), <code>options.hpp</code>, <code>tolerances.hpp</code> (every numerical constant, cited), <code>sankhya.h</code> (the C API), <code>io.hpp</code>, <code>mip.hpp</code>, <code>qp.hpp</code>, <code>pdhg.hpp</code></td>
+<td>nothing</td>
+<td>1.6k</td>
+</tr>
+<tr>
+<td><code>src/core/</code></td>
+<td><code>Model</code>/<code>Solution</code> implementation, <code>recompute_quality()</code>, the <code>solve()</code> dispatcher and its status guard</td>
+<td>everything below</td>
+<td>0.7k</td>
+</tr>
+<tr>
+<td><code>src/util/</code></td>
+<td>logging, the options registry (every option has a description and a default, checked for duplicates by a test), the version stamp</td>
+<td>–</td>
+<td>0.8k</td>
+</tr>
+<tr>
+<td><code>src/la/</code></td>
+<td>CSC/CSR sparse matrix with row views, the sparse LU with Markowitz threshold pivoting and the product-form update (FTRAN/BTRAN, eta file), Ruiz + Pock–Chambolle equilibration</td>
+<td>–</td>
+<td>1.6k</td>
+</tr>
+<tr>
+<td><code>src/io/</code></td>
+<td>MPS (fixed and free, RANGES, negative-UP convention, MARKER blocks, gzip) and LP readers, the <code>.sol</code> writer and the <code>--stats</code> JSON writer</td>
+<td>core</td>
+<td>2.2k</td>
+</tr>
+<tr>
+<td><code>src/presolve/</code></td>
+<td>reductions (empty/fixed/singleton rows and columns, redundant rows, free-column singletons, doubleton equations, integer bound rounding) and the postsolve stack that reconstructs the primal and the DUAL of the original model</td>
+<td>core, la</td>
+<td>1.8k</td>
+</tr>
+<tr>
+<td><code>src/simplex/</code></td>
+<td><code>simplex_core.hpp</code> — the state the two simplex loops share (basis, factors, pricing weights, perturbation, warm start); <code>primal_simplex.cpp</code> — bounded-variable revised primal simplex, composite phase 1, Devex pricing, textbook and Harris ratio tests, bound perturbation, basis repair; <code>dual_simplex.cpp</code> — bounded dual simplex, bound-flipping ratio test, dual Devex, artificial bounds, cost perturbation, hand-over to the primal loop; <code>dense_lu</code> — a dense reference used by tests</td>
+<td>core, la</td>
+<td>3.2k</td>
+</tr>
+<tr>
+<td><code>src/pdhg/</code></td>
+<td>restarted PDHG (PDLP-style), CPU; the CUDA backend hangs off this path (<code>src/gpu/</code>, behind <code>SANKHYA_ENABLE_CUDA</code>, on <code>main</code> since #329, measured on an RTX 5050 by #390: the GPU overtakes the CPU at 10,000 rows, <code>docs/BENCHMARKS.md</code> section 1g)</td>
+<td>core, la</td>
+<td>0.7k</td>
+</tr>
+<tr>
+<td><code>src/ipm/</code></td>
+<td>Mehrotra predictor-corrector interior-point method on the normal equations, over the sparse LDLᵀ in <code>src/la/ldl.cpp</code>; no basis</td>
+<td>core, la</td>
+<td>0.5k</td>
+</tr>
+<tr>
+<td><code>src/qp/</code></td>
+<td>convexity check (Cholesky of the Hessian), Condat–Vũ first-order convex QP</td>
+<td>core, la</td>
+<td>0.5k</td>
+</tr>
+<tr>
+<td><code>src/mip/</code></td>
+<td>branch and bound: propagation, root diving, reliability branching with strong branching, warm-started dual node LPs, MIQP nodes through the QP engine; root cuts are PR #159</td>
+<td>core, simplex, qp</td>
+<td>1.3k</td>
+</tr>
+<tr>
+<td><code>src/api/</code></td>
+<td>the C API over <code>solve()</code> (including <code>sankhya_set_callback</code> and <code>sankhya_model_interrupt</code>); the Python bindings (<code>bindings/python/</code>, including <code>Model.interrupt()</code>) wrap this, not the C++</td>
+<td>core</td>
+<td>0.5k</td>
+</tr>
+<tr>
+<td><code>apps/sankhya-cli/</code></td>
+<td><code>sankhya solve|info|options|version</code>, <code>--stats</code>, <code>--write-sol</code>, <code>--option k=v</code>. Uses <code>sankhya_set_callback</code> for graceful SIGINT interrupted exit</td>
+<td>api, io</td>
+<td>–</td>
+</tr>
+<tr>
+<td><code>tools/</code></td>
+<td><code>verify_solution.py</code>: re-parses the model with its own reader and checks the <code>.sol</code> file's primal feasibility, reduced costs, dual feasibility, complementary slackness and strong duality. Shares no code with the solver, deliberately</td>
+<td>–</td>
+<td>1.5k</td>
+</tr>
+<tr>
+<td><code>tests/</code></td>
+<td>unit tests per module; <code>oracles/</code> — a rational-arithmetic simplex and exact MILP branch and bound that the float engines are fuzzed against; <code>robustness/</code> — the sweeps that find where the solver stops working</td>
+<td>–</td>
+<td>10k</td>
+</tr>
+<tr>
+<td><code>bench/runners/</code></td>
+<td>Netlib, MIPLIB and Mittelmann runners and fetchers, the HiGHS comparison (a separate process over the same files), the robustness sweep, <code>make_benchmarks_doc.py</code> which generates <code>docs/BENCHMARKS.md</code> from the CSVs</td>
+<td>–</td>
+<td>4k</td>
+</tr>
+</tbody>
+</table></div>
+<p>The dependency direction is strictly downward in that table: <code>la</code> knows nothing about
+models, <code>simplex</code> knows nothing about integrality, <code>mip</code> knows nothing about file formats.
+No file in <code>src/</code> reads or links anything from another optimization solver; <code>docs/PROVENANCE.md</code>
+records the dependency table, the link line and the algorithm citations.</p>
+<h2 id="3-the-two-invariants-everything-else-rests-on">3. The two invariants everything else rests on</h2>
+<p><strong>The frozen interface.</strong> <code>Model</code>, <code>Solution</code> and <code>solve()</code> do not change without an explicit
+note in the PR that changes them. Readers produce a <code>Model</code>; every engine consumes one and
+produces a <code>Solution</code>; the writers, the verifier, the C API and the bindings consume a
+<code>Solution</code>. A new engine touches <code>src/&lt;engine&gt;/</code> and one branch of the dispatcher.</p>
+<p><strong>Nothing is reported that was not measured.</strong> <code>recompute_quality()</code> recomputes the row
+activities, the objective, the reduced costs and the KKT residuals against the ORIGINAL
+model after postsolve, and the status guard turns an engine's "optimal" into "feasible" when
+those numbers disagree with the claim. Outside the process, <code>tools/verify_solution.py</code>
+repeats the audit with its own reader, and the exact oracle in <code>tests/oracles/</code> is the
+standard the float engines are compared against on instances nobody chose. A wrong answer
+in numerical code prints and looks correct; these three layers are how it gets caught.</p>
+<h3 id="3a-the-size-this-build-supports">3a. The size this build supports</h3>
+<p><code>Index</code> is <code>std::int32_t</code>, so a sparse structure addresses at most <strong>2,147,483,647 nonzeros</strong>
+and the same number of rows or columns (<code>kMaxNonzeros</code> in <code>include/sankhya/types.hpp</code>). The
+choice is deliberate: every offset, loop bound and allocation size in a pattern is an <code>Index</code>,
+and widening it to 64 bits doubles the memory of every pattern array on every model to buy a
+size no benchmark here reaches. The largest instance the scale runners generate is about
+5,000,000 nonzeros, three orders of magnitude below the ceiling.</p>
+<p>What the ceiling costs is a guard rather than a risk (#305). <code>SparseMatrix</code> counts entries as
+they arrive, refuses the ones past its limit and flags itself; <code>Model::validate()</code> turns the
+flag into a model error before an engine reads the pattern; the sparse LDL^T checks the size
+of the factor its ordering implies, since fill-in can make the factor far denser than the
+matrix. A model that exceeds the limit is therefore <strong>refused with a diagnostic</strong>, not
+assembled from a prefix sum that wrapped into negative offsets.</p>
+<p><code>SparseMatrix::set_nonzero_limit()</code> lowers the ceiling per instance. It exists so the refusal
+path is testable at a handful of entries instead of 2^31, and doubles as a per-matrix memory
+cap for a caller who wants one.</p>
+<h2 id="4-how-a-solve-flows">4. How a solve flows</h2>
+<ol>
+<li><strong>Read.</strong> <code>src/io</code> produces a <code>Model</code> with column-major storage, bounds, integrality and
+   an optional lower-triangular Hessian. Coefficients below <code>kZeroDrop</code> are dropped here and
+   nowhere later, and <code>docs/BENCHMARKS.md</code> §5 records what that costs.</li>
+<li><strong>Classify.</strong> Integrality → branch and bound; a Hessian → convex QP (or MIQP nodes);
+   otherwise an LP engine chosen by <code>algorithm</code>: <code>auto</code> is a rule table on the model's shape
+   (<code>src/core/engine_selection.cpp</code>, #284): the dual simplex below 20,000 rows and 100,000
+   nonzeros, the interior point with crossover above either, PDHG from 100,000 rows, and a
+   starting basis always the dual simplex; every threshold names its CSV, the answer carries
+   the rule and the reason, and an interior point that declines - a factor beyond its budget, or a
+   set-up past <code>ipm_setup_share</code> of the time limit (#357), or a factor that exhausts the
+   machine's memory (#437, caught inside the recovery rather than past it) - falls back to
+   PDHG at or above the row limit and to the dual simplex below it, on the time that is left.</li>
+<li><strong>Presolve</strong> (LP path). Reductions are recorded on a stack. The reduced model is scaled
+   (Ruiz then Pock–Chambolle) inside the simplex entry point; the scaled and unscaled
+   attempts share one time budget.</li>
+<li><strong>Solve.</strong> The dual simplex starts from the slack basis (or a warm start), boxes any
+   column that is dual infeasible, runs the bound-flipping ratio test with dual Devex
+   pricing, perturbs costs on a degenerate stall, and hands the basis to the primal loop
+   whenever it cannot finish honestly (artificial bound active, pivot disagreement on fresh
+   factors, marginal infeasibility). Optimality is declared only on fresh factors.</li>
+<li><strong>Postsolve.</strong> Primal values are reconstructed in reverse record order; the duals are
+   reconstructed to a fixed point, then every reduced cost of a column presolve could have
+   touched is recomputed as <code>c − Aᵀy</code>.</li>
+<li><strong>Audit and report.</strong> <code>recompute_quality()</code>, the status guard, then the <code>.sol</code> and JSON
+   writers. The <code>.sol</code> file carries 17 significant digits so the verifier sees what the
+   solver saw.</li>
+</ol>
+<p>For a MILP, step 4 becomes the tree: propagation at each node, a root dive for an incumbent,
+reliability branching (pseudocosts once observed enough times, strong branching before that),
+and every child solved by the dual simplex from its parent's basis, which is dual feasible
+there by construction.</p>
+<h3 id="4a-what-presolve-reports">4a. What presolve reports</h3>
+<p>Presolve is the one stage that rewrites the model a user handed over, so it accounts for
+itself (#286). Every solve carries a <code>Solution::PresolveReport</code>: rows, columns and nonzeros
+before and after with the reduction percentages, the count of each reduction that fired, the
+count of what presolve DECLINED to do and why (a column carrying curvature, an integer column
+whose substitution would come back fractional), the number of passes, why it stopped (fixed
+point, pass limit, or an infeasibility it proved), and how long it took.</p>
+<p>The same numbers appear in three places, from one source: a summary line in the log and in
+the CLI's result block, a per-reduction breakdown at <code>--option log_level=verbose</code>, and a
+<code>presolve</code> object in the <code>--stats</code> JSON for the benchmark runners. The counts are derived
+from the records postsolve replays, so the report cannot drift away from the transformation
+it describes.</p>
+<h2 id="5-where-the-next-engines-plug-in">5. Where the next engines plug in</h2>
+<p><strong>The engine registry</strong> (#297, <code>src/solver_engine/</code>). Every engine is a <code>SolverEngine</code>: a
+name, the classes it accepts, what its answer carries (a basis, row duals, a certificate,
+a warm start taken, an interrupt honoured, a deterministic mode kept) and a sentence on
+what it is, registered once in <code>builtin_engines.cpp</code> as a thin wrapper over the existing
+<code>solve_*()</code> function. <code>solve()</code> asks the registry which LP engine runs (<code>engine::select()</code>,
+the rule table of #284) and whether it takes a starting basis, and the model's class is
+decided in one place, <code>engine::classify</code>, for the dispatcher and the registry alike.
+<code>sankhya engines</code> prints the table, <code>--format json</code> for scripts, with every flag read from
+the engine rather than typed beside it. The names <code>algorithm</code> accepts are the registry's
+<code>algorithm_names()</code>; the option table's own list is held to them by a test, since the
+option layer cannot ask the engines without depending on them. When <code>algorithm</code> names an
+LP engine for a MILP, QP or MIQP, the class's engine runs and the log and the answer's
+message say so rather than the request being dropped silently. Adding an engine is a
+wrapper and a registration line in <code>builtin_engines.cpp</code> and a branch in <code>solve()</code> for how
+to run it; <code>solve()</code> refuses a registered engine it has no branch for rather than running
+another under its name (#402). The contract around an engine - ownership, thread safety,
+status mapping, how each kind of failure surfaces, and what #297 asked for that is not built -
+is section 13; the steps for adding one are <code>docs/ADDING_AN_ENGINE.md</code>.</p>
+<ul>
+<li><strong>Interior-point method</strong> (#56) — built: <code>src/ipm/</code> is one branch of the LP dispatcher
+  over the sparse LDLᵀ in <code>src/la/ldl.cpp</code> (#70). On its own it produces a <code>Solution</code> without
+  a basis, which the status guard and the verifier handle as they do for PDHG; by default
+  (<code>crossover=true</code>, #219) <code>src/simplex/crossover.cpp</code> then pushes that answer to a vertex
+  with the dual simplex warm-started from a basis guessed off the interior point, so the
+  reported solution carries a basis. The dual simplex stays the node engine for branch and
+  bound.</li>
+<li><strong>MIQP</strong> — already present: the branch-and-bound node relaxation is a QP when the model
+  has a Hessian, and the node bound is quadratic (<code>src/mip/branch_and_bound.cpp</code>).</li>
+<li><strong>NLP / MINLP</strong> — <code>Model</code> stays frozen. A nonlinear model is <code>nlp::NonlinearModel</code>
+  (<code>src/nlp/</code>): the frozen <code>Model</code> for columns, bounds, integrality, linear rows and the
+  linear/quadratic objective, plus an expression graph over the same columns for a nonlinear
+  objective term and nonlinear rows (#296). <code>nlp::NlpProblem</code> presents it as the smooth NLP
+  an optimizer iterates on, with exact derivatives: the gradient, the Jacobian on a fixed
+  pattern, and the Hessian of the Lagrangian on a fixed lower-triangle pattern found by
+  index-domain propagation (NLP stage 1). Models reach it from AMPL's text <code>.nl</code> format
+  (<code>src/nlp/nl_reader.cpp</code>), from the C API (<code>include/sankhya/sankhya_nonlinear.h</code>) and from
+  Python (<code>sankhya.nonlinear</code>); <code>sankhya info model.nl</code> reports its class, size, derivative
+  sparsity and whether its relaxation is proved convex. The engines are separate entry points
+  beside <code>solve()</code>, as <code>solve_global()</code> is for quadratic rows: the convex Condat-Vu engine for
+  linear constraints (#226), and <code>nlp::solve_nlp()</code> (<code>src/nlp/nlp_solve.cpp</code>, NLP stage 2), a
+  primal-dual interior point with a filter line search after Wachter &amp; Biegler (2006) for
+  general smooth nonlinear constraints, reached from <code>sankhya solve model.nl</code>, the C API and
+  Python. Its status is decided by a KKT check at the project tolerances in the model's own
+  terms: <code>optimal</code> only when the model is also proved convex (a global optimum),
+  <code>locally_optimal</code> otherwise, <code>locally_infeasible</code> when the restoration phase finds a local
+  minimizer of the violation. Those two statuses are appended to <code>SolveStatus</code> (an explicit
+  frozen-interface addition). <code>tools/verify_solution.py</code> checks a <code>.nl</code> answer with its own
+  reader and derivatives.
+  A model with integer columns goes to NLP-based branch and bound (<code>src/nlp/minlp_bnb.cpp</code>,
+  NLP stage 3, Gupta &amp; Ravindran 1985), which runs only when the continuous relaxation is
+  proved convex - the condition under which a node relaxation's value is a bound - and
+  refuses a nonconvex MINLP with the reason. It certifies an infeasible node by solving the
+  convex minimum-violation problem, reuses the MIP tree's gap test and limits, and reports
+  <code>optimal</code> only when every node was resolved with a certificate.</li>
+<li><strong>Cutting planes</strong> — already present, and off by default. Root GMI and lifted cover cuts
+  landed in #159 (<code>src/mip/cuts.cpp</code>) and single-row MIR cuts in #221
+  (<code>src/mip/mir_cuts.cpp</code>), appended as rows of the working model before the search
+  starts; the answer reports the root bound before and after the round. <code>enable_root_cuts</code>
+  is false by measurement: the three-way A/B at <code>078cb24</code> (<code>docs/BENCHMARKS.md</code> section 2)
+  has the off leg at 14 of 30 reached and 9 proved, the root round at 13 and 9 (one match
+  lost at the time limit, nodes 1.049x) and root plus tree rounds at 14 and 10
+  (<code>neos-3611689-kaihu</code> proved, nodes 0.920x). The tree leg is the first to gain a proof
+  without losing one; whether it becomes the default is #221's open decision.</li>
+<li><strong>Parallelism</strong> — the column loops in pricing and in the sparse products are
+  embarrassingly parallel and deterministic (no cross-thread reductions); the tree search is
+  the larger prize and the harder one, because a race on the incumbent can fathom a node
+  that should have been explored (#57). It is <code>mip_threads</code> since #222; section 12.</li>
+</ul>
+<h2 id="6-toolchain-as-tested">6. Toolchain, as tested</h2>
+<ul>
+<li>C++20, CMake ≥ 3.20, Ninja. CI is Ubuntu (GCC), Release and Debug + ASan/UBSan; the
+  Windows development boxes use MSYS2 UCRT64 GCC 16.1.0 through <code>scripts/configure.sh</code>,
+  which refuses a compiler older than GCC 10.</li>
+<li>Dependencies (all non-solver, table in <code>docs/PROVENANCE.md</code>): fmt, CLI11, nlohmann/json,
+  GoogleTest (tests only), zlib (optional), pybind11 (bindings). No BLAS, no LAPACK.</li>
+<li><code>clang-format</code> 22.1.8 from pip, pinned, because its output differs between majors.</li>
+<li>Python 3.10+ for the runners, <code>highspy</code> optional for the comparison.</li>
+<li><code>scripts/reproduce.sh</code> is the one command from a fresh clone: configure, build, test,
+  fetch, benchmark, robustness sweep, comparison, and regenerate <code>docs/BENCHMARKS.md</code>. It
+  says which steps need the network and skips them, named, when it is absent.</li>
+</ul>
+<h2 id="7-reproducibility-and-what-is-actually-promised">7. Reproducibility, and what is actually promised</h2>
+<p><code>--option deterministic=true</code> turns on the reproducible mode (#288). It is off by default:
+it refuses a wall-clock <code>time_limit</code>, and a caller who asked for one has to keep getting it.</p>
+<p>Four different things get called reproducibility, and only some of them are ours to give:</p>
+<div class="table-wrap"><table class="doc-table">
+<thead>
+<tr>
+<th>Level</th>
+<th>What it means</th>
+<th>SANKHYA today</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Mathematical</td>
+<td>The same optimal value, whatever route is taken to it</td>
+<td>Yes, and the exact rational oracle in <code>tests/oracles/</code> is what checks it</td>
+</tr>
+<tr>
+<td>Numerical</td>
+<td>The same answer inside the documented tolerances</td>
+<td>Yes, within <code>tol::kPrimalFeasibility</code> and friends; this is what the verifier enforces</td>
+</tr>
+<tr>
+<td>Execution determinism</td>
+<td>The same decisions in the same order: same algorithm, same iteration count, same nodes, same branches</td>
+<td>Yes in deterministic mode, on one build and one machine. This is what <code>tests/unit/test_deterministic.cpp</code> measures</td>
+</tr>
+<tr>
+<td>Bit for bit</td>
+<td>Identical bit patterns in every reported number</td>
+<td>Yes for repeated runs of one build on one machine; NOT claimed across compilers, optimization levels, CPUs or GPUs, and nothing here tests that</td>
+</tr>
+</tbody>
+</table></div>
+<p>What deterministic mode changes, all of it in one function, <code>apply_deterministic_mode()</code> in
+<code>src/core/solve.cpp</code>, before any engine sees the options:</p>
+<ul>
+<li>a <code>time_limit</code> is refused with a warning naming the value, and the search is expected to
+  be bounded with <code>iteration_limit</code> or <code>node_limit</code> instead, which count the same on every
+  machine;</li>
+<li><code>polish_max_seconds</code> stops bounding the interior-point polish; <code>polish_max_factor_nonzeros</code>
+  does, which is a property of the model rather than of the machine;</li>
+<li>PDHG's 70 percent share of a finite time limit is not taken, because there is no finite
+  time limit left to share;</li>
+<li><code>threads</code> becomes 1 unless the caller set it. Set explicitly, it is honoured and the log
+  says that reproducibility then rests on #57's measurement that the column loops are
+  order-independent rather than on anything this mode re-checks.</li>
+</ul>
+<p>What it does not touch, because the audit in the PR for #288 found it already deterministic:
+every randomized component in the solver is a power iteration started from a fixed seed
+(<code>src/pdhg/pdhg.cpp</code>, <code>src/la/scaling.cpp</code>, <code>src/qp/qp_condat_vu.cpp</code>), all three now derived
+from <code>random_seed</code> rather than from a literal, and nothing anywhere seeds from the clock or
+from an address. The ratio tests break ties on the larger pivot and then on the first
+candidate reached, scanning in index order. Node selection keeps the first node achieving the
+best bound while scanning the open list in order, and the open list is built in index order.
+Presolve walks rows and columns in index order; its <code>unordered_map</code>s are lookup tables that
+are never iterated, so no reduction depends on a bucket order. Cover-cut variables are sorted
+by coefficient descending and then by column index (<code>src/mip/cuts.cpp</code>).</p>
+<p>What it cannot remove: <code>solve_seconds</code> and every timing in the log, which are measurements
+of this run and are meant to differ; and a progress callback, whose window is wall-clock, so
+how often it fires varies between runs. A callback that only reports is harmless, one that
+interrupts decides the answer on the clock, and deterministic mode warns when one is
+attached.</p>
+<p>Two runs that want to be compared should first check they were handed the same model:
+<code>Model::fingerprint()</code> is a 64-bit FNV-1a over the canonical numbers, reported in the log in
+deterministic mode and written to every stats blob as <code>model.fingerprint</code>. It hashes bit
+patterns, so -0.0 and 0.0 are different inputs, and it ignores names, because two models
+that differ only in what their columns are called solve identically.</p>
+<p>The single-device GPU path honours <code>deterministic=true</code> since #478; #383 had refused it.
+Two things were order-dependent and both are gone under that flag. The step-rule scalars
+(movement and interaction, PDLP section 3.1) were summed by an <code>atomicAdd</code> of each block's
+total, in whatever order the blocks finished; every block now writes its total to its own
+slot and one block sums the slots in an order fixed by the thread index
+(<code>src/gpu/pdhg_reduce.cuh</code>, used on every GPU run, deterministic or not). And A^T y ran as
+cuSPARSE's transpose product, which the cuSPARSE documentation does not promise to be
+repeatable; under the flag both products run as non-transpose products with
+<code>CUSPARSE_SPMV_CSR_ALG2</code>, the one configuration that documentation states is bit-wise
+repeatable, with A^T held explicitly in CSR (the CSC arrays of A, a second copy of the
+matrix on the device, which the VRAM gate counts). <code>tests/unit/test_pdhg_cuda_determinism.cpp</code>
+solves twice on the card and compares the answers to the bit. The multi-GPU engine was
+written fixed-order from the start (<code>src/gpu/pdhg_multi_gpu_device.hpp</code>: per-block sums
+finalised in index order, both products <code>CSR_ALG2</code> on explicit A_k and A_k^T) and its
+cross-card sum of A^T y runs in slot order whichever transport moved the partials
+(<code>src/gpu/multi_gpu_exchange.hpp</code>), so since #295 a deterministic request naming several
+devices in <code>gpu_devices</code> is honoured too; <code>tests/unit/test_multi_gpu.cpp</code> checks a virtual
+pair of one card to the bit and <code>tests/unit/test_multi_gpu_solve.cpp</code> two real cards.
+<code>docs/PS26119_COVERAGE.md</code> says what exists.</p>
+<p>Multi-GPU dispatch is explicit and stays so: <code>gpu_devices=auto</code> means device 0 and the
+single-card engine, and a set of cards is used only when named. Nothing chooses it by size,
+because the measurement (<code>docs/BENCHMARKS.md</code> section 1g.6) does not support a rule: two
+A100s over NVLink are 1.64x faster per step than one at 4,000,000 rows and slower on the
+two real instances tried, and the whole solve at 4,000,000 rows takes the same time on one
+card or two because setup and evaluation dominate a 2,000-step budget. The partition is by
+work (nonzeros plus rows), never by memory: every card must hold the block the balance
+gives it, checked per card against that card's free memory before anything is allocated
+(<code>estimate_multi_gpu_partition_memory</code>), and a card that cannot sends the whole solve to CPU
+PDHG with a warning rather than being given a smaller block. Every card named must meet the
+compiled compute capability, checked in the shared guard; an id that does not exist runs
+the single-card engine, with a warning.</p>
+<p><strong>GPU iteration counts vary run to run</strong> (#448) without <code>deterministic=true</code>: the default
+path keeps cuSPARSE's transpose product and its default algorithm. The working hypothesis
+was the nondeterministic atomicAdd reductions (removed by #478 on every path): they changed
+the rounding in every dot product on every run, PDHG's restart schedule is driven by residual ratios computed from those dot
+products, and a different restart decision is a different iteration count. It is a
+hypothesis, not a finding - #448 asks for the two paths to be instrumented on one instance
+and their traces diffed to the first divergence, and that has not been done. The effect is
+large enough to observe in <code>bench/results/gpu-*.csv</code>: the GPU count at 500×500 / 1e-4 has
+varied from 2,400 to well above the CPU count for the same cell across benchmark runs.</p>
+<p>One observation in the same CSV is not explained by that hypothesis and stays open with</p>
+<h1 id="448-on-the-cpu-the-1e-4-and-1e-8-runs-stop-at-identical-iteration-counts-at-1000-2000">448: on the CPU, the 1e-4 and 1e-8 runs stop at identical iteration counts at 1000, 2000,</h1>
+<p>5000 and 10000 rows, while the GPU counts differ between the two tolerances everywhere.
+Either the CPU converges past 1e-8 before it first checks 1e-4 on those instances - and
+then the question is why the GPU does not - or the requested tolerance is not steering CPU
+termination the way it is meant to. Until that is answered, section 1g's GPU crossover is
+a timing comparison between runs that may not be doing the same work.</p>
+<p>Two consequences for reading section 1g of <code>docs/BENCHMARKS.md</code>:
+1. The speedup figure in the crossover table is the median of repeated runs, not a single
+   measurement; the <code>[min–max]</code> spread beside each cell shows the run-to-run range.
+2. The GPU iteration count at a given (size, tolerance) cannot be compared against the CPU
+   count as evidence of algorithmic equivalence — the two paths walk different numerical
+   trajectories whenever the GPU's non-associative reductions diverge from the CPU's.</p>
+<p><strong>Benchmark CSV stamp validation</strong> (#433). Every number in <code>docs/BENCHMARKS.md</code> is generated
+from a CSV in <code>bench/results/</code>. Each CSV records the git commit it was produced at in a
+<code>git_commit</code> column. A benchmark run on a PR branch is stamped with a commit that dies at
+the squash merge: on a fresh clone the stamp does not resolve, so <code>scripts/reproduce.sh</code>
+cannot tie the number to a build. CI catches this with <code>bench/runners/check_result_stamps.py</code>,
+which fails if any cited CSV's stamp is not an ancestor of <code>main</code>. Branch-run stamps that were
+squash-merged are listed in <code>bench/results/squash-stamps.txt</code> with their squash commit;
+the checker accepts them when the squash commit is on <code>main</code>, so the chain of custody is
+preserved without re-running on a main commit.</p>
+<h2 id="8-resource-limits-and-what-each-one-means">8. Resource limits, and what each one means</h2>
+<p>One place decides what a limit means: <code>ResourceLimits</code> in <code>src/core/resource_limits.hpp</code>,
+read from the options once per solve and consulted by every engine through <code>StopController</code>
+(#289). Before it, each engine read the options for itself and they did not agree.</p>
+<div class="table-wrap"><table class="doc-table">
+<thead>
+<tr>
+<th>Option</th>
+<th>No limit</th>
+<th>Zero</th>
+<th>N</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>time_limit</code></td>
+<td>the default sentinel, or any non-finite value</td>
+<td>a budget of ZERO SECONDS: the solve stops at its first safe point</td>
+<td>at most N seconds of wall clock</td>
+</tr>
+<tr>
+<td><code>iteration_limit</code></td>
+<td><code>-1</code></td>
+<td>no iterations are performed</td>
+<td>at most N iterations</td>
+</tr>
+<tr>
+<td><code>node_limit</code></td>
+<td><code>-1</code></td>
+<td>no nodes are processed</td>
+<td>at most N nodes</td>
+</tr>
+</tbody>
+</table></div>
+<p>A negative duration or a count below <code>-1</code> is a configuration error: it is refused with a
+warning naming the value, and the solve runs without that limit rather than with a nonsense
+one.</p>
+<p><strong>What the clock covers.</strong> It starts at the top of <code>solve()</code>, so it covers presolve, the
+engine and postsolve. It does not cover reading the model or writing the answer, which happen
+in the CLI around the call. An engine reached after presolve is given what is LEFT of the
+budget, not the whole of it.</p>
+<p><strong>Precedence</strong>, when more than one limit is exhausted at the same check:</p>
+<pre><code>user interrupt  &gt;  time  &gt;  iterations  &gt;  nodes
+</code></pre>
+<p>The interrupt wins because it is the only one a person is waiting on; time beats the counters
+because it is the limit protecting a caller's own deadline.</p>
+<p><strong>Safe points.</strong> A limit is observed at a boundary the engine chooses: between simplex
+iterations, between PDHG iterations, between branch-and-bound nodes, and inside the interior
+point's ordering and factorization through the same predicate (#197). A factorization or a
+kernel already running finishes first, so overrunning a deadline by one such step is expected
+and is not a violated limit.</p>
+<p><strong>A limit is never a numerical failure.</strong> <code>kTimeLimit</code>, <code>kIterationLimit</code>, <code>kNodeLimit</code> and
+<code>kInterrupted</code> are distinct from <code>kOptimal</code>, <code>kInfeasible</code>, <code>kUnbounded</code> and
+<code>kNumericalError</code>, and the solve reports which one stopped it in <code>Solution::stopped_by</code>,
+because a MILP that hits a limit holding an incumbent reports <code>kFeasible</code> and the status can
+no longer say. Three cases that used to come back <code>numerical_error</code> and no longer do:
+<code>node_limit=0</code>, <code>time_limit=0</code> on a MILP, and a node LP that runs out of iterations.</p>
+<p><strong>What a stopped solve still reports.</strong> The incumbent, the best bound and the gap where a MILP
+has them. A search stopped before it found any integer point reports no point, the worst
+representable objective and an INFINITE gap, because an unknown gap is not a closed one, and
+a bound only if a node proved one: an unevaluated root proves nothing.</p>
+<p><strong>Not implemented, and not pretended.</strong> There is no memory limit and no GPU memory limit. Peak
+resident memory is not portably queryable from this binary, and <code>docs/PS26119_COVERAGE.md</code>
+says so rather than the option table carrying a knob that does nothing. The CUDA backend
+estimates whether the model fits in the device's memory before it starts and falls back to
+the CPU when it does not (#370); that estimate is the one device-memory claim made, and
+kernel termination is not a limit this section enforces.</p>
+<h2 id="9-nonlinear-models-the-representation-before-any-engine">9. Nonlinear models: the representation, before any engine</h2>
+<p><code>src/nlp/</code> (#296) is the model layer a nonlinear objective or constraint needs: an expression
+graph over the model's columns, evaluated without ever returning NaN as a value,
+differentiated exactly, and classified for convexity by written rules. It solves nothing, and
+no LP, MILP, QP or MIQP engine reads it.</p>
+<ul>
+<li><strong><code>NonlinearModel</code> holds a frozen <code>Model</code></strong> for the columns, bounds, integrality, linear rows
+  and the linear and quadratic objective, and adds an <code>ExpressionGraph</code> over the same columns
+  for the objective term and the constraints the existing engines cannot take. There is no
+  second variable model, and an LP never passes through an expression tree.</li>
+<li><strong>The graph is an arena of immutable nodes named by index.</strong> A child is always created before
+  its parent, so the graph cannot hold a cycle, a reference cannot dangle, and index order is an
+  evaluation order. Construction is hash-consed: the same operation built twice is one node,
+  commutative operations sort their children, and a shared subexpression is referenced rather
+  than copied. Misuse is sticky, not thrown (nothing in <code>src/</code> throws): an unknown node, an
+  out-of-range column or a non-finite constant yields <code>kNoExpr</code> and one recorded message, as
+  <code>SparseMatrix</code> does for an overflowed count.</li>
+<li><strong>Simplification never changes a domain.</strong> <code>x + 0</code>, <code>x * 1</code>, <code>-(-x)</code>, constant folding and
+  sum flattening happen; <code>0 * log(x)</code> stays a product, because at x = -1 it is an error, not a
+  zero, and <code>exp(log(x))</code> stays a composition for the same reason.</li>
+<li><strong>Evaluation separates three failures.</strong> A domain error (log of a non-positive, sqrt of a
+  negative, division by zero, a non-integer power of a negative) is not an overflow, and neither
+  is a malformed expression. <code>NonlinearModel::evaluate</code> keeps a domain failure apart from a
+  constraint violation: a point the model does not define is not a point that violates it.</li>
+<li><strong>Derivatives are exact.</strong> Gradients by reverse-mode AD; Hessians by forward-over-reverse, one
+  sweep per column the expression contains, returned as a sparse lower triangle. A derivative
+  that does not exist (sqrt at 0) is refused, not returned as infinity. Finite differences
+  exist only as <code>check_derivatives</code>, a test facility.</li>
+<li><strong>Convexity is conservative.</strong> The composition rules of disciplined convex programming, with
+  each atom's monotonicity read off the interval range of its argument, so x^3 is convex on
+  x &gt;= 0 and 1/x convex on x &gt; 0. Anything the rules cannot establish is unknown, never guessed:
+  <code>log(exp(x))</code> is affine in truth and unknown here. The soundness test puts every random
+  expression the rules call convex or concave through the definition at random point pairs.</li>
+</ul>
+<p>What is not here: an engine (#226), a file format (nothing reads or writes a nonlinear model
+yet), nonlinear presolve, and spatial branch and bound for the non-convex case.</p>
+<h2 id="10-profiling-where-a-solves-time-goes">10. Profiling: where a solve's time goes</h2>
+<p><code>--option profile=basic|detailed</code> (#285) records a tree of named regions with inclusive time,
+exclusive time and call counts, plus counters, and prints it in the log;
+<code>--option profile_out=&lt;path&gt;</code> also writes it as JSON. <code>src/util/profiler.hpp</code> holds the
+profiler and <code>ProfileScope</code>, its RAII timer.</p>
+<ul>
+<li><strong>basic</strong>: <code>solve</code>, then <code>presolve</code>, <code>engine</code>, <code>postsolve</code> and <code>verification</code> (the status
+  guard and the certificate check), with <code>ranging</code> and <code>iis</code> when they run, and the counters
+  every engine already keeps (iterations, nodes, polish iterations, cuts).</li>
+<li><strong>detailed</strong>: also what happens inside an engine. The dual simplex's pricing, pivot row,
+  ratio test, FTRAN, update, refactorization, basic values and reduced costs come from the
+  accumulators #210 already keeps and are not timed a second time. The interior point adds
+  normal-equation assembly, ordering and factorization, PDHG its primal and dual steps, and
+  the branch and bound its node LPs, heuristics and branching (strong branching's probes
+  included). Counters add refactorizations, nodes pruned, warm and cold node LPs, and PDHG
+  restarts.</li>
+</ul>
+<p>The profiler rides on the <code>Logger</code> every engine is already handed, so no engine signature
+changed. With profiling off it is never attached, and a scope costs a null-pointer test; a
+disabled scope does not read the clock. <code>bench/results/profiler-overhead-3630cba.csv</code> measures
+off, basic and detailed against <code>main</code> at the same commit, and finds no overhead above the
+machine's noise, with identical answers in every mode.</p>
+<p>There is no GPU timing and no memory statistic. The CUDA path has no profiler hook yet, and
+peak resident memory is not portably measurable from this binary; neither is reported rather
+than guessed.</p>
+<h2 id="11-conflict-analysis-learning-from-infeasible-nodes">11. Conflict analysis: learning from infeasible nodes</h2>
+<p><code>conflict_analysis</code> (#292, <code>src/mip/conflict.hpp</code>, <code>src/mip/branch_and_bound_conflicts.cpp</code>)
+learns, from each node proved infeasible, which of its branching decisions were to blame, and
+uses that in every later node's propagation. It is OFF by default, and the second A/B run
+(#405) says why: the 30-instance MIPLIB set at 60 s, one commit, one machine,
+<code>conflict_analysis</code> the only difference. It was run on the closeout branch at <code>6c405f8</code>, a
+commit that is not on <code>main</code>, so its CSVs are not committed (the #256 rule, as in #340) and
+what follows is an observation until the same runner is repeated on <code>main</code> as a bench PR.</p>
+<p><code>conflict_use</code> (#406) separates learning from use for that measurement: <code>none</code> learns and
+uses nothing (the analysis's cost alone), <code>prune</code> only prunes, <code>propagate</code> (the default) also
+fixes bounds; with <code>conflict_minimize</code> these are the five arms of the ablation #292 asks for.</p>
+<ul>
+<li><strong>Nothing moved that must not move.</strong> 14 of 30 reach the published optimum and 9 of 30 prove
+  it, in BOTH legs. No instance changed status, no matched or proved verdict moved, and no
+  feasible point was lost: the same 28 solutions pass independent verification either way
+  (<code>enlight8</code> and <code>enlight_hard</code> end at the limit with no incumbent in both legs).</li>
+<li><strong>Where the search finishes, conflicts make it smaller.</strong> Over the nine proved instances the
+  node count goes from 2,285 to 2,204 (0.965x) in 6.13 s against 5.67 s. Six are identical and
+  the whole movement is three instances: <code>supportcase16</code> 87 nodes against 123, <code>supportcase14</code>
+  102 against 115, <code>flugpl</code> 437 against 469.</li>
+<li><strong>Where it does not finish, conflicts cost throughput.</strong> The 21 instances stopped by the time
+  limit explore 1,900,912 nodes with conflicts on against 2,026,885 without (0.938x) - in the
+  SAME wall clock, so that is nodes not reached, not search saved. <code>enlight8</code> is the extreme at
+  0.373x: 46,704 nodes against 125,200, with 37.4 s of the 60 s budget spent inside the
+  analysis itself. Of the three incumbents that moved at the limit, two improved
+  (<code>timtab1</code> 1,149,285 against 1,217,806, <code>neos-5140963-mincio</code> 14,900 against 15,226) and one
+  worsened (<code>gen-ip054</code> 6,870.87 against 6,859.87).</li>
+</ul>
+<p>This CONFIRMS the pre-merge observation rather than revising it. That observation, made on a
+working tree before #381 and never citable, named four instances and this run reproduces every
+one in the same direction: <code>supportcase16</code> 91 against 127 then, 87 against 123 now;
+<code>supportcase14</code> 102 against 124 then, 102 against 115 now; <code>flugpl</code> 437 against 469 in both;
+<code>enlight8</code> fewer nodes in the same budget, 23,040 against 49,918 then and 46,704 against
+125,200 now. The default stays OFF: the measured benefit is 81 nodes over the
+nine instances that finish and no verdict either way, against up to 62 percent of a time
+budget on an instance whose infeasible nodes are cheap and many. The option is there for the
+instances that behave like <code>supportcase16</code>, and the default follows the measurement, as it does
+for the cut families.</p>
+<p>Conflict quality on three of them, from <code>conflict_out</code> at the same limit: <code>supportcase16</code>
+analysed 37 infeasible nodes, learned 35 (2 not proved from the global bounds), mean size 1.5,
+450 bounds tightened, 0.007 s; <code>flugpl</code> analysed and learned 146, mean size 3.7, 15 nodes
+pruned and 713 bounds tightened, 0.005 s; <code>enlight8</code> learned 6,783, mean size 7.3, 3,212 nodes
+pruned and 615,775 bounds tightened, 37.4 s. Short conflicts that tighten bounds are what pays;
+long ones on an instance that produces thousands of them are what does not.</p>
+<ul>
+<li><strong>What is learned.</strong> A set of bound literals <code>x_j &lt;= v</code> / <code>x_j &gt;= v</code> on integer columns,
+  taken from the node's branching decisions, that the rows and the GLOBAL column bounds cannot
+  satisfy together. The learned constraint is the bound disjunction "one of them is false".
+  Because it is proved from the global bounds it is globally valid; there are no node-local
+  conflicts.</li>
+<li><strong>When a set counts as proved.</strong> Only after it is checked again from scratch: the literals
+  applied to the global bounds, then node propagation (which may empty the box), then, for a
+  node whose LP was infeasible, the LP's Farkas multipliers re-evaluated conservatively on the
+  propagated box (every coefficient counted at its true bound, no coefficient rounded to
+  zero, a margin that scales with the aggregation). Neither the LP's status nor its
+  multipliers are taken on trust; a set that does not pass is counted as rejected and dropped.
+  Numerical failures, time limits and interrupts never reach the analysis at all.</li>
+<li><strong>Minimisation.</strong> The literals the Farkas proof leans on are tried first, then a deletion
+  filter drops each decision the check still passes without, at most 32 checks per conflict.
+  The node's own decision is kept without a check, since its parent's solved LP shows it is
+  needed.</li>
+<li><strong>Use.</strong> At the start of each propagation sweep: a conflict whose literals all hold prunes
+  the node without an LP, and one with a single undecided literal fixes that literal false,
+  which is an integer bound one step past it.</li>
+<li><strong>Store.</strong> Canonical sorted literals, exact duplicates rejected, at most <code>conflict_max</code>
+  (10,000) held and <code>conflict_max_size</code> (32) literals each. A full store forgets the least
+  used tenth, ordered by uses, then last use, then age: a total order, so a rerun keeps the
+  same conflicts. Forgetting weakens pruning and never changes the feasible region.</li>
+<li><strong>Budget.</strong> Work, not seconds: verification calls may not run more than 8 per explored node
+  ahead (plus a start-up allowance), so the analysis is deterministic under
+  <code>deterministic=true</code> and cannot eat a search that finds infeasible nodes cheaply.</li>
+</ul>
+<p>Conflicts live in the indices of the model the search runs on, which is the presolved model
+when presolve ran; they are solver metadata and are not mapped back. <code>conflict_out=&lt;path&gt;</code>
+writes them and their statistics as JSON for diagnostics, with the <code>columns</code> field naming the
+column count of the model the indices belong to, so a reader cannot quietly read them as the
+original model's. The log's <code>Conflicts:</code> line and the profiler's <code>conflict analysis</code> region
+report their cost.</p>
+<h2 id="12-parallel-tree-search">12. Parallel tree search</h2>
+<p><code>mip_threads=N</code> (#222, <code>src/mip/parallel_search.hpp</code>, <code>src/mip/branch_and_bound_parallel.cpp</code>)
+runs the branch and bound on N worker threads. Each worker runs the ordinary sequential
+search on one subtree at a time, with its own working model and node LPs. A subtree is a
+chain of bound changes from the root, so giving one away copies a few dozen numbers. The
+workers share the incumbent (every worker prunes against the best point anyone found), the
+node count (so <code>node_limit</code> covers the whole search), one solution pool, the pseudocosts
+(exchanged every 20 nodes), the node scaling (computed once), a queue of subtrees and a stop
+flag. A worker with at least eight open nodes gives the smallest-bound ones away whenever
+another worker is idle and the queue is empty, never its two newest nodes, which its dive is
+about to take. Each worker sets OpenMP's thread count to one when it starts: the count is per
+thread, and a new thread would otherwise fork a full team in every column loop.</p>
+<p>The answer does not depend on the thread count; the tree explored does. A subtree that stops
+early (a limit, or its own gap test) hands back the smallest bound among its open nodes, the
+reported bound is the smallest of everything left open anywhere, and optimality is claimed only
+when every subtree closed or met the gap target. The caller's progress callback is called from
+the calling thread only, and its interrupt is forwarded to the workers.</p>
+<p>Not taken, with a note in the log: an MIQP (QP node relaxations), <code>pool_complete</code> (its pruning
+reads the pool at every node), a checkpoint or resume (the file holds one search's tree) and
+<code>deterministic=true</code> (the tree varies with timing). <code>node_limit</code> can be overshot by at most one
+node per worker, because each counts a node before it checks. Root cuts, if enabled, are the
+root worker's own rows; other workers do not see them.</p>
+<h2 id="13-the-engine-layer-what-an-engine-is-promised-and-what-it-promises">13. The engine layer: what an engine is promised, and what it promises</h2>
+<p>Section 5 says where an engine registers. This section is the contract around it (#297):
+who owns what, what may run at the same time, how an engine's ending becomes a status, and
+how each kind of failure reaches the caller. Every sentence here is either read off the code
+in <code>src/solver_engine/</code> and <code>src/core/</code> or held by a test in
+<code>tests/unit/test_solver_engine_conformance.cpp</code>, which runs over whatever
+<code>SolverRegistry::builtin()</code> holds, so an engine registered later is held to it without
+anyone adding a test. Adding one step by step is <code>docs/ADDING_AN_ENGINE.md</code>.</p>
+<p><strong>Three ways in.</strong> <code>solve()</code> (<code>src/core/solve.cpp</code>) is the pipeline every caller uses: validate,
+classify, select through the registry, presolve, run, postsolve, certificate check, status
+guards, ranging and IIS, with the LP choreography (PDHG polished by the interior point, the
+interior point falling back to the dual simplex) that runs more than one engine for one
+request. <code>engine::solve()</code> (<code>src/solver_engine/solver_engine_dispatch.hpp</code>) is the
+registry's own: the same validation, selection, presolve pipeline, resource limits,
+out-of-memory guard and status guards, running exactly the one engine selected, without the
+choreography. <code>SolverEngine::solve()</code> is one engine on the model it is handed: the class gate,
+the engine's own answer, and <code>stopped_by</code> filled from the status - no presolve and no status
+guard, which is what the caller who reaches for it is asking for.</p>
+<p><strong>Lifecycle.</strong> An engine is constructed once, when the registry is built, and is immutable
+from then on: <code>name()</code>, <code>capabilities()</code>, <code>summary()</code> and <code>source()</code> are functions of the type,
+and nothing is stored between solves. There is no configure, initialize or finalize step:
+configuration is the <code>Options</code> handed to each call, the algorithm's working state lives in that
+call, and it is released when the call returns. Every stage ends in a <code>Solution</code> with a status,
+including the ones that fail - an unsupported class, an unregistered name, an invalid model, an
+exhausted machine.</p>
+<p><strong>Ownership.</strong></p>
+<div class="table-wrap"><table class="doc-table">
+<thead>
+<tr>
+<th>What</th>
+<th>Owned by</th>
+<th>How the engine layer holds it</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Model</code></td>
+<td>the caller</td>
+<td><code>const Model&amp;</code>, for the call only; never copied by an engine</td>
+</tr>
+<tr>
+<td>the presolved model</td>
+<td><code>run_with_presolve</code> (<code>src/core/presolve_pipeline.cpp</code>), for the call</td>
+<td>handed to the engine as <code>const Model&amp;</code>; freed when the call returns</td>
+</tr>
+<tr>
+<td><code>Options</code></td>
+<td>the caller</td>
+<td><code>const Options&amp;</code>; a wrapper that rewrites them (<code>apply_deterministic_mode</code>, the remaining time limit) makes its own copy</td>
+</tr>
+<tr>
+<td><code>Logger</code>, and the <code>Profiler</code> riding on it</td>
+<td>the caller</td>
+<td><code>Logger&amp;</code>; the stream is not owned (<code>include/sankhya/logging.hpp</code>)</td>
+</tr>
+<tr>
+<td><code>SolveControl</code> (interrupt, callback, starting basis)</td>
+<td>the caller</td>
+<td>an optional pointer, never stored</td>
+</tr>
+<tr>
+<td><code>Solution</code>, its vectors, its basis and its certificates (<code>farkas_dual</code>, <code>primal_ray</code>)</td>
+<td>the caller</td>
+<td>returned by value; nothing in the layer keeps a reference into it</td>
+</tr>
+<tr>
+<td>engine state between solves</td>
+<td>nobody</td>
+<td>there is none</td>
+</tr>
+<tr>
+<td>a checkpoint file</td>
+<td>the caller's path</td>
+<td>written atomically by the branch and bound (<code>src/mip/checkpoint.hpp</code>)</td>
+</tr>
+<tr>
+<td>a registered engine</td>
+<td>the registry</td>
+<td><code>shared_ptr&lt;const SolverEngine&gt;</code>; <code>find()</code> and <code>candidates()</code> hand out non-owning <code>const SolverEngine*</code>, valid while the registry lives - for <code>builtin()</code>, the process</td>
+</tr>
+</tbody>
+</table></div>
+<p>No call transfers ownership, and no pointer the layer hands out is one the caller must free.</p>
+<p><strong>Thread safety.</strong></p>
+<ul>
+<li><code>SolverRegistry::builtin()</code> is built once by a function-local static, which the language
+  makes thread-safe, and only read afterwards. A registry a caller builds for itself is an
+  ordinary container: fill it, then share it read-only; concurrent <code>register_engine()</code> calls
+  are not safe.</li>
+<li>One engine instance may solve many models, one after another or at the same time, provided
+  each concurrent call has its own <code>Model</code>, <code>Options</code>, <code>Logger</code> and <code>Solution</code>. The engines hold
+  no mutable state, and a search of <code>src/</code> for mutable statics finds only initialised-once
+  constants (<code>options.cpp</code>, <code>version.cpp</code>, <code>solver_registry.cpp</code>, <code>c_api.cpp</code>) and the C API's
+  <code>thread_local</code> error string. <code>EngineConcurrency.EnginesSolvingAtOnceGiveTheAnswersTheyGiveAlone</code>
+  runs every registered engine on its own thread at once and requires the answers they give
+  alone; CI runs it under ThreadSanitizer.</li>
+<li>A <code>Logger</code> is not synchronised: one per concurrent solve. <code>SolveControl::interrupt()</code> is an
+  atomic store and is safe from another thread or a signal handler; two solves that share one
+  <code>SolveControl</code> are both interrupted by it.</li>
+<li><code>solve()</code> applies the <code>threads</code> option through <code>omp_set_num_threads</code>, which sizes the calling
+  thread's OpenMP regions. Two concurrent <code>solve()</code> calls on two threads each size their own;
+  the engines' own <code>solve()</code> does not touch it. <code>mip_threads</code> starts its workers inside the
+  call and joins them before it returns (section 12).</li>
+</ul>
+<p><strong>Status mapping.</strong> An engine reports its ending as a <code>SolveStatus</code> (<code>include/sankhya/model.hpp</code>)
+and nothing else is asked of it: <code>SolverEngine::solve()</code>, <code>engine::solve()</code> and <code>solve()</code> all
+fill <code>Solution::stopped_by</code> from that status through one function,
+<code>record_why_it_stopped</code> (<code>src/core/status_guard.hpp</code>), keeping a reason the engine set itself
+(the branch and bound does, because a limit hit with an incumbent reports <code>kFeasible</code>).</p>
+<div class="table-wrap"><table class="doc-table">
+<thead>
+<tr>
+<th>The engine ended because</th>
+<th>Status</th>
+<th><code>stopped_by</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>an optimum met the project's tolerances (a simplex basis, a KKT test, a closed gap)</td>
+<td><code>kOptimal</code></td>
+<td>none</td>
+</tr>
+<tr>
+<td>a point met a first-order method's request but not the project's standard, or a limit fell holding a MILP incumbent</td>
+<td><code>kFeasible</code></td>
+<td>none, or the limit</td>
+</tr>
+<tr>
+<td>infeasible, unbounded, or one of the two without telling which</td>
+<td><code>kInfeasible</code>, <code>kUnbounded</code>, <code>kInfeasibleOrUnbounded</code></td>
+<td>none</td>
+</tr>
+<tr>
+<td>the clock, the iteration count, the node count</td>
+<td><code>kTimeLimit</code>, <code>kIterationLimit</code>, <code>kNodeLimit</code></td>
+<td><code>kTime</code>, <code>kIterations</code>, <code>kNodes</code></td>
+</tr>
+<tr>
+<td>the caller</td>
+<td><code>kInterrupted</code></td>
+<td><code>kInterrupt</code></td>
+</tr>
+<tr>
+<td>a number that is not a number, or a factorization that failed</td>
+<td><code>kNumericalError</code></td>
+<td>none</td>
+</tr>
+</tbody>
+</table></div>
+<p>The two guards that downgrade a claim the measured point does not support
+(<code>reconcile_status_with_measurement</code>, <code>refuse_a_non_finite_answer</code>) run on <code>solve()</code> and
+<code>engine::solve()</code>, not inside an engine. <code>EngineResources.*</code> holds every engine to the limit
+rows of the table through its own <code>solve()</code>: a zero iteration or node budget, a zero time
+limit and an interrupt raised before the first safe point.</p>
+<p><strong>How each kind of failure reaches the caller.</strong> Nothing in <code>src/</code> throws, and nothing exits
+the process for a solver error; the one <code>std::abort</code> is an option name our own code misspells
+in a typed accessor (<code>src/util/options.cpp</code>), which is a programming error, not an input.</p>
+<div class="table-wrap"><table class="doc-table">
+<thead>
+<tr>
+<th>Kind</th>
+<th>Where it is caught</th>
+<th>What the caller sees</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>configuration: an unknown option, a value of the wrong type, out of range or not among its choices</td>
+<td><code>Options</code>, when the value is set from text (the CLI's <code>--option</code>, the C API), before any solve starts</td>
+<td>refused with the reason (<code>src/util/options.cpp</code>)</td>
+</tr>
+<tr>
+<td>configuration: an <code>algorithm</code> no engine answers to, set in code</td>
+<td><code>solve()</code> before any engine; <code>engine::select()</code></td>
+<td><code>kNotSolved</code>, the message naming the engines that exist; <code>EngineChoice::rule</code> is <code>unregistered</code>, <code>unsupported</code> or <code>no-candidate</code></td>
+</tr>
+<tr>
+<td>configuration: an <code>algorithm</code> for a MILP, QP or MIQP that is not the class's engine</td>
+<td><code>solve()</code></td>
+<td>the class's engine runs; a warning and a note on the message (#408); <code>engine::select()</code> refuses it instead</td>
+</tr>
+<tr>
+<td>configuration: a negative limit, <code>--gpu</code> without PDHG or without CUDA</td>
+<td>option reading (section 8), <code>solve()</code></td>
+<td>a warning naming the value; the solve runs without it</td>
+</tr>
+<tr>
+<td>model</td>
+<td><code>Model::validate()</code>, before any engine</td>
+<td><code>kModelError</code> with the reason</td>
+</tr>
+<tr>
+<td>numerical</td>
+<td>the engine; the non-finite guard</td>
+<td><code>kNumericalError</code>, or a claim downgraded by the measurement guard</td>
+</tr>
+<tr>
+<td>resource</td>
+<td><code>ResourceLimits</code> and <code>StopController</code> in every engine (section 8)</td>
+<td>a limit status and <code>stopped_by</code></td>
+</tr>
+<tr>
+<td>memory</td>
+<td><code>run_engine_guarded</code> catching <code>std::bad_alloc</code></td>
+<td><code>kNumericalError</code>, the message naming the engine and the budget to lower</td>
+</tr>
+<tr>
+<td>backend</td>
+<td>the GPU guard (<code>gpu::gpu_pdhg_is_safe</code>)</td>
+<td>CPU PDHG runs, with the reason in the log</td>
+</tr>
+</tbody>
+</table></div>
+<p>What this is not: a status per error class. A configuration error and an out-of-memory stop
+are told apart by their message, not by their status, because <code>SolveStatus</code> is the frozen
+interface of section 3 and the C API, the bindings and the stats JSON all read it; a caller
+that needs the distinction before running reads <code>engine::select()</code>'s rule.</p>
+<p><strong>Capabilities, and the test behind each.</strong> <code>sankhya engines</code> prints them from
+<code>capabilities()</code> (<code>--format json</code> for scripts). A flag set true is one the answer backs, and
+<code>EngineCapabilities.*</code> checks each through the engine's own <code>solve()</code>: declared duals are a
+finite, non-zero row dual on afiro; a declared basis has one basic entry per row (which is why
+the interior point's wrapper runs the crossover itself, as <code>solve()</code> does - without it the
+flag was true only for a caller who went through <code>solve()</code>); declared certificates are a Farkas
+vector <code>farkas_proves_infeasible</code> accepts; a declared checkpoint stops, resumes and reaches the
+uninterrupted optimum (<code>EngineCheckpoint.*</code>), and an engine that does not declare one writes
+nothing to the file it is handed. <code>supports_checkpoint</code> is the branch and bound's alone (#287).
+Quadratic constraints and nonlinear models are not flags, because no engine takes either and a
+field that can only be false describes nothing (section 9 is the nonlinear model layer).</p>
+<p><strong>Profiling.</strong> <code>classification</code> and <code>engine selection</code> are profiler regions under <code>solve</code>, beside
+<code>presolve</code>, <code>engine</code>, <code>postsolve</code> and <code>verification</code>, so the dispatch layer's cost is measured
+rather than assumed. The first <code>engine selection</code> in a process includes building the registry.
+<code>bench/runners/engine_dispatch.py</code> reads them from <code>profile_out</code> over LP, a generated sparse LP,
+MILP, QP, MIQP and CPU PDHG (CUDA PDHG when the binary has it, and no GPU row when it does not),
+and puts every answer through <code>tools/verify_solution.py</code>.</p>
+<p><strong>What #297 asked for that is not here, and why.</strong></p>
+<ul>
+<li><em>No <code>ExecutionContext</code> or <code>SolverInput</code> type.</em> The context is three arguments - <code>Options</code>, the
+  <code>Logger</code> with its profiler, the <code>SolveControl</code> - and the input is the <code>Model</code> plus the
+  starting basis on the <code>SolveControl</code> (#218). Wrapping them in a struct would change every
+  engine's signature for no behaviour.</li>
+<li><em>No per-engine <code>statistics()</code> or <code>configuration()</code>.</em> Statistics are the <code>Solution</code>'s effort
+  fields and the profiler's counters; configuration is the one option table, whose names, types
+  and choices are checked before a solve starts (<code>OptionsAndRegistry.*</code> holds its <code>algorithm</code>
+  list to the registry).</li>
+<li><em>No <code>PDHGBackend</code> interface.</em> The CPU engine (<code>src/pdhg/</code>) and the CUDA one (<code>src/gpu/</code>) are
+  separate files that share the termination test (<code>src/pdhg/pdhg_evaluate.hpp</code>) and are chosen
+  by the selector; a backend class over them would be a rewrite of working, measured code.</li>
+<li><em>No relaxation-engine interface inside the branch and bound.</em> The node relaxation is one
+  function that runs the warm-started dual simplex, the primal simplex (<code>mip_node_engine</code>) or,
+  for an MIQP, the convex QP engine (<code>src/mip/branch_and_bound_internal.hpp</code>); MIQP reuses the
+  whole tree rather than copying it. <code>mip::describe_components</code> reports the composition.</li>
+<li><em>No hardware-context object.</em> The selector probes the device through <code>gpu::device_available</code>
+  and the guard through <code>gpu::gpu_pdhg_is_safe</code>; no engine detects hardware on its own.</li>
+<li><em>No dynamic plugins</em>, which #297 puts out of scope.</li>
+</ul>
+</article>
+<footer>
+<!-- fragment:footer -->
+<div class="wrap">
+    <div>SANKHYA · Smart India Hackathon 2026 · PS SIH26119 · Apache-2.0 · <a href="https://sankhya-solver.vercel.app">sankhya-solver.vercel.app</a></div>
+    <div>Every figure on this site was last checked against SANKHYA <a href="https://github.com/thegoodengineers/SANKHYA/tree/493fa1df0abfbd70f1d5cf7cbb35272da0a49b30">main at <span data-fact="sankhya_commit">493fa1d</span></a>.</div>
+    <div><a href="https://github.com/thegoodengineers/SANKHYA">Source</a> · <a href="/docs">Docs</a> · <a href="/docs/benchmarks">Benchmarks</a> · <a href="/docs/provenance">Provenance</a> · <a href="/docs/coverage">Coverage tracker</a></div>
+  </div>
+<!-- /fragment:footer -->
+</footer>
+</main>
+</div>
+</body>
+</html>

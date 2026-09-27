@@ -1,0 +1,18 @@
+{
+  "solver_commit": "493fa1df0abfbd70f1d5cf7cbb35272da0a49b30",
+  "solver_date": "2026-09-27",
+  "markdown": "3.7",
+  "pages": [
+    "docs/adding-an-engine.html",
+    "docs/architecture.html",
+    "docs/benchmarks.html",
+    "docs/case-study-refinery.html",
+    "docs/coverage.html",
+    "docs/engineering-rules.html",
+    "docs/gpu-plan.html",
+    "docs/index.html",
+    "docs/negative-results.html",
+    "docs/provenance.html",
+    "docs/report.html"
+  ]
+}

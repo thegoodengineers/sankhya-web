@@ -49,7 +49,7 @@ def main():
     facts = load_facts()
     fragments = {p.stem: p.read_text(encoding="utf-8") for p in (ROOT / "fragments").glob("*.html")}
     problems, drift, used = [], [], set()
-    for page in sorted(ROOT.glob("*.html")):
+    for page in sorted(ROOT.glob("*.html")) + sorted(ROOT.glob("docs/*.html")):
         old = page.read_text(encoding="utf-8")
         new = render(old, facts, fragments, problems, page.name)
         used.update(m.group(2) for m in FACT.finditer(new))
