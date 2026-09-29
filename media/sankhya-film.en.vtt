@@ -1,0 +1,244 @@
+WEBVTT
+
+00:00:00.400 --> 00:00:07.177
+Every refinery plan ends with one word, printed by a program nobody in the plant can read.
+
+00:00:07.177 --> 00:00:07.576
+Optimal.
+
+00:00:08.876 --> 00:00:18.740
+Crude purchases, unit runs and blends are decided this way every week, on licensed software that no one here can inspect, audit or extend.
+
+00:00:19.140 --> 00:00:20.849
+A planner needs three answers.
+
+00:00:20.849 --> 00:00:22.558
+Is this the best plan.
+
+00:00:22.558 --> 00:00:24.266
+Does it keep every limit.
+
+00:00:24.266 --> 00:00:27.684
+And if no plan exists, which limits are to blame.
+
+00:00:28.084 --> 00:00:30.442
+And a wrong answer does not crash.
+
+00:00:30.442 --> 00:00:37.180
+A plan that breaks a quality limit by one part in a thousand runs, prints, and ships a bad blend.
+
+00:00:37.580 --> 00:00:42.124
+That is why a refinery asked for a solver of its own.
+
+00:00:42.124 --> 00:00:50.455
+The problem statement is plain: an indigenous optimization solver, a sovereign alternative to Xpress and CPLEX, issued by Mangalore Refinery and Petrochemicals.
+
+00:00:50.455 --> 00:00:53.105
+Not a wrapper around someone else's engine.
+
+00:00:53.105 --> 00:01:04.844
+Something built here, with its source open, that the people who depend on it can read, audit and extend, and with nothing borrowed from the solvers it is meant to replace.
+
+00:01:05.244 --> 00:01:06.293
+This is SANKHYA.
+
+00:01:06.293 --> 00:01:12.235
+An optimization solver written from the mathematics, that does not ask you to trust the word optimal.
+
+00:01:12.235 --> 00:01:13.284
+It proves it.
+
+00:01:14.584 --> 00:01:17.308
+A model goes in through one entry point.
+
+00:01:17.308 --> 00:01:23.437
+It is presolved, handed by its class to one of seven engines, and returned to the original model.
+
+00:01:23.437 --> 00:01:25.480
+Then a separate program checks it.
+
+00:01:25.880 --> 00:01:31.020
+That separate program is the verifier, and it shares no code with the solver.
+
+00:01:31.020 --> 00:01:35.426
+It reads only two things: the model file and the answer file.
+
+00:01:35.426 --> 00:01:38.731
+And it will not accept a number on trust.
+
+00:01:38.731 --> 00:01:42.770
+For an optimum, it wants a dual that matches the primal.
+
+00:01:42.770 --> 00:01:49.379
+For an impossible model, it wants a certificate: weights on the constraints that, added up, contradict each other.
+
+00:01:49.379 --> 00:01:54.152
+For an unbounded one, a direction along which the cost never stops improving.
+
+00:01:54.552 --> 00:01:56.825
+Here is a small crude blend.
+
+00:01:56.825 --> 00:01:59.856
+The dual simplex solves it in two iterations.
+
+00:01:59.856 --> 00:02:05.160
+The answer file carries every row's price, and how far each price stays valid.
+
+00:02:05.560 --> 00:02:09.937
+Then the verifier, in its own arithmetic.
+
+00:02:09.937 --> 00:02:14.940
+Bounds, rows, reduced costs, complementary slackness, strong duality.
+
+00:02:14.940 --> 00:02:16.191
+Fourteen checks.
+
+00:02:16.191 --> 00:02:16.816
+Verified.
+
+00:02:17.216 --> 00:02:20.090
+Now tighten the limits until no plan exists.
+
+00:02:20.090 --> 00:02:22.605
+The solver does not just say infeasible.
+
+00:02:22.605 --> 00:02:27.276
+It hands over the proof, and the four constraints that cannot all hold.
+
+00:02:27.276 --> 00:02:29.072
+The verifier checks that too.
+
+00:02:29.472 --> 00:02:34.727
+Pooling, the hard part of blending, has products of variables and false optima.
+
+00:02:34.727 --> 00:02:42.408
+With the global option, spatial branch and bound reaches Haverly's published optimum of four hundred, and proves the bound.
+
+00:02:42.808 --> 00:02:47.523
+Every result is a committed file with the commit and the machine.
+
+00:02:47.523 --> 00:02:53.416
+On Netlib, eighty-one of eighty-nine match the published optimum, and all eighty-nine pass the verifier.
+
+00:02:53.816 --> 00:02:56.907
+And the losses are published beside the wins.
+
+00:02:56.907 --> 00:02:59.226
+Eleven of thirty mixed-integer models proved.
+
+00:02:59.226 --> 00:03:01.930
+Two of eight of the largest LPs.
+
+00:03:01.930 --> 00:03:05.408
+Every one named, with the file that measured it.
+
+00:03:05.808 --> 00:03:12.969
+Against HiGHS, run as a separate process on the same machine, the answers agree on all fifty medium Netlib models.
+
+00:03:12.969 --> 00:03:20.130
+The time depends on the machine: level with it on a rented server, about twice its time on a laptop.
+
+00:03:20.130 --> 00:03:23.352
+Both readings are kept, and neither is quoted alone.
+
+00:03:23.752 --> 00:03:26.926
+None of this is a promise in a README.
+
+00:03:26.926 --> 00:03:30.804
+CI fails the build if a solver library is ever linked.
+
+00:03:30.804 --> 00:03:33.978
+A fuzz test holds the simplex against exact arithmetic.
+
+00:03:33.978 --> 00:03:37.504
+And an optimal the numbers do not support is downgraded.
+
+00:03:37.904 --> 00:03:39.980
+And some of it is new.
+
+00:03:39.980 --> 00:03:45.518
+An engine race, where three engines run at once and only a verified answer may win.
+
+00:03:45.518 --> 00:03:48.979
+A proof of a mixed-integer optimum, checked in exact fractions.
+
+00:03:48.979 --> 00:03:51.747
+Bounds that stay valid whatever the rounding did.
+
+00:03:51.747 --> 00:03:55.208
+Each is off by default until a measurement earns it.
+
+00:03:55.608 --> 00:03:57.542
+Here is the whole picture.
+
+00:03:57.542 --> 00:03:59.477
+Seven engines behind one call.
+
+00:03:59.477 --> 00:04:05.666
+Dual and primal simplex, which produce the basis that warm starts and branch and bound need.
+
+00:04:05.666 --> 00:04:08.374
+An interior point for large sparse models.
+
+00:04:08.374 --> 00:04:11.856
+A first-order method that also runs on NVIDIA GPUs.
+
+00:04:11.856 --> 00:04:14.177
+Two engines for convex quadratic programs.
+
+00:04:14.177 --> 00:04:19.206
+Branch and cut for integer models, and spatial branch and bound for pooling.
+
+00:04:19.206 --> 00:04:28.104
+Every one written from the papers, in C plus plus, and every one returns the same kind of answer to the same verifier.
+
+00:04:28.504 --> 00:04:30.720
+It is real and it is public.
+
+00:04:30.720 --> 00:04:36.736
+This is the build, this is the test run, and these are the seven engines the solver itself reports.
+
+00:04:37.136 --> 00:04:39.963
+The GPU is a measurement, not a slogan.
+
+00:04:39.963 --> 00:04:45.972
+The first-order engine has a CUDA port of its own, and it was measured on three cards.
+
+00:04:45.972 --> 00:04:52.687
+On a datacenter L4, at ten thousand rows, it is four point two one times faster than the processor.
+
+00:04:52.687 --> 00:05:00.109
+Below the crossover, on smaller models, the GPU is slower, because launching work on the card costs more than it saves.
+
+00:05:00.109 --> 00:05:02.936
+The site says both, and names the files.
+
+00:05:03.336 --> 00:05:07.557
+And you do not have to take any of this from us.
+
+00:05:07.557 --> 00:05:17.758
+On Windows, Ubuntu or macOS, five commands take a fresh clone to a verified answer: configure, build, run the tests, solve a model, and check it with the verifier.
+
+00:05:17.758 --> 00:05:26.904
+The benchmark instances are committed, so nothing is downloaded after the clone, and every number in this film can be produced again on your own machine.
+
+00:05:27.304 --> 00:05:28.242
+What we learned.
+
+00:05:28.242 --> 00:05:31.058
+A wrong answer looks exactly like a right one.
+
+00:05:31.058 --> 00:05:32.935
+A proof is cheaper than trust.
+
+00:05:32.935 --> 00:05:36.376
+And a published loss is worth more than a hidden win.
+
+00:05:36.776 --> 00:05:37.300
+SANKHYA.
+
+00:05:37.300 --> 00:05:38.872
+Don't trust optimal.
+
+00:05:38.872 --> 00:05:39.920
+Check it.
