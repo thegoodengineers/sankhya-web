@@ -1,15 +1,17 @@
 {
   "about": "Every figure the site states, once. Pages carry <span data-fact=\"key\">value</span>; run python tools/facts.py after editing this file, and python tools/facts.py --check before a PR. Paths are in thegoodengineers/SANKHYA on main at the commit in sankhya_commit.",
   "facts": {
-    "sankhya_commit": {"value": "493fa1d", "source": "git rev-parse --short origin/main, 2026-09-28"},
+    "sankhya_commit": {"value": "43b648c", "source": "git rev-parse --short origin/main, 2026-09-29"},
     "first_commit_date": {"value": "25 August 2026", "source": "git log --reverse --format=%ad --date=short | head -1 -> 2026-08-25"},
-    "tests_total": {"value": "1324", "source": "ctest --test-dir build -N | tail -1 -> Total Tests: 1324, Release build of 493fa1d"},
-    "engines_total": {"value": "seven", "source": "./build/sankhya engines --format json at 493fa1d: simplex, dual-simplex, pdhg, ipm, convex-qp, qp-ipm, branch-and-bound (pdhg-gpu only in a CUDA build)"},
+    "tests_total": {"value": "1324", "source": "ctest --test-dir build -N | tail -1 -> Total Tests: 1324, Release build of 493fa1d; unchanged at 43b648c, whose only test change since is one renamed TEST (QpIpm, #740) and a function added inside bindings/python/test_adapters.py, which ctest does not register (#738)"},
+    "engines_total": {"value": "seven", "source": "./build/sankhya engines --format json at 9094e1c, the last commit before 43b648c to touch C++: simplex, dual-simplex, pdhg, ipm, convex-qp, qp-ipm, branch-and-bound (pdhg-gpu only in a CUDA build)"},
 
-    "netlib_total": {"value": "89", "source": "bench/results/netlib-full-ad57c03.csv, 89 rows"},
-    "netlib_matched": {"value": "81", "source": "netlib-full-ad57c03.csv, matches_published = 1 on 81 rows"},
-    "netlib_verified": {"value": "89", "source": "netlib-full-ad57c03.csv, independently_verified = 1 on 89 rows"},
-    "netlib_outliers": {"value": "8", "source": "netlib-full-ad57c03.csv, matches_published = 0 on 80bau3b, e226, ganges, greenbea, greenbeb, nesm, pilot, scrs8"},
+    "netlib_total": {"value": "92", "source": "bench/results/netlib-full-9094e1c.csv, 92 rows (the LPs netlib.org ships as EMPS, #742)"},
+    "netlib_matched": {"value": "82", "source": "netlib-full-9094e1c.csv, matches_published = 1 on 82 rows"},
+    "netlib_verified": {"value": "92", "source": "netlib-full-9094e1c.csv, independently_verified = 1 on 92 rows"},
+    "netlib_outliers": {"value": "10", "source": "netlib-full-9094e1c.csv, matches_published = 0 on 80bau3b, e226, ganges, greenbea, greenbeb, nesm, pilot, pilot.ja, pilot.we, scrs8"},
+    "mm_total": {"value": "138", "source": "bench/results/maros-meszaros-9094e1c.csv, 138 rows"},
+    "mm_matched": {"value": "106", "source": "maros-meszaros-9094e1c.csv, matches_reference = 1 on 106 rows, status optimal on the same 106, none of them rejected by the verifier"},
 
     "miplib_total": {"value": "30", "source": "bench/results/miplib-ad57c03.csv, 30 rows"},
     "miplib_reach": {"value": "14", "source": "miplib-ad57c03.csv, matched_published = 1 on 14 rows"},
