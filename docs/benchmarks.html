@@ -25,11 +25,11 @@
   <a class="brand" href="/"><span class="brand-mark" aria-hidden="true"></span>SANKHYA<small>SIH26119</small></a>
   <nav class="doors" aria-label="Site"><a href="/">Home</a><a href="/evaluate">For evaluators</a><a href="/problem">Problem</a><a href="/solver">Solver</a><a href="/evidence">Evidence</a><a href="/docs" aria-current="page">Docs</a><a href="/run">Run it</a><a href="/team">Team</a><a class="ext" href="https://github.com/thegoodengineers/SANKHYA">GitHub</a></nav>
   <hr class="rail-rule">
-  <nav class="here" aria-label="On this page"><a href="#1-netlib-lp--accuracy-against-published-optima">1. Netlib LP — accuracy against published optima</a><a href="#1a-the-small-set--what-the-demo-runs" class="sub">1a. The small set — what the demo runs</a><a href="#1b-the-medium-tier--instances-up-to-500-rows" class="sub">1b. The medium tier — instances up to 500 rows</a><a href="#1c-the-full-set--the-honest-headline" class="sub">1c. The full set — the honest headline</a><a href="#1c1-the-kennington-set---the-next-rung" class="sub">1c.1 The Kennington set - the next rung</a><a href="#1d-beyond-netlib--mittelmanns-lp-set" class="sub">1d. Beyond Netlib — Mittelmann&#x27;s LP set</a><a href="#1e-the-first-order-engine--pdhg" class="sub">1e. The first-order engine — PDHG</a><a href="#1g-gpu-pdhg-crossover--when-the-gpu-wins" class="sub">1g. GPU PDHG crossover — when the GPU wins</a><a href="#1f-scale--how-far-up-this-goes" class="sub">1f. Scale — how far up this goes</a><a href="#2-miplib--the-mixed-integer-side">2. MIPLIB — the mixed-integer side</a><a href="#2b-maros-meszaros-the-convex-qp-set">2b. Maros-Meszaros, the convex QP set</a><a href="#2c-the-standard-pooling-instances-non-convex">2c. The standard pooling instances, non-convex</a><a href="#2d-qplib-the-convex-continuous-qps">2d. QPLIB, the convex continuous QPs</a><a href="#2e-nonlinear-programs---hock-schittkowski-and-convex-minlplib">2e. Nonlinear programs - Hock-Schittkowski, and convex MINLPLib</a><a href="#3-correctness-beyond-the-objective-value">3. Correctness beyond the objective value</a><a href="#3a-netlibs-infeasible-set---a-verdict-is-only-as-good-as-its-certificate" class="sub">3a. Netlib&#x27;s infeasible set - a verdict is only as good as its certificate</a><a href="#3b-parametric-lp---the-optimal-value-as-a-function-of-one-coefficient" class="sub">3b. Parametric LP - the optimal value as a function of one coefficient</a><a href="#4-comparison-against-an-established-solver">4. Comparison against an established solver</a><a href="#4a-head-to-head-highs-scip-cbcclp-and-glpk-766">4a. Head-to-head: HiGHS, SCIP, CBC/Clp and GLPK (#766)</a><a href="#4a1-netlib-lp" class="sub">4a.1 Netlib LP</a><a href="#4a2-kennington-lp" class="sub">4a.2 Kennington LP</a><a href="#4a3-maros-meszaros-qp" class="sub">4a.3 Maros-Meszaros QP</a><a href="#4b-agreement-against-size-limited-commercial-editions-533">4b. Agreement against size-limited commercial editions (#533)</a><a href="#5-robustness--where-the-solver-stops-working">5. Robustness — where the solver stops working</a><a href="#5b-the-stress-set---badly-scaled-netlib-and-adversarial-lps-against-highs-762">5b. The stress set - badly scaled Netlib and adversarial LPs, against HiGHS (#762)</a><a href="#6-what-these-numbers-do-not-say">6. What these numbers do not say</a></nav>
+  <nav class="here" aria-label="On this page"><a href="#1-netlib-lp--accuracy-against-published-optima">1. Netlib LP — accuracy against published optima</a><a href="#1a-the-small-set--what-the-demo-runs" class="sub">1a. The small set — what the demo runs</a><a href="#1b-the-medium-tier--instances-up-to-500-rows" class="sub">1b. The medium tier — instances up to 500 rows</a><a href="#1c-the-full-set--the-honest-headline" class="sub">1c. The full set — the honest headline</a><a href="#1c1-the-kennington-set---the-next-rung" class="sub">1c.1 The Kennington set - the next rung</a><a href="#1c2-certified-gaps-on-the-full-netlib-set--a-bound-valid-by-construction-763" class="sub">1c.2 Certified gaps on the full Netlib set — a bound valid by construction (#763)</a><a href="#1d-beyond-netlib--mittelmanns-lp-set" class="sub">1d. Beyond Netlib — Mittelmann&#x27;s LP set</a><a href="#1e-the-first-order-engine--pdhg" class="sub">1e. The first-order engine — PDHG</a><a href="#1g-gpu-pdhg-crossover--when-the-gpu-wins" class="sub">1g. GPU PDHG crossover — when the GPU wins</a><a href="#1f-scale--how-far-up-this-goes" class="sub">1f. Scale — how far up this goes</a><a href="#2-miplib--the-mixed-integer-side">2. MIPLIB — the mixed-integer side</a><a href="#2b-maros-meszaros-the-convex-qp-set">2b. Maros-Meszaros, the convex QP set</a><a href="#2c-the-standard-pooling-instances-non-convex">2c. The standard pooling instances, non-convex</a><a href="#2d-qplib-the-convex-continuous-qps">2d. QPLIB, the convex continuous QPs</a><a href="#2e-nonlinear-programs---hock-schittkowski-and-convex-minlplib">2e. Nonlinear programs - Hock-Schittkowski, and convex MINLPLib</a><a href="#3-correctness-beyond-the-objective-value">3. Correctness beyond the objective value</a><a href="#3a-netlibs-infeasible-set---a-verdict-is-only-as-good-as-its-certificate" class="sub">3a. Netlib&#x27;s infeasible set - a verdict is only as good as its certificate</a><a href="#3b-parametric-lp---the-optimal-value-as-a-function-of-one-coefficient" class="sub">3b. Parametric LP - the optimal value as a function of one coefficient</a><a href="#4-comparison-against-an-established-solver">4. Comparison against an established solver</a><a href="#4a-head-to-head-highs-scip-cbcclp-and-glpk-766">4a. Head-to-head: HiGHS, SCIP, CBC/Clp and GLPK (#766)</a><a href="#4a1-netlib-lp" class="sub">4a.1 Netlib LP</a><a href="#4a2-kennington-lp" class="sub">4a.2 Kennington LP</a><a href="#4a3-maros-meszaros-qp" class="sub">4a.3 Maros-Meszaros QP</a><a href="#4b-agreement-against-size-limited-commercial-editions-533">4b. Agreement against size-limited commercial editions (#533)</a><a href="#5-robustness--where-the-solver-stops-working">5. Robustness — where the solver stops working</a><a href="#5b-the-stress-set---badly-scaled-netlib-and-adversarial-lps-against-highs-762">5b. The stress set - badly scaled Netlib and adversarial LPs, against HiGHS (#762)</a><a href="#6-what-these-numbers-do-not-say">6. What these numbers do not say</a></nav>
 </aside>
 <main class="col" id="content">
-<header class="page" id="top"><div class="wrap"><nav class="crumbs" aria-label="Breadcrumb"><a href="/docs">Docs</a><span aria-hidden="true">/</span>Benchmarks</nav><h1>Benchmarks</h1><p class="doc-banner">Generated from <a href="https://github.com/thegoodengineers/SANKHYA/blob/8c58fb910a32d63372e05a26d0588ed65dcae580/docs/BENCHMARKS.md"><code>docs/BENCHMARKS.md</code></a> at commit <a href="https://github.com/thegoodengineers/SANKHYA/commit/8c58fb910a32d63372e05a26d0588ed65dcae580"><code>8c58fb9</code></a> (2026-09-30). Do not edit this page by hand.</p></div></header>
-<details class="doc-toc"><summary>Contents</summary><ol><li><a href="#1-netlib-lp--accuracy-against-published-optima">1. Netlib LP — accuracy against published optima</a></li><li class="sub"><a href="#1a-the-small-set--what-the-demo-runs">1a. The small set — what the demo runs</a></li><li class="sub"><a href="#1b-the-medium-tier--instances-up-to-500-rows">1b. The medium tier — instances up to 500 rows</a></li><li class="sub"><a href="#1c-the-full-set--the-honest-headline">1c. The full set — the honest headline</a></li><li class="sub"><a href="#1c1-the-kennington-set---the-next-rung">1c.1 The Kennington set - the next rung</a></li><li class="sub"><a href="#1d-beyond-netlib--mittelmanns-lp-set">1d. Beyond Netlib — Mittelmann&#x27;s LP set</a></li><li class="sub"><a href="#1e-the-first-order-engine--pdhg">1e. The first-order engine — PDHG</a></li><li class="sub"><a href="#1g-gpu-pdhg-crossover--when-the-gpu-wins">1g. GPU PDHG crossover — when the GPU wins</a></li><li class="sub"><a href="#1f-scale--how-far-up-this-goes">1f. Scale — how far up this goes</a></li><li><a href="#2-miplib--the-mixed-integer-side">2. MIPLIB — the mixed-integer side</a></li><li><a href="#2b-maros-meszaros-the-convex-qp-set">2b. Maros-Meszaros, the convex QP set</a></li><li><a href="#2c-the-standard-pooling-instances-non-convex">2c. The standard pooling instances, non-convex</a></li><li><a href="#2d-qplib-the-convex-continuous-qps">2d. QPLIB, the convex continuous QPs</a></li><li><a href="#2e-nonlinear-programs---hock-schittkowski-and-convex-minlplib">2e. Nonlinear programs - Hock-Schittkowski, and convex MINLPLib</a></li><li><a href="#3-correctness-beyond-the-objective-value">3. Correctness beyond the objective value</a></li><li class="sub"><a href="#3a-netlibs-infeasible-set---a-verdict-is-only-as-good-as-its-certificate">3a. Netlib&#x27;s infeasible set - a verdict is only as good as its certificate</a></li><li class="sub"><a href="#3b-parametric-lp---the-optimal-value-as-a-function-of-one-coefficient">3b. Parametric LP - the optimal value as a function of one coefficient</a></li><li><a href="#4-comparison-against-an-established-solver">4. Comparison against an established solver</a></li><li><a href="#4a-head-to-head-highs-scip-cbcclp-and-glpk-766">4a. Head-to-head: HiGHS, SCIP, CBC/Clp and GLPK (#766)</a></li><li class="sub"><a href="#4a1-netlib-lp">4a.1 Netlib LP</a></li><li class="sub"><a href="#4a2-kennington-lp">4a.2 Kennington LP</a></li><li class="sub"><a href="#4a3-maros-meszaros-qp">4a.3 Maros-Meszaros QP</a></li><li><a href="#4b-agreement-against-size-limited-commercial-editions-533">4b. Agreement against size-limited commercial editions (#533)</a></li><li><a href="#5-robustness--where-the-solver-stops-working">5. Robustness — where the solver stops working</a></li><li><a href="#5b-the-stress-set---badly-scaled-netlib-and-adversarial-lps-against-highs-762">5b. The stress set - badly scaled Netlib and adversarial LPs, against HiGHS (#762)</a></li><li><a href="#6-what-these-numbers-do-not-say">6. What these numbers do not say</a></li></ol></details>
+<header class="page" id="top"><div class="wrap"><nav class="crumbs" aria-label="Breadcrumb"><a href="/docs">Docs</a><span aria-hidden="true">/</span>Benchmarks</nav><h1>Benchmarks</h1><p class="doc-banner">Generated from <a href="https://github.com/thegoodengineers/SANKHYA/blob/3f8256ef5450d2584d22fc9d4aaab074051a0938/docs/BENCHMARKS.md"><code>docs/BENCHMARKS.md</code></a> at commit <a href="https://github.com/thegoodengineers/SANKHYA/commit/3f8256ef5450d2584d22fc9d4aaab074051a0938"><code>3f8256e</code></a> (2026-09-30). Do not edit this page by hand.</p></div></header>
+<details class="doc-toc"><summary>Contents</summary><ol><li><a href="#1-netlib-lp--accuracy-against-published-optima">1. Netlib LP — accuracy against published optima</a></li><li class="sub"><a href="#1a-the-small-set--what-the-demo-runs">1a. The small set — what the demo runs</a></li><li class="sub"><a href="#1b-the-medium-tier--instances-up-to-500-rows">1b. The medium tier — instances up to 500 rows</a></li><li class="sub"><a href="#1c-the-full-set--the-honest-headline">1c. The full set — the honest headline</a></li><li class="sub"><a href="#1c1-the-kennington-set---the-next-rung">1c.1 The Kennington set - the next rung</a></li><li class="sub"><a href="#1c2-certified-gaps-on-the-full-netlib-set--a-bound-valid-by-construction-763">1c.2 Certified gaps on the full Netlib set — a bound valid by construction (#763)</a></li><li class="sub"><a href="#1d-beyond-netlib--mittelmanns-lp-set">1d. Beyond Netlib — Mittelmann&#x27;s LP set</a></li><li class="sub"><a href="#1e-the-first-order-engine--pdhg">1e. The first-order engine — PDHG</a></li><li class="sub"><a href="#1g-gpu-pdhg-crossover--when-the-gpu-wins">1g. GPU PDHG crossover — when the GPU wins</a></li><li class="sub"><a href="#1f-scale--how-far-up-this-goes">1f. Scale — how far up this goes</a></li><li><a href="#2-miplib--the-mixed-integer-side">2. MIPLIB — the mixed-integer side</a></li><li><a href="#2b-maros-meszaros-the-convex-qp-set">2b. Maros-Meszaros, the convex QP set</a></li><li><a href="#2c-the-standard-pooling-instances-non-convex">2c. The standard pooling instances, non-convex</a></li><li><a href="#2d-qplib-the-convex-continuous-qps">2d. QPLIB, the convex continuous QPs</a></li><li><a href="#2e-nonlinear-programs---hock-schittkowski-and-convex-minlplib">2e. Nonlinear programs - Hock-Schittkowski, and convex MINLPLib</a></li><li><a href="#3-correctness-beyond-the-objective-value">3. Correctness beyond the objective value</a></li><li class="sub"><a href="#3a-netlibs-infeasible-set---a-verdict-is-only-as-good-as-its-certificate">3a. Netlib&#x27;s infeasible set - a verdict is only as good as its certificate</a></li><li class="sub"><a href="#3b-parametric-lp---the-optimal-value-as-a-function-of-one-coefficient">3b. Parametric LP - the optimal value as a function of one coefficient</a></li><li><a href="#4-comparison-against-an-established-solver">4. Comparison against an established solver</a></li><li><a href="#4a-head-to-head-highs-scip-cbcclp-and-glpk-766">4a. Head-to-head: HiGHS, SCIP, CBC/Clp and GLPK (#766)</a></li><li class="sub"><a href="#4a1-netlib-lp">4a.1 Netlib LP</a></li><li class="sub"><a href="#4a2-kennington-lp">4a.2 Kennington LP</a></li><li class="sub"><a href="#4a3-maros-meszaros-qp">4a.3 Maros-Meszaros QP</a></li><li><a href="#4b-agreement-against-size-limited-commercial-editions-533">4b. Agreement against size-limited commercial editions (#533)</a></li><li><a href="#5-robustness--where-the-solver-stops-working">5. Robustness — where the solver stops working</a></li><li><a href="#5b-the-stress-set---badly-scaled-netlib-and-adversarial-lps-against-highs-762">5b. The stress set - badly scaled Netlib and adversarial LPs, against HiGHS (#762)</a></li><li><a href="#6-what-these-numbers-do-not-say">6. What these numbers do not say</a></li></ol></details>
 <article class="doc-body">
 <!-- GENERATED FILE. Do not edit by hand. -->
 <!-- Regenerate with: python bench/runners/make_benchmarks_doc.py -->
@@ -2260,6 +2260,36 @@ Commit <code>65eecbc</code> · machine <code>Windows-AMD64</code> · generated 2
 <li><strong>failed: <code>pds-20</code></strong>, kept in the table on purpose</li>
 </ul>
 <p>No per-engine option run is committed yet (<code>--solver-option algorithm=dual-simplex</code>, <code>simplex</code>, <code>pdhg</code>, <code>ipm</code>).</p>
+<h3 id="1c2-certified-gaps-on-the-full-netlib-set--a-bound-valid-by-construction-763">1c.2 Certified gaps on the full Netlib set — a bound valid by construction (#763)</h3>
+<p>Every LP reported <code>optimal</code> carries the Neumaier-Shcherbina safe bound of its own duals,
+computed with outward rounding (Math. Programming 99, 2004), and the gap from the objective
+to it. <code>tools/verify_solution.py</code> re-derives each stated bound from the model and the .sol
+file in exact rational arithmetic. A certified relative gap at or under 1e-6 means the
+reported objective is within 1e-6 of a proven bound on the true optimum, so that closeness
+rests on a proof and not on a solver tolerance. The timings of this run are not used anywhere.</p>
+<p>Run at <code>8c58fb91</code> on <code>laptop-7.7GB-Windows-AMD64-shared-with-other-agents</code> (<code>certified-gap-netlib-full-8c58fb91.csv</code>).</p>
+<div class="table-wrap"><table class="doc-table">
+<thead>
+<tr>
+<th style="text-align: right;">optimal answers</th>
+<th style="text-align: right;">certified to 1e-6 relative</th>
+<th style="text-align: right;">finite bound, looser</th>
+<th style="text-align: right;">no finite bound</th>
+<th style="text-align: right;">stated bound re-derived exactly by the verifier</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: right;">91</td>
+<td style="text-align: right;"><strong>73</strong> (worst 5.1e-08)</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">17</td>
+<td style="text-align: right;">91 of 91</td>
+</tr>
+</tbody>
+</table></div>
+<p>Finite but looser than 1e-6: modszk1 (1.09e-04).</p>
+<p>No finite bound from the reported duals, even after bound propagation and the basis shift (the file says <code>safe_lower_bound -inf</code> and claims nothing): bnl2, brandy, finnis, greenbea, greenbeb, lotfi, maros, maros-r7, perold, pilot.ja, pilot4, scfxm1, scfxm2, scfxm3, scorpion, scrs8, stair.</p>
 <h3 id="1d-beyond-netlib--mittelmanns-lp-set">1d. Beyond Netlib — Mittelmann's LP set</h3>
 <p>Netlib's largest instance has about 6,000 rows. PS26119 asks about "thousands to millions
 of variables", and the only honest way to say where this solver stands on that is to run
@@ -5562,7 +5592,7 @@ solve repeats itself. This measures what that costs per PDHG iteration on the 77
 refinery year (<code>generate_refinery_lp.py --periods 8760 --seed 42</code>), with three and with two
 sparse products per iteration, and with the whole iteration loop kept on the device
 (<code>gpu_on_device_loop=true</code>).</p>
-<p>Instance <code>refinery_year.mps</code> (779640 rows, 1208880 columns, 9968834 nonzeros), engine <code>cuda</code>, 10000 iterations per solve, median of 3 repeats; the per-iteration figure is the marginal time between the full and the one-fifth run, as <code>pdhg_two_matvec_ab.py</code> defines it. Commit <code>ad57c03</code>, GPU Tesla V100-PCIE-32GB (compute 7.0, 32494 MiB VRAM).</p>
+<p>Instance <code>refinery_year.mps</code> (779640 rows, 1208880 columns, 9968834 nonzeros), engine <code>cuda</code>, 10000 iterations per solve, median of 3 repeats; the per-iteration figure is the marginal time between the full and the one-fifth run, as <code>pdhg_two_matvec_ab.py</code> defines it. Commit <code>fdd1f35</code>, GPU NVIDIA A100-SXM4-40GB (compute 8.0, 40326 MiB VRAM, CUDA runtime 12.4, driver API 12.4).</p>
 <div class="table-wrap"><table class="doc-table">
 <thead>
 <tr>
@@ -5578,26 +5608,199 @@ sparse products per iteration, and with the whole iteration loop kept on the dev
 <tr>
 <td>default</td>
 <td><code>defaults</code></td>
-<td style="text-align: right;">985.7</td>
-<td style="text-align: right;">808.7</td>
-<td style="text-align: right;">0.820</td>
-<td><code>pdhg-478-refinery-default-ad57c03.csv</code></td>
+<td style="text-align: right;">598.1</td>
+<td style="text-align: right;">489.5</td>
+<td style="text-align: right;">0.818</td>
+<td><code>pdhg-478-refinery-default-fdd1f35.csv</code></td>
 </tr>
 <tr>
 <td>deterministic</td>
 <td><code>deterministic=true</code></td>
-<td style="text-align: right;">1007.4</td>
-<td style="text-align: right;">805.8</td>
-<td style="text-align: right;">0.800</td>
-<td><code>pdhg-478-refinery-deterministic-ad57c03.csv</code></td>
+<td style="text-align: right;">569.0</td>
+<td style="text-align: right;">495.8</td>
+<td style="text-align: right;">0.871</td>
+<td><code>pdhg-478-refinery-deterministic-fdd1f35.csv</code></td>
 </tr>
 <tr>
 <td>deterministic-loop</td>
 <td><code>deterministic=true gpu_on_device_loop=true</code></td>
-<td style="text-align: right;">1009.4</td>
-<td style="text-align: right;">824.4</td>
-<td style="text-align: right;">0.817</td>
-<td><code>pdhg-478-refinery-deterministic-loop-ad57c03.csv</code></td>
+<td style="text-align: right;">575.7</td>
+<td style="text-align: right;">448.1</td>
+<td style="text-align: right;">0.778</td>
+<td><code>pdhg-478-refinery-deterministic-loop-fdd1f35.csv</code></td>
+</tr>
+<tr>
+<td>loop</td>
+<td><code>gpu_on_device_loop=true</code></td>
+<td style="text-align: right;">553.3</td>
+<td style="text-align: right;">479.1</td>
+<td style="text-align: right;">0.866</td>
+<td><code>pdhg-478-refinery-loop-fdd1f35.csv</code></td>
+</tr>
+</tbody>
+</table></div>
+<h4 id="1g10-gpu-mip-heuristics-and-batched-node-bounds-on-the-full-miplib-tier-2-509-520">1g.10 GPU MIP heuristics and batched node bounds on the full MIPLIB tier 2 (#509, #520)</h4>
+<p>All 60 instances of the tier-2 list (<code>bench/runners/miplib_tier2.json</code>), 60 s each, one run
+per leg on one binary: the feasibility pump and fix-and-propagate on PDHG relaxations (#509,
+on the device and with <code>gpu_heur_backend=cpu</code>), and batched PDHG for node bounds and for
+strong-branching scores (#520, on the device and with <code>gpu_batch_backend=cpu</code>). All of
+these are off by default; each row says what turning one on does against <code>off</code>. "Closer" and
+"further" compare the incumbent, and the final dual bound, with the published optimum,
+instance by instance. Every leg runs with <code>miplib.py --profile</code> (profile=detailed), which
+records the seconds spent choosing the branching column (strong branching's probe LPs are
+inside them) and the batched-PDHG calls. The legs ran on a 64-core host with one V100 as two
+streams side by side, one single-threaded process each: the CPU-only legs (<code>off</code> and the
+<code>*-cpu</code> legs) in one, the device legs in the other, so exactly one process used the card.
+The CPU stream has four legs and the device stream six, so every leg except the last two
+device legs (<code>520-sb-filter</code>, <code>520-both</code>, which ran alone) shared the host with exactly one
+other single-threaded solve.</p>
+<p>Commit <code>a0cc065</code> · machine <code>Linux-x86_64</code> · 60 instances, one seed, one thread; every leg against <code>off</code>, the same binary with every GPU option off.</p>
+<div class="table-wrap"><table class="doc-table">
+<thead>
+<tr>
+<th>leg</th>
+<th>solver options</th>
+<th style="text-align: right;">feasible (verified)</th>
+<th style="text-align: right;">matched</th>
+<th style="text-align: right;">proved</th>
+<th style="text-align: right;">nodes / s</th>
+<th style="text-align: right;">branching s</th>
+<th style="text-align: right;">batched SB s</th>
+<th style="text-align: right;">primal closer / further</th>
+<th style="text-align: right;">dual bound closer / further</th>
+<th>source</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>off</td>
+<td><code>defaults</code></td>
+<td style="text-align: right;">40 (40)</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1276</td>
+<td style="text-align: right;">960.5</td>
+<td style="text-align: right;">0.0</td>
+<td style="text-align: right;">-</td>
+<td style="text-align: right;">-</td>
+<td><code>miplib-t2-full-off-a0cc065.csv</code></td>
+</tr>
+<tr>
+<td>509-fixprop-gpu</td>
+<td><code>gpu_fix_and_prop=true</code></td>
+<td style="text-align: right;">42 (42)</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1270</td>
+<td style="text-align: right;">949.1</td>
+<td style="text-align: right;">0.0</td>
+<td style="text-align: right;">9 / 4</td>
+<td style="text-align: right;">14 / 14</td>
+<td><code>miplib-t2-full-509-fixprop-gpu-a0cc065.csv</code></td>
+</tr>
+<tr>
+<td>509-fixprop-cpu</td>
+<td><code>gpu_fix_and_prop=true gpu_heur_backend=cpu</code></td>
+<td style="text-align: right;">42 (42)</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1274</td>
+<td style="text-align: right;">952.7</td>
+<td style="text-align: right;">0.0</td>
+<td style="text-align: right;">9 / 4</td>
+<td style="text-align: right;">11 / 12</td>
+<td><code>miplib-t2-full-509-fixprop-cpu-a0cc065.csv</code></td>
+</tr>
+<tr>
+<td>509-pump-gpu</td>
+<td><code>gpu_pump=true</code></td>
+<td style="text-align: right;">44 (44)</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1241</td>
+<td style="text-align: right;">922.2</td>
+<td style="text-align: right;">0.0</td>
+<td style="text-align: right;">5 / 5</td>
+<td style="text-align: right;">3 / 28</td>
+<td><code>miplib-t2-full-509-pump-gpu-a0cc065.csv</code></td>
+</tr>
+<tr>
+<td>509-pump-cpu</td>
+<td><code>gpu_pump=true gpu_heur_backend=cpu</code></td>
+<td style="text-align: right;">44 (44)</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1260</td>
+<td style="text-align: right;">924.8</td>
+<td style="text-align: right;">0.0</td>
+<td style="text-align: right;">5 / 6</td>
+<td style="text-align: right;">6 / 22</td>
+<td><code>miplib-t2-full-509-pump-cpu-a0cc065.csv</code></td>
+</tr>
+<tr>
+<td>520-nodes</td>
+<td><code>gpu_batch_nodes=true</code></td>
+<td style="text-align: right;">40 (40)</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">424</td>
+<td style="text-align: right;">938.2</td>
+<td style="text-align: right;">0.0</td>
+<td style="text-align: right;">1 / 15</td>
+<td style="text-align: right;">4 / 28</td>
+<td><code>miplib-t2-full-520-nodes-a0cc065.csv</code></td>
+</tr>
+<tr>
+<td>520-sb-score</td>
+<td><code>gpu_batch_strong_branching=score</code></td>
+<td style="text-align: right;">36 (36)</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">844</td>
+<td style="text-align: right;">1965.7</td>
+<td style="text-align: right;">1958.8</td>
+<td style="text-align: right;">9 / 29</td>
+<td style="text-align: right;">5 / 34</td>
+<td><code>miplib-t2-full-520-sb-score-a0cc065.csv</code></td>
+</tr>
+<tr>
+<td>520-sb-filter</td>
+<td><code>gpu_batch_strong_branching=filter</code></td>
+<td style="text-align: right;">37 (37)</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1094</td>
+<td style="text-align: right;">1865.0</td>
+<td style="text-align: right;">1225.2</td>
+<td style="text-align: right;">3 / 18</td>
+<td style="text-align: right;">0 / 36</td>
+<td><code>miplib-t2-full-520-sb-filter-a0cc065.csv</code></td>
+</tr>
+<tr>
+<td>520-both</td>
+<td><code>gpu_batch_nodes=true gpu_batch_strong_branching=score</code></td>
+<td style="text-align: right;">36 (36)</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">255</td>
+<td style="text-align: right;">1914.4</td>
+<td style="text-align: right;">1910.3</td>
+<td style="text-align: right;">6 / 32</td>
+<td style="text-align: right;">5 / 34</td>
+<td><code>miplib-t2-full-520-both-a0cc065.csv</code></td>
+</tr>
+<tr>
+<td>520-both-cpu</td>
+<td><code>gpu_batch_nodes=true gpu_batch_strong_branching=score gpu_batch_backend=cpu</code></td>
+<td style="text-align: right;">33 (33)</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">185</td>
+<td style="text-align: right;">2157.4</td>
+<td style="text-align: right;">2155.2</td>
+<td style="text-align: right;">5 / 32</td>
+<td style="text-align: right;">1 / 38</td>
+<td><code>miplib-t2-full-520-both-cpu-a0cc065.csv</code></td>
 </tr>
 </tbody>
 </table></div>
@@ -6328,7 +6531,231 @@ Commit <code>e134aeb</code> · machine <code>Windows-AMD64</code> · 120.0s per 
 </table></div>
 <p><strong>10 of 11</strong> solves under <code>auto</code> reached the analytic optimum to a relative 1e-06 (commit 078cb24). The engine column is what ran, which after a decline is the fallback: <code>pdhg-cpu</code> on a row that the rule table sent to the interior point means the set-up passed <code>ipm_setup_share</code> of the limit and the first-order method took the rest (#357).</p>
 <h4 id="1f5-a-million-rows-on-the-cpu">1f.5 A million rows on the CPU</h4>
-<p><em>No <code>million-cpu-*.csv</code> in <code>bench/results/</code>. Produce one with</em> <code>python bench/runners/million.py --binary build/sankhya --keep DIR</code>.</p>
+<p>Source CSV: <code>bench/results/million-cpu-b561fba.csv</code><br>
+Commit <code>b561fba</code> · machine <code>cloud container; Linux-x86_64; Intel(R) Xeon(R) Processor @ 2.10GHz; 4 cores; 15.7 GiB RAM</code> · 3600s per solve</p>
+<p>Three generated models at a million rows or more (#751), each with its optimum exact by construction and each written from a seed; the sha256 in the CSV names the file that was solved. <code>verified</code> is <code>tools/verify_solution.py</code>'s exit code on the written solution, which parses the model itself and recomputes every residual.</p>
+<div class="table-wrap"><table class="doc-table">
+<thead>
+<tr>
+<th>model</th>
+<th style="text-align: right;">rows x cols</th>
+<th style="text-align: right;">nonzeros</th>
+<th>arm</th>
+<th>route</th>
+<th>status</th>
+<th style="text-align: right;">relative error</th>
+<th style="text-align: right;">verified</th>
+<th style="text-align: right;">seconds</th>
+<th style="text-align: right;">peak memory</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>transport</td>
+<td style="text-align: right;">1,000,000 x 2,000,000</td>
+<td style="text-align: right;">4,000,000</td>
+<td><code>ipm</code></td>
+<td>ipm</td>
+<td>feasible</td>
+<td style="text-align: right;">1.9e-11</td>
+<td style="text-align: right;">yes</td>
+<td style="text-align: right;">34</td>
+<td style="text-align: right;">1,865 MB</td>
+</tr>
+<tr>
+<td>transport</td>
+<td style="text-align: right;">1,000,000 x 2,000,000</td>
+<td style="text-align: right;">4,000,000</td>
+<td><code>ipm-xover</code></td>
+<td>ipm</td>
+<td>feasible</td>
+<td style="text-align: right;">1.9e-11</td>
+<td style="text-align: right;">yes</td>
+<td style="text-align: right;">3,611</td>
+<td style="text-align: right;">1,870 MB</td>
+</tr>
+<tr>
+<td>transport</td>
+<td style="text-align: right;">1,000,000 x 2,000,000</td>
+<td style="text-align: right;">4,000,000</td>
+<td><code>pdhg</code></td>
+<td>pdhg-cpu</td>
+<td>optimal</td>
+<td style="text-align: right;">4.1e-14</td>
+<td style="text-align: right;">yes</td>
+<td style="text-align: right;">119</td>
+<td style="text-align: right;">1,091 MB</td>
+</tr>
+<tr>
+<td>staircase</td>
+<td style="text-align: right;">1,000,000 x 1,000,000</td>
+<td style="text-align: right;">5,000,000</td>
+<td><code>ipm</code></td>
+<td>ipm</td>
+<td>numerical error</td>
+<td style="text-align: right;">-</td>
+<td style="text-align: right;">no</td>
+<td style="text-align: right;">23</td>
+<td style="text-align: right;">1,534 MB</td>
+</tr>
+<tr>
+<td>staircase</td>
+<td style="text-align: right;">1,000,000 x 1,000,000</td>
+<td style="text-align: right;">5,000,000</td>
+<td><code>ipm-xover</code></td>
+<td>ipm</td>
+<td>numerical error</td>
+<td style="text-align: right;">-</td>
+<td style="text-align: right;">no</td>
+<td style="text-align: right;">23</td>
+<td style="text-align: right;">1,534 MB</td>
+</tr>
+<tr>
+<td>staircase</td>
+<td style="text-align: right;">1,000,000 x 1,000,000</td>
+<td style="text-align: right;">5,000,000</td>
+<td><code>pdhg</code></td>
+<td>pdhg-cpu</td>
+<td>time limit</td>
+<td style="text-align: right;">2.0e-08</td>
+<td style="text-align: right;">yes</td>
+<td style="text-align: right;">2,542</td>
+<td style="text-align: right;">1,604 MB</td>
+</tr>
+<tr>
+<td>refinery</td>
+<td style="text-align: right;">1,007,400 x 1,892,160</td>
+<td style="text-align: right;">17,940,408</td>
+<td><code>ipm</code></td>
+<td>ipm</td>
+<td>numerical error</td>
+<td style="text-align: right;">-</td>
+<td style="text-align: right;">no</td>
+<td style="text-align: right;">44</td>
+<td style="text-align: right;">3,221 MB</td>
+</tr>
+<tr>
+<td>refinery</td>
+<td style="text-align: right;">1,007,400 x 1,892,160</td>
+<td style="text-align: right;">17,940,408</td>
+<td><code>ipm-xover</code></td>
+<td>ipm</td>
+<td>numerical error</td>
+<td style="text-align: right;">-</td>
+<td style="text-align: right;">no</td>
+<td style="text-align: right;">44</td>
+<td style="text-align: right;">3,221 MB</td>
+</tr>
+<tr>
+<td>refinery</td>
+<td style="text-align: right;">1,007,400 x 1,892,160</td>
+<td style="text-align: right;">17,940,408</td>
+<td><code>pdhg</code></td>
+<td>pdhg-cpu</td>
+<td>optimal</td>
+<td style="text-align: right;">3.1e-14</td>
+<td style="text-align: right;">yes</td>
+<td style="text-align: right;">2,336</td>
+<td style="text-align: right;">2,312 MB</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>2 of 9</strong> arms end <code>optimal</code> and verified.</p>
+<p>Every arm that did not finish, and the numbers that say why. <code>attribution</code> is read off the row by <code>bench/runners/million.py</code>: <code>iterations</code> when the method ran to the limit still converging, <code>fill</code> when the factor's size stopped it, <code>polish</code> when PDHG's point was not finished by the interior point, <code>stall</code> when the interior point's step collapsed short of its optimality test, <code>crossover</code> when the pivots from that point ran out of time, <code>memory</code> when the process was killed or its peak neared the machine's RAM.</p>
+<div class="table-wrap"><table class="doc-table">
+<thead>
+<tr>
+<th>model</th>
+<th>arm</th>
+<th>attribution</th>
+<th>status</th>
+<th style="text-align: right;">iterations</th>
+<th style="text-align: right;">primal inf</th>
+<th style="text-align: right;">dual inf</th>
+<th style="text-align: right;">peak memory</th>
+<th>solver message</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>transport</td>
+<td><code>ipm</code></td>
+<td><strong>stall</strong></td>
+<td>feasible</td>
+<td style="text-align: right;">21</td>
+<td style="text-align: right;">1.8e-08</td>
+<td style="text-align: right;">5.3e-09</td>
+<td style="text-align: right;">1,865 MB</td>
+<td>the interior-point iteration stalled after 21 iterations (steps 3.4e-11 / 1.4e-11); the best iterate is reported as a feasible point</td>
+</tr>
+<tr>
+<td>transport</td>
+<td><code>ipm-xover</code></td>
+<td><strong>crossover</strong></td>
+<td>feasible</td>
+<td style="text-align: right;">21</td>
+<td style="text-align: right;">1.8e-08</td>
+<td style="text-align: right;">5.3e-09</td>
+<td style="text-align: right;">1,870 MB</td>
+<td>the interior-point iteration stalled after 21 iterations (steps 3.4e-11 / 1.4e-11); the best iterate is reported as a feasible point; crossover did not reach a vertex (time_limit after 198900 pivots, 3576.36s), the interior point's answer stands</td>
+</tr>
+<tr>
+<td>staircase</td>
+<td><code>ipm</code></td>
+<td><strong>fill</strong></td>
+<td>numerical error</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">3.7e+02</td>
+<td style="text-align: right;">3.0e+02</td>
+<td style="text-align: right;">1,534 MB</td>
+<td>declined: the factor of the normal equations would hold more than 175797034 nonzeros, above ipm_max_factor_nonzeros = 175797034; raise the option or use another engine</td>
+</tr>
+<tr>
+<td>staircase</td>
+<td><code>ipm-xover</code></td>
+<td><strong>fill</strong></td>
+<td>numerical error</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">3.7e+02</td>
+<td style="text-align: right;">3.0e+02</td>
+<td style="text-align: right;">1,534 MB</td>
+<td>declined: the factor of the normal equations would hold more than 175797034 nonzeros, above ipm_max_factor_nonzeros = 175797034; raise the option or use another engine; the best iterate (merit 5.0e+03) is attached for crossover_from_nonoptimal, and is not claimed as a point; crossover not attempted from this numerical_error answer: its scaled infeasibility 4.7e+00 / 1.0e+00 is above 1e-04, or it holds no finite point</td>
+</tr>
+<tr>
+<td>staircase</td>
+<td><code>pdhg</code></td>
+<td><strong>polish</strong></td>
+<td>time limit</td>
+<td style="text-align: right;">229633</td>
+<td style="text-align: right;">2.6e-05</td>
+<td style="text-align: right;">2.1e-12</td>
+<td style="text-align: right;">1,604 MB</td>
+<td>stopped at relative primal 1.466e-09, dual 0.000e+00, gap 1.349e-07 after 229633 iterations and 18 restarts (target 1.0e-04); the interior-point polish did not improve it (not_solved after 0 iterations: declined: the factor of the normal equations would hold more than 175797034 nonzeros, above polish_max_factor_nonzeros = 175797034; raise the option or use another engine)</td>
+</tr>
+<tr>
+<td>refinery</td>
+<td><code>ipm</code></td>
+<td><strong>fill</strong></td>
+<td>numerical error</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">5.9e+02</td>
+<td style="text-align: right;">3.6e+01</td>
+<td style="text-align: right;">3,221 MB</td>
+<td>declined: the factor of the normal equations would hold more than 175797034 nonzeros, above ipm_max_factor_nonzeros = 175797034; raise the option or use another engine</td>
+</tr>
+<tr>
+<td>refinery</td>
+<td><code>ipm-xover</code></td>
+<td><strong>fill</strong></td>
+<td>numerical error</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">5.9e+02</td>
+<td style="text-align: right;">3.6e+01</td>
+<td style="text-align: right;">3,221 MB</td>
+<td>declined: the factor of the normal equations would hold more than 175797034 nonzeros, above ipm_max_factor_nonzeros = 175797034; raise the option or use another engine; the best iterate (merit 1.5e+05) is attached for crossover_from_nonoptimal, and is not claimed as a point; crossover not attempted from this numerical_error answer: its scaled infeasibility 5.4e+01 / 4.2e+00 is above 1e-04, or it holds no finite point</td>
+</tr>
+</tbody>
+</table></div>
 <hr>
 <h2 id="2-miplib--the-mixed-integer-side">2. MIPLIB — the mixed-integer side</h2>
 <p>The LP tiers above say nothing about the branch and bound. This is the MILP evidence, and it
@@ -10044,6 +10471,7 @@ Commit <code>ad57c03</code> · machine <code>Linux-x86_64</code> · time limit 1
 <li><code>auto</code>, <strong>no published reference</strong> (1): <code>QPLIB_9002</code>.</li>
 <li><code>ipm</code>, <strong>did not reach <code>optimal</code></strong> (5): <code>QPLIB_8515</code> (model_error), <code>QPLIB_8559</code> (numerical_error), <code>QPLIB_8567</code> (numerical_error), <code>QPLIB_8906</code> (numerical_error), <code>QPLIB_9002</code> (iteration_limit).</li>
 <li><code>ipm</code>, <strong>no published reference</strong> (1): <code>QPLIB_9002</code>.</li>
+<li><strong>fetched and selected, not run in this CSV</strong> (5): <code>QPLIB_10034</code>, <code>QPLIB_10038</code>, <code>QPLIB_8500</code>, <code>QPLIB_8602</code>, <code>QPLIB_8790</code> - <code>qplib.py</code> without <code>--tier</code> runs them.</li>
 </ul>
 <hr>
 <h2 id="2e-nonlinear-programs---hock-schittkowski-and-convex-minlplib">2e. Nonlinear programs - Hock-Schittkowski, and convex MINLPLib</h2>
@@ -12621,7 +13049,7 @@ reach 5^29 &gt; 1e20, comes back unbounded.</p>
 <!-- fragment:footer -->
 <div class="wrap">
     <div>SANKHYA · Smart India Hackathon 2026 · PS SIH26119 · Apache-2.0 · <a href="https://sankhya-solver.vercel.app">sankhya-solver.vercel.app</a></div>
-    <div>Every figure on this site was last checked against SANKHYA <a href="https://github.com/thegoodengineers/SANKHYA/tree/8c58fb910a32d63372e05a26d0588ed65dcae580">main at <span data-fact="sankhya_commit">8c58fb9</span></a>.</div>
+    <div>Every figure on this site was last checked against SANKHYA <a href="https://github.com/thegoodengineers/SANKHYA/tree/3f8256ef5450d2584d22fc9d4aaab074051a0938">main at <span data-fact="sankhya_commit">3f8256e</span></a>.</div>
     <div><a href="https://github.com/thegoodengineers/SANKHYA">Source</a> · <a href="/docs">Docs</a> · <a href="/docs/benchmarks">Benchmarks</a> · <a href="/docs/provenance">Provenance</a> · <a href="/docs/coverage">Coverage tracker</a></div>
   </div>
 <!-- /fragment:footer -->

@@ -31,6 +31,25 @@
 
 <header class="page" id="top"><div class="wrap"><div class="label"><span class="n">04</span> · Run it</div><h1 style="margin-top:12px">From a fresh clone to a verified answer, on any machine.</h1><p class="lede">Needs a C++20 compiler, CMake 3.20+, Ninja, Python 3 and git. No CUDA, no internet after the clone: the Netlib instances are committed.</p></div></header>
 
+<section id="download">
+  <div class="wrap">
+    <div class="head"><div class="label"><span class="n">No build</span></div><div><h2>Or download it. No compiler needed.</h2><p>Release <a href="https://github.com/thegoodengineers/SANKHYA/releases/tag/v1.0.0-rc1"><span data-fact="release_tag">v1.0.0-rc1</span></a>, a pre-release built by CI alone: Linux x86-64 (CPU, and CUDA with the runtime linked in, so only the driver is needed) and Windows x64. Each archive keeps the repository's layout and carries a manifest of the commit, compiler and linked libraries; check it against SHA256SUMS.</p></div></div>
+    <div class="two">
+      <pre><code># Linux (Windows: unzip, then build\sankhya.exe)
+tar -xzf sankhya-0.1.0-linux-x86_64-cpu.tar.gz
+cd sankhya-0.1.0-linux-x86_64-cpu
+sha256sum -c SHA256SUMS
+build/sankhya solve demo/crude_blend.mps --write-sol blend.sol
+python3 tools/verify_solution.py demo/crude_blend.mps blend.sol
+demo/finale.sh</code></pre>
+      <pre><code># the image is also a release asset
+docker load &lt; sankhya-image.tar.gz
+docker run --rm --gpus all sankhya:ci sankhya solve demo/crude_blend.mps --gpu</code></pre>
+    </div>
+    <p class="small" style="margin-top:14px">The archives of this pre-release are named 0.1.0, the version the tree carried when it was tagged. There is no Windows CUDA archive: nvcc on Windows needs MSVC, and this tree builds with MinGW GCC.</p>
+  </div>
+</section>
+
 <section id="step-1">
   <div class="wrap">
     <div class="head"><div class="label"><span class="n">Step 1</span></div><div><h2>Install the toolchain for your system.</h2></div></div>
@@ -64,7 +83,7 @@ cd SANKHYA
 scripts/configure.sh build Release
 cmake --build build -j
 ctest --test-dir build --output-on-failure</code></pre>
-      <div><p class="small"><b>What you should see:</b> the configure script names the compiler it picked (it checks the version rather than trusting PATH order), the build finishes with no warnings under <code>-Wall -Wextra -Werror</code>, and ctest runs <span data-fact="tests_total">1345</span> tests. At <span data-fact="sankhya_commit">8c58fb9</span> the Ubuntu CI passes all of them. On a Windows build with GCC 16.1 one fails: <code>Pdhg.StopAtRequestGivesTheCheapAnswerAndNeverCallsItOptimal</code>, where the honest run reports <code>feasible</code> rather than the <code>optimal</code> the test expects, because a complementarity product of 2.075e-06 is above the 1e-6 the verifier accepts. Windows sometimes blocks a freshly linked binary through Smart App Control; <code>scripts/preflight.sh</code> names the fix.</p><p class="small">Or skip straight to everything: <code>scripts/reproduce.sh</code> does the build, the tests, the Netlib benchmark with verification, the HiGHS comparison (if <code>pip install highspy</code> is present) and the PS26119 demo.</p></div>
+      <div><p class="small"><b>What you should see:</b> the configure script names the compiler it picked (it checks the version rather than trusting PATH order), the build finishes with no warnings under <code>-Wall -Wextra -Werror</code>, and ctest runs <span data-fact="tests_total">1347</span> tests. At <span data-fact="sankhya_commit">3f8256e</span> the Ubuntu CI passes all of them. On a Windows build with GCC 16.1 one fails: <code>Pdhg.StopAtRequestGivesTheCheapAnswerAndNeverCallsItOptimal</code>, where the honest run reports <code>feasible</code> rather than the <code>optimal</code> the test expects, because a complementarity product of 2.075e-06 is above the 1e-6 the verifier accepts. Windows sometimes blocks a freshly linked binary through Smart App Control; <code>scripts/preflight.sh</code> names the fix.</p><p class="small">Or skip straight to everything: <code>scripts/reproduce.sh</code> does the build, the tests, the Netlib benchmark with verification, the HiGHS comparison (if <code>pip install highspy</code> is present) and the PS26119 demo.</p></div>
     </div>
   </div>
 </section>
@@ -162,7 +181,7 @@ demo/finale.sh                  # the finale walk (Windows: demo\finale.cmd)</co
 <!-- fragment:footer -->
 <div class="wrap">
     <div>SANKHYA · Smart India Hackathon 2026 · PS SIH26119 · Apache-2.0 · <a href="https://sankhya-solver.vercel.app">sankhya-solver.vercel.app</a></div>
-    <div>Every figure on this site was last checked against SANKHYA <a href="https://github.com/thegoodengineers/SANKHYA/tree/8c58fb910a32d63372e05a26d0588ed65dcae580">main at <span data-fact="sankhya_commit">8c58fb9</span></a>.</div>
+    <div>Every figure on this site was last checked against SANKHYA <a href="https://github.com/thegoodengineers/SANKHYA/tree/3f8256ef5450d2584d22fc9d4aaab074051a0938">main at <span data-fact="sankhya_commit">3f8256e</span></a>.</div>
     <div><a href="https://github.com/thegoodengineers/SANKHYA">Source</a> · <a href="/docs">Docs</a> · <a href="/docs/benchmarks">Benchmarks</a> · <a href="/docs/provenance">Provenance</a> · <a href="/docs/coverage">Coverage tracker</a></div>
   </div>
 <!-- /fragment:footer -->
