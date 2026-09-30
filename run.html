@@ -42,9 +42,10 @@ sha256sum -c SHA256SUMS
 build/sankhya solve demo/crude_blend.mps --write-sol blend.sol
 python3 tools/verify_solution.py demo/crude_blend.mps blend.sol
 demo/finale.sh</code></pre>
-      <pre><code># the image is also a release asset
-docker load &lt; sankhya-image.tar.gz
-docker run --rm --gpus all sankhya:ci sankhya solve demo/crude_blend.mps --gpu</code></pre>
+      <pre><code># or the container image (CUDA build, verifier, demo models)
+docker pull ghcr.io/thegoodengineers/sankhya:v1.0.0-rc1
+docker run --rm --gpus all ghcr.io/thegoodengineers/sankhya:v1.0.0-rc1 sankhya solve demo/crude_blend.mps --gpu
+# offline: docker load &lt; sankhya-image.tar.gz (release asset), then run sankhya:ci</code></pre>
     </div>
     <p class="small" style="margin-top:14px">The archives of this pre-release are named 0.1.0, the version the tree carried when it was tagged. There is no Windows CUDA archive: nvcc on Windows needs MSVC, and this tree builds with MinGW GCC.</p>
   </div>
