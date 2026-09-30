@@ -1,13 +1,17 @@
 {
   "about": "Every figure the site states, once. Pages carry <span data-fact=\"key\">value</span>; run python tools/facts.py after editing this file, and python tools/facts.py --check before a PR. Paths are in thegoodengineers/SANKHYA on main at the commit in sankhya_commit.",
   "facts": {
-    "sankhya_commit": {"value": "43b648c", "source": "git rev-parse --short origin/main, 2026-09-29"},
+    "sankhya_commit": {"value": "8c58fb9", "source": "git rev-parse --short origin/main, 2026-09-30"},
     "first_commit_date": {"value": "25 August 2026", "source": "git log --reverse --format=%ad --date=short | head -1 -> 2026-08-25"},
-    "tests_total": {"value": "1324", "source": "ctest --test-dir build -N | tail -1 -> Total Tests: 1324, Release build of 493fa1d; unchanged at 43b648c, whose only test change since is one renamed TEST (QpIpm, #740) and a function added inside bindings/python/test_adapters.py, which ctest does not register (#738)"},
+    "tests_total": {"value": "1345", "source": "build/tests/sankhya_tests --gtest_list_tests on a Release build of 8c58fb9: 1345 tests, the list gtest_discover_tests registers with ctest"},
     "engines_total": {"value": "seven", "source": "./build/sankhya engines --format json at 9094e1c, the last commit before 43b648c to touch C++: simplex, dual-simplex, pdhg, ipm, convex-qp, qp-ipm, branch-and-bound (pdhg-gpu only in a CUDA build)"},
 
     "netlib_total": {"value": "92", "source": "bench/results/netlib-full-9094e1c.csv, 92 rows (the LPs netlib.org ships as EMPS, #742)"},
     "netlib_matched": {"value": "82", "source": "netlib-full-9094e1c.csv, matches_published = 1 on 82 rows"},
+    "netlib_exact": {"value": "90", "source": "netlib-full-9094e1c.csv regraded against Koch's exact optima (data/netlib/koch_exact.json, #747) by bench/runners/make_benchmarks_doc.py: within 1e-6 relative and independently verified on 90 of 92"},
+    "netlib_h2h_total": {"value": "94", "source": "bench/results/head-to-head-netlib-5e490ef.csv (#791), the 94 sankhya rows: 94 rows, the 92 EMPS LPs plus truss and stocfor3 (#746)"},
+    "netlib_h2h_exact": {"value": "94", "source": "bench/results/head-to-head-netlib-5e490ef.csv (#791), the 94 sankhya rows: matches_exact = 1 and independently_verified = 1 on 94"},
+    "netlib_h2h_matched": {"value": "84", "source": "bench/results/head-to-head-netlib-5e490ef.csv (#791), the 94 sankhya rows: matches_reference = 1 on 84"},
     "netlib_verified": {"value": "92", "source": "netlib-full-9094e1c.csv, independently_verified = 1 on 92 rows"},
     "netlib_outliers": {"value": "10", "source": "netlib-full-9094e1c.csv, matches_published = 0 on 80bau3b, e226, ganges, greenbea, greenbeb, nesm, pilot, pilot.ja, pilot.we, scrs8"},
     "mm_total": {"value": "138", "source": "bench/results/maros-meszaros-9094e1c.csv, 138 rows"},
@@ -45,9 +49,17 @@
     "gpu_a100_10k": {"value": "4.08x", "source": "README.md on main at 493fa1d, lines 17-19: 4.08x faster at 10,000 x 10,000 on an A100; docs/BENCHMARKS.md 1g, the 10000x10000 row"},
     "gpu_l4_brazil3": {"value": "8.10x", "source": "bench/results/gpu-real-l4-58a8374.csv, brazil3 at 1e-8, cpu-1t / gpu"},
     "gpu_a100_brazil3": {"value": "10.53x", "source": "bench/results/gpu-real-a100-58a8374.csv, brazil3 at 1e-8, cpu-1t / gpu"},
+    "gpu_a100_brazil3_rerun": {"value": "8.72x", "source": "bench/results/gpu-real-a100-fdd1f35.csv, brazil3 at 1e-8 against the faster CPU arm (16 threads), three repeats; the figure README.md leads with"},
 
     "refinery_exact_rows": {"value": "32,485", "source": "bench/results/scale-refinery-e134aeb.csv, ipm optimal at 32485 rows in 67.7 s"},
     "refinery_hourly_rows": {"value": "779,640", "source": "scale-refinery-e134aeb.csv and docs/BENCHMARKS.md 1f"},
-    "scale_rows": {"value": "1,000,000", "source": "bench/results/scale-iterations-bf3df02.csv, largest rows at iteration_limit 1000"}
+    "scale_rows": {"value": "1,000,000", "source": "bench/results/scale-iterations-bf3df02.csv, largest rows at iteration_limit 1000"},
+    "scenarios_total": {"value": "1130", "source": "bench/results/scenarios-de0f393a.csv, 1130 rows, verified = yes and agrees = yes on every row (#752, #784)"},
+    "scenarios_blend_batch": {"value": "0.053 s", "source": "scenarios-de0f393a.csv via the runner's log: 1000 crude-blend scenarios in 0.0527 s from one read, 1000 single solves 0.3001 s"},
+    "scenarios_blend_single": {"value": "0.300 s", "source": "same run: 1000 separate single solves, each reading the file again, 0.3001 s"},
+    "scenarios_year_prices": {"value": "36.3 s", "source": "same run: refinery daily year, 10 price sets, 36.3309 s including the base solve"},
+    "scenarios_year_prices_single": {"value": "177.3 s", "source": "same run: 10 separate single solves, 177.2556 s"},
+    "scenarios_year_demand": {"value": "19.5 s", "source": "same run: refinery daily year, 10 demand forecasts, 19.5161 s including the base solve"},
+    "scenarios_year_demand_single": {"value": "137.0 s", "source": "same run: 10 separate single solves, 137.0347 s"}
   }
 }

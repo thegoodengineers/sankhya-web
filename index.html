@@ -39,7 +39,7 @@
     <div class="float f1"><div class="label"><span class="n">blend.sol</span> · shadow prices</div><pre>row  THRUPUT  basic     dual  0
 row  DIESEL   fixed     dual  4.97297
 row  SULPHUR  at_upper  dual  1.13513
-ranging_basis  nondegenerate</pre><div class="m">demo/crude_blend.mps at <span data-fact="sankhya_commit">43b648c</span>, objective 214.1459459</div></div>
+ranging_basis  nondegenerate</pre><div class="m">demo/crude_blend.mps at <span data-fact="sankhya_commit">8c58fb9</span>, objective 214.1459459</div></div>
     <div class="float f2"><div class="label"><span class="n">verifier</span> · independent</div><pre>row activity        1.421e-14
 reduced costs       8.882e-16
 strong duality gap  0.000e+00
@@ -48,7 +48,7 @@ VERIFIED: 14 checks passed</pre><div class="m">tools/verify_solution.py on the s
 contradiction  1.245e+01
 iis            2 rows, 2 bounds
 VERIFIED: 10 checks passed</pre><div class="m">demo/crude_blend_infeasible.mps, IIS irreducible</div></div>
-    <div class="float f4"><div class="label"><span class="n">netlib-full-ad57c03</span> · <span data-fact="netlib_total">92</span> instances</div><div class="mini"><div style="width:91.0%"></div></div><div class="m"><span data-fact="netlib_matched">82</span>/<span data-fact="netlib_total">92</span> matched · <span data-fact="netlib_verified">92</span>/<span data-fact="netlib_total">92</span> verifier-accepted</div></div>
+    <div class="float f4"><div class="label"><span class="n">head-to-head-netlib-5e490ef</span> · <span data-fact="netlib_h2h_total">94</span> instances</div><div class="mini"><div style="width:100.0%"></div></div><div class="m"><span data-fact="netlib_h2h_exact">94</span>/<span data-fact="netlib_h2h_total">94</span> exact and verifier-accepted</div></div>
     <div class="center">
       <div class="label"><span class="n">Smart India Hackathon 2026</span> · PS SIH26119 · MRPL</div>
       <h1>An optimization solver<br>written <em>from the mathematics.</em></h1>
@@ -61,7 +61,7 @@ VERIFIED: 10 checks passed</pre><div class="m">demo/crude_blend_infeasible.mps, 
 <section class="strip-section">
   <div class="wrap">
     <div class="label" style="text-align:center;margin-bottom:14px">Measured against</div>
-    <div class="logos"><span>Netlib <b><span data-fact="netlib_matched">82</span>/<span data-fact="netlib_total">92</span></b> matched · <b><span data-fact="netlib_verified">92</span>/<span data-fact="netlib_total">92</span></b> verified</span><span>MIPLIB 2017 <b><span data-fact="miplib_reach">14</span>/<span data-fact="miplib_total">30</span></b> reach · <b><span data-fact="miplib_prove">11</span>/<span data-fact="miplib_total">30</span></b> prove</span><span>Mittelmann <b><span data-fact="mittelmann_auto">2</span>/<span data-fact="mittelmann_total">8</span></b> auto · <b><span data-fact="mittelmann_any">3</span>/<span data-fact="mittelmann_total">8</span></b> across engines</span><span>HiGHS cross-check <b><span data-fact="highs_agree">50</span>/50</b></span><span>GPU at 10⁴×10⁴ <b><span data-fact="gpu_laptop_10k">1.37x</span></b> laptop · <b><span data-fact="gpu_l4_10k">4.21x</span></b> L4</span><span>GPU brazil3 1e-8 <b><span data-fact="gpu_l4_brazil3">8.10x</span></b> L4 · <b><span data-fact="gpu_a100_brazil3">10.53x</span></b> A100</span><span>Refinery year solved exactly <b><span data-fact="refinery_exact_rows">32,485</span></b> rows</span><span>Generated family <b><span data-fact="scale_rows">1,000,000</span></b> rows · fixed 1,000 iterations, no proof</span><span>Tests on main <b><span data-fact="tests_total">1324</span></b></span></div>
+    <div class="logos"><span>Netlib <b><span data-fact="netlib_h2h_exact">94</span>/<span data-fact="netlib_h2h_total">94</span></b> exact and verified · <b><span data-fact="netlib_h2h_matched">84</span>/<span data-fact="netlib_h2h_total">94</span></b> match the readme</span><span>MIPLIB 2017 <b><span data-fact="miplib_reach">14</span>/<span data-fact="miplib_total">30</span></b> reach · <b><span data-fact="miplib_prove">11</span>/<span data-fact="miplib_total">30</span></b> prove</span><span>Mittelmann <b><span data-fact="mittelmann_auto">2</span>/<span data-fact="mittelmann_total">8</span></b> auto · <b><span data-fact="mittelmann_any">3</span>/<span data-fact="mittelmann_total">8</span></b> across engines</span><span>HiGHS cross-check <b><span data-fact="highs_agree">50</span>/50</b></span><span>GPU at 10⁴×10⁴ <b><span data-fact="gpu_laptop_10k">1.37x</span></b> laptop · <b><span data-fact="gpu_l4_10k">4.21x</span></b> L4</span><span>GPU brazil3 1e-8 <b><span data-fact="gpu_l4_brazil3">8.10x</span></b> L4 · <b><span data-fact="gpu_a100_brazil3_rerun">8.72x</span></b> A100</span><span>Refinery year solved exactly <b><span data-fact="refinery_exact_rows">32,485</span></b> rows</span><span>Generated family <b><span data-fact="scale_rows">1,000,000</span></b> rows · fixed 1,000 iterations, no proof</span><span>Tests on main <b><span data-fact="tests_total">1345</span></b></span></div>
   </div>
 </section>
 
@@ -116,7 +116,7 @@ VERIFIED: 10 checks passed</pre><div class="m">demo/crude_blend_infeasible.mps, 
 
 <section id="what-is-new">
   <div class="wrap">
-    <div class="head"><div class="label"><span class="n">What is new</span></div><div><h2>Ten additions on main, each with its default and its result.</h2><p>Each is on main at <span data-fact="sankhya_commit">43b648c</span>. Most are off by default until a clean A/B on main says they earn it; the solver page gives every one its option, its default and its result, losing results included.</p></div></div>
+    <div class="head"><div class="label"><span class="n">What is new</span></div><div><h2>Ten additions on main, each with its default and its result.</h2><p>Each is on main at <span data-fact="sankhya_commit">8c58fb9</span>. Most are off by default until a clean A/B on main says they earn it; the solver page gives every one its option, its default and its result, losing results included.</p></div></div>
     <ul class="status">
       <li class="done"><i></i><div><b>Verifier-gated engine race</b> <span>· three LP engines at once; an answer wins only after it passes the verifier's own check. Off.</span></div></li>
       <li class="done"><i></i><div><b>A checkable proof of a MILP optimum</b> <span>· written in the VIPR format and checked in exact rational arithmetic by a separate program. Off.</span></div></li>
@@ -159,7 +159,7 @@ VERIFIED: 10 checks passed</pre><div class="m">demo/crude_blend_infeasible.mps, 
 <!-- fragment:footer -->
 <div class="wrap">
     <div>SANKHYA · Smart India Hackathon 2026 · PS SIH26119 · Apache-2.0 · <a href="https://sankhya-solver.vercel.app">sankhya-solver.vercel.app</a></div>
-    <div>Every figure on this site was last checked against SANKHYA <a href="https://github.com/thegoodengineers/SANKHYA/tree/43b648c6c4bd569ae804909a8d8e9a4df6cc40bf">main at <span data-fact="sankhya_commit">43b648c</span></a>.</div>
+    <div>Every figure on this site was last checked against SANKHYA <a href="https://github.com/thegoodengineers/SANKHYA/tree/8c58fb910a32d63372e05a26d0588ed65dcae580">main at <span data-fact="sankhya_commit">8c58fb9</span></a>.</div>
     <div><a href="https://github.com/thegoodengineers/SANKHYA">Source</a> · <a href="/docs">Docs</a> · <a href="/docs/benchmarks">Benchmarks</a> · <a href="/docs/provenance">Provenance</a> · <a href="/docs/coverage">Coverage tracker</a></div>
   </div>
 <!-- /fragment:footer -->

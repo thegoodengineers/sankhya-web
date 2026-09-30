@@ -25,11 +25,11 @@
   <a class="brand" href="/"><span class="brand-mark" aria-hidden="true"></span>SANKHYA<small>SIH26119</small></a>
   <nav class="doors" aria-label="Site"><a href="/">Home</a><a href="/evaluate">For evaluators</a><a href="/problem">Problem</a><a href="/solver">Solver</a><a href="/evidence">Evidence</a><a href="/docs" aria-current="page">Docs</a><a href="/run">Run it</a><a href="/team">Team</a><a class="ext" href="https://github.com/thegoodengineers/SANKHYA">GitHub</a></nav>
   <hr class="rail-rule">
-  <nav class="here" aria-label="On this page"><a href="#1-netlib-lp--accuracy-against-published-optima">1. Netlib LP — accuracy against published optima</a><a href="#1a-the-small-set--what-the-demo-runs" class="sub">1a. The small set — what the demo runs</a><a href="#1b-the-medium-tier--instances-up-to-500-rows" class="sub">1b. The medium tier — instances up to 500 rows</a><a href="#1c-the-full-set--the-honest-headline" class="sub">1c. The full set — the honest headline</a><a href="#1c1-the-kennington-set---the-next-rung" class="sub">1c.1 The Kennington set - the next rung</a><a href="#1d-beyond-netlib--mittelmanns-lp-set" class="sub">1d. Beyond Netlib — Mittelmann&#x27;s LP set</a><a href="#1e-the-first-order-engine--pdhg" class="sub">1e. The first-order engine — PDHG</a><a href="#1g-gpu-pdhg-crossover--when-the-gpu-wins" class="sub">1g. GPU PDHG crossover — when the GPU wins</a><a href="#1f-scale--how-far-up-this-goes" class="sub">1f. Scale — how far up this goes</a><a href="#10-of-11-solves-under-auto-reached-the-analytic-optimum-to-a-relative-1e-06-commit-078cb24-the-engine-column-is-what-ran-which-after-a-decline-is-the-fallback-pdhg-cpu-on-a-row-that-the-rule-table-sent-to-the-interior-point-means-the-set-up-passed-ipm_setup_share-of-the-limit-and-the-first-order-method-took-the-rest-357">10 of 11 solves under auto reached the analytic optimum to a relative 1e-06 (commit 078...</a><a href="#2-miplib--the-mixed-integer-side">2. MIPLIB — the mixed-integer side</a><a href="#2b-maros-meszaros-the-convex-qp-set">2b. Maros-Meszaros, the convex QP set</a><a href="#2c-the-standard-pooling-instances-non-convex">2c. The standard pooling instances, non-convex</a><a href="#2d-qplib-the-convex-continuous-qps">2d. QPLIB, the convex continuous QPs</a><a href="#2e-nonlinear-programs---hock-schittkowski-and-convex-minlplib">2e. Nonlinear programs - Hock-Schittkowski, and convex MINLPLib</a><a href="#3-correctness-beyond-the-objective-value">3. Correctness beyond the objective value</a><a href="#3a-netlibs-infeasible-set---a-verdict-is-only-as-good-as-its-certificate" class="sub">3a. Netlib&#x27;s infeasible set - a verdict is only as good as its certificate</a><a href="#3b-parametric-lp---the-optimal-value-as-a-function-of-one-coefficient" class="sub">3b. Parametric LP - the optimal value as a function of one coefficient</a><a href="#4-comparison-against-an-established-solver">4. Comparison against an established solver</a><a href="#4b-agreement-against-size-limited-commercial-editions-533">4b. Agreement against size-limited commercial editions (#533)</a><a href="#5-robustness--where-the-solver-stops-working">5. Robustness — where the solver stops working</a><a href="#6-what-these-numbers-do-not-say">6. What these numbers do not say</a></nav>
+  <nav class="here" aria-label="On this page"><a href="#1-netlib-lp--accuracy-against-published-optima">1. Netlib LP — accuracy against published optima</a><a href="#1a-the-small-set--what-the-demo-runs" class="sub">1a. The small set — what the demo runs</a><a href="#1b-the-medium-tier--instances-up-to-500-rows" class="sub">1b. The medium tier — instances up to 500 rows</a><a href="#1c-the-full-set--the-honest-headline" class="sub">1c. The full set — the honest headline</a><a href="#1c1-the-kennington-set---the-next-rung" class="sub">1c.1 The Kennington set - the next rung</a><a href="#1d-beyond-netlib--mittelmanns-lp-set" class="sub">1d. Beyond Netlib — Mittelmann&#x27;s LP set</a><a href="#1e-the-first-order-engine--pdhg" class="sub">1e. The first-order engine — PDHG</a><a href="#1g-gpu-pdhg-crossover--when-the-gpu-wins" class="sub">1g. GPU PDHG crossover — when the GPU wins</a><a href="#1f-scale--how-far-up-this-goes" class="sub">1f. Scale — how far up this goes</a><a href="#2-miplib--the-mixed-integer-side">2. MIPLIB — the mixed-integer side</a><a href="#2b-maros-meszaros-the-convex-qp-set">2b. Maros-Meszaros, the convex QP set</a><a href="#2c-the-standard-pooling-instances-non-convex">2c. The standard pooling instances, non-convex</a><a href="#2d-qplib-the-convex-continuous-qps">2d. QPLIB, the convex continuous QPs</a><a href="#2e-nonlinear-programs---hock-schittkowski-and-convex-minlplib">2e. Nonlinear programs - Hock-Schittkowski, and convex MINLPLib</a><a href="#3-correctness-beyond-the-objective-value">3. Correctness beyond the objective value</a><a href="#3a-netlibs-infeasible-set---a-verdict-is-only-as-good-as-its-certificate" class="sub">3a. Netlib&#x27;s infeasible set - a verdict is only as good as its certificate</a><a href="#3b-parametric-lp---the-optimal-value-as-a-function-of-one-coefficient" class="sub">3b. Parametric LP - the optimal value as a function of one coefficient</a><a href="#4-comparison-against-an-established-solver">4. Comparison against an established solver</a><a href="#4a-head-to-head-highs-scip-cbcclp-and-glpk-766">4a. Head-to-head: HiGHS, SCIP, CBC/Clp and GLPK (#766)</a><a href="#4a1-netlib-lp" class="sub">4a.1 Netlib LP</a><a href="#4a2-kennington-lp" class="sub">4a.2 Kennington LP</a><a href="#4a3-maros-meszaros-qp" class="sub">4a.3 Maros-Meszaros QP</a><a href="#4b-agreement-against-size-limited-commercial-editions-533">4b. Agreement against size-limited commercial editions (#533)</a><a href="#5-robustness--where-the-solver-stops-working">5. Robustness — where the solver stops working</a><a href="#5b-the-stress-set---badly-scaled-netlib-and-adversarial-lps-against-highs-762">5b. The stress set - badly scaled Netlib and adversarial LPs, against HiGHS (#762)</a><a href="#6-what-these-numbers-do-not-say">6. What these numbers do not say</a></nav>
 </aside>
 <main class="col" id="content">
-<header class="page" id="top"><div class="wrap"><nav class="crumbs" aria-label="Breadcrumb"><a href="/docs">Docs</a><span aria-hidden="true">/</span>Benchmarks</nav><h1>Benchmarks</h1><p class="doc-banner">Generated from <a href="https://github.com/thegoodengineers/SANKHYA/blob/43b648c6c4bd569ae804909a8d8e9a4df6cc40bf/docs/BENCHMARKS.md"><code>docs/BENCHMARKS.md</code></a> at commit <a href="https://github.com/thegoodengineers/SANKHYA/commit/43b648c6c4bd569ae804909a8d8e9a4df6cc40bf"><code>43b648c</code></a> (2026-09-29). Do not edit this page by hand.</p></div></header>
-<details class="doc-toc"><summary>Contents</summary><ol><li><a href="#1-netlib-lp--accuracy-against-published-optima">1. Netlib LP — accuracy against published optima</a></li><li class="sub"><a href="#1a-the-small-set--what-the-demo-runs">1a. The small set — what the demo runs</a></li><li class="sub"><a href="#1b-the-medium-tier--instances-up-to-500-rows">1b. The medium tier — instances up to 500 rows</a></li><li class="sub"><a href="#1c-the-full-set--the-honest-headline">1c. The full set — the honest headline</a></li><li class="sub"><a href="#1c1-the-kennington-set---the-next-rung">1c.1 The Kennington set - the next rung</a></li><li class="sub"><a href="#1d-beyond-netlib--mittelmanns-lp-set">1d. Beyond Netlib — Mittelmann&#x27;s LP set</a></li><li class="sub"><a href="#1e-the-first-order-engine--pdhg">1e. The first-order engine — PDHG</a></li><li class="sub"><a href="#1g-gpu-pdhg-crossover--when-the-gpu-wins">1g. GPU PDHG crossover — when the GPU wins</a></li><li class="sub"><a href="#1f-scale--how-far-up-this-goes">1f. Scale — how far up this goes</a></li><li><a href="#10-of-11-solves-under-auto-reached-the-analytic-optimum-to-a-relative-1e-06-commit-078cb24-the-engine-column-is-what-ran-which-after-a-decline-is-the-fallback-pdhg-cpu-on-a-row-that-the-rule-table-sent-to-the-interior-point-means-the-set-up-passed-ipm_setup_share-of-the-limit-and-the-first-order-method-took-the-rest-357">10 of 11 solves under auto reached the analytic optimum to a relative 1e-06 (commit 078...</a></li><li><a href="#2-miplib--the-mixed-integer-side">2. MIPLIB — the mixed-integer side</a></li><li><a href="#2b-maros-meszaros-the-convex-qp-set">2b. Maros-Meszaros, the convex QP set</a></li><li><a href="#2c-the-standard-pooling-instances-non-convex">2c. The standard pooling instances, non-convex</a></li><li><a href="#2d-qplib-the-convex-continuous-qps">2d. QPLIB, the convex continuous QPs</a></li><li><a href="#2e-nonlinear-programs---hock-schittkowski-and-convex-minlplib">2e. Nonlinear programs - Hock-Schittkowski, and convex MINLPLib</a></li><li><a href="#3-correctness-beyond-the-objective-value">3. Correctness beyond the objective value</a></li><li class="sub"><a href="#3a-netlibs-infeasible-set---a-verdict-is-only-as-good-as-its-certificate">3a. Netlib&#x27;s infeasible set - a verdict is only as good as its certificate</a></li><li class="sub"><a href="#3b-parametric-lp---the-optimal-value-as-a-function-of-one-coefficient">3b. Parametric LP - the optimal value as a function of one coefficient</a></li><li><a href="#4-comparison-against-an-established-solver">4. Comparison against an established solver</a></li><li><a href="#4b-agreement-against-size-limited-commercial-editions-533">4b. Agreement against size-limited commercial editions (#533)</a></li><li><a href="#5-robustness--where-the-solver-stops-working">5. Robustness — where the solver stops working</a></li><li><a href="#6-what-these-numbers-do-not-say">6. What these numbers do not say</a></li></ol></details>
+<header class="page" id="top"><div class="wrap"><nav class="crumbs" aria-label="Breadcrumb"><a href="/docs">Docs</a><span aria-hidden="true">/</span>Benchmarks</nav><h1>Benchmarks</h1><p class="doc-banner">Generated from <a href="https://github.com/thegoodengineers/SANKHYA/blob/8c58fb910a32d63372e05a26d0588ed65dcae580/docs/BENCHMARKS.md"><code>docs/BENCHMARKS.md</code></a> at commit <a href="https://github.com/thegoodengineers/SANKHYA/commit/8c58fb910a32d63372e05a26d0588ed65dcae580"><code>8c58fb9</code></a> (2026-09-30). Do not edit this page by hand.</p></div></header>
+<details class="doc-toc"><summary>Contents</summary><ol><li><a href="#1-netlib-lp--accuracy-against-published-optima">1. Netlib LP — accuracy against published optima</a></li><li class="sub"><a href="#1a-the-small-set--what-the-demo-runs">1a. The small set — what the demo runs</a></li><li class="sub"><a href="#1b-the-medium-tier--instances-up-to-500-rows">1b. The medium tier — instances up to 500 rows</a></li><li class="sub"><a href="#1c-the-full-set--the-honest-headline">1c. The full set — the honest headline</a></li><li class="sub"><a href="#1c1-the-kennington-set---the-next-rung">1c.1 The Kennington set - the next rung</a></li><li class="sub"><a href="#1d-beyond-netlib--mittelmanns-lp-set">1d. Beyond Netlib — Mittelmann&#x27;s LP set</a></li><li class="sub"><a href="#1e-the-first-order-engine--pdhg">1e. The first-order engine — PDHG</a></li><li class="sub"><a href="#1g-gpu-pdhg-crossover--when-the-gpu-wins">1g. GPU PDHG crossover — when the GPU wins</a></li><li class="sub"><a href="#1f-scale--how-far-up-this-goes">1f. Scale — how far up this goes</a></li><li><a href="#2-miplib--the-mixed-integer-side">2. MIPLIB — the mixed-integer side</a></li><li><a href="#2b-maros-meszaros-the-convex-qp-set">2b. Maros-Meszaros, the convex QP set</a></li><li><a href="#2c-the-standard-pooling-instances-non-convex">2c. The standard pooling instances, non-convex</a></li><li><a href="#2d-qplib-the-convex-continuous-qps">2d. QPLIB, the convex continuous QPs</a></li><li><a href="#2e-nonlinear-programs---hock-schittkowski-and-convex-minlplib">2e. Nonlinear programs - Hock-Schittkowski, and convex MINLPLib</a></li><li><a href="#3-correctness-beyond-the-objective-value">3. Correctness beyond the objective value</a></li><li class="sub"><a href="#3a-netlibs-infeasible-set---a-verdict-is-only-as-good-as-its-certificate">3a. Netlib&#x27;s infeasible set - a verdict is only as good as its certificate</a></li><li class="sub"><a href="#3b-parametric-lp---the-optimal-value-as-a-function-of-one-coefficient">3b. Parametric LP - the optimal value as a function of one coefficient</a></li><li><a href="#4-comparison-against-an-established-solver">4. Comparison against an established solver</a></li><li><a href="#4a-head-to-head-highs-scip-cbcclp-and-glpk-766">4a. Head-to-head: HiGHS, SCIP, CBC/Clp and GLPK (#766)</a></li><li class="sub"><a href="#4a1-netlib-lp">4a.1 Netlib LP</a></li><li class="sub"><a href="#4a2-kennington-lp">4a.2 Kennington LP</a></li><li class="sub"><a href="#4a3-maros-meszaros-qp">4a.3 Maros-Meszaros QP</a></li><li><a href="#4b-agreement-against-size-limited-commercial-editions-533">4b. Agreement against size-limited commercial editions (#533)</a></li><li><a href="#5-robustness--where-the-solver-stops-working">5. Robustness — where the solver stops working</a></li><li><a href="#5b-the-stress-set---badly-scaled-netlib-and-adversarial-lps-against-highs-762">5b. The stress set - badly scaled Netlib and adversarial LPs, against HiGHS (#762)</a></li><li><a href="#6-what-these-numbers-do-not-say">6. What these numbers do not say</a></li></ol></details>
 <article class="doc-body">
 <!-- GENERATED FILE. Do not edit by hand. -->
 <!-- Regenerate with: python bench/runners/make_benchmarks_doc.py -->
@@ -60,6 +60,7 @@ of Netlib.</strong> Its pass rate is not the headline; section 1c is.</p>
 <p>Source CSV: <code>bench/results/netlib-small-2b4eb6b.csv</code><br>
 Commit <code>2b4eb6b</code> · machine <code>Windows-AMD64</code> · generated 2026-09-09T03:41:33+00:00</p>
 <p><strong>9 of 9 instances in this working set</strong> matched their published optimum to a relative 1e-6 <strong>and</strong> passed independent verification by <code>tools/verify_solution.py</code>.</p>
+<p>The same run graded against the <strong>exact</strong> optimum, Koch's rational values (<em>The final NETLIB-LP results</em>, Oper. Res. Lett. 32, 2004; <code>data/netlib/koch_exact.json</code>): <strong>9 of 9</strong> within a relative 1e-6 <strong>and</strong> verified. Not within it: none.</p>
 <p>Coverage: this run used <strong>9 of the 97 instances</strong> Netlib publishes an optimal value for (set <code>small</code>, selected by <code>fetch_data.py --set small</code>). Phase 6's "full Netlib &gt;= 95%" exit criterion is measured against the full set, not against this one.</p>
 <p>Every instance in this set passed.</p>
 <div class="table-wrap"><table class="doc-table">
@@ -199,6 +200,7 @@ Commit <code>2b4eb6b</code> · machine <code>Windows-AMD64</code> · generated 2
 <p>Source CSV: <code>bench/results/netlib-medium-2b4eb6b.csv</code><br>
 Commit <code>2b4eb6b</code> · machine <code>Windows-AMD64</code> · generated 2026-09-09T03:36:04+00:00</p>
 <p><strong>48 of 50 instances in this working set</strong> matched their published optimum to a relative 1e-6 <strong>and</strong> passed independent verification by <code>tools/verify_solution.py</code>.</p>
+<p>The same run graded against the <strong>exact</strong> optimum, Koch's rational values (<em>The final NETLIB-LP results</em>, Oper. Res. Lett. 32, 2004; <code>data/netlib/koch_exact.json</code>): <strong>50 of 50</strong> within a relative 1e-6 <strong>and</strong> verified. Not within it: none.</p>
 <p>Coverage: this run used <strong>50 of the 97 instances</strong> Netlib publishes an optimal value for (set <code>medium</code>, selected by <code>fetch_data.py --set medium</code>). Phase 6's "full Netlib &gt;= 95%" exit criterion is measured against the full set, not against this one.</p>
 <p><strong>2 failed</strong>, grouped by the reason the solver itself gave. They are named here because a pass rate without its failures is a claim, not evidence:</p>
 <div class="table-wrap"><table class="doc-table">
@@ -849,6 +851,7 @@ makes them the easier half of the library by construction; this is the number Ph
 <p>Source CSV: <code>bench/results/netlib-full-9094e1c.csv</code><br>
 Commit <code>9094e1c</code> · machine <code>Windows-AMD64</code> · generated 2026-09-29T12:26:26+00:00</p>
 <p><strong>82 of 92 instances in this working set</strong> matched their published optimum to a relative 1e-6 <strong>and</strong> passed independent verification by <code>tools/verify_solution.py</code>.</p>
+<p>The same run graded against the <strong>exact</strong> optimum, Koch's rational values (<em>The final NETLIB-LP results</em>, Oper. Res. Lett. 32, 2004; <code>data/netlib/koch_exact.json</code>): <strong>90 of 92</strong> within a relative 1e-6 <strong>and</strong> verified. Not within it: <code>pilot.ja</code>, <code>pilot87</code>.</p>
 <p>Coverage: this run used <strong>92 of the 97 instances</strong> Netlib publishes an optimal value for (set <code>full</code>, selected by <code>fetch_data.py --set full</code>). Phase 6's "full Netlib &gt;= 95%" exit criterion is measured against this set.</p>
 <p><strong>10 failed</strong>, grouped by the reason the solver itself gave. They are named here because a pass rate without its failures is a claim, not evidence:</p>
 <div class="table-wrap"><table class="doc-table">
@@ -6323,7 +6326,10 @@ Commit <code>e134aeb</code> · machine <code>Windows-AMD64</code> · 120.0s per 
 </tr>
 </tbody>
 </table></div>
-<h2 id="10-of-11-solves-under-auto-reached-the-analytic-optimum-to-a-relative-1e-06-commit-078cb24-the-engine-column-is-what-ran-which-after-a-decline-is-the-fallback-pdhg-cpu-on-a-row-that-the-rule-table-sent-to-the-interior-point-means-the-set-up-passed-ipm_setup_share-of-the-limit-and-the-first-order-method-took-the-rest-357"><strong>10 of 11</strong> solves under <code>auto</code> reached the analytic optimum to a relative 1e-06 (commit 078cb24). The engine column is what ran, which after a decline is the fallback: <code>pdhg-cpu</code> on a row that the rule table sent to the interior point means the set-up passed <code>ipm_setup_share</code> of the limit and the first-order method took the rest (#357).</h2>
+<p><strong>10 of 11</strong> solves under <code>auto</code> reached the analytic optimum to a relative 1e-06 (commit 078cb24). The engine column is what ran, which after a decline is the fallback: <code>pdhg-cpu</code> on a row that the rule table sent to the interior point means the set-up passed <code>ipm_setup_share</code> of the limit and the first-order method took the rest (#357).</p>
+<h4 id="1f5-a-million-rows-on-the-cpu">1f.5 A million rows on the CPU</h4>
+<p><em>No <code>million-cpu-*.csv</code> in <code>bench/results/</code>. Produce one with</em> <code>python bench/runners/million.py --binary build/sankhya --keep DIR</code>.</p>
+<hr>
 <h2 id="2-miplib--the-mixed-integer-side">2. MIPLIB — the mixed-integer side</h2>
 <p>The LP tiers above say nothing about the branch and bound. This is the MILP evidence, and it
 is a harder library: MIPLIB instances are chosen to be difficult for mature solvers.</p>
@@ -7203,6 +7209,15 @@ Commit <code>54e561b</code></p>
 </tbody>
 </table></div>
 <p><strong>Needed time</strong> (proved at 600 s, not at 60 s): none. <strong>Needs a bound</strong> (optimum reached at both limits, proved at neither): <code>b-ball</code>, <code>neos-3611689-kaihu</code>, <code>neos5</code>, <code>noswot</code>, <code>opt1217</code>, <code>rlp1</code>. <strong>Needs an incumbent</strong> (wrong answer even at 600 s): <code>ej</code>, <code>enlight8</code>, <code>enlight_hard</code>, <code>gen-ip016</code>, <code>gen-ip054</code>, <code>k16x240b</code>, <code>markshare1</code>, <code>markshare_4_0</code>, <code>markshare_5_0</code>, <code>neos-3072252-nete</code>, <code>neos-5140963-mincio</code>, <code>pk1</code>, <code>ran12x21</code>, <code>ran13x13</code>, <code>timtab1</code>.</p>
+<h4 id="the-60-instance-tier-over-three-seeds-504">The 60-instance tier over three seeds (#504)</h4>
+<p>Not yet run. Reproduce with:</p>
+<pre><code>python bench/runners/fetch_miplib.py --tier 2
+python bench/runners/miplib.py --tier 2 --seeds 3 --time-limit 300
+</code></pre>
+<h4 id="ab-the-node-lp-factor-cache-501">A/B: the node LP factor cache (#501)</h4>
+<p>Not yet run on an idle machine.</p>
+<h4 id="ab-feasibility-jump-on-the-seed-harness-506">A/B: Feasibility Jump on the seed harness (#506)</h4>
+<p>Not yet run on an idle machine.</p>
 <hr>
 <h2 id="2b-maros-meszaros-the-convex-qp-set">2b. Maros-Meszaros, the convex QP set</h2>
 <p>The 138 convex QPs of Maros and Meszaros, <em>A repository of convex quadratic programming
@@ -12033,6 +12048,201 @@ Commit <code>ad57c03</code> · machine <code>Linux-x86_64</code></p>
 </ul>
 <p>The two are <strong>within noise of each other</strong> here, at 1.00x. A narrow claim: eight small instances settle nothing about large models. HiGHS is a decade of specialist work with presolve, a dual simplex and a mature pricing scheme. This solver now has a presolve (#43, #92) and a dual simplex (#65) of its own, both defaults, so what remains between the two is the pricing and the years. The part that has to be right first is that <strong>the answers agree</strong> - the problem statement asks us to compare, not to win.</p>
 <hr>
+<h2 id="4a-head-to-head-highs-scip-cbcclp-and-glpk-766">4a. Head-to-head: HiGHS, SCIP, CBC/Clp and GLPK (#766)</h2>
+<p><strong>The instance counts first, because they differ between reports.</strong> netlib.org's <code>lp/data</code>
+ships <strong>92</strong> feasible LPs as EMPS files, and those 92 are the headline row below. Two more,
+<code>truss</code> and <code>stocfor3</code>, are shipped only as Fortran generators; they are generated and pinned
+by sha256 (#745) and reported in their own row. <code>qap8</code>, <code>qap12</code> and <code>qap15</code> are in the
+readme's table but not in <code>lp/data</code>. Published comparisons count differently: 93 or 94 when
+they add the generated or <code>qap</code> models, 114 when the sixteen Kennington LPs are folded in.
+Kennington is reported separately here (4a.2), and so is the 138-problem Maros-Meszaros set
+(4a.3).</p>
+<p>Every solver runs as a SEPARATE PROCESS on the same machine, with the same time limit and one
+thread: HiGHS through <code>highspy</code>, SCIP through <code>pyscipopt</code>, Clp (CBC's LP engine) and GLPK as
+the distribution's binaries. No rival code is linked into or read by SANKHYA; see judgement
+call 35 in <code>docs/PROVENANCE.md</code>. Every answer, a rival's included, is converted into the
+<code>.sol</code> layout and checked by <code>tools/verify_solution.py</code>: on primal and dual conditions where
+the solver gives usable duals, on primal feasibility and the objective only where it does not
+(SCIP; the <code>checked on</code> column says which). <code>solved</code> is the solver's own optimal status;
+<code>matched</code> is the objective recomputed at its point within a relative 1e-6 of the published
+optimum; <code>verified</code> is the verifier's acceptance. Only a run that is solved, verified and
+matched counts for the time - matched against the exact optimum where one is published, which
+for Netlib is Koch's (the readme is wrong on nine instances) - and any other is charged the
+full limit, and the shifted geometric mean uses a
+10-second shift, Mittelmann's, not the 1 s of section 1.
+Times are each solver's own clock. Produced by <code>python bench/runners/compare.py --suite
+&lt;suite&gt;</code> (<code>bench/runners/compare_suite.py</code>, <code>bench/runners/rivals.py</code>).</p>
+<h3 id="4a1-netlib-lp">4a.1 Netlib LP</h3>
+<p>Source CSV: <code>bench/results/head-to-head-netlib-5e490ef.csv</code><br>
+Commit <code>5e490ef</code> · machine <code>cloud container (docker); Intel(R) Xeon(R) Processor @ 2.10GHz; 4 cores; 16 GiB RAM; Linux-x86_64</code><br>
+94 instances · time limit 120 s · 1 thread per solver · every solver a separate process</p>
+<p><strong>The 92 LPs netlib.org ships as EMPS files:</strong></p>
+<div class="table-wrap"><table class="doc-table">
+<thead>
+<tr>
+<th>solver</th>
+<th>version</th>
+<th style="text-align: right;">runs</th>
+<th style="text-align: right;">solved</th>
+<th style="text-align: right;">matched</th>
+<th style="text-align: right;">matched exact</th>
+<th style="text-align: right;">verified</th>
+<th>checked on</th>
+<th style="text-align: right;">SGM time, shift 10 s</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SANKHYA</td>
+<td>5e490ef</td>
+<td style="text-align: right;">92</td>
+<td style="text-align: right;">92</td>
+<td style="text-align: right;">83</td>
+<td style="text-align: right;">92</td>
+<td style="text-align: right;">92</td>
+<td>primal+dual</td>
+<td style="text-align: right;">0.575 s</td>
+</tr>
+<tr>
+<td>HiGHS</td>
+<td>1.15.1</td>
+<td style="text-align: right;">92</td>
+<td style="text-align: right;">92</td>
+<td style="text-align: right;">83</td>
+<td style="text-align: right;">92</td>
+<td style="text-align: right;">92</td>
+<td>primal+dual</td>
+<td style="text-align: right;">0.163 s</td>
+</tr>
+<tr>
+<td>SCIP</td>
+<td>10.0.2</td>
+<td style="text-align: right;">92</td>
+<td style="text-align: right;">92</td>
+<td style="text-align: right;">83</td>
+<td style="text-align: right;">92</td>
+<td style="text-align: right;">92</td>
+<td>primal-only</td>
+<td style="text-align: right;">0.398 s</td>
+</tr>
+<tr>
+<td>CBC/Clp</td>
+<td>1.17.9</td>
+<td style="text-align: right;">92</td>
+<td style="text-align: right;">92</td>
+<td style="text-align: right;">83</td>
+<td style="text-align: right;">92</td>
+<td style="text-align: right;">88</td>
+<td>primal+dual</td>
+<td style="text-align: right;">1.355 s</td>
+</tr>
+<tr>
+<td>GLPK</td>
+<td>5.0</td>
+<td style="text-align: right;">92</td>
+<td style="text-align: right;">92</td>
+<td style="text-align: right;">83</td>
+<td style="text-align: right;">92</td>
+<td style="text-align: right;">91</td>
+<td>primal+dual</td>
+<td style="text-align: right;">0.486 s</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>The two generated from netlib.org's Fortran bundles (#745), <code>truss</code> and <code>stocfor3</code>:</strong></p>
+<div class="table-wrap"><table class="doc-table">
+<thead>
+<tr>
+<th>solver</th>
+<th>version</th>
+<th style="text-align: right;">runs</th>
+<th style="text-align: right;">solved</th>
+<th style="text-align: right;">matched</th>
+<th style="text-align: right;">matched exact</th>
+<th style="text-align: right;">verified</th>
+<th>checked on</th>
+<th style="text-align: right;">SGM time, shift 10 s</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SANKHYA</td>
+<td>5e490ef</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">2</td>
+<td>primal+dual</td>
+<td style="text-align: right;">3.874 s</td>
+</tr>
+<tr>
+<td>HiGHS</td>
+<td>1.15.1</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">2</td>
+<td>primal+dual</td>
+<td style="text-align: right;">1.397 s</td>
+</tr>
+<tr>
+<td>SCIP</td>
+<td>10.0.2</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">2</td>
+<td>primal-only</td>
+<td style="text-align: right;">2.314 s</td>
+</tr>
+<tr>
+<td>CBC/Clp</td>
+<td>1.17.9</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">2</td>
+<td>primal+dual</td>
+<td style="text-align: right;">1.279 s</td>
+</tr>
+<tr>
+<td>GLPK</td>
+<td>5.0</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">2</td>
+<td>primal+dual</td>
+<td style="text-align: right;">2.164 s</td>
+</tr>
+</tbody>
+</table></div>
+<p><code>matched</code> grades against the readme's optimum and <code>matched exact</code> against Koch's exact rational optimum (<code>data/netlib/koch_exact.json</code>, #747); the timing counts the exact grade. Where the two differ the readme is the one that is wrong: on 80bau3b, ganges, greenbea, greenbeb, nesm, pilot, pilot.we, scrs8 and stocfor3 every solver here agrees with Koch.</p>
+<p><img alt="Dolan-More performance profile, Netlib LP" src="/docs/img/profile-netlib.svg"></p>
+<p><em><code>docs/img/profile-netlib.svg</code>, drawn from the CSV by <code>bench/runners/perf_profile.py</code> each time this document is generated. A curve's height at tau is the fraction of the instances above on which that solver's run counted and took at most tau times the fastest counted run; times under 0.1 s are floored there (GLPK's clock resolution), so the fast end is a tie.</em></p>
+<p>Every run that did not count, by solver:</p>
+<ul>
+<li><strong>CBC/Clp</strong>, 4: <code>pilot</code> (optimal, rejected by the verifier), <code>pilot.ja</code> (optimal, rejected by the verifier), <code>pilot.we</code> (optimal, rejected by the verifier), <code>pilotnov</code> (optimal, rejected by the verifier)</li>
+<li><strong>GLPK</strong>, 1: <code>dfl001</code> (optimal, rejected by the verifier)</li>
+</ul>
+<p>What the verifier rejected:</p>
+<ul>
+<li>CBC/Clp on <code>pilot</code>: [FAIL] column bounds               worst violation 5.392e-07 (5.392e-07 relative) on UFO006</li>
+<li>CBC/Clp on <code>pilot.ja</code>: [FAIL] column bounds               worst violation 1.538e-05 (1.538e-05 relative) on USLB06</li>
+<li>CBC/Clp on <code>pilot.we</code>: [FAIL] column bounds               worst violation 1.000e-05 (1.000e-05 relative) on UOSE03</li>
+<li>CBC/Clp on <code>pilotnov</code>: [FAIL] column bounds               worst violation 1.538e-05 (1.538e-05 relative) on USLB06</li>
+<li>GLPK on <code>dfl001</code>: [FAIL] dual feasibility (columns)  worst 2.851e-07 (2.851e-07 relative) on C11729</li>
+</ul>
+<h3 id="4a2-kennington-lp">4a.2 Kennington LP</h3>
+<p>No <code>head-to-head-kennington-*.csv</code> in <code>bench/results/</code>, so <strong>no numbers are stated for this suite</strong>. Run <code>python bench/runners/compare.py --suite kennington</code>.</p>
+<h3 id="4a3-maros-meszaros-qp">4a.3 Maros-Meszaros QP</h3>
+<p>No <code>head-to-head-maros-meszaros-*.csv</code> in <code>bench/results/</code>, so <strong>no numbers are stated for this suite</strong>. Run <code>python bench/runners/compare.py --suite maros-meszaros</code>.</p>
+<hr>
 <h2 id="4b-agreement-against-size-limited-commercial-editions-533">4b. Agreement against size-limited commercial editions (#533)</h2>
 <p>Gurobi Academic/Trial (≤2000 variables + constraints), CPLEX Community Edition (≤1000), and
 GLPK (no size limit), each invoked as a <strong>separate process</strong> over the same MPS files. No
@@ -12042,10 +12252,10 @@ fast. What is being measured is <strong>agreement of objective values and status
 solver that claims the same answer as three independent implementations is more credible than
 one that does not, regardless of how it compares on a wall clock.</p>
 <p>No commercial-agreement run has been committed yet. Reproduce with:</p>
-<pre><code class="language-bash"># install one or more of: gurobi_cl (Gurobi), cplex (CPLEX Community), glpsol (GLPK)
-python bench/runners/commercial_agreement.py --suite netlib --time-limit 60
+<pre><code class="language-bash">python -m venv editions &amp;&amp; editions/bin/pip install cplex   # CPLEX Community
+python bench/runners/commercial_agreement.py --python editions/bin/python
 </code></pre>
-<p>Licence terms for each edition are checked in <code>docs/PROVENANCE.md</code> before any run.</p>
+<p>Licence terms for each edition are in <code>docs/PROVENANCE.md</code>, judgement call 16: the pip editions of Gurobi and Xpress forbid publishing benchmark results, so only CPLEX Community is run by default.</p>
 <hr>
 <h2 id="5-robustness--where-the-solver-stops-working">5. Robustness — where the solver stops working</h2>
 <p>PS26119 asks for "a clear demonstration of numerical robustness ... involving degeneracy,
@@ -12108,6 +12318,281 @@ of Beale and Kuhn.</p>
 </table></div>
 <p>Reading the table: the <code>conditioning</code> cliff is <code>kZeroDrop</code> (<code>tolerances.hpp</code>), the threshold below which a coefficient is treated as zero everywhere in the solver. At an entry spread of 1e12 the smallest coefficients fall under 1e-11, the model that gets solved is not the model that was written, and presolve then reports - correctly, about the truncated model - that a row cannot reach its bound. A model whose answer depends on a coefficient below 1e-11 is outside this solver's range; lowering the threshold would move the cliff, not remove it. The other limits are limits of the CERTIFICATE, not the answer: where the objective is right to 1e-15 and the verifier still rejects, the reduced costs or multipliers carry more rounding than its tolerances allow, which is worth knowing exactly because those tolerances are what a downstream consumer of the duals gets.</p>
 <hr>
+<h2 id="5b-the-stress-set---badly-scaled-netlib-and-adversarial-lps-against-highs-762">5b. The stress set - badly scaled Netlib and adversarial LPs, against HiGHS (#762)</h2>
+<p>Every Netlib LP with each row and column multiplied by a seeded power of two between 2^-20
+and 2^20 (about 1e-6 to 1e6, so a matrix entry moves by up to 1e12), which is an exact
+change of variables: the optimum is Koch's exact optimum of the original. Beside it, Klee-Minty
+cubes n = 10..40, near-singular optimal bases, LPs infeasible by 1e-9..1e-6, Beale's and
+Chvatal's cycling examples and heavily degenerate vertices, and unbounded LPs whose ray needs
+two columns together. Generated by <code>bench/runners/stress_instances.py</code> (each file's sha256 in
+<code>data/stress/reference.json</code>), solved by SANKHYA and by HiGHS in a separate process, and both
+solvers' <code>.sol</code> files judged by the same <code>tools/verify_solution.py</code>. <strong>correct</strong> is the known
+verdict with a file the verifier accepts (and, when optimal, the objective within 1e-6
+relative); <strong>wrong</strong> is a contradicted verdict, an objective off the known optimum, or a file
+the verifier rejects; <strong>failed</strong> is no verdict (a limit, a numerical error, <code>feasible</code>).</p>
+<p>Reading it: SANKHYA's scaled-Netlib failures are the status guard refusing a claim it cannot
+support, not answers; why the engine gets there (presolve's absolute 1e-11 coefficient drop,
+an equilibration that does not undo a 2^40 spread, no objective scaling) is #792 and #783.
+HiGHS runs with its defaults, under which a matrix entry below <code>small_matrix_value</code> = 1e-9 is
+dropped and a bound at or above <code>infinite_bound</code> = 1e20 is infinite. The scaled files carry
+entries far below 1e-9, which is consistent with most of its scaled-Netlib points violating a
+row of the file as written and most of its certificates failing to prove the file infeasible
+(each failing check is named below); Klee-Minty from n = 30, whose last right-hand sides
+reach 5^29 &gt; 1e20, comes back unbounded.</p>
+<p>Measured on SANKHYA commit <code>90f5d356</code> against HiGHS 1.15.1 (highspy, separate process), machine <code>laptop-i5-1135G7-7.7GB-Windows-AMD64-shared</code>, 126 instances. Source: <code>stress-90f5d356.csv</code>.</p>
+<div class="table-wrap"><table class="doc-table">
+<thead>
+<tr>
+<th>family</th>
+<th>instances</th>
+<th>sankhya correct / wrong / failed</th>
+<th>highs correct / wrong / failed</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>degenerate</code></td>
+<td>5</td>
+<td>5 / 0 / 0</td>
+<td>5 / 0 / 0</td>
+</tr>
+<tr>
+<td><code>klee_minty</code></td>
+<td>7</td>
+<td>4 / 0 / 3</td>
+<td>4 / 3 / 0</td>
+</tr>
+<tr>
+<td><code>near_singular</code></td>
+<td>8</td>
+<td>8 / 0 / 0</td>
+<td>8 / 0 / 0</td>
+</tr>
+<tr>
+<td><code>scaled_netlib</code></td>
+<td>94</td>
+<td>7 / 0 / 87</td>
+<td>0 / 86 / 8</td>
+</tr>
+<tr>
+<td><code>thin_infeasible</code></td>
+<td>8</td>
+<td>7 / 0 / 1</td>
+<td>8 / 0 / 0</td>
+</tr>
+<tr>
+<td><code>unbounded</code></td>
+<td>4</td>
+<td>4 / 0 / 0</td>
+<td>4 / 0 / 0</td>
+</tr>
+<tr>
+<td><strong>all</strong></td>
+<td>126</td>
+<td>35 / 0 / 91</td>
+<td>29 / 89 / 8</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>sankhya, failed</strong> (91):</p>
+<ul>
+<li><code>klee_minty_20</code>: no verdict: feasible (engine reported optimal but the largest /multiplier/ * slack is 1.562e-02, above the 1.0e-06 the independent verifier ac)</li>
+<li><code>klee_minty_25</code>: no verdict: feasible (engine reported optimal but the largest /multiplier/ * slack is 6.400e+01, above the 1.0e-06 the independent verifier ac)</li>
+<li><code>klee_minty_30</code>: no verdict: feasible (engine reported optimal but the largest /multiplier/ * slack is 1.311e+05, above the 1.0e-06 the independent verifier ac)</li>
+<li><code>scaled_25fv47</code>: no verdict: numerical_error (route: the scaled attempt returned optimal after 3.5 s of its 30 s share; neither attempt produced a usable point; the s)</li>
+<li><code>scaled_80bau3b</code>: no verdict: numerical_error (phase 1 stalled at max bound violation 5.226e-05, only just above the 1.0e-07 feasibility tolerance; no column prices as)</li>
+<li><code>scaled_adlittle</code>: no verdict: numerical_error (engine reported optimal but the returned point violates primal feasibility by 5.417e-06 (5.417e-06 relative to the scale)</li>
+<li><code>scaled_agg</code>: no verdict: numerical_error (engine reported optimal but the returned point violates primal feasibility by 3.484e-02 (3.484e-02 relative to the scale)</li>
+<li><code>scaled_agg2</code>: no verdict: numerical_error (engine reported optimal but the returned point violates primal feasibility by 4.268e-02 (3.703e-02 relative to the scale)</li>
+<li><code>scaled_agg3</code>: no verdict: numerical_error (engine reported optimal but the returned point violates primal feasibility by 1.101e-01 (1.101e-01 relative to the scale)</li>
+<li><code>scaled_bandm</code>: no verdict: numerical_error (engine reported optimal but the returned point violates primal feasibility by 4.486e-05 (4.486e-05 relative to the scale)</li>
+<li><code>scaled_beaconfd</code>: no verdict: numerical_error (engine reported optimal but the returned point violates primal feasibility by 2.810e-04 (2.810e-04 relative to the scale)</li>
+<li><code>scaled_blend</code>: no verdict: feasible (engine reported optimal but the reduced costs violate dual feasibility by 4.485e-05 (4.485e-05 relative to the terms the)</li>
+<li><code>scaled_bnl1</code>: no verdict: numerical_error (phase 1 terminated with max bound violation 2.328e+02, far above the 1.0e-07 feasibility tolerance; route: the scaled at)</li>
+<li><code>scaled_bnl2</code>: no verdict: numerical_error (phase 1 terminated with max bound violation 1.893e+02, far above the 1.0e-07 feasibility tolerance; route: the scaled at)</li>
+<li><code>scaled_boeing1</code>: no verdict: numerical_error (engine reported optimal but the returned point violates primal feasibility by 8.332e-04 (8.332e-04 relative to the scale)</li>
+<li><code>scaled_bore3d</code>: no verdict: numerical_error (route: the scaled attempt returned optimal after 0.0 s of its 30 s share; nothing was left for an unscaled retry; engine)</li>
+<li><code>scaled_brandy</code>: no verdict: numerical_error (engine reported optimal but the returned point violates primal feasibility by 1.305e-05 (1.305e-05 relative to the scale)</li>
+<li><code>scaled_capri</code>: no verdict: numerical_error (engine reported optimal but the returned point violates primal feasibility by 4.835e-04 (4.835e-04 relative to the scale)</li>
+<li><code>scaled_cycle</code>: no verdict: numerical_error (phase 1 diverged: the largest bound violation grew to 2.975e+08 from a least of 0.000e+00, which cannot happen on faithf)</li>
+<li><code>scaled_czprob</code>: no verdict: numerical_error (phase 1 terminated with max bound violation 2.308e-04, far above the 1.0e-07 feasibility tolerance; no machine-checkable)</li>
+<li><code>scaled_d2q06c</code>: no verdict: time_limit (time limit 29.9865s reached inside the basis factorization, which was abandoned; route: the scaled attempt returned time)</li>
+<li><code>scaled_d6cube</code>: no verdict: numerical_error (engine reported optimal but the returned point violates primal feasibility by 7.629e-06 (7.629e-06 relative to the scale)</li>
+<li><code>scaled_degen2</code>: no verdict: feasible (engine reported optimal but the reduced costs violate dual feasibility by 4.091e-05 (4.091e-05 relative to the terms the)</li>
+<li><code>scaled_degen3</code>: no verdict: numerical_error (phase 1 terminated with max bound violation 2.054e+00, far above the 1.0e-07 feasibility tolerance; route: the scaled at)</li>
+<li><code>scaled_dfl001</code>: no verdict: numerical_error (dual simplex: basic variable 57 is outside its bounds by 1.016e+00, far above the 1.0e-07 feasibility tolerance, and no )</li>
+<li><code>scaled_e226</code>: no verdict: numerical_error (engine reported optimal but the returned point violates primal feasibility by 1.224e-06 (1.224e-06 relative to the scale)</li>
+<li><code>scaled_etamacro</code>: no verdict: numerical_error (engine reported optimal but the returned point violates primal feasibility by 6.408e-05 (6.408e-05 relative to the scale)</li>
+<li><code>scaled_fffff800</code>: no verdict: numerical_error (engine reported optimal but the returned point violates primal feasibility by 1.567e-04 (1.567e-04 relative to the scale)</li>
+<li><code>scaled_finnis</code>: no verdict: numerical_error (phase 1 terminated with max bound violation 4.299e+01, far above the 1.0e-07 feasibility tolerance; no machine-checkable)</li>
+<li><code>scaled_fit1d</code>: no verdict: numerical_error (engine reported optimal but the returned point violates primal feasibility by 1.831e-05 (1.831e-05 relative to the scale)</li>
+<li><code>scaled_fit1p</code>: no verdict: numerical_error (engine reported optimal but the returned point violates primal feasibility by 6.936e-05 (6.936e-05 relative to the scale)</li>
+<li><code>scaled_fit2d</code>: no verdict: numerical_error (engine reported optimal but the returned point violates primal feasibility by 6.847e-06 (6.847e-06 relative to the scale)</li>
+<li><code>scaled_fit2p</code>: no verdict: time_limit (time limit 29.9484s reached inside the basis factorization, which was abandoned; route: the scaled attempt returned time)</li>
+<li><code>scaled_forplan</code>: no verdict: numerical_error (engine reported optimal but the returned point violates primal feasibility by 2.252e-04 (2.252e-04 relative to the scale)</li>
+<li><code>scaled_ganges</code>: no verdict: numerical_error (dual simplex: basic variable 1494 is outside its bounds by 5.634e+03, far above the 1.0e-07 feasibility tolerance, and n)</li>
+<li><code>scaled_gfrd-pnc</code>: no verdict: numerical_error (engine reported optimal but the returned point violates primal feasibility by 1.335e-01 (1.335e-01 relative to the scale)</li>
+<li><code>scaled_greenbea</code>: no verdict: numerical_error (engine reported optimal but the returned point violates primal feasibility by 6.987e-03 (6.987e-03 relative to the scale)</li>
+<li><code>scaled_greenbeb</code>: no verdict: time_limit (time limit 37.4059s reached inside the basis factorization, which was abandoned; route: the scaled attempt returned nume)</li>
+<li><code>scaled_grow15</code>: no verdict: numerical_error (engine reported optimal but the returned point violates primal feasibility by 4.257e+00 (1.000e+00 relative to the scale)</li>
+<li><code>scaled_grow22</code>: no verdict: numerical_error (engine reported optimal but the returned point violates primal feasibility by 3.815e+00 (1.000e+00 relative to the scale)</li>
+<li><code>scaled_grow7</code>: no verdict: numerical_error (engine reported optimal but the returned point violates primal feasibility by 9.577e-01 (9.577e-01 relative to the scale)</li>
+<li><code>scaled_lotfi</code>: no verdict: numerical_error (engine reported optimal but the returned point violates primal feasibility by 9.695e-03 (9.695e-03 relative to the scale)</li>
+<li><code>scaled_maros</code>: no verdict: numerical_error (phase 1 diverged: the largest bound violation grew to 2.184e+09 from a least of 0.000e+00, which cannot happen on faithf)</li>
+<li><code>scaled_maros-r7</code>: no verdict: time_limit (time limit 59.9759s reached inside the assembly of the normal equations, which was abandoned)</li>
+<li><code>scaled_modszk1</code>: no verdict: numerical_error (engine reported optimal but the returned point violates primal feasibility by 7.700e-02 (7.700e-02 relative to the scale)</li>
+<li><code>scaled_nesm</code>: no verdict: numerical_error (dual simplex: basic variable 2864 is outside its bounds by 8.766e+00, far above the 1.0e-07 feasibility tolerance, and n)</li>
+<li><code>scaled_perold</code>: no verdict: time_limit (time limit 29.9961s reached inside the basis factorization, which was abandoned; route: the scaled attempt returned time)</li>
+<li><code>scaled_pilot</code>: no verdict: numerical_error (phase 1 diverged: the largest bound violation grew to 1.281e+21 from a least of 1.570e+08, which cannot happen on faithf)</li>
+<li><code>scaled_pilot.ja</code>: no verdict: time_limit (time limit 29.9585s reached inside the basis factorization, which was abandoned; route: the scaled attempt returned time)</li>
+<li><code>scaled_pilot.we</code>: no verdict: numerical_error (phase 1 terminated with max bound violation 3.956e-01, far above the 1.0e-07 feasibility tolerance; route: the scaled at)</li>
+<li><code>scaled_pilot4</code>: no verdict: time_limit (time limit 29.999s reached inside the basis factorization, which was abandoned; route: the scaled attempt returned time_)</li>
+<li><code>scaled_pilot87</code>: no verdict: time_limit (stopped at the time limit of 29.9879s after 30.23s, 5754 iterations, 0 nodes; route: the scaled attempt returned time_li)</li>
+<li><code>scaled_pilotnov</code>: no verdict: numerical_error (phase 1 diverged: the largest bound violation grew to 3.304e+08 from a least of 2.700e+01, which cannot happen on faithf)</li>
+<li><code>scaled_recipe</code>: no verdict: numerical_error (dual simplex: basic variable 203 is outside its bounds by 8.975e+01, far above the 1.0e-07 feasibility tolerance, and no)</li>
+<li><code>scaled_sc205</code>: no verdict: feasible (route: the scaled attempt returned optimal after 0.1 s of its 30 s share; the unscaled retry produced this answer; engin)</li>
+<li><code>scaled_sc50b</code>: no verdict: numerical_error (engine reported optimal but the returned point violates primal feasibility by 1.150e-04 (1.150e-04 relative to the scale)</li>
+<li><code>scaled_scagr25</code>: no verdict: numerical_error (phase 1 terminated with max bound violation 3.639e+05, far above the 1.0e-07 feasibility tolerance; route: the scaled at)</li>
+<li><code>scaled_scagr7</code>: no verdict: numerical_error (phase 1 terminated with max bound violation 3.526e+03, far above the 1.0e-07 feasibility tolerance; route: the scaled at)</li>
+<li><code>scaled_scfxm1</code>: no verdict: numerical_error (phase 1 terminated with max bound violation 1.172e-01, far above the 1.0e-07 feasibility tolerance; the scaled attempt c)</li>
+<li><code>scaled_scfxm2</code>: no verdict: time_limit (time limit 59.5956s reached inside the basis factorization, which was abandoned; the scaled attempt claimed unbounded bu)</li>
+<li><code>scaled_scfxm3</code>: no verdict: numerical_error (phase 1 terminated with max bound violation 5.460e+03, far above the 1.0e-07 feasibility tolerance; no machine-checkable)</li>
+<li><code>scaled_scorpion</code>: no verdict: numerical_error (phase 1 stalled at max bound violation 3.662e-06, only just above the 1.0e-07 feasibility tolerance; no column prices as)</li>
+<li><code>scaled_scrs8</code>: no verdict: numerical_error (engine reported optimal but the returned point violates primal feasibility by 1.406e-06 (1.406e-06 relative to the scale)</li>
+<li><code>scaled_scsd1</code>: no verdict: numerical_error (engine reported optimal but the returned point violates primal feasibility by 3.815e-06 (3.815e-06 relative to the scale)</li>
+<li><code>scaled_scsd6</code>: no verdict: numerical_error (route: the scaled attempt returned optimal after 1.2 s of its 30 s share; neither attempt produced a usable point; the s)</li>
+<li><code>scaled_scsd8</code>: no verdict: numerical_error (engine reported optimal but the returned point violates primal feasibility by 4.937e-05 (4.937e-05 relative to the scale)</li>
+<li><code>scaled_sctap1</code>: no verdict: feasible (engine reported optimal but the reduced costs violate dual feasibility by 2.384e-06 (2.384e-06 relative to the terms the)</li>
+<li><code>scaled_sctap2</code>: no verdict: numerical_error (engine reported optimal but the returned point violates primal feasibility by 2.861e-05 (2.861e-05 relative to the scale)</li>
+<li><code>scaled_sctap3</code>: no verdict: numerical_error (engine reported optimal but the returned point violates primal feasibility by 1.431e-05 (1.431e-05 relative to the scale)</li>
+<li><code>scaled_seba</code>: no verdict: numerical_error (dual simplex: basic variable 994 is outside its bounds by 1.404e-02, far above the 1.0e-07 feasibility tolerance, and no)</li>
+<li><code>scaled_share1b</code>: no verdict: numerical_error (engine reported optimal but the returned point violates primal feasibility by 1.751e-04 (1.751e-04 relative to the scale)</li>
+<li><code>scaled_share2b</code>: no verdict: feasible (engine reported optimal but the reduced costs violate dual feasibility by 5.958e-06 (5.958e-06 relative to the terms the)</li>
+<li><code>scaled_shell</code>: no verdict: numerical_error (dual simplex: basic variable 1480 is outside its bounds by 1.470e+03, far above the 1.0e-07 feasibility tolerance, and n)</li>
+<li><code>scaled_ship04l</code>: no verdict: numerical_error (engine reported optimal but the returned point violates primal feasibility by 5.186e-04 (5.186e-04 relative to the scale)</li>
+<li><code>scaled_ship04s</code>: no verdict: numerical_error (engine reported optimal but the returned point violates primal feasibility by 3.796e-05 (3.796e-05 relative to the scale)</li>
+<li><code>scaled_ship08l</code>: no verdict: numerical_error (engine reported optimal but the returned point violates primal feasibility by 2.342e-04 (2.342e-04 relative to the scale)</li>
+<li><code>scaled_ship08s</code>: no verdict: numerical_error (phase 1 stalled at max bound violation 5.993e-06, only just above the 1.0e-07 feasibility tolerance; no column prices as)</li>
+<li><code>scaled_ship12l</code>: no verdict: numerical_error (phase 1 stalled at max bound violation 3.499e-07, only just above the 1.0e-07 feasibility tolerance; no column prices as)</li>
+<li><code>scaled_ship12s</code>: no verdict: numerical_error (phase 1 stalled at max bound violation 1.797e-06, only just above the 1.0e-07 feasibility tolerance; no column prices as)</li>
+<li><code>scaled_sierra</code>: no verdict: numerical_error (route: the scaled attempt returned optimal after 0.5 s of its 30 s share; neither attempt produced a usable point; the s)</li>
+<li><code>scaled_stair</code>: no verdict: numerical_error (phase 1 terminated with max bound violation 4.518e+03, far above the 1.0e-07 feasibility tolerance; no machine-checkable)</li>
+<li><code>scaled_standata</code>: no verdict: feasible (engine reported optimal but the reduced costs violate dual feasibility by 2.237e-06 (2.237e-06 relative to the terms the)</li>
+<li><code>scaled_standmps</code>: no verdict: numerical_error (engine reported optimal but the returned point violates primal feasibility by 9.346e-07 (9.346e-07 relative to the scale)</li>
+<li><code>scaled_stocfor1</code>: no verdict: numerical_error (phase 1 terminated with max bound violation 8.000e+00, far above the 1.0e-07 feasibility tolerance; route: the scaled at)</li>
+<li><code>scaled_stocfor2</code>: no verdict: numerical_error (phase 1 terminated with max bound violation 1.710e+04, far above the 1.0e-07 feasibility tolerance; no machine-checkable)</li>
+<li><code>scaled_stocfor3</code>: no verdict: time_limit (time limit 29.7081s reached inside the basis factorization, which was abandoned; route: the scaled attempt returned time)</li>
+<li><code>scaled_truss</code>: no verdict: numerical_error (engine reported optimal but the returned point violates primal feasibility by 3.693e-04 (3.693e-04 relative to the scale)</li>
+<li><code>scaled_tuff</code>: no verdict: numerical_error (engine reported optimal but the returned point violates primal feasibility by 9.506e-05 (9.506e-05 relative to the scale)</li>
+<li><code>scaled_vtp.base</code>: no verdict: feasible (engine reported optimal but the reduced costs violate dual feasibility by 1.095e-05 (1.095e-05 relative to the terms the)</li>
+<li><code>scaled_woodw</code>: no verdict: numerical_error (engine reported optimal but the returned point violates primal feasibility by 3.486e-07 (3.486e-07 relative to the scale)</li>
+<li><code>thin_infeasible_1e-6_1</code>: no verdict: numerical_error (phase 1 stalled at max bound violation 1.746e-07, only just above the 1.0e-07 feasibility tolerance; no column prices as)</li>
+</ul>
+<p><strong>highs, wrong</strong> (89):</p>
+<ul>
+<li><code>klee_minty_30</code>: unbounded, verifier rejects: [FAIL] ray respects the row bounds     17 would be crossed: R13, R14, R15, R16, R17</li>
+<li><code>klee_minty_35</code>: unbounded, verifier rejects: [FAIL] ray respects the row bounds     22 would be crossed: R13, R14, R15, R16, R17</li>
+<li><code>klee_minty_40</code>: unbounded, verifier rejects: [FAIL] ray respects the row bounds     27 would be crossed: R13, R14, R15, R16, R17</li>
+<li><code>scaled_25fv47</code>: infeasible, verifier rejects: [FAIL] aggregate is bounded above         1 unbounded in the direction used, so the aggregate proves nothing: C474</li>
+<li><code>scaled_80bau3b</code>: infeasible, verifier rejects: [FAIL] aggregate is bounded above         1 unbounded in the direction used, so the aggregate proves nothing: C1807</li>
+<li><code>scaled_adlittle</code>: optimal, verifier rejects: [FAIL] row activity                      worst violation 4.385e-02 (4.385e-02 relative to the row's terms) on R27; [FAIL] activity agreement                max /ours - solver's/ = 4.385e-02; [F</li>
+<li><code>scaled_afiro</code>: optimal, verifier rejects: [FAIL] row activity                      worst violation 2.043e-02 (2.043e-02 relative to the row's terms) on R4; [FAIL] activity agreement                max /ours - solver's/ = 2.043e-02; [FA</li>
+<li><code>scaled_agg</code>: infeasible, verifier rejects: [FAIL] aggregate is bounded above         1 unbounded in the direction used, so the aggregate proves nothing: C119</li>
+<li><code>scaled_agg2</code>: optimal, verifier rejects: [FAIL] row activity                      worst violation 7.601e+01 (1.977e+00 relative to the row's terms) on R438; [FAIL] activity agreement                max /ours - solver's/ = 1.850e+02; [</li>
+<li><code>scaled_agg3</code>: optimal, verifier rejects: [FAIL] row activity                      worst violation 2.556e+00 (1.094e+00 relative to the row's terms) on R503; [FAIL] activity agreement                max /ours - solver's/ = 2.279e+02; [</li>
+<li><code>scaled_bandm</code>: infeasible, verifier rejects: [FAIL] aggregate is bounded above         11 unbounded in the direction used, so the aggregate proves nothing: C8, C88, C240, C278, C280</li>
+<li><code>scaled_beaconfd</code>: infeasible, verifier rejects: [FAIL] aggregate is bounded above         1 unbounded in the direction used, so the aggregate proves nothing: C51</li>
+<li><code>scaled_blend</code>: unbounded on an instance that is optimal</li>
+<li><code>scaled_bnl1</code>: infeasible, verifier rejects: [FAIL] aggregate is bounded above         1 unbounded in the direction used, so the aggregate proves nothing: C4</li>
+<li><code>scaled_bnl2</code>: infeasible, verifier rejects: [FAIL] aggregate is bounded above         1 unbounded in the direction used, so the aggregate proves nothing: C935</li>
+<li><code>scaled_boeing1</code>: infeasible, verifier rejects: [FAIL] aggregate is bounded above         1 unbounded in the direction used, so the aggregate proves nothing: C33</li>
+<li><code>scaled_boeing2</code>: optimal, verifier rejects: [FAIL] row activity                      worst violation 8.099e-03 (8.099e-03 relative to the row's terms) on R88; [FAIL] activity agreement                max /ours - solver's/ = 9.445e-03; [F</li>
+<li><code>scaled_bore3d</code>: optimal, verifier rejects: [FAIL] row activity                      worst violation 1.766e-02 (1.766e-02 relative to the row's terms) on R190; [FAIL] activity agreement                max /ours - solver's/ = 1.766e-02; [</li>
+<li><code>scaled_brandy</code>: infeasible, verifier rejects: [FAIL] aggregate is bounded above         1 unbounded in the direction used, so the aggregate proves nothing: C5</li>
+<li><code>scaled_capri</code>: infeasible, verifier rejects: [FAIL] aggregate is bounded above         1 unbounded in the direction used, so the aggregate proves nothing: C260</li>
+<li><code>scaled_cycle</code>: infeasible on an instance that is optimal</li>
+<li><code>scaled_czprob</code>: infeasible, verifier rejects: [FAIL] aggregate is bounded above         1 unbounded in the direction used, so the aggregate proves nothing: C3267</li>
+<li><code>scaled_d2q06c</code>: infeasible, verifier rejects: [FAIL] aggregate is bounded above         1 unbounded in the direction used, so the aggregate proves nothing: C3752</li>
+<li><code>scaled_d6cube</code>: optimal, verifier rejects: [FAIL] row activity                      worst violation 2.441e-04 (2.441e-04 relative to the row's terms) on R406; [FAIL] activity agreement                max /ours - solver's/ = 2.441e-04; [</li>
+<li><code>scaled_degen2</code>: infeasible, verifier rejects: [FAIL] aggregate is bounded above         2 unbounded in the direction used, so the aggregate proves nothing: C58, C59</li>
+<li><code>scaled_degen3</code>: infeasible, verifier rejects: [FAIL] aggregate is bounded above         3 unbounded in the direction used, so the aggregate proves nothing: C389, C390, C391</li>
+<li><code>scaled_dfl001</code>: infeasible, verifier rejects: [FAIL] aggregate is bounded above         1 unbounded in the direction used, so the aggregate proves nothing: C4912</li>
+<li><code>scaled_e226</code>: infeasible on an instance that is optimal</li>
+<li><code>scaled_etamacro</code>: infeasible, verifier rejects: [FAIL] aggregate is bounded above         1 unbounded in the direction used, so the aggregate proves nothing: C226</li>
+<li><code>scaled_fffff800</code>: infeasible, verifier rejects: [FAIL] aggregate is bounded above         1 unbounded in the direction used, so the aggregate proves nothing: C820</li>
+<li><code>scaled_finnis</code>: infeasible, verifier rejects: [FAIL] aggregate is bounded above         2 unbounded in the direction used, so the aggregate proves nothing: C413, C414</li>
+<li><code>scaled_fit1d</code>: optimal, verifier rejects: [FAIL] row activity                      worst violation 4.925e-04 (4.925e-04 relative to the row's terms) on R17; [FAIL] activity agreement                max /ours - solver's/ = 4.925e-04; [F</li>
+<li><code>scaled_forplan</code>: optimal, verifier rejects: [FAIL] row activity                      worst violation 6.199e-03 (6.199e-03 relative to the row's terms) on R10; [FAIL] activity agreement                max /ours - solver's/ = 6.199e-03; [F</li>
+<li><code>scaled_ganges</code>: infeasible, verifier rejects: [FAIL] aggregate is bounded above         1 unbounded in the direction used, so the aggregate proves nothing: C211</li>
+<li><code>scaled_gfrd-pnc</code>: optimal, verifier rejects: [FAIL] row activity                      worst violation 2.670e-01 (2.670e-01 relative to the row's terms) on R7; [FAIL] activity agreement                max /ours - solver's/ = 2.670e-01; [FA</li>
+<li><code>scaled_greenbea</code>: infeasible, verifier rejects: [FAIL] aggregate is bounded above         1 unbounded in the direction used, so the aggregate proves nothing: C2678</li>
+<li><code>scaled_greenbeb</code>: infeasible, verifier rejects: [FAIL] aggregate is bounded above         1 unbounded in the direction used, so the aggregate proves nothing: C1952</li>
+<li><code>scaled_grow15</code>: optimal, verifier rejects: [FAIL] row activity                      worst violation 4.212e+00 (1.847e+00 relative to the row's terms) on R265; [FAIL] activity agreement                max /ours - solver's/ = 1.961e+02; [</li>
+<li><code>scaled_grow22</code>: optimal, verifier rejects: [FAIL] row activity                      worst violation 6.851e+00 (1.626e+00 relative to the row's terms) on R139; [FAIL] activity agreement                max /ours - solver's/ = 1.451e+03; [</li>
+<li><code>scaled_grow7</code>: optimal, verifier rejects: [FAIL] row activity                      worst violation 3.708e+00 (1.277e+00 relative to the row's terms) on R16; [FAIL] activity agreement                max /ours - solver's/ = 1.771e+02; [F</li>
+<li><code>scaled_israel</code>: optimal, verifier rejects: [FAIL] row activity                      worst violation 9.693e+00 (1.000e+00 relative to the row's terms) on R0; [FAIL] activity agreement                max /ours - solver's/ = 9.693e+00; [FA</li>
+<li><code>scaled_kb2</code>: optimal, verifier rejects: [FAIL] row activity                      worst violation 1.274e-03 (1.274e-03 relative to the row's terms) on R11; [FAIL] activity agreement                max /ours - solver's/ = 1.274e-03; [F</li>
+<li><code>scaled_lotfi</code>: optimal, verifier rejects: [FAIL] row activity                      worst violation 2.753e-01 (1.901e-01 relative to the row's terms) on R138; [FAIL] activity agreement                max /ours - solver's/ = 2.753e-01; [</li>
+<li><code>scaled_maros</code>: unbounded, verifier rejects: [FAIL] row activity                    worst violation 3.015e+00 (1.015e+00 relative to the row's terms) on R570; [FAIL] activity agreement              max /ours - solver's/ = 3.956e+01</li>
+<li><code>scaled_maros-r7</code>: infeasible, verifier rejects: [FAIL] aggregate is bounded above         1 unbounded in the direction used, so the aggregate proves nothing: C5945</li>
+<li><code>scaled_modszk1</code>: optimal, verifier rejects: [FAIL] row activity                      worst violation 1.454e+00 (1.000e+00 relative to the row's terms) on R685; [FAIL] activity agreement                max /ours - solver's/ = 1.454e+00; [</li>
+<li><code>scaled_nesm</code>: infeasible, verifier rejects: [FAIL] infeasibility proof                the rows aggregate to at least 7.379150390625e-02, the column bounds allow at most 1.020935039062e-01, a contradiction of -2.830e-02</li>
+<li><code>scaled_pilot</code>: infeasible, verifier rejects: [FAIL] aggregate is bounded above         2 unbounded in the direction used, so the aggregate proves nothing: C82, C2742</li>
+<li><code>scaled_pilot.we</code>: infeasible, verifier rejects: [FAIL] certificate uses only real bounds  2 lean on an infinite bound: R60, R79</li>
+<li><code>scaled_pilot4</code>: infeasible on an instance that is optimal</li>
+<li><code>scaled_pilot87</code>: infeasible on an instance that is optimal</li>
+<li><code>scaled_recipe</code>: infeasible, verifier rejects: [FAIL] infeasibility proof                the rows aggregate to at least 0.000000000000e+00, the column bounds allow at most 6.675720214844e-05, a contradiction of -6.676e-05</li>
+<li><code>scaled_sc105</code>: optimal, verifier rejects: [FAIL] row activity                      worst violation 1.876e-02 (1.876e-02 relative to the row's terms) on R25; [FAIL] activity agreement                max /ours - solver's/ = 1.876e-02; [F</li>
+<li><code>scaled_sc205</code>: optimal, verifier rejects: [FAIL] row activity                      worst violation 2.882e-02 (2.882e-02 relative to the row's terms) on R116; [FAIL] activity agreement                max /ours - solver's/ = 2.882e-02; [</li>
+<li><code>scaled_sc50a</code>: optimal, verifier rejects: [FAIL] reduced costs                     max /c - A^T y - d/ = 1.112e-04 (1.112e-04 relative to its terms) on C44</li>
+<li><code>scaled_sc50b</code>: optimal, verifier rejects: [FAIL] row activity                      worst violation 1.150e-04 (1.150e-04 relative to the row's terms) on R35; [FAIL] activity agreement                max /ours - solver's/ = 1.150e-04</li>
+<li><code>scaled_scagr25</code>: infeasible, verifier rejects: [FAIL] aggregate is bounded above         2 unbounded in the direction used, so the aggregate proves nothing: C117, C126</li>
+<li><code>scaled_scagr7</code>: infeasible, verifier rejects: [FAIL] aggregate is bounded above         1 unbounded in the direction used, so the aggregate proves nothing: C96</li>
+<li><code>scaled_scfxm1</code>: infeasible, verifier rejects: [FAIL] aggregate is bounded above         1 unbounded in the direction used, so the aggregate proves nothing: C116</li>
+<li><code>scaled_scfxm2</code>: infeasible, verifier rejects: [FAIL] aggregate is bounded above         1 unbounded in the direction used, so the aggregate proves nothing: C690</li>
+<li><code>scaled_scfxm3</code>: infeasible, verifier rejects: [FAIL] aggregate is bounded above         1 unbounded in the direction used, so the aggregate proves nothing: C795</li>
+<li><code>scaled_scorpion</code>: infeasible, verifier rejects: [FAIL] aggregate is bounded above         2 unbounded in the direction used, so the aggregate proves nothing: C249, C263</li>
+<li><code>scaled_scrs8</code>: infeasible, verifier rejects: [FAIL] aggregate is bounded above         1 unbounded in the direction used, so the aggregate proves nothing: C1132</li>
+<li><code>scaled_scsd1</code>: optimal, verifier rejects: [FAIL] row activity                      worst violation 2.271e-05 (2.271e-05 relative to the row's terms) on R7; [FAIL] activity agreement                max /ours - solver's/ = 2.271e-05; [FA</li>
+<li><code>scaled_scsd6</code>: optimal, verifier rejects: [FAIL] row activity                      worst violation 3.052e-05 (3.052e-05 relative to the row's terms) on R101; [FAIL] activity agreement                max /ours - solver's/ = 3.052e-05; [</li>
+<li><code>scaled_scsd8</code>: optimal, verifier rejects: [FAIL] row activity                      worst violation 1.659e-04 (1.659e-04 relative to the row's terms) on R173; [FAIL] activity agreement                max /ours - solver's/ = 1.659e-04; [</li>
+<li><code>scaled_sctap1</code>: optimal, verifier rejects: [FAIL] row activity                      worst violation 1.831e-03 (1.831e-03 relative to the row's terms) on R150; [FAIL] activity agreement                max /ours - solver's/ = 1.831e-03; [</li>
+<li><code>scaled_sctap2</code>: infeasible, verifier rejects: [FAIL] aggregate is bounded above         3 unbounded in the direction used, so the aggregate proves nothing: C280, C281, C282</li>
+<li><code>scaled_sctap3</code>: optimal, verifier rejects: [FAIL] row activity                      worst violation 9.766e-04 (9.766e-04 relative to the row's terms) on R171; [FAIL] activity agreement                max /ours - solver's/ = 9.766e-04; [</li>
+<li><code>scaled_seba</code>: infeasible, verifier rejects: [FAIL] aggregate is bounded above         1 unbounded in the direction used, so the aggregate proves nothing: C76</li>
+<li><code>scaled_share1b</code>: infeasible, verifier rejects: [FAIL] aggregate is bounded above         2 unbounded in the direction used, so the aggregate proves nothing: C34, C133</li>
+<li><code>scaled_share2b</code>: optimal, verifier rejects: [FAIL] row activity                      worst violation 1.908e-04 (1.908e-04 relative to the row's terms) on R74; [FAIL] activity agreement                max /ours - solver's/ = 4.232e-03; [F</li>
+<li><code>scaled_shell</code>: infeasible, verifier rejects: [FAIL] aggregate is bounded above         1 unbounded in the direction used, so the aggregate proves nothing: C516</li>
+<li><code>scaled_ship04l</code>: optimal, verifier rejects: [FAIL] row activity                      worst violation 1.314e-02 (1.314e-02 relative to the row's terms) on R59; [FAIL] activity agreement                max /ours - solver's/ = 1.314e-02; [F</li>
+<li><code>scaled_ship04s</code>: infeasible, verifier rejects: [FAIL] aggregate is bounded above         1 unbounded in the direction used, so the aggregate proves nothing: C333</li>
+<li><code>scaled_ship08l</code>: infeasible, verifier rejects: [FAIL] aggregate is bounded above         1 unbounded in the direction used, so the aggregate proves nothing: C177</li>
+<li><code>scaled_ship08s</code>: infeasible, verifier rejects: [FAIL] aggregate is bounded above         1 unbounded in the direction used, so the aggregate proves nothing: C198</li>
+<li><code>scaled_ship12l</code>: infeasible, verifier rejects: [FAIL] aggregate is bounded above         1 unbounded in the direction used, so the aggregate proves nothing: C5332</li>
+<li><code>scaled_ship12s</code>: infeasible, verifier rejects: [FAIL] aggregate is bounded above         1 unbounded in the direction used, so the aggregate proves nothing: C2737</li>
+<li><code>scaled_stair</code>: infeasible, verifier rejects: [FAIL] aggregate is bounded above         1 unbounded in the direction used, so the aggregate proves nothing: C406</li>
+<li><code>scaled_standata</code>: infeasible, verifier rejects: [FAIL] aggregate is bounded above         1 unbounded in the direction used, so the aggregate proves nothing: C235</li>
+<li><code>scaled_standmps</code>: infeasible, verifier rejects: [FAIL] infeasibility proof                the rows aggregate to at least 0.000000000000e+00, the column bounds allow at most 9.918212890625e-05, a contradiction of -9.918e-05</li>
+<li><code>scaled_stocfor1</code>: infeasible, verifier rejects: [FAIL] aggregate is bounded above         1 unbounded in the direction used, so the aggregate proves nothing: C86</li>
+<li><code>scaled_stocfor2</code>: infeasible, verifier rejects: [FAIL] aggregate is bounded above         3 unbounded in the direction used, so the aggregate proves nothing: C28, C742, C1253</li>
+<li><code>scaled_stocfor3</code>: infeasible, verifier rejects: [FAIL] aggregate is bounded above         4 unbounded in the direction used, so the aggregate proves nothing: C102, C566, C1782, C1836</li>
+<li><code>scaled_truss</code>: optimal, verifier rejects: [FAIL] row activity                      worst violation 1.562e-02 (1.562e-02 relative to the row's terms) on R458; [FAIL] activity agreement                max /ours - solver's/ = 1.562e-02; [</li>
+<li><code>scaled_tuff</code>: infeasible, verifier rejects: [FAIL] aggregate is bounded above         1 unbounded in the direction used, so the aggregate proves nothing: C399</li>
+<li><code>scaled_vtp.base</code>: infeasible, verifier rejects: [FAIL] aggregate is bounded above         1 unbounded in the direction used, so the aggregate proves nothing: C114</li>
+<li><code>scaled_wood1p</code>: optimal, verifier rejects: [FAIL] reduced costs                     max /c - A^T y - d/ = 9.080e-06 (9.080e-06 relative to its terms) on C305</li>
+</ul>
+<p><strong>highs, failed</strong> (8):</p>
+<ul>
+<li><code>scaled_fit1p</code>: no verdict: kSolveError</li>
+<li><code>scaled_fit2d</code>: no verdict: killed (no exit within 3x the time limit)</li>
+<li><code>scaled_fit2p</code>: no verdict: time_limit</li>
+<li><code>scaled_perold</code>: no verdict: kNotset</li>
+<li><code>scaled_pilot.ja</code>: no verdict: kNotset</li>
+<li><code>scaled_pilotnov</code>: no verdict: kNotset</li>
+<li><code>scaled_sierra</code>: no verdict: kNotset</li>
+<li><code>scaled_woodw</code>: no verdict: kNotset</li>
+</ul>
+<p>13 thin-infeasible answers are <code>optimal</code> at a point the verifier accepts with every row inside 1e-7: at the stated tolerance that point is feasible, so the answer is graded correct, and named here so the grade is not mistaken for a proof of infeasibility.</p>
+<hr>
 <h2 id="6-what-these-numbers-do-not-say">6. What these numbers do not say</h2>
 <ul>
 <li><strong>The large-model evidence is sections 1d and 1f to 1f.3, and none of it is a real
@@ -12136,7 +12621,7 @@ of Beale and Kuhn.</p>
 <!-- fragment:footer -->
 <div class="wrap">
     <div>SANKHYA · Smart India Hackathon 2026 · PS SIH26119 · Apache-2.0 · <a href="https://sankhya-solver.vercel.app">sankhya-solver.vercel.app</a></div>
-    <div>Every figure on this site was last checked against SANKHYA <a href="https://github.com/thegoodengineers/SANKHYA/tree/43b648c6c4bd569ae804909a8d8e9a4df6cc40bf">main at <span data-fact="sankhya_commit">43b648c</span></a>.</div>
+    <div>Every figure on this site was last checked against SANKHYA <a href="https://github.com/thegoodengineers/SANKHYA/tree/8c58fb910a32d63372e05a26d0588ed65dcae580">main at <span data-fact="sankhya_commit">8c58fb9</span></a>.</div>
     <div><a href="https://github.com/thegoodengineers/SANKHYA">Source</a> · <a href="/docs">Docs</a> · <a href="/docs/benchmarks">Benchmarks</a> · <a href="/docs/provenance">Provenance</a> · <a href="/docs/coverage">Coverage tracker</a></div>
   </div>
 <!-- /fragment:footer -->
