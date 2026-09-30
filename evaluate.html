@@ -49,7 +49,7 @@
       <div class="stepcard"><div class="num">1</div><div><h3>Build and run the tests <small>· five minutes</small></h3><pre><code>git clone https://github.com/thegoodengineers/SANKHYA &amp;&amp; cd SANKHYA
 scripts/configure.sh build Release
 cmake --build build -j
-ctest --test-dir build --output-on-failure</code></pre><p class="small">Expect the build to finish with no warnings. ctest runs <span data-fact="tests_total">1347</span> tests; at <span data-fact="sankhya_commit">3f8256e</span> they all pass on the Ubuntu CI, and on one Windows GCC 16.1 build one PDHG status test fails, named on the <a href="/run#step-2">Run it</a> page. The suite includes a fuzz test that compares the simplex against an exact rational-arithmetic oracle on random models.</p></div></div>
+ctest --test-dir build --output-on-failure</code></pre><p class="small">Expect the build to finish with no warnings. ctest runs <span data-fact="tests_total">1357</span> tests; at <span data-fact="sankhya_commit">9a50cc7</span> they all pass on the Ubuntu CI, and on one Windows GCC 16.1 build one PDHG status test fails, named on the <a href="/run#step-2">Run it</a> page. The suite includes a fuzz test that compares the simplex against an exact rational-arithmetic oracle on random models.</p></div></div>
       <div class="stepcard"><div class="num">2</div><div><h3>Solve a blending model and check it independently <small>· one minute</small></h3><pre><code>./build/sankhya solve demo/crude_blend.mps --write-sol blend.sol --ranging
 python tools/verify_solution.py demo/crude_blend.mps blend.sol</code></pre><p class="small">The checker reads only the model file and the solution file, re-derives feasibility and optimality in its own arithmetic and prints its verdict with the residuals. Open <code>blend.sol</code>: every row has its shadow price and its range.</p></div></div>
       <div class="stepcard"><div class="num">3</div><div><h3>Watch an impossible model get a proof, not an excuse <small>· one minute</small></h3><pre><code>./build/sankhya solve demo/crude_blend_infeasible.mps --write-sol no.sol
@@ -93,7 +93,7 @@ demo/run_demo.sh share2b</code></pre><p class="small">Classic Netlib models, com
 <!-- fragment:footer -->
 <div class="wrap">
     <div>SANKHYA · Smart India Hackathon 2026 · PS SIH26119 · Apache-2.0 · <a href="https://sankhya-solver.vercel.app">sankhya-solver.vercel.app</a></div>
-    <div>Every figure on this site was last checked against SANKHYA <a href="https://github.com/thegoodengineers/SANKHYA/tree/3f8256ef5450d2584d22fc9d4aaab074051a0938">main at <span data-fact="sankhya_commit">3f8256e</span></a>.</div>
+    <div>Every figure on this site was last checked against SANKHYA <a href="https://github.com/thegoodengineers/SANKHYA/tree/9a50cc78a66364676620bb46594b7e23508effb2">main at <span data-fact="sankhya_commit">9a50cc7</span></a>.</div>
     <div><a href="https://github.com/thegoodengineers/SANKHYA">Source</a> · <a href="/docs">Docs</a> · <a href="/docs/benchmarks">Benchmarks</a> · <a href="/docs/provenance">Provenance</a> · <a href="/docs/coverage">Coverage tracker</a></div>
   </div>
 <!-- /fragment:footer -->

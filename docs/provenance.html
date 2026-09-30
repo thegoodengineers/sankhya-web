@@ -28,7 +28,7 @@
   <nav class="here" aria-label="On this page"><a href="#1-the-red-line">1. The red line</a><a href="#2-dependency-table">2. Dependency table</a><a href="#2b-toolchains-this-has-been-built-and-tested-with">2b. Toolchains this has been built and tested with</a><a href="#3-algorithm-citation-table">3. Algorithm citation table</a><a href="#4-machine-checkable-evidence">4. Machine-checkable evidence</a><a href="#41-what-the-binary-actually-links-against" class="sub">4.1 What the binary actually links against</a><a href="#42-the-full-link-line" class="sub">4.2 The full link line</a><a href="#42b-the-opt-in-cudss-build-489" class="sub">4.2b The opt-in cuDSS build (#489)</a><a href="#42c-release-archives-748" class="sub">4.2c Release archives (#748)</a><a href="#43-sbom" class="sub">4.3 SBOM</a><a href="#5-judgement-calls">5. Judgement calls</a><a href="#6-reproducing-this">6. Reproducing this</a></nav>
 </aside>
 <main class="col" id="content">
-<header class="page" id="top"><div class="wrap"><nav class="crumbs" aria-label="Breadcrumb"><a href="/docs">Docs</a><span aria-hidden="true">/</span>Provenance</nav><h1>Provenance</h1><p class="doc-banner">Generated from <a href="https://github.com/thegoodengineers/SANKHYA/blob/3f8256ef5450d2584d22fc9d4aaab074051a0938/docs/PROVENANCE.md"><code>docs/PROVENANCE.md</code></a> at commit <a href="https://github.com/thegoodengineers/SANKHYA/commit/3f8256ef5450d2584d22fc9d4aaab074051a0938"><code>3f8256e</code></a> (2026-09-30). Do not edit this page by hand.</p></div></header>
+<header class="page" id="top"><div class="wrap"><nav class="crumbs" aria-label="Breadcrumb"><a href="/docs">Docs</a><span aria-hidden="true">/</span>Provenance</nav><h1>Provenance</h1><p class="doc-banner">Generated from <a href="https://github.com/thegoodengineers/SANKHYA/blob/9a50cc78a66364676620bb46594b7e23508effb2/docs/PROVENANCE.md"><code>docs/PROVENANCE.md</code></a> at commit <a href="https://github.com/thegoodengineers/SANKHYA/commit/9a50cc78a66364676620bb46594b7e23508effb2"><code>9a50cc7</code></a> (2026-09-30). Do not edit this page by hand.</p></div></header>
 <details class="doc-toc"><summary>Contents</summary><ol><li><a href="#1-the-red-line">1. The red line</a></li><li><a href="#2-dependency-table">2. Dependency table</a></li><li><a href="#2b-toolchains-this-has-been-built-and-tested-with">2b. Toolchains this has been built and tested with</a></li><li><a href="#3-algorithm-citation-table">3. Algorithm citation table</a></li><li><a href="#4-machine-checkable-evidence">4. Machine-checkable evidence</a></li><li class="sub"><a href="#41-what-the-binary-actually-links-against">4.1 What the binary actually links against</a></li><li class="sub"><a href="#42-the-full-link-line">4.2 The full link line</a></li><li class="sub"><a href="#42b-the-opt-in-cudss-build-489">4.2b The opt-in cuDSS build (#489)</a></li><li class="sub"><a href="#42c-release-archives-748">4.2c Release archives (#748)</a></li><li class="sub"><a href="#43-sbom">4.3 SBOM</a></li><li><a href="#5-judgement-calls">5. Judgement calls</a></li><li><a href="#6-reproducing-this">6. Reproducing this</a></li></ol></details>
 <article class="doc-body">
 <p>This document exists so that the claim "built from mathematical foundations, not wrapped
@@ -345,7 +345,7 @@ mathematics, not transcribed from anyone's implementation.</p>
 <td><code>src/simplex/primal_simplex.cpp</code></td>
 </tr>
 <tr>
-<td>Bounded-variable revised dual simplex with the bound-flipping ratio test, dual devex pricing, artificial bounds for dual infeasibility, warm start from a basis (#65; <code>--option algorithm=dual-simplex</code>, and the branch-and-bound node engine)</td>
+<td>Bounded-variable revised dual simplex with the bound-flipping ratio test, dual devex pricing, artificial bounds for dual infeasibility, warm start from a basis (#65; <code>--option algorithm=dual-simplex</code>, and the branch-and-bound node engine, cold at the root since #803)</td>
 <td>Lemke, <em>The dual method of solving the linear programming problem</em>, Naval Research Logistics Quarterly 1 (1954); Maros, <em>Computational Techniques of the Simplex Method</em>, ch. 10; Koberstein, <em>The dual simplex method, techniques for a fast and stable implementation</em>, PhD thesis, Paderborn (2005), sec. 3.3 and 4.5; Forrest &amp; Goldfarb (1992), above, sec. 3 for the dual weights</td>
 <td><code>src/simplex/dual_simplex.cpp</code>, shared state in <code>src/simplex/simplex_core.hpp</code></td>
 </tr>
@@ -505,7 +505,7 @@ mathematics, not transcribed from anyone's implementation.</p>
 <td><code>src/la/ldl_supernodal.cpp</code></td>
 </tr>
 <tr>
-<td>Interior point normal equations factored on the device by NVIDIA cuDSS (#489, <code>ipm_linear_solver=cudss</code>, off by default): analysis once per pattern, numeric LDL^T every iteration with pivoting off and a static pivot epsilon equal to the CPU factor's regularization, a factor holding a negative pivot redone on the CPU, the Newton iteration and the iterative refinement unchanged on the host</td>
+<td>Interior point normal equations factored on the device by NVIDIA cuDSS (#489, <code>ipm_linear_solver=cudss</code>; under the default <code>ipm_linear_solver=auto</code> in a cuDSS build with a device, for normal equations or CPU factors of at least <code>tol::kIpmDeviceFactorFloor</code> = 1e6 nonzeros): analysis once per pattern, numeric LDL^T every iteration with pivoting off and a static pivot epsilon equal to the CPU factor's regularization, a factor holding a negative pivot redone on the CPU, the Newton iteration and the iterative refinement unchanged on the host</td>
 <td>Shin et al., <em>MadIPM GPU interior point</em>, arXiv:2508.16094 (paper only); NVIDIA cuDSS documentation. Licence: judgement call 28 in section 5</td>
 <td><code>src/gpu/cudss_factor.cpp</code>, <code>src/ipm/ipm.cpp</code></td>
 </tr>
@@ -675,9 +675,9 @@ mathematics, not transcribed from anyone's implementation.</p>
 <td><code>src/mip/certificate_writer.cpp</code>, <code>src/mip/branch_and_bound_certificate.cpp</code>, <code>tools/verify_certificate.py</code>, <code>tools/verify_certificate_model.py</code></td>
 </tr>
 <tr>
-<td>Arbitrary-precision integers under the exact rationals (#757): sign and magnitude in 32-bit limbs, schoolbook add, subtract and multiply, division by Knuth's Algorithm D, Euclid's gcd</td>
-<td>Knuth, <em>The Art of Computer Programming</em> vol. 2, 3rd ed., section 4.3.1; Warren, <em>Hacker's Delight</em>, 2nd ed., section 9-2</td>
-<td><code>src/exact/bigint.hpp</code></td>
+<td>Arbitrary-precision integers under the exact rationals (#757): sign and magnitude in 32-bit limbs, schoolbook add, subtract and multiply, division by Knuth's Algorithm D, Lehmer's gcd (Euclid's steps simulated on the leading 62 bits with single-word cofactors, one full division when they cannot be certified; a power-of-two operand read off the trailing zeros); rationals kept in lowest terms by the reduced-operand sums and products (the gcds taken of the operands' parts, never of the full-size result)</td>
+<td>Knuth, <em>The Art of Computer Programming</em> vol. 2, 3rd ed., sections 4.3.1, 4.5.1 and 4.5.2 (Algorithm L); Warren, <em>Hacker's Delight</em>, 2nd ed., section 9-2</td>
+<td><code>src/exact/bigint.hpp</code>, <code>src/exact/rational.hpp</code></td>
 </tr>
 <tr>
 <td>Certified sensitivity (#757, options <code>exact</code> and <code>ranging</code>): duals, reduced costs, cost and RHS ranges re-derived from the reported basis in exact rational arithmetic and each float value marked certified or corrected; each row's shadow price interval (left and right derivatives of the optimal value) from the lexicographic dual simplex on the infinitesimally shifted bounds; the verifier re-derives all of it with its own sparse exact LU</td>
@@ -1385,7 +1385,7 @@ build/sankhya solve demo/crude_blend.lp
 <!-- fragment:footer -->
 <div class="wrap">
     <div>SANKHYA · Smart India Hackathon 2026 · PS SIH26119 · Apache-2.0 · <a href="https://sankhya-solver.vercel.app">sankhya-solver.vercel.app</a></div>
-    <div>Every figure on this site was last checked against SANKHYA <a href="https://github.com/thegoodengineers/SANKHYA/tree/3f8256ef5450d2584d22fc9d4aaab074051a0938">main at <span data-fact="sankhya_commit">3f8256e</span></a>.</div>
+    <div>Every figure on this site was last checked against SANKHYA <a href="https://github.com/thegoodengineers/SANKHYA/tree/9a50cc78a66364676620bb46594b7e23508effb2">main at <span data-fact="sankhya_commit">9a50cc7</span></a>.</div>
     <div><a href="https://github.com/thegoodengineers/SANKHYA">Source</a> · <a href="/docs">Docs</a> · <a href="/docs/benchmarks">Benchmarks</a> · <a href="/docs/provenance">Provenance</a> · <a href="/docs/coverage">Coverage tracker</a></div>
   </div>
 <!-- /fragment:footer -->
