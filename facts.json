@@ -1,9 +1,9 @@
 {
   "about": "Every figure the site states, once. Pages carry <span data-fact=\"key\">value</span>; run python tools/facts.py after editing this file, and python tools/facts.py --check before a PR. Paths are in thegoodengineers/SANKHYA on main at the commit in sankhya_commit.",
   "facts": {
-    "sankhya_commit": {"value": "8c58fb9", "source": "git rev-parse --short origin/main, 2026-09-30"},
+    "sankhya_commit": {"value": "3f8256e", "source": "git rev-parse --short origin/main, 2026-09-30"},
     "first_commit_date": {"value": "25 August 2026", "source": "git log --reverse --format=%ad --date=short | head -1 -> 2026-08-25"},
-    "tests_total": {"value": "1345", "source": "build/tests/sankhya_tests --gtest_list_tests on a Release build of 8c58fb9: 1345 tests, the list gtest_discover_tests registers with ctest"},
+    "tests_total": {"value": "1347", "source": "ctest in the CI Release leg on main at 3f8256e (run 36698805877): 100% tests passed, 0 tests failed out of 1308, then out of 39 in the serial set"},
     "engines_total": {"value": "seven", "source": "./build/sankhya engines --format json at 9094e1c, the last commit before 43b648c to touch C++: simplex, dual-simplex, pdhg, ipm, convex-qp, qp-ipm, branch-and-bound (pdhg-gpu only in a CUDA build)"},
 
     "netlib_total": {"value": "92", "source": "bench/results/netlib-full-9094e1c.csv, 92 rows (the LPs netlib.org ships as EMPS, #742)"},
@@ -14,6 +14,16 @@
     "netlib_h2h_matched": {"value": "84", "source": "bench/results/head-to-head-netlib-5e490ef.csv (#791), the 94 sankhya rows: matches_reference = 1 on 84"},
     "netlib_verified": {"value": "92", "source": "netlib-full-9094e1c.csv, independently_verified = 1 on 92 rows"},
     "netlib_outliers": {"value": "10", "source": "netlib-full-9094e1c.csv, matches_published = 0 on 80bau3b, e226, ganges, greenbea, greenbeb, nesm, pilot, pilot.ja, pilot.we, scrs8"},
+    "mm_verified": {"value": "120", "source": "bench/results/maros-meszaros-9094e1c.csv, independently_verified = 1 on 120 rows"},
+    "stress_total": {"value": "126", "source": "bench/results/stress-90f5d356.csv (#794), 126 instances per solver"},
+    "stress_ours_wrong": {"value": "0", "source": "stress-90f5d356.csv, solver sankhya: 35 correct, 0 wrong, 91 failed (refused a claim or stopped)"},
+    "stress_highs_wrong": {"value": "89", "source": "stress-90f5d356.csv, solver highs 1.15.1: 29 correct, 89 wrong, 8 failed"},
+    "million_refinery_rows": {"value": "1,007,400", "source": "bench/results/million-cpu-b561fba.csv (#804): million-refinery.mps, pdhg, optimal, verified, relative error 3.1e-14"},
+    "million_refinery_seconds": {"value": "2,336 s", "source": "million-cpu-b561fba.csv: 2336.18 s wall, 4-core cloud container"},
+    "million_transport_seconds": {"value": "119 s", "source": "million-cpu-b561fba.csv: million-transport.mps (1,000,000 rows), pdhg optimal and verified, 119.15 s, 4.1e-14"},
+    "pump_off_feasible": {"value": "40", "source": "bench/results/miplib-t2-full-off-a0cc065.csv (#814): 40 of 60 feasible and verified at 60 s"},
+    "pump_gpu_feasible": {"value": "44", "source": "miplib-t2-full-509-pump-gpu-a0cc065.csv: 44 of 60 feasible and verified, V100"},
+    "release_tag": {"value": "v1.0.0-rc1", "source": "gh release view v1.0.0-rc1: pre-release, three archives, image tarball, SHA256SUMS"},
     "mm_total": {"value": "138", "source": "bench/results/maros-meszaros-9094e1c.csv, 138 rows"},
     "mm_matched": {"value": "106", "source": "maros-meszaros-9094e1c.csv, matches_reference = 1 on 106 rows, status optimal on the same 106, none of them rejected by the verifier"},
 
