@@ -72,6 +72,7 @@
     "scenarios_year_prices": {"value": "36.3 s", "source": "same run: refinery daily year, 10 price sets, 36.3309 s including the base solve"},
     "scenarios_year_prices_single": {"value": "177.3 s", "source": "same run: 10 separate single solves, 177.2556 s"},
     "scenarios_year_demand": {"value": "19.5 s", "source": "same run: refinery daily year, 10 demand forecasts, 19.5161 s including the base solve"},
-    "scenarios_year_demand_single": {"value": "137.0 s", "source": "same run: 10 separate single solves, 137.0347 s"}
+    "scenarios_year_demand_single": {"value": "137.0 s", "source": "same run: 10 separate single solves, 137.0347 s"},
+    "warmstart_iter_ratio": {"value": "0.069x", "source": "bench/results/replan-warm-start-medium-5a39fb2.csv (#872, #892): warm 353 simplex iterations against cold 5091 over ten verified mornings, medium refinery LP"}
   }
 }
