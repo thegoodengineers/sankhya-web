@@ -267,6 +267,8 @@ def gh_slug(text, seen):
 
 
 def to_html(md_text):
+    # GitHub renders Markdown inside a bare <details>; md_in_html needs it asked for.
+    md_text = re.sub(r"<details>", '<details markdown="1">', md_text)
     body = markdown.markdown(md_text, extensions=["tables", "fenced_code", "sane_lists", "md_in_html"], output_format="html")
     seen, toc = {}, []
 

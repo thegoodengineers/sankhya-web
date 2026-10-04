@@ -28,7 +28,7 @@
   <nav class="here" aria-label="On this page"><a href="#1-the-shape-in-one-paragraph">1. The shape in one paragraph</a><a href="#2-modules-and-their-boundaries">2. Modules and their boundaries</a><a href="#3-the-two-invariants-everything-else-rests-on">3. The two invariants everything else rests on</a><a href="#3a-the-size-this-build-supports" class="sub">3a. The size this build supports</a><a href="#4-how-a-solve-flows">4. How a solve flows</a><a href="#4a-what-presolve-reports" class="sub">4a. What presolve reports</a><a href="#5-where-the-next-engines-plug-in">5. Where the next engines plug in</a><a href="#6-toolchain-as-tested">6. Toolchain, as tested</a><a href="#7-reproducibility-and-what-is-actually-promised">7. Reproducibility, and what is actually promised</a><a href="#8-resource-limits-and-what-each-one-means">8. Resource limits, and what each one means</a><a href="#9-nonlinear-models-the-representation-before-any-engine">9. Nonlinear models: the representation, before any engine</a><a href="#10-profiling-where-a-solves-time-goes">10. Profiling: where a solve&#x27;s time goes</a><a href="#11-conflict-analysis-learning-from-infeasible-nodes">11. Conflict analysis: learning from infeasible nodes</a><a href="#12-parallel-tree-search">12. Parallel tree search</a><a href="#13-the-engine-layer-what-an-engine-is-promised-and-what-it-promises">13. The engine layer: what an engine is promised, and what it promises</a></nav>
 </aside>
 <main class="col" id="content">
-<header class="page" id="top"><div class="wrap"><nav class="crumbs" aria-label="Breadcrumb"><a href="/docs">Docs</a><span aria-hidden="true">/</span>Architecture</nav><h1>Architecture</h1><p class="doc-banner">Generated from <a href="https://github.com/thegoodengineers/SANKHYA/blob/9a50cc78a66364676620bb46594b7e23508effb2/docs/ARCHITECTURE.md"><code>docs/ARCHITECTURE.md</code></a> at commit <a href="https://github.com/thegoodengineers/SANKHYA/commit/9a50cc78a66364676620bb46594b7e23508effb2"><code>9a50cc7</code></a> (2026-09-30). Do not edit this page by hand.</p></div></header>
+<header class="page" id="top"><div class="wrap"><nav class="crumbs" aria-label="Breadcrumb"><a href="/docs">Docs</a><span aria-hidden="true">/</span>Architecture</nav><h1>Architecture</h1><p class="doc-banner">Generated from <a href="https://github.com/thegoodengineers/SANKHYA/blob/5ddf5b05713640f1ad4890fcaf29f0350ea56cab/docs/ARCHITECTURE.md"><code>docs/ARCHITECTURE.md</code></a> at commit <a href="https://github.com/thegoodengineers/SANKHYA/commit/5ddf5b05713640f1ad4890fcaf29f0350ea56cab"><code>5ddf5b0</code></a> (2026-10-04). Do not edit this page by hand.</p></div></header>
 <details class="doc-toc"><summary>Contents</summary><ol><li><a href="#1-the-shape-in-one-paragraph">1. The shape in one paragraph</a></li><li><a href="#2-modules-and-their-boundaries">2. Modules and their boundaries</a></li><li><a href="#3-the-two-invariants-everything-else-rests-on">3. The two invariants everything else rests on</a></li><li class="sub"><a href="#3a-the-size-this-build-supports">3a. The size this build supports</a></li><li><a href="#4-how-a-solve-flows">4. How a solve flows</a></li><li class="sub"><a href="#4a-what-presolve-reports">4a. What presolve reports</a></li><li><a href="#5-where-the-next-engines-plug-in">5. Where the next engines plug in</a></li><li><a href="#6-toolchain-as-tested">6. Toolchain, as tested</a></li><li><a href="#7-reproducibility-and-what-is-actually-promised">7. Reproducibility, and what is actually promised</a></li><li><a href="#8-resource-limits-and-what-each-one-means">8. Resource limits, and what each one means</a></li><li><a href="#9-nonlinear-models-the-representation-before-any-engine">9. Nonlinear models: the representation, before any engine</a></li><li><a href="#10-profiling-where-a-solves-time-goes">10. Profiling: where a solve&#x27;s time goes</a></li><li><a href="#11-conflict-analysis-learning-from-infeasible-nodes">11. Conflict analysis: learning from infeasible nodes</a></li><li><a href="#12-parallel-tree-search">12. Parallel tree search</a></li><li><a href="#13-the-engine-layer-what-an-engine-is-promised-and-what-it-promises">13. The engine layer: what an engine is promised, and what it promises</a></li></ol></details>
 <article class="doc-body">
 <p>How the solver is put together, where each algorithm lives, and where the next engine plugs
@@ -221,7 +221,11 @@ cap for a caller who wants one.</p>
    the rule and the reason, and an interior point that declines - a factor beyond its budget, or a
    set-up past <code>ipm_setup_share</code> of the time limit (#357), or a factor that exhausts the
    machine's memory (#437, caught inside the recovery rather than past it) - falls back to
-   PDHG at or above the row limit and to the dual simplex below it, on the time that is left.</li>
+   PDHG at or above the row limit and to the dual simplex below it, on the time that is left.
+   <code>algorithm_selection=learned</code> (#477, off by default) replaces the table, inside the range
+   of its training models and without a GPU, by a depth-4 decision tree trained on generated
+   instances and committed as readable rules (<code>src/core/engine_selection_tree.cpp</code>, generated
+   by <code>bench/runners/engine_selection_cart.py</code>); the reason then prints the path it took.</li>
 <li><strong>Presolve</strong> (LP path). Reductions are recorded on a stack. The reduced model is scaled
    (Ruiz then Pock–Chambolle) inside the simplex entry point; the scaled and unscaled
    attempts share one time budget.</li>
@@ -506,7 +510,8 @@ one.</p>
 <p><strong>What the clock covers.</strong> It starts at the top of <code>solve()</code>, so it covers presolve, the
 engine and postsolve. It does not cover reading the model or writing the answer, which happen
 in the CLI around the call. An engine reached after presolve is given what is LEFT of the
-budget, not the whole of it.</p>
+budget, not the whole of it, and so is every node relaxation of a branch and bound, an LP
+(#803) or an MIQP's QP (#835).</p>
 <p><strong>Precedence</strong>, when more than one limit is exhausted at the same check:</p>
 <pre><code>user interrupt  &gt;  time  &gt;  iterations  &gt;  nodes
 </code></pre>
@@ -514,7 +519,9 @@ budget, not the whole of it.</p>
 because it is the limit protecting a caller's own deadline.</p>
 <p><strong>Safe points.</strong> A limit is observed at a boundary the engine chooses: between simplex
 iterations, between PDHG iterations, between branch-and-bound nodes, and inside the interior
-point's ordering and factorization through the same predicate (#197). A factorization or a
+point's ordering and factorization through the same predicate (#197), and inside the QP
+engines' convexity test (#835), where a test the clock stops decides nothing: the solve
+reports the time limit, never a solve and never a refusal. A factorization or a
 kernel already running finishes first, so overrunning a deadline by one such step is expected
 and is not a violated limit.</p>
 <p><strong>A limit is never a numerical failure.</strong> <code>kTimeLimit</code>, <code>kIterationLimit</code>, <code>kNodeLimit</code> and
@@ -956,7 +963,7 @@ and puts every answer through <code>tools/verify_solution.py</code>.</p>
 <!-- fragment:footer -->
 <div class="wrap">
     <div>SANKHYA · Smart India Hackathon 2026 · PS SIH26119 · Apache-2.0 · <a href="https://sankhya-solver.vercel.app">sankhya-solver.vercel.app</a></div>
-    <div>Every figure on this site was last checked against SANKHYA <a href="https://github.com/thegoodengineers/SANKHYA/tree/9a50cc78a66364676620bb46594b7e23508effb2">main at <span data-fact="sankhya_commit">9a50cc7</span></a>.</div>
+    <div>Every figure on this site was last checked against SANKHYA <a href="https://github.com/thegoodengineers/SANKHYA/tree/5ddf5b05713640f1ad4890fcaf29f0350ea56cab">main at <span data-fact="sankhya_commit">5ddf5b0</span></a>.</div>
     <div><a href="https://github.com/thegoodengineers/SANKHYA">Source</a> · <a href="/docs">Docs</a> · <a href="/docs/benchmarks">Benchmarks</a> · <a href="/docs/provenance">Provenance</a> · <a href="/docs/coverage">Coverage tracker</a></div>
   </div>
 <!-- /fragment:footer -->

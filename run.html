@@ -84,7 +84,7 @@ cd SANKHYA
 scripts/configure.sh build Release
 cmake --build build -j
 ctest --test-dir build --output-on-failure</code></pre>
-      <div><p class="small"><b>What you should see:</b> the configure script names the compiler it picked (it checks the version rather than trusting PATH order), the build finishes with no warnings under <code>-Wall -Wextra -Werror</code>, and ctest runs <span data-fact="tests_total">1357</span> tests. At <span data-fact="sankhya_commit">9a50cc7</span> the Ubuntu CI passes all of them. On a Windows build with GCC 16.1 one fails: <code>Pdhg.StopAtRequestGivesTheCheapAnswerAndNeverCallsItOptimal</code>, where the honest run reports <code>feasible</code> rather than the <code>optimal</code> the test expects, because a complementarity product of 2.075e-06 is above the 1e-6 the verifier accepts. Windows sometimes blocks a freshly linked binary through Smart App Control; <code>scripts/preflight.sh</code> names the fix.</p><p class="small">Or skip straight to everything: <code>scripts/reproduce.sh</code> does the build, the tests, the Netlib benchmark with verification, the HiGHS comparison (if <code>pip install highspy</code> is present) and the PS26119 demo.</p></div>
+      <div><p class="small"><b>What you should see:</b> the configure script names the compiler it picked (it checks the version rather than trusting PATH order), the build finishes with no warnings under <code>-Wall -Wextra -Werror</code>, and ctest runs <span data-fact="tests_total">1529</span> tests. At <span data-fact="sankhya_commit">5ddf5b0</span> the Ubuntu CI passes all of them. On a Windows build with GCC 16.1 one fails: <code>Pdhg.StopAtRequestGivesTheCheapAnswerAndNeverCallsItOptimal</code>, where the honest run reports <code>feasible</code> rather than the <code>optimal</code> the test expects, because a complementarity product of 2.075e-06 is above the 1e-6 the verifier accepts. Windows sometimes blocks a freshly linked binary through Smart App Control; <code>scripts/preflight.sh</code> names the fix.</p><p class="small">Or skip straight to everything: <code>scripts/reproduce.sh</code> does the build, the tests, the Netlib benchmark with verification, the HiGHS comparison (if <code>pip install highspy</code> is present) and the PS26119 demo.</p></div>
     </div>
   </div>
 </section>
@@ -182,7 +182,7 @@ demo/finale.sh                  # the finale walk (Windows: demo\finale.cmd)</co
 <!-- fragment:footer -->
 <div class="wrap">
     <div>SANKHYA · Smart India Hackathon 2026 · PS SIH26119 · Apache-2.0 · <a href="https://sankhya-solver.vercel.app">sankhya-solver.vercel.app</a></div>
-    <div>Every figure on this site was last checked against SANKHYA <a href="https://github.com/thegoodengineers/SANKHYA/tree/9a50cc78a66364676620bb46594b7e23508effb2">main at <span data-fact="sankhya_commit">9a50cc7</span></a>.</div>
+    <div>Every figure on this site was last checked against SANKHYA <a href="https://github.com/thegoodengineers/SANKHYA/tree/5ddf5b05713640f1ad4890fcaf29f0350ea56cab">main at <span data-fact="sankhya_commit">5ddf5b0</span></a>.</div>
     <div><a href="https://github.com/thegoodengineers/SANKHYA">Source</a> · <a href="/docs">Docs</a> · <a href="/docs/benchmarks">Benchmarks</a> · <a href="/docs/provenance">Provenance</a> · <a href="/docs/coverage">Coverage tracker</a></div>
   </div>
 <!-- /fragment:footer -->
