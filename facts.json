@@ -1,9 +1,9 @@
 {
   "about": "Every figure the site states, once. Pages carry <span data-fact=\"key\">value</span>; run python tools/facts.py after editing this file, and python tools/facts.py --check before a PR. Paths are in thegoodengineers/SANKHYA on main at the commit in sankhya_commit.",
   "facts": {
-    "sankhya_commit": {"value": "5ddf5b0", "source": "git rev-parse --short origin/main, 2026-10-04"},
+    "sankhya_commit": {"value": "afdbdbb", "source": "git rev-parse --short origin/main, 2026-10-05"},
     "first_commit_date": {"value": "25 August 2026", "source": "git log --reverse --format=%ad --date=short | head -1 -> 2026-08-25"},
-    "tests_total": {"value": "1529", "source": "ctest in the CI Release leg on main at 5ddf5b0 (run 37158747283): 100% tests passed, 0 tests failed out of 1486, then out of 43 in the serial set"},
+    "tests_total": {"value": "1570", "source": "ctest in the CI Release leg on main at afdbdbb (run 37318225790): 100% tests passed, 0 tests failed out of 1527, then out of 43 in the serial set"},
     "engines_total": {"value": "seven", "source": "./build/sankhya engines --format json at 9094e1c, the last commit before 43b648c to touch C++: simplex, dual-simplex, pdhg, ipm, convex-qp, qp-ipm, branch-and-bound (pdhg-gpu only in a CUDA build)"},
 
     "netlib_total": {"value": "92", "source": "bench/results/netlib-full-9094e1c.csv, 92 rows (the LPs netlib.org ships as EMPS, #742)"},
@@ -33,6 +33,11 @@
     "miplib_reach": {"value": "14", "source": "miplib-ad57c03.csv, matched_published = 1 on 14 rows"},
     "miplib_prove": {"value": "11", "source": "miplib-ad57c03.csv, proved_optimal = 1 on 11 rows"},
     "miplib_seeds_proved": {"value": "9", "source": "bench/results/summary-miplib-seeds3-ad57c03.csv, seeds_proved = seeds on 9 rows"},
+    "miplib_seeds_runs": {"value": "90", "source": "bench/results/nodepricing-ab-miplib-seeds3-devex-fef0192.csv (#792, #971): 90 rows, 30 instances x 3 seeds at 60 s, one thread, mip_node_pricing=devex, the default since #972"},
+    "miplib_seeds_reach": {"value": "52", "source": "nodepricing-ab-miplib-seeds3-devex-fef0192.csv, matched_published = 1 on 52 of 90 rows"},
+    "miplib_seeds_prove": {"value": "33", "source": "nodepricing-ab-miplib-seeds3-devex-fef0192.csv, proved_optimal = 1 on 33 of 90 rows"},
+    "miplib_seeds_prove_all": {"value": "10", "source": "nodepricing-ab-miplib-seeds3-devex-fef0192.csv, proved_optimal = 1 on all three seeds for 10 of 30 instances"},
+    "walkthrough_length": {"value": "13:09", "source": "https://youtu.be/6A-G580x6RA, 789 s"},
 
     "mittelmann_total": {"value": "8", "source": "bench/results/mittelmann-5c7efbc.csv, 8 rows"},
     "mittelmann_auto": {"value": "2", "source": "mittelmann-5c7efbc.csv: brazil3 (ipm, 1.9 s) and chromaticindex1024-7 (pdhg-cpu, 21.4 s) optimal and verified"},

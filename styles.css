@@ -396,6 +396,7 @@ p code, li code, dd code, td code { overflow-wrap: anywhere; }
 /* the film on the home page */
 .film { margin: 0; border: 1px solid var(--rule); background: var(--paper); }
 .film video { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; background: #0b1015; }
+.film iframe { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; border: 0; background: #0b1015; }
 .film figcaption { padding: 10px 14px; font-size: 12px; line-height: 1.5; color: var(--ink-45); border-top: 1px dashed var(--rule-solid); }
 .hero-film { grid-column: 1 / -1; order: 0; margin: 0 0 40px; border: 0; background: none; }
 .hero-film .label { margin-bottom: 12px; }

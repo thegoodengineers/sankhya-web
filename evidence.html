@@ -53,7 +53,8 @@
   <div class="wrap">
     <div class="head"><div class="label"><span class="n">Integer and large</span></div><div><h2>MIPLIB, Mittelmann, robustness.</h2></div></div>
     <div class="figure"><div class="bars">
-<div class="bar"><div class="lab"><b>MIPLIB easy, reach published optimum</b><small>miplib-ad57c03.csv · 60 s · the shipped defaults, symmetry on</small></div><div class="track"><div class="fill " style="width:46.7%"></div></div><div class="val"><span data-fact="miplib_reach">14</span> / <span data-fact="miplib_total">30</span></div></div>
+<div class="bar"><div class="lab"><b>MIPLIB easy, reached / proved over 3 seeds</b><small>nodepricing-ab-miplib-seeds3-devex-fef0192.csv · 30 instances x 3 seeds, 60 s, one thread · node LPs priced by Devex, the default since #972 · <span data-fact="miplib_seeds_prove_all">10</span> of 30 proved on every seed</small></div><div class="track"><div class="fill " style="width:57.8%"></div></div><div class="val"><span data-fact="miplib_seeds_reach">52</span> / <span data-fact="miplib_seeds_prove">33</span> of <span data-fact="miplib_seeds_runs">90</span></div></div>
+<div class="bar"><div class="lab"><b>MIPLIB easy, reach published optimum</b><small>miplib-ad57c03.csv · 60 s · the defaults at ad57c03, symmetry on</small></div><div class="track"><div class="fill " style="width:46.7%"></div></div><div class="val"><span data-fact="miplib_reach">14</span> / <span data-fact="miplib_total">30</span></div></div>
 <div class="bar"><div class="lab"><b>MIPLIB easy, prove it</b><small>same CSV</small></div><div class="track"><div class="fill dim" style="width:36.7%"></div></div><div class="val"><span data-fact="miplib_prove">11</span> / <span data-fact="miplib_total">30</span></div></div>
 <div class="bar"><div class="lab"><b>MIPLIB 3, the classic set, reached / proved over 3 seeds</b><small>miplib3-300s-seeds3-f2cf240.csv · 52 instances with a reference x 3 seeds, 300 s, one thread · every one of 153 points verified · HiGHS 1.15.1 on the same container: 49 of 52 at the optimum (60 s: ours 109 / 95, HiGHS 47)</small></div><div class="track"><div class="fill " style="width:76.9%"></div></div><div class="val">120 / 113 of 156</div></div>
 <div class="bar"><div class="lab"><b>MIPLIB 2017 tier 2, 60 harder instances, reached / proved over 3 seeds</b><small>summary-miplib-tier2-seeds3-e7c0c60.csv · 300 s, one thread · the first 60 benchmark instances with a proven optimum by file size, chosen before the run</small></div><div class="track"><div class="fill dim" style="width:17.8%"></div></div><div class="val">32 / 18 of 180</div></div>
@@ -106,7 +107,7 @@
       <pre><code>git clone https://github.com/thegoodengineers/SANKHYA
 cd SANKHYA
 scripts/reproduce.sh</code></pre>
-      <p class="small">Builds, runs the <span data-fact="tests_total">1529</span> tests, the Netlib benchmark with verification, the HiGHS comparison and the PS26119 walkthrough, offline. Any step that cannot run on your machine says why and is listed again at the end, so a shorter run is never mistaken for a passing one. Commit hashes in the CSV names identify the exact solver that produced each number.</p>
+      <p class="small">Builds, runs the <span data-fact="tests_total">1570</span> tests, the Netlib benchmark with verification, the HiGHS comparison and the PS26119 walkthrough, offline. Any step that cannot run on your machine says why and is listed again at the end, so a shorter run is never mistaken for a passing one. Commit hashes in the CSV names identify the exact solver that produced each number.</p>
     </div>
   </div>
 </section>
@@ -128,7 +129,7 @@ scripts/reproduce.sh</code></pre>
 <!-- fragment:footer -->
 <div class="wrap">
     <div>SANKHYA · Smart India Hackathon 2026 · PS SIH26119 · Apache-2.0 · <a href="https://sankhya-solver.vercel.app">sankhya-solver.vercel.app</a></div>
-    <div>Every figure on this site was last checked against SANKHYA <a href="https://github.com/thegoodengineers/SANKHYA/tree/5ddf5b05713640f1ad4890fcaf29f0350ea56cab">main at <span data-fact="sankhya_commit">5ddf5b0</span></a>.</div>
+    <div>Every figure on this site was last checked against SANKHYA <a href="https://github.com/thegoodengineers/SANKHYA/tree/afdbdbb58c4476df240882e9d5246e559a4ef9b9">main at <span data-fact="sankhya_commit">afdbdbb</span></a>.</div>
     <div><a href="https://github.com/thegoodengineers/SANKHYA">Source</a> · <a href="/docs">Docs</a> · <a href="/docs/benchmarks">Benchmarks</a> · <a href="/docs/provenance">Provenance</a> · <a href="/docs/coverage">Coverage tracker</a></div>
   </div>
 <!-- /fragment:footer -->

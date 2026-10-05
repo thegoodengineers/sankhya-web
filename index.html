@@ -35,11 +35,11 @@
       <source src="/media/sankhya-film.mp4" type="video/mp4">
       <track kind="captions" src="/media/sankhya-film.en.vtt" srclang="en" label="English">
       <a href="/media/sankhya-film.mp4">Download the film (MP4)</a>
-    </video></figure>
+    </video><p class="small" style="margin-top:12px"><a class="section-link" href="/evaluate#the-walkthrough">The team's <span data-fact="walkthrough_length">13:09</span> walkthrough, as submitted to SIH 2026 →</a></p></figure>
     <div class="float f1"><div class="label"><span class="n">blend.sol</span> · shadow prices</div><pre>row  THRUPUT  basic     dual  0
 row  DIESEL   fixed     dual  4.97297
 row  SULPHUR  at_upper  dual  1.13513
-ranging_basis  nondegenerate</pre><div class="m">demo/crude_blend.mps at <span data-fact="sankhya_commit">5ddf5b0</span>, objective 214.1459459</div></div>
+ranging_basis  nondegenerate</pre><div class="m">demo/crude_blend.mps at <span data-fact="sankhya_commit">afdbdbb</span>, objective 214.1459459</div></div>
     <div class="float f2"><div class="label"><span class="n">verifier</span> · independent</div><pre>row activity        1.421e-14
 reduced costs       8.882e-16
 strong duality gap  0.000e+00
@@ -61,7 +61,7 @@ VERIFIED: 10 checks passed</pre><div class="m">demo/crude_blend_infeasible.mps, 
 <section class="strip-section">
   <div class="wrap">
     <div class="label" style="text-align:center;margin-bottom:14px">Measured against</div>
-    <div class="logos"><span>Netlib <b><span data-fact="netlib_h2h_exact">94</span>/<span data-fact="netlib_h2h_total">94</span></b> exact and verified · <b><span data-fact="netlib_h2h_matched">84</span>/<span data-fact="netlib_h2h_total">94</span></b> match the readme</span><span>MIPLIB 2017 <b><span data-fact="miplib_reach">14</span>/<span data-fact="miplib_total">30</span></b> reach · <b><span data-fact="miplib_prove">11</span>/<span data-fact="miplib_total">30</span></b> prove</span><span>Mittelmann <b><span data-fact="mittelmann_auto">2</span>/<span data-fact="mittelmann_total">8</span></b> auto · <b><span data-fact="mittelmann_any">3</span>/<span data-fact="mittelmann_total">8</span></b> across engines</span><span>HiGHS cross-check <b><span data-fact="highs_agree">50</span>/50</b></span><span>GPU at 10⁴×10⁴ <b><span data-fact="gpu_laptop_10k">1.37x</span></b> laptop · <b><span data-fact="gpu_l4_10k">4.21x</span></b> L4</span><span>GPU brazil3 1e-8 <b><span data-fact="gpu_l4_brazil3">8.10x</span></b> L4 · <b><span data-fact="gpu_a100_brazil3_rerun">8.72x</span></b> A100</span><span>Refinery year solved exactly <b><span data-fact="refinery_exact_rows">32,485</span></b> rows</span><span>Refinery year, hourly <b><span data-fact="million_refinery_rows">1,007,400</span></b> rows · optimal and verified</span><span>Stress set, 2^±20-scaled Netlib <b><span data-fact="stress_ours_wrong">0</span>/<span data-fact="stress_total">126</span></b> wrong, <span data-fact="stress_ours_correct">105</span> solved, <span data-fact="stress_ours_failed">21</span> declined · HiGHS on default options (drops entries below 1e-9, 1e20 is infinite) <span data-fact="stress_highs_wrong">90</span> wrong</span><span>Tests on main <b><span data-fact="tests_total">1529</span></b></span></div>
+    <div class="logos"><span>Netlib <b><span data-fact="netlib_h2h_exact">94</span>/<span data-fact="netlib_h2h_total">94</span></b> exact and verified · <b><span data-fact="netlib_h2h_matched">84</span>/<span data-fact="netlib_h2h_total">94</span></b> match the readme</span><span>MIPLIB 2017, three seeds <b><span data-fact="miplib_seeds_reach">52</span>/<span data-fact="miplib_seeds_runs">90</span></b> reach · <b><span data-fact="miplib_seeds_prove">33</span>/<span data-fact="miplib_seeds_runs">90</span></b> prove</span><span>Mittelmann <b><span data-fact="mittelmann_auto">2</span>/<span data-fact="mittelmann_total">8</span></b> auto · <b><span data-fact="mittelmann_any">3</span>/<span data-fact="mittelmann_total">8</span></b> across engines</span><span>HiGHS cross-check <b><span data-fact="highs_agree">50</span>/50</b></span><span>GPU at 10⁴×10⁴ <b><span data-fact="gpu_laptop_10k">1.37x</span></b> laptop · <b><span data-fact="gpu_l4_10k">4.21x</span></b> L4</span><span>GPU brazil3 1e-8 <b><span data-fact="gpu_l4_brazil3">8.10x</span></b> L4 · <b><span data-fact="gpu_a100_brazil3_rerun">8.72x</span></b> A100</span><span>Refinery year solved exactly <b><span data-fact="refinery_exact_rows">32,485</span></b> rows</span><span>Refinery year, hourly <b><span data-fact="million_refinery_rows">1,007,400</span></b> rows · optimal and verified</span><span>Stress set, 2^±20-scaled Netlib <b><span data-fact="stress_ours_wrong">0</span>/<span data-fact="stress_total">126</span></b> wrong, <span data-fact="stress_ours_correct">105</span> solved, <span data-fact="stress_ours_failed">21</span> declined · HiGHS on default options (drops entries below 1e-9, 1e20 is infinite) <span data-fact="stress_highs_wrong">90</span> wrong</span><span>Tests on main <b><span data-fact="tests_total">1570</span></b></span></div>
   </div>
 </section>
 
@@ -116,7 +116,7 @@ VERIFIED: 10 checks passed</pre><div class="m">demo/crude_blend_infeasible.mps, 
 
 <section id="what-is-new">
   <div class="wrap">
-    <div class="head"><div class="label"><span class="n">What is new</span></div><div><h2>Sixteen additions on main, each with its default and its result.</h2><p>Each is on main at <span data-fact="sankhya_commit">5ddf5b0</span>. Most are off by default until a clean A/B on main says they earn it; the solver page gives every one its option, its default and its result, losing results included.</p></div></div>
+    <div class="head"><div class="label"><span class="n">What is new</span></div><div><h2>Twenty-one additions on main, each with its default and its result.</h2><p>Each is on main at <span data-fact="sankhya_commit">afdbdbb</span>. Most are off by default until a clean A/B on main says they earn it; the solver page gives every one its option, its default and its result, losing results included.</p></div></div>
     <ul class="status">
       <li class="done"><i></i><div><b>Verifier-gated engine race</b> <span>· three LP engines at once; an answer wins only after it passes the verifier's own check. Off.</span></div></li>
       <li class="done"><i></i><div><b>A checkable proof of a MILP optimum</b> <span>· written in the VIPR format and checked in exact rational arithmetic by a separate program. Off.</span></div></li>
@@ -134,6 +134,11 @@ VERIFIED: 10 checks passed</pre><div class="m">demo/crude_blend_infeasible.mps, 
       <li class="done"><i></i><div><b>SOS and semi-continuous columns</b> <span>· read from MPS and LP and branched natively; 18 of 18 agree with the binary reformulation. On.</span></div></li>
       <li class="done"><i></i><div><b>Interior point with certificates</b> <span>· the homogeneous self-dual embedding ends an infeasible or unbounded LP with a certificate. Off.</span></div></li>
       <li class="done"><i></i><div><b>A local-model modelling assistant</b> <span>· plain language to a checked LP, solved and verified only on confirmation; calls nothing unless you point it at your own model server. Off.</span></div></li>
+      <li class="done"><i></i><div><b>Benders decomposition</b> <span>· a block-angular LP, such as a multi-period plan joined by its stocks, split into a master and one LP per block, the blocks in parallel. Off.</span></div></li>
+      <li class="done"><i></i><div><b>Outer approximation for convex MINLP</b> <span>· a MILP master over linearizations and a convex NLP at each integer assignment; optimal only on a proof. Off.</span></div></li>
+      <li class="done"><i></i><div><b>A checkable proof of a global optimum</b> <span>· the spatial branch and bound writes its tree and multipliers, and a separate program re-derives the bound in exact arithmetic. Off.</span></div></li>
+      <li class="done"><i></i><div><b>Minimum degree with supervariables</b> <span>· the interior point's ordering merges variables with identical neighbourhoods and eliminates them together. Off.</span></div></li>
+      <li class="done"><i></i><div><b>A learned branching score</b> <span>· a linear ranking model trained offline and compiled into the solver, with no ML runtime. Off.</span></div></li>
     </ul>
     <p style="margin-top:18px"><a class="section-link" href="/solver#what-is-new">Options, defaults and results →</a></p>
   </div>
@@ -165,7 +170,7 @@ VERIFIED: 10 checks passed</pre><div class="m">demo/crude_blend_infeasible.mps, 
 <!-- fragment:footer -->
 <div class="wrap">
     <div>SANKHYA · Smart India Hackathon 2026 · PS SIH26119 · Apache-2.0 · <a href="https://sankhya-solver.vercel.app">sankhya-solver.vercel.app</a></div>
-    <div>Every figure on this site was last checked against SANKHYA <a href="https://github.com/thegoodengineers/SANKHYA/tree/5ddf5b05713640f1ad4890fcaf29f0350ea56cab">main at <span data-fact="sankhya_commit">5ddf5b0</span></a>.</div>
+    <div>Every figure on this site was last checked against SANKHYA <a href="https://github.com/thegoodengineers/SANKHYA/tree/afdbdbb58c4476df240882e9d5246e559a4ef9b9">main at <span data-fact="sankhya_commit">afdbdbb</span></a>.</div>
     <div><a href="https://github.com/thegoodengineers/SANKHYA">Source</a> · <a href="/docs">Docs</a> · <a href="/docs/benchmarks">Benchmarks</a> · <a href="/docs/provenance">Provenance</a> · <a href="/docs/coverage">Coverage tracker</a></div>
   </div>
 <!-- /fragment:footer -->
