@@ -28,7 +28,7 @@
   <nav class="here" aria-label="On this page"><a href="#1-the-shape-in-one-paragraph">1. The shape in one paragraph</a><a href="#2-modules-and-their-boundaries">2. Modules and their boundaries</a><a href="#3-the-two-invariants-everything-else-rests-on">3. The two invariants everything else rests on</a><a href="#3a-the-size-this-build-supports" class="sub">3a. The size this build supports</a><a href="#4-how-a-solve-flows">4. How a solve flows</a><a href="#4a-what-presolve-reports" class="sub">4a. What presolve reports</a><a href="#5-where-the-next-engines-plug-in">5. Where the next engines plug in</a><a href="#6-toolchain-as-tested">6. Toolchain, as tested</a><a href="#7-reproducibility-and-what-is-actually-promised">7. Reproducibility, and what is actually promised</a><a href="#8-resource-limits-and-what-each-one-means">8. Resource limits, and what each one means</a><a href="#9-nonlinear-models-the-representation-before-any-engine">9. Nonlinear models: the representation, before any engine</a><a href="#10-profiling-where-a-solves-time-goes">10. Profiling: where a solve&#x27;s time goes</a><a href="#11-conflict-analysis-learning-from-infeasible-nodes">11. Conflict analysis: learning from infeasible nodes</a><a href="#12-parallel-tree-search">12. Parallel tree search</a><a href="#13-the-engine-layer-what-an-engine-is-promised-and-what-it-promises">13. The engine layer: what an engine is promised, and what it promises</a></nav>
 </aside>
 <main class="col" id="content">
-<header class="page" id="top"><div class="wrap"><nav class="crumbs" aria-label="Breadcrumb"><a href="/docs">Docs</a><span aria-hidden="true">/</span>Architecture</nav><h1>Architecture</h1><p class="doc-banner">Generated from <a href="https://github.com/thegoodengineers/SANKHYA/blob/5ddf5b05713640f1ad4890fcaf29f0350ea56cab/docs/ARCHITECTURE.md"><code>docs/ARCHITECTURE.md</code></a> at commit <a href="https://github.com/thegoodengineers/SANKHYA/commit/5ddf5b05713640f1ad4890fcaf29f0350ea56cab"><code>5ddf5b0</code></a> (2026-10-04). Do not edit this page by hand.</p></div></header>
+<header class="page" id="top"><div class="wrap"><nav class="crumbs" aria-label="Breadcrumb"><a href="/docs">Docs</a><span aria-hidden="true">/</span>Architecture</nav><h1>Architecture</h1><p class="doc-banner">Generated from <a href="https://github.com/thegoodengineers/SANKHYA/blob/afdbdbb58c4476df240882e9d5246e559a4ef9b9/docs/ARCHITECTURE.md"><code>docs/ARCHITECTURE.md</code></a> at commit <a href="https://github.com/thegoodengineers/SANKHYA/commit/afdbdbb58c4476df240882e9d5246e559a4ef9b9"><code>afdbdbb</code></a> (2026-10-05). Do not edit this page by hand.</p></div></header>
 <details class="doc-toc"><summary>Contents</summary><ol><li><a href="#1-the-shape-in-one-paragraph">1. The shape in one paragraph</a></li><li><a href="#2-modules-and-their-boundaries">2. Modules and their boundaries</a></li><li><a href="#3-the-two-invariants-everything-else-rests-on">3. The two invariants everything else rests on</a></li><li class="sub"><a href="#3a-the-size-this-build-supports">3a. The size this build supports</a></li><li><a href="#4-how-a-solve-flows">4. How a solve flows</a></li><li class="sub"><a href="#4a-what-presolve-reports">4a. What presolve reports</a></li><li><a href="#5-where-the-next-engines-plug-in">5. Where the next engines plug in</a></li><li><a href="#6-toolchain-as-tested">6. Toolchain, as tested</a></li><li><a href="#7-reproducibility-and-what-is-actually-promised">7. Reproducibility, and what is actually promised</a></li><li><a href="#8-resource-limits-and-what-each-one-means">8. Resource limits, and what each one means</a></li><li><a href="#9-nonlinear-models-the-representation-before-any-engine">9. Nonlinear models: the representation, before any engine</a></li><li><a href="#10-profiling-where-a-solves-time-goes">10. Profiling: where a solve&#x27;s time goes</a></li><li><a href="#11-conflict-analysis-learning-from-infeasible-nodes">11. Conflict analysis: learning from infeasible nodes</a></li><li><a href="#12-parallel-tree-search">12. Parallel tree search</a></li><li><a href="#13-the-engine-layer-what-an-engine-is-promised-and-what-it-promises">13. The engine layer: what an engine is promised, and what it promises</a></li></ol></details>
 <article class="doc-body">
 <p>How the solver is put together, where each algorithm lives, and where the next engine plugs
@@ -311,8 +311,25 @@ is section 13; the steps for adding one are <code>docs/ADDING_AN_ENGINE.md</code
   proved convex - the condition under which a node relaxation's value is a bound - and
   refuses a nonconvex MINLP with the reason. It certifies an infeasible node by solving the
   convex minimum-violation problem, reuses the MIP tree's gap test and limits, and reports
-  <code>optimal</code> only when every node was resolved with a certificate.</li>
-<li><strong>Cutting planes</strong> — already present, and off by default. Root GMI and lifted cover cuts
+  <code>optimal</code> only when every node was resolved with a certificate.
+  <code>--option minlp_method=oa</code> (#528, off by default) solves the same models by outer
+  approximation instead (<code>src/nlp/minlp_oa.cpp</code>, Duran &amp; Grossmann 1986): the MILP engine
+  solves a master over linearizations of the nonlinear rows and objective, the NLP engine
+  solves the continuous problem at the master's integers, and the two meet when the master's
+  bound reaches the best NLP value. It sits behind the same convexity gate, so it never
+  claims a bound on a model whose relaxation is not proved convex.</li>
+</ul>
+<p>A minimisation LP whose constraint matrix is block-angular - independent groups of rows joined by a
+few linking columns, such as the stocks that join the periods of a planning model - can be solved by
+Benders decomposition (<code>--option decomposition=auto</code>, <code>src/decomp/</code>, off by default). <code>structure.cpp</code>
+finds the blocks by balanced hypergraph partitioning and accepts a split only when it is strong;
+<code>benders.cpp</code> alternates a master LP over the linking columns with one small LP per block, the
+blocks in parallel. <code>solve()</code> holds the decomposed answer to the same measurement as any engine's
+and falls back to the ordinary engines, saying why in the log, when the structure is weak, the
+method declines (an integer, quadratic or maximisation model; an unbounded block) or the answer
+does not pass. Linking rows, the form Dantzig-Wolfe decomposition is for, are detected and
+reported but not solved.
+- <strong>Cutting planes</strong> — already present, and off by default. Root GMI and lifted cover cuts
   landed in #159 (<code>src/mip/cuts.cpp</code>) and single-row MIR cuts in #221
   (<code>src/mip/mir_cuts.cpp</code>), appended as rows of the working model before the search
   starts; the answer reports the root bound before and after the round. <code>enable_root_cuts</code>
@@ -320,12 +337,11 @@ is section 13; the steps for adding one are <code>docs/ADDING_AN_ENGINE.md</code
   has the off leg at 14 of 30 reached and 9 proved, the root round at 13 and 9 (one match
   lost at the time limit, nodes 1.049x) and root plus tree rounds at 14 and 10
   (<code>neos-3611689-kaihu</code> proved, nodes 0.920x). The tree leg is the first to gain a proof
-  without losing one; whether it becomes the default is #221's open decision.</li>
-<li><strong>Parallelism</strong> — the column loops in pricing and in the sparse products are
+  without losing one; whether it becomes the default is #221's open decision.
+- <strong>Parallelism</strong> — the column loops in pricing and in the sparse products are
   embarrassingly parallel and deterministic (no cross-thread reductions); the tree search is
   the larger prize and the harder one, because a race on the incumbent can fathom a node
-  that should have been explored (#57). It is <code>mip_threads</code> since #222; section 12.</li>
-</ul>
+  that should have been explored (#57). It is <code>mip_threads</code> since #222; section 12.</p>
 <h2 id="6-toolchain-as-tested">6. Toolchain, as tested</h2>
 <ul>
 <li>C++20, CMake ≥ 3.20, Ninja. CI is Ubuntu (GCC), Release and Debug + ASan/UBSan; the
@@ -963,7 +979,7 @@ and puts every answer through <code>tools/verify_solution.py</code>.</p>
 <!-- fragment:footer -->
 <div class="wrap">
     <div>SANKHYA · Smart India Hackathon 2026 · PS SIH26119 · Apache-2.0 · <a href="https://sankhya-solver.vercel.app">sankhya-solver.vercel.app</a></div>
-    <div>Every figure on this site was last checked against SANKHYA <a href="https://github.com/thegoodengineers/SANKHYA/tree/5ddf5b05713640f1ad4890fcaf29f0350ea56cab">main at <span data-fact="sankhya_commit">5ddf5b0</span></a>.</div>
+    <div>Every figure on this site was last checked against SANKHYA <a href="https://github.com/thegoodengineers/SANKHYA/tree/afdbdbb58c4476df240882e9d5246e559a4ef9b9">main at <span data-fact="sankhya_commit">afdbdbb</span></a>.</div>
     <div><a href="https://github.com/thegoodengineers/SANKHYA">Source</a> · <a href="/docs">Docs</a> · <a href="/docs/benchmarks">Benchmarks</a> · <a href="/docs/provenance">Provenance</a> · <a href="/docs/coverage">Coverage tracker</a></div>
   </div>
 <!-- /fragment:footer -->
