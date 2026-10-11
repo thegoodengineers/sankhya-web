@@ -25,7 +25,7 @@
     "million_transport_seconds": {"value": "119 s", "source": "million-cpu-b561fba.csv: million-transport.mps (1,000,000 rows), pdhg optimal and verified, 119.15 s, 4.1e-14"},
     "pump_off_feasible": {"value": "40", "source": "bench/results/miplib-t2-full-off-a0cc065.csv (#814): 40 of 60 feasible and verified at 60 s"},
     "pump_gpu_feasible": {"value": "44", "source": "miplib-t2-full-509-pump-gpu-a0cc065.csv: 44 of 60 feasible and verified, V100"},
-    "release_tag": {"value": "v1.0.0-rc1", "source": "gh release view v1.0.0-rc1: pre-release, three archives, image tarball, SHA256SUMS"},
+    "release_tag": {"value": "v1.0.0-rc2", "source": "gh release view v1.0.0-rc2: pre-release, three archives, two wheels, image tarball, SHA256SUMS"},
     "mm_total": {"value": "138", "source": "bench/results/maros-meszaros-9094e1c.csv, 138 rows"},
     "mm_matched": {"value": "106", "source": "maros-meszaros-9094e1c.csv, matches_reference = 1 on 106 rows, status optimal on the same 106, none of them rejected by the verifier"},
 

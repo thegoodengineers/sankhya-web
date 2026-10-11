@@ -33,22 +33,22 @@
 
 <section id="download">
   <div class="wrap">
-    <div class="head"><div class="label"><span class="n">No build</span></div><div><h2>Or download it. No compiler needed.</h2><p>Release <a href="https://github.com/thegoodengineers/SANKHYA/releases/tag/v1.0.0-rc1"><span data-fact="release_tag">v1.0.0-rc1</span></a>, a pre-release built by CI alone: Linux x86-64 (CPU, and CUDA with the runtime linked in, so only the driver is needed) and Windows x64. Each archive keeps the repository's layout and carries a manifest of the commit, compiler and linked libraries; check it against SHA256SUMS.</p></div></div>
+    <div class="head"><div class="label"><span class="n">No build</span></div><div><h2>Or download it. No compiler needed.</h2><p>Release <a href="https://github.com/thegoodengineers/SANKHYA/releases/tag/v1.0.0-rc2"><span data-fact="release_tag">v1.0.0-rc2</span></a>, a pre-release built by CI alone: Linux x86-64 (CPU, and CUDA with the runtime linked in, so only the driver is needed) and Windows x64. Each archive keeps the repository's layout and carries a manifest of the commit, compiler and linked libraries; check it against SHA256SUMS.</p></div></div>
     <div class="two">
       <pre><code># Linux (Windows: unzip, then build\sankhya.exe)
-tar -xzf sankhya-0.1.0-linux-x86_64-cpu.tar.gz
-cd sankhya-0.1.0-linux-x86_64-cpu
+tar -xzf sankhya-1.0.0-linux-x86_64-cpu.tar.gz
+cd sankhya-1.0.0-linux-x86_64-cpu
 sha256sum -c SHA256SUMS
 build/sankhya solve demo/crude_blend.mps --write-sol blend.sol
 python3 tools/verify_solution.py demo/crude_blend.mps blend.sol
 demo/finale.sh</code></pre>
       <pre><code># or the container image (CUDA build, verifier, demo models)
-docker pull ghcr.io/thegoodengineers/sankhya:v1.0.0-rc1
-docker run --rm --gpus all ghcr.io/thegoodengineers/sankhya:v1.0.0-rc1 sankhya solve demo/crude_blend.mps --gpu
+docker pull ghcr.io/thegoodengineers/sankhya:v1.0.0-rc2
+docker run --rm --gpus all ghcr.io/thegoodengineers/sankhya:v1.0.0-rc2 sankhya solve demo/crude_blend.mps --gpu
 # offline: docker load &lt; sankhya-image.tar.gz (release asset), then run sankhya:ci</code></pre>
     </div>
-    <p class="small" style="margin-top:14px">The archives of this pre-release are named 0.1.0, the version the tree carried when it was tagged. This pre-release has no Windows CUDA archive. The tree now builds under MSVC, the host compiler nvcc requires on Windows, and the release workflow builds a Windows x64 CUDA archive (CUDA 12.6 toolkit, compiled without a card, the runtime DLLs beside the binary) that is unpacked and run on a runner with no compiler and no card; the next tag's release carries it.</p>
-    <p class="small"><b>From pip.</b> The Python bindings are ctypes over the C API, so one wheel per platform, with the library and the CLI inside, serves CPython 3.9 to 3.13: <code>manylinux_2_35_x86_64</code> and <code>win_amd64</code>. CI installs each into a clean venv of every one of those versions and solves and verifies the demo there. Releases from the next tag on carry them: <code>pip install https://github.com/thegoodengineers/SANKHYA/releases/download/&lt;tag&gt;/sankhya-1.0.0-py3-none-manylinux_2_35_x86_64.whl</code>. Nothing is on PyPI.</p>
+    <p class="small" style="margin-top:14px">This pre-release has no Windows CUDA archive. The tree now builds under MSVC, the host compiler nvcc requires on Windows, and the release workflow builds a Windows x64 CUDA archive (CUDA 12.6 toolkit, compiled without a card, the runtime DLLs beside the binary) that is unpacked and run on a runner with no compiler and no card; the next tag's release carries it.</p>
+    <p class="small"><b>From pip.</b> The Python bindings are ctypes over the C API, so one wheel per platform, with the library and the CLI inside, serves CPython 3.9 to 3.13: <code>manylinux_2_35_x86_64</code> and <code>win_amd64</code>. CI installs each into a clean venv of every one of those versions and solves and verifies the demo there. This release carries them: <code>pip install https://github.com/thegoodengineers/SANKHYA/releases/download/v1.0.0-rc2/sankhya-1.0.0-py3-none-manylinux_2_35_x86_64.whl</code> (Windows: <code>.../v1.0.0-rc2/sankhya-1.0.0-py3-none-win_amd64.whl</code>). Nothing is on PyPI.</p>
   </div>
 </section>
 
