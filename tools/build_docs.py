@@ -180,7 +180,7 @@ def extract_rows(text, names, src):
     best = None
     i = 0
     while i < len(lines):
-        if lines[i].lstrip().startswith("|") and i + 1 < len(lines) and re.match(r"^\s*\|?\s*:?-{3,}", lines[i + 1]):
+        if lines[i].lstrip().startswith("|") and i + 1 < len(lines) and re.match(r"^\s*\|?\s*:?-+", lines[i + 1]):
             j = i + 2
             rows = []
             while j < len(lines) and lines[j].lstrip().startswith("|"):
@@ -400,7 +400,7 @@ def table_shape(md_text):
         if is_row:
             run.append(line)
             continue
-        if len(run) >= 2 and re.match(r"^\s*\|?\s*:?-{3,}", run[1]):
+        if len(run) >= 2 and re.match(r"^\s*\|?\s*:?-+", run[1]):
             shapes.append(len(run) - 2)
         run = []
     return shapes
