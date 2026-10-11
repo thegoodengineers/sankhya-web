@@ -27,6 +27,8 @@
     "pump_gpu_feasible": {"value": "44", "source": "miplib-t2-full-509-pump-gpu-a0cc065.csv: 44 of 60 feasible and verified, V100"},
     "release_tag": {"value": "v1.0.0-rc2", "source": "gh release view v1.0.0-rc2: pre-release, three archives, two wheels, image tarball, SHA256SUMS"},
     "mm_total": {"value": "138", "source": "bench/results/maros-meszaros-9094e1c.csv, 138 rows"},
+    "refinery_total": {"value": "30", "source": "bench/results/head-to-head-refinery-8d4b07b3.csv (#1004, #1011), the 30 sankhya rows: ten refinery models at three sizes"},
+    "refinery_optimal": {"value": "26", "source": "bench/results/head-to-head-refinery-8d4b07b3.csv, the sankhya rows: status optimal on 26, every one with matches_reference = 1 and independently_verified = 1; the other 4 are time limits, no wrong answer"},
     "mm_matched": {"value": "106", "source": "maros-meszaros-9094e1c.csv, matches_reference = 1 on 106 rows, status optimal on the same 106, none of them rejected by the verifier"},
 
     "miplib_total": {"value": "30", "source": "bench/results/miplib-ad57c03.csv, 30 rows"},
