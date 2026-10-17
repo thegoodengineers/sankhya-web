@@ -1,7 +1,7 @@
 {
   "about": "Every figure the site states, once. Pages carry <span data-fact=\"key\">value</span>; run python tools/facts.py after editing this file, and python tools/facts.py --check before a PR. Paths are in thegoodengineers/SANKHYA on main at the commit in sankhya_commit.",
   "facts": {
-    "sankhya_commit": {"value": "00da48bf", "source": "git rev-parse --short origin/main, 2026-10-17 (the squash merge of SANKHYA #1025)"},
+    "sankhya_commit": {"value": "29b715e4", "source": "git rev-parse --short origin/main, 2026-10-17 (the squash merge of SANKHYA #1032)"},
     "first_commit_date": {"value": "25 August 2026", "source": "git log --reverse --format=%ad --date=short | head -1 -> 2026-08-25"},
     "tests_total": {"value": "1609", "source": "ctest in the CI Release leg on main at 5ac4df76 (run 38152112294, 2026-10-11): 100% tests passed, 0 tests failed out of 1565, then out of 44 in the serial set"},
     "tests_commit": {"value": "5ac4df7", "source": "git rev-parse --short of the main commit tests_total was read from (CI run 38152112294, 2026-10-11)"},
@@ -17,7 +17,7 @@
     "netlib_certified": {"value": "90", "source": "bench/results/certified-gap-netlib-full-736a1106.csv (SANKHYA #1017, #1021): status optimal on 94, certified_relative_gap <= 1e-6 on 90 (worst 5.1e-08), every stated bound re-derived exactly by tools/verify_solution.py; pilot87 finite at 6.3e-06, greenbea, greenbeb and maros-r7 with no finite bound"},
     "netlib_certified_total": {"value": "94", "source": "certified-gap-netlib-full-736a1106.csv, 94 rows, status optimal on all 94"},
     "netlib_outliers": {"value": "10", "source": "netlib-full-9094e1c.csv, matches_published = 0 on 80bau3b, e226, ganges, greenbea, greenbeb, nesm, pilot, pilot.ja, pilot.we, scrs8"},
-    "mm_verified": {"value": "121", "source": "bench/results/maros-meszaros-8103fb18.csv (SANKHYA #1025; Ubuntu 22.04 under WSL, 60 s), independently_verified = 1 on 121 rows"},
+    "mm_verified": {"value": "121", "source": "bench/results/maros-meszaros-dcbd32eb.csv (SANKHYA #1032; Ubuntu 22.04 under WSL, 60 s), independently_verified = 1 on 121 rows"},
     "stress_total": {"value": "126", "source": "bench/results/stress-d32b3847.csv (#887, re-run 2026-10-08), 126 instances per solver"},
     "stress_ours_wrong": {"value": "0", "source": "stress-d32b3847.csv, solver sankhya: 111 correct, 0 wrong, 15 failed (declined a claim or stopped); scaled_netlib 79 / 0 / 15"},
     "stress_ours_correct": {"value": "111", "source": "stress-d32b3847.csv, solver sankhya, verdict correct on 111 rows (105 at 348d60ff)"},
@@ -29,10 +29,10 @@
     "pump_off_feasible": {"value": "40", "source": "bench/results/miplib-t2-full-off-a0cc065.csv (#814): 40 of 60 feasible and verified at 60 s"},
     "pump_gpu_feasible": {"value": "44", "source": "miplib-t2-full-509-pump-gpu-a0cc065.csv: 44 of 60 feasible and verified, V100"},
     "release_tag": {"value": "v1.0.0-rc2", "source": "gh release view v1.0.0-rc2: pre-release, three archives, two wheels, image tarball, SHA256SUMS"},
-    "mm_total": {"value": "138", "source": "bench/results/maros-meszaros-8103fb18.csv, 138 rows"},
+    "mm_total": {"value": "138", "source": "bench/results/maros-meszaros-dcbd32eb.csv, 138 rows"},
     "refinery_total": {"value": "30", "source": "bench/results/head-to-head-refinery-8d4b07b3.csv (#1004, #1011), the 30 sankhya rows: ten refinery models at three sizes"},
     "refinery_optimal": {"value": "26", "source": "bench/results/head-to-head-refinery-8d4b07b3.csv, the sankhya rows: status optimal on 26, every one with matches_reference = 1 and independently_verified = 1; the other 4 are time limits, no wrong answer"},
-    "mm_matched": {"value": "109", "source": "maros-meszaros-8103fb18.csv, matches_reference = 1 on 109 rows, status optimal on the same 109, none of them rejected by the verifier (optimal on 111)"},
+    "mm_matched": {"value": "114", "source": "maros-meszaros-dcbd32eb.csv, matches_reference = 1 on 114 rows, status optimal on the same 114, none of them rejected by the verifier (optimal on 116)"},
 
     "miplib_total": {"value": "30", "source": "bench/results/miplib-ad57c03.csv, 30 rows"},
     "miplib_reach": {"value": "14", "source": "miplib-ad57c03.csv, matched_published = 1 on 14 rows"},
