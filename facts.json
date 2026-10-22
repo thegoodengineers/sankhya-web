@@ -1,7 +1,7 @@
 {
   "about": "Every figure the site states, once. Pages carry <span data-fact=\"key\">value</span>; run python tools/facts.py after editing this file, and python tools/facts.py --check before a PR. Paths are in thegoodengineers/SANKHYA on main at the commit in sankhya_commit.",
   "facts": {
-    "sankhya_commit": {"value": "8a463fb7", "source": "git rev-parse --short=8 origin/main, 2026-10-21 (the squash merge of SANKHYA #1107)"},
+    "sankhya_commit": {"value": "08d63ede", "source": "git rev-parse --short=8 origin/main, 2026-10-22 (after SANKHYA #1126 and #1137)"},
     "first_commit_date": {"value": "25 August 2026", "source": "git log --reverse --format=%ad --date=short | head -1 -> 2026-08-25"},
     "tests_total": {"value": "1609", "source": "ctest in the CI Release leg on main at 5ac4df76 (run 38152112294, 2026-10-11): 100% tests passed, 0 tests failed out of 1565, then out of 44 in the serial set"},
     "tests_commit": {"value": "5ac4df7", "source": "git rev-parse --short of the main commit tests_total was read from (CI run 38152112294, 2026-10-11)"},
@@ -14,8 +14,8 @@
     "netlib_h2h_exact": {"value": "94", "source": "bench/results/head-to-head-netlib-5e490ef.csv (#791), the 94 sankhya rows: matches_exact = 1 and independently_verified = 1 on 94"},
     "netlib_h2h_matched": {"value": "84", "source": "bench/results/head-to-head-netlib-5e490ef.csv (#791), the 94 sankhya rows: matches_reference = 1 on 84"},
     "netlib_verified": {"value": "92", "source": "netlib-full-9094e1c.csv, independently_verified = 1 on 92 rows"},
-    "netlib_certified": {"value": "92", "source": "bench/results/certified-gap-netlib-full-92ef682.csv (SANKHYA #1119, #1123): status optimal on 94, certified_relative_gap <= 1e-6 on 92 (worst 5.1e-08), independently_verified on 94; greenbea at 1.0e-04 and pilot87 at 6.3e-06 are the two outside"},
-    "netlib_certified_total": {"value": "94", "source": "certified-gap-netlib-full-92ef682.csv, 94 rows, status optimal on all 94"},
+    "netlib_certified": {"value": "93", "source": "bench/results/certified-gap-netlib-full-81b812c.csv (SANKHYA #1137), certified_gap_seconds=120, 120 s per instance: status optimal on 94, certified_relative_gap <= 1e-6 on 93 (worst 5.1e-08), independently_verified on 94; pilot87 at 5.4e-06 is the one outside"},
+    "netlib_certified_total": {"value": "94", "source": "certified-gap-netlib-full-81b812c.csv, 94 rows, status optimal on all 94"},
     "netlib_outliers": {"value": "10", "source": "netlib-full-9094e1c.csv, matches_published = 0 on 80bau3b, e226, ganges, greenbea, greenbeb, nesm, pilot, pilot.ja, pilot.we, scrs8"},
     "mm_verified": {"value": "124", "source": "bench/results/maros-meszaros-cad720c.csv (SANKHYA #1065; bench.yml on GitHub Actions ubuntu-latest, 60 s), independently_verified = 1 on 124 rows"},
     "stress_total": {"value": "126", "source": "bench/results/stress-d32b3847.csv (#887, re-run 2026-10-08), 126 instances per solver"},
