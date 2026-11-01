@@ -33,7 +33,7 @@
 
 <section id="download">
   <div class="wrap">
-    <div class="head"><div class="label"><span class="n">No build</span></div><div><h2>Or download it. No compiler needed.</h2><p>Release <a href="https://github.com/thegoodengineers/SANKHYA/releases/tag/v1.0.0-rc2"><span data-fact="release_tag">v1.0.0-rc2</span></a>, a pre-release built by CI alone: Linux x86-64 (CPU, and CUDA with the runtime linked in, so only the driver is needed) and Windows x64. Each archive keeps the repository's layout and carries a manifest of the commit, compiler and linked libraries; check it against SHA256SUMS.</p></div></div>
+    <div class="head"><div class="label"><span class="n">No build</span></div><div><h2>Or download it. No compiler needed.</h2><p>Release <a href="https://github.com/thegoodengineers/SANKHYA/releases/tag/v1.0.0-rc5"><span data-fact="release_tag">v1.0.0-rc5</span></a>, a pre-release built by CI alone: Linux x86-64 and Windows x64, each as a CPU archive and a CUDA archive (the Linux one with the runtime linked in, the Windows one with the runtime DLLs beside the binary, so only the driver is needed), two pip wheels, the container image, the jury report and the deck. Each archive keeps the repository's layout and carries a manifest of the commit, compiler and linked libraries; check it against SHA256SUMS.</p></div></div>
     <div class="two">
       <pre><code># Linux (Windows: unzip, then build\sankhya.exe)
 tar -xzf sankhya-1.0.0-linux-x86_64-cpu.tar.gz
@@ -43,12 +43,12 @@ build/sankhya solve demo/crude_blend.mps --write-sol blend.sol
 python3 tools/verify_solution.py demo/crude_blend.mps blend.sol
 demo/finale.sh</code></pre>
       <pre><code># or the container image (CUDA build, verifier, demo models)
-docker pull ghcr.io/thegoodengineers/sankhya:v1.0.0-rc2
-docker run --rm --gpus all ghcr.io/thegoodengineers/sankhya:v1.0.0-rc2 sankhya solve demo/crude_blend.mps --gpu
+docker pull ghcr.io/thegoodengineers/sankhya:v1.0.0-rc5
+docker run --rm --gpus all ghcr.io/thegoodengineers/sankhya:v1.0.0-rc5 sankhya solve demo/crude_blend.mps --gpu
 # offline: docker load &lt; sankhya-image.tar.gz (release asset), then run sankhya:ci</code></pre>
     </div>
     <p class="small" style="margin-top:14px">This pre-release has no Windows CUDA archive. The tree now builds under MSVC, the host compiler nvcc requires on Windows, and the release workflow builds a Windows x64 CUDA archive (CUDA 12.6 toolkit, compiled without a card, the runtime DLLs beside the binary) that is unpacked and run on a runner with no compiler and no card; the next tag's release carries it.</p>
-    <p class="small"><b>From pip.</b> The Python bindings are ctypes over the C API, so one wheel per platform, with the library and the CLI inside, serves CPython 3.9 to 3.13: <code>manylinux_2_35_x86_64</code> and <code>win_amd64</code>. CI installs each into a clean venv of every one of those versions and solves and verifies the demo there. This release carries them: <code>pip install https://github.com/thegoodengineers/SANKHYA/releases/download/v1.0.0-rc2/sankhya-1.0.0-py3-none-manylinux_2_35_x86_64.whl</code> (Windows: <code>.../v1.0.0-rc2/sankhya-1.0.0-py3-none-win_amd64.whl</code>). Nothing is on PyPI.</p>
+    <p class="small"><b>From pip.</b> The Python bindings are ctypes over the C API, so one wheel per platform, with the library and the CLI inside, serves CPython 3.9 to 3.13: <code>manylinux_2_35_x86_64</code> and <code>win_amd64</code>. CI installs each into a clean venv of every one of those versions and solves and verifies the demo there. This release carries them: <code>pip install https://github.com/thegoodengineers/SANKHYA/releases/download/v1.0.0-rc5/sankhya-1.0.0-py3-none-manylinux_2_35_x86_64.whl</code> (Windows: <code>.../v1.0.0-rc5/sankhya-1.0.0-py3-none-win_amd64.whl</code>). Nothing is on PyPI.</p>
   </div>
 </section>
 
@@ -85,7 +85,7 @@ cd SANKHYA
 scripts/configure.sh build Release
 cmake --build build -j
 ctest --test-dir build --output-on-failure</code></pre>
-      <div><p class="small"><b>What you should see:</b> the configure script names the compiler it picked (it checks the version rather than trusting PATH order), the build finishes with no warnings under <code>-Wall -Wextra -Werror</code>, and ctest runs <span data-fact="tests_total">1609</span> tests. At <span data-fact="tests_commit">5ac4df7</span> the Ubuntu CI passes all of them. On a Windows build with GCC 16.1 one fails: <code>Pdhg.StopAtRequestGivesTheCheapAnswerAndNeverCallsItOptimal</code>, where the honest run reports <code>feasible</code> rather than the <code>optimal</code> the test expects, because a complementarity product of 2.075e-06 is above the 1e-6 the verifier accepts. Windows sometimes blocks a freshly linked binary through Smart App Control; <code>scripts/preflight.sh</code> names the fix.</p><p class="small">Or skip straight to everything: <code>scripts/reproduce.sh</code> does the build, the tests, the Netlib benchmark with verification, the HiGHS comparison (if <code>pip install highspy</code> is present) and the PS26119 demo.</p></div>
+      <div><p class="small"><b>What you should see:</b> the configure script names the compiler it picked (it checks the version rather than trusting PATH order), the build finishes with no warnings under <code>-Wall -Wextra -Werror</code>, and ctest runs <span data-fact="tests_total">1703</span> tests. At <span data-fact="tests_commit">8e1bec1e</span> the Ubuntu CI passes all of them. On a Windows build with GCC 16.1 one fails: <code>Pdhg.StopAtRequestGivesTheCheapAnswerAndNeverCallsItOptimal</code>, where the honest run reports <code>feasible</code> rather than the <code>optimal</code> the test expects, because a complementarity product of 2.075e-06 is above the 1e-6 the verifier accepts. Windows sometimes blocks a freshly linked binary through Smart App Control; <code>scripts/preflight.sh</code> names the fix.</p><p class="small">Or skip straight to everything: <code>scripts/reproduce.sh</code> does the build, the tests, the Netlib benchmark with verification, the HiGHS comparison (if <code>pip install highspy</code> is present) and the PS26119 demo.</p></div>
     </div>
   </div>
 </section>
@@ -183,8 +183,8 @@ demo/finale.sh                  # the finale walk (Windows: demo\finale.cmd)</co
 <!-- fragment:footer -->
 <div class="wrap">
     <div>SANKHYA · Smart India Hackathon 2026 · PS SIH26119 · Apache-2.0 · <a href="https://sankhya-solver.vercel.app">sankhya-solver.vercel.app</a></div>
-    <div>Every figure on this site was last checked against SANKHYA <a href="https://github.com/thegoodengineers/SANKHYA/tree/d1644bbef750a3b9b68c2743e83363a175c9b4d8">main at <span data-fact="sankhya_commit">08d63ede</span></a>.</div>
-    <div><a href="https://github.com/thegoodengineers/SANKHYA">Source</a> · <a href="/docs">Docs</a> · <a href="/docs/benchmarks">Benchmarks</a> · <a href="/docs/provenance">Provenance</a> · <a href="/docs/coverage">Coverage tracker</a> · <a href="https://github.com/thegoodengineers/SANKHYA/blob/d1644bbef750a3b9b68c2743e83363a175c9b4d8/docs/REPORT.pdf">Jury report (PDF)</a></div>
+    <div>Every figure on this site was last checked against SANKHYA <a href="https://github.com/thegoodengineers/SANKHYA/tree/8e1bec1ea71883434f3edf1f7fe505b6c1eabd64">main at <span data-fact="sankhya_commit">8e1bec1e</span></a>.</div>
+    <div><a href="https://github.com/thegoodengineers/SANKHYA">Source</a> · <a href="/docs">Docs</a> · <a href="/docs/benchmarks">Benchmarks</a> · <a href="/docs/provenance">Provenance</a> · <a href="/docs/coverage">Coverage tracker</a> · <a href="https://github.com/thegoodengineers/SANKHYA/blob/8e1bec1ea71883434f3edf1f7fe505b6c1eabd64/docs/REPORT.pdf">Jury report (PDF)</a></div>
   </div>
 <!-- /fragment:footer -->
 </footer>
