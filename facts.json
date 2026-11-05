@@ -1,10 +1,10 @@
 {
   "about": "Every figure the site states, once. Pages carry <span data-fact=\"key\">value</span>; run python tools/facts.py after editing this file, and python tools/facts.py --check before a PR. Paths are in thegoodengineers/SANKHYA on main at the commit in sankhya_commit.",
   "facts": {
-    "sankhya_commit": {"value": "8e1bec1e", "source": "git rev-parse --short=8 origin/main, 2026-11-01 (SANKHYA #1175, the Maros-Meszaros run on main at c766eaeb and v1.0.0-rc5)"},
+    "sankhya_commit": {"value": "c190f91b", "source": "git rev-parse --short=8 origin/main, 2026-11-05 (SANKHYA #1188, the rolling warm start re-measured)"},
     "first_commit_date": {"value": "25 August 2026", "source": "git log --reverse --format=%ad --date=short | head -1 -> 2026-08-25"},
-    "tests_total": {"value": "1703", "source": "ctest in the CI Release leg on main at 8e1bec1e (run 39862840013, job 120117589879): 100% tests passed, 0 tests failed out of 1656, then out of 47 in the serial set"},
-    "tests_commit": {"value": "8e1bec1e", "source": "git rev-parse --short=8 of the main commit tests_total was read from (CI run 39862840013)"},
+    "tests_total": {"value": "1718", "source": "ctest in the CI Release leg on main at 029dc93b (run 41971327319, job 127060031513): 100% tests passed, 0 tests failed out of 1668, then out of 50 in the serial set"},
+    "tests_commit": {"value": "029dc93b", "source": "git rev-parse --short=8 of the main commit tests_total was read from (CI run 41971327319)"},
     "engines_total": {"value": "seven", "source": "./build/sankhya engines --format json at 9094e1c, the last commit before 43b648c to touch C++: simplex, dual-simplex, pdhg, ipm, convex-qp, qp-ipm, branch-and-bound (pdhg-gpu only in a CUDA build)"},
 
     "netlib_total": {"value": "92", "source": "bench/results/netlib-full-9094e1c.csv, 92 rows (the LPs netlib.org ships as EMPS, #742)"},
@@ -32,8 +32,8 @@
     "mm_h2h_ours": {"value": "117", "source": "bench/results/head-to-head-maros-meszaros-d0eb672.csv (SANKHYA #1084), 60 s, 1 thread, every solver graded the same: sankhya matches_reference = 1 and independently_verified = 1 on 117 rows"},
     "mm_h2h_piqp_matched": {"value": "130", "source": "bench/results/head-to-head-maros-meszaros-d0eb672.csv (SANKHYA #1084), 60 s, 1 thread, every solver graded the same: piqp matches_reference = 1 on 130 rows"},
     "mm_h2h_piqp": {"value": "128", "source": "bench/results/head-to-head-maros-meszaros-d0eb672.csv (SANKHYA #1084), 60 s, 1 thread, every solver graded the same: piqp matches_reference = 1 and independently_verified = 1 on 128 rows"},
-    "pdhg_warm_weeks": {"value": "52", "source": "bench/results/rolling-warm-start-pdhg-f6740af.csv (SANKHYA #1102): 52 rows, answers_agree True on 52"},
-    "pdhg_warm_ratio": {"value": "0.84x", "source": "rolling-warm-start-pdhg-f6740af.csv: sum warm_iterations 40,876,092 / sum cold_iterations 48,580,415 = 0.841"},
+    "pdhg_warm_weeks": {"value": "52", "source": "bench/results/rolling-warm-start-pdhg-029dc93.csv (SANKHYA #913, #1188): 52 rows, answers_agree True on 52"},
+    "pdhg_warm_ratio": {"value": "0.19x", "source": "rolling-warm-start-pdhg-029dc93.csv (SANKHYA #1188): sum warm_iterations 2,035,187 / sum cold_iterations 10,720,401 = 0.190, 622 s against 2,662 s; the earlier 0.84x (rolling-warm-start-pdhg-f6740af.csv) was measured with the duals offered back negated, fixed in #1184"},
     "mm_total": {"value": "138", "source": "bench/results/maros-meszaros-c766eae.csv, 138 rows"},
     "refinery_total": {"value": "30", "source": "bench/results/head-to-head-refinery-8d4b07b3.csv (#1004, #1011), the 30 sankhya rows: ten refinery models at three sizes"},
     "refinery_optimal": {"value": "26", "source": "bench/results/head-to-head-refinery-8d4b07b3.csv, the sankhya rows: status optimal on 26, every one with matches_reference = 1 and independently_verified = 1; the other 4 are time limits, no wrong answer"},

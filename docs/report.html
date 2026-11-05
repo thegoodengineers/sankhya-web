@@ -28,7 +28,7 @@
   <nav class="here" aria-label="On this page"><a href="#summary">Summary</a><a href="#1-architecture">1 Architecture</a><a href="#1-the-shape-in-one-paragraph" class="sub">1. The shape in one paragraph</a><a href="#2-modules-and-their-boundaries" class="sub">2. Modules and their boundaries</a><a href="#4-how-a-solve-flows" class="sub">4. How a solve flows</a><a href="#13-the-engine-layer-what-an-engine-is-promised-and-what-it-promises" class="sub">13. The engine layer: what an engine is promised, and what it promises</a><a href="#2-lp-engines">2 LP engines</a><a href="#1e-the-first-order-engine--pdhg" class="sub">1e. The first-order engine — PDHG</a><a href="#3-milp-engine">3 MILP engine</a><a href="#11-conflict-analysis-learning-from-infeasible-nodes" class="sub">11. Conflict analysis: learning from infeasible nodes</a><a href="#12-parallel-tree-search" class="sub">12. Parallel tree search</a><a href="#4-qp-engines">4 QP engines</a><a href="#2b-maros-meszaros-the-convex-qp-set" class="sub">2b. Maros-Meszaros, the convex QP set</a><a href="#2d-qplib-the-convex-continuous-qps" class="sub">2d. QPLIB, the convex continuous QPs</a><a href="#5-gpu-acceleration">5 GPU acceleration</a><a href="#1g-gpu-pdhg-crossover--when-the-gpu-wins" class="sub">1g. GPU PDHG crossover — when the GPU wins</a><a href="#5-what-the-hardware-lets-us-claim-and-what-it-does-not" class="sub">5. What the hardware lets us claim, and what it does not</a><a href="#6-numerical-stability">6 Numerical stability</a><a href="#3-the-two-invariants-everything-else-rests-on" class="sub">3. The two invariants everything else rests on</a><a href="#5-robustness--where-the-solver-stops-working" class="sub">5. Robustness — where the solver stops working</a><a href="#7-independent-verification">7 Independent verification</a><a href="#3-correctness-beyond-the-objective-value" class="sub">3. Correctness beyond the objective value</a><a href="#4-machine-checkable-evidence" class="sub">4. Machine-checkable evidence</a><a href="#8-benchmark-method">8 Benchmark method</a><a href="#7-reproducibility-and-what-is-actually-promised" class="sub">7. Reproducibility, and what is actually promised</a><a href="#6-what-these-numbers-do-not-say" class="sub">6. What these numbers do not say</a><a href="#9-results">9 Results</a><a href="#1c-the-full-set--the-honest-headline" class="sub">1c. The full set — the honest headline</a><a href="#1c1-the-kennington-set---the-next-rung" class="sub">1c.1 The Kennington set - the next rung</a><a href="#1d-beyond-netlib--mittelmanns-lp-set" class="sub">1d. Beyond Netlib — Mittelmann&#x27;s LP set</a><a href="#1f-scale--how-far-up-this-goes" class="sub">1f. Scale — how far up this goes</a><a href="#2-miplib--the-mixed-integer-side" class="sub">2. MIPLIB — the mixed-integer side</a><a href="#2e-nonlinear-programs---hock-schittkowski-and-convex-minlplib" class="sub">2e. Nonlinear programs - Hock-Schittkowski, and convex MINLPLib</a><a href="#4-comparison-against-an-established-solver" class="sub">4. Comparison against an established solver</a><a href="#10-limitations">10 Limitations</a><a href="#1-demoted-by-a-committed-measurement" class="sub">1. Demoted by a committed measurement</a><a href="#2-demoted-by-a-measurement-made-on-a-branch-not-re-run-on-main" class="sub">2. Demoted by a measurement made on a branch, not re-run on main</a><a href="#3-built-opt-in-awaiting-the-measurement" class="sub">3. Built opt-in, awaiting the measurement</a><a href="#4-withdrawn-claims" class="sub">4. Withdrawn claims</a><a href="#adding-an-entry" class="sub">Adding an entry</a><a href="#what-this-does-not-do" class="sub">What this does NOT do</a><a href="#11-future-work">11 Future work</a></nav>
 </aside>
 <main class="col" id="content">
-<header class="page" id="top"><div class="wrap"><nav class="crumbs" aria-label="Breadcrumb"><a href="/docs">Docs</a><span aria-hidden="true">/</span>Technical report</nav><h1>Technical report</h1><p class="doc-banner">Generated from <a href="https://github.com/thegoodengineers/sankhya-web/blob/main/content/report.md"><code>content/report.md</code></a> at commit <a href="https://github.com/thegoodengineers/SANKHYA/commit/8e1bec1ea71883434f3edf1f7fe505b6c1eabd64"><code>8e1bec1</code></a> (2026-10-23). Do not edit this page by hand.</p></div></header>
+<header class="page" id="top"><div class="wrap"><nav class="crumbs" aria-label="Breadcrumb"><a href="/docs">Docs</a><span aria-hidden="true">/</span>Technical report</nav><h1>Technical report</h1><p class="doc-banner">Generated from <a href="https://github.com/thegoodengineers/sankhya-web/blob/main/content/report.md"><code>content/report.md</code></a> at commit <a href="https://github.com/thegoodengineers/SANKHYA/commit/c190f91b167141a41ab0edfd7dbc4f78cadb23ce"><code>c190f91</code></a> (2026-11-05). Do not edit this page by hand.</p></div></header>
 <details class="doc-toc"><summary>Contents</summary><ol><li><a href="#summary">Summary</a></li><li><a href="#1-architecture">1 Architecture</a></li><li class="sub"><a href="#1-the-shape-in-one-paragraph">1. The shape in one paragraph</a></li><li class="sub"><a href="#2-modules-and-their-boundaries">2. Modules and their boundaries</a></li><li class="sub"><a href="#4-how-a-solve-flows">4. How a solve flows</a></li><li class="sub"><a href="#13-the-engine-layer-what-an-engine-is-promised-and-what-it-promises">13. The engine layer: what an engine is promised, and what it promises</a></li><li><a href="#2-lp-engines">2 LP engines</a></li><li class="sub"><a href="#1e-the-first-order-engine--pdhg">1e. The first-order engine — PDHG</a></li><li><a href="#3-milp-engine">3 MILP engine</a></li><li class="sub"><a href="#11-conflict-analysis-learning-from-infeasible-nodes">11. Conflict analysis: learning from infeasible nodes</a></li><li class="sub"><a href="#12-parallel-tree-search">12. Parallel tree search</a></li><li><a href="#4-qp-engines">4 QP engines</a></li><li class="sub"><a href="#2b-maros-meszaros-the-convex-qp-set">2b. Maros-Meszaros, the convex QP set</a></li><li class="sub"><a href="#2d-qplib-the-convex-continuous-qps">2d. QPLIB, the convex continuous QPs</a></li><li><a href="#5-gpu-acceleration">5 GPU acceleration</a></li><li class="sub"><a href="#1g-gpu-pdhg-crossover--when-the-gpu-wins">1g. GPU PDHG crossover — when the GPU wins</a></li><li class="sub"><a href="#5-what-the-hardware-lets-us-claim-and-what-it-does-not">5. What the hardware lets us claim, and what it does not</a></li><li><a href="#6-numerical-stability">6 Numerical stability</a></li><li class="sub"><a href="#3-the-two-invariants-everything-else-rests-on">3. The two invariants everything else rests on</a></li><li class="sub"><a href="#5-robustness--where-the-solver-stops-working">5. Robustness — where the solver stops working</a></li><li><a href="#7-independent-verification">7 Independent verification</a></li><li class="sub"><a href="#3-correctness-beyond-the-objective-value">3. Correctness beyond the objective value</a></li><li class="sub"><a href="#4-machine-checkable-evidence">4. Machine-checkable evidence</a></li><li><a href="#8-benchmark-method">8 Benchmark method</a></li><li class="sub"><a href="#7-reproducibility-and-what-is-actually-promised">7. Reproducibility, and what is actually promised</a></li><li class="sub"><a href="#6-what-these-numbers-do-not-say">6. What these numbers do not say</a></li><li><a href="#9-results">9 Results</a></li><li class="sub"><a href="#1c-the-full-set--the-honest-headline">1c. The full set — the honest headline</a></li><li class="sub"><a href="#1c1-the-kennington-set---the-next-rung">1c.1 The Kennington set - the next rung</a></li><li class="sub"><a href="#1d-beyond-netlib--mittelmanns-lp-set">1d. Beyond Netlib — Mittelmann&#x27;s LP set</a></li><li class="sub"><a href="#1f-scale--how-far-up-this-goes">1f. Scale — how far up this goes</a></li><li class="sub"><a href="#2-miplib--the-mixed-integer-side">2. MIPLIB — the mixed-integer side</a></li><li class="sub"><a href="#2e-nonlinear-programs---hock-schittkowski-and-convex-minlplib">2e. Nonlinear programs - Hock-Schittkowski, and convex MINLPLib</a></li><li class="sub"><a href="#4-comparison-against-an-established-solver">4. Comparison against an established solver</a></li><li><a href="#10-limitations">10 Limitations</a></li><li class="sub"><a href="#1-demoted-by-a-committed-measurement">1. Demoted by a committed measurement</a></li><li class="sub"><a href="#2-demoted-by-a-measurement-made-on-a-branch-not-re-run-on-main">2. Demoted by a measurement made on a branch, not re-run on main</a></li><li class="sub"><a href="#3-built-opt-in-awaiting-the-measurement">3. Built opt-in, awaiting the measurement</a></li><li class="sub"><a href="#4-withdrawn-claims">4. Withdrawn claims</a></li><li class="sub"><a href="#adding-an-entry">Adding an entry</a></li><li class="sub"><a href="#what-this-does-not-do">What this does NOT do</a></li><li><a href="#11-future-work">11 Future work</a></li></ol></details>
 <article class="doc-body">
 <h2 id="summary">Summary</h2>
@@ -3367,13 +3367,13 @@ Commit <code>c766eae</code> · machine <code>github-actions ubuntu-24.04 4 vCPU 
 <li><strong><code>optimal</code> but more than 1e-6 relative from the reference objective</strong> (1): <code>hues-mod</code>.</li>
 <li><strong><code>optimal</code> but not successful at 1e-9 relative</strong> (12): <code>gouldqp3</code>, <code>hs268</code>, <code>hs35mod</code>, <code>liswet1</code>, <code>liswet10</code>, <code>liswet11</code>, <code>liswet2</code>, <code>liswet3</code>, <code>liswet4</code>, <code>liswet5</code>, <code>liswet6</code>, <code>s268</code>.</li>
 </ul>
-<p><strong>Reference errata.</strong> For these instances the published objective is not the optimum: it was recomputed exactly (<code>data/maros-meszaros/reference_errata.json</code>). The table above still judges them against the published value, so they count as not matched.</p>
+<p><strong>Reference errata.</strong> For these instances the published objective is not the optimum: it was recomputed exactly, or independent solvers agree on another value (<code>data/maros-meszaros/reference_errata.json</code>). The table above still judges them against the published value, so they count as not matched.</p>
 <div class="table-wrap"><table class="doc-table">
 <thead>
 <tr>
 <th>instance</th>
 <th style="text-align: right;">published</th>
-<th style="text-align: right;">exact optimum</th>
+<th style="text-align: right;">optimum</th>
 <th style="text-align: right;">relative difference</th>
 <th style="text-align: right;">ours (this run)</th>
 <th>how</th>
@@ -3395,6 +3395,14 @@ Commit <code>c766eae</code> · machine <code>github-actions ubuntu-24.04 4 vCPU 
 <td style="text-align: right;">6.4933e-06</td>
 <td style="text-align: right;">348244638733.45282</td>
 <td><code>bench/runners/exact_diagonal_qp.py data/maros-meszaros/huestis.qps</code></td>
+</tr>
+<tr>
+<td><code>liswet8</code></td>
+<td style="text-align: right;">7.1447006e+03</td>
+<td style="text-align: right;">714.47006</td>
+<td style="text-align: right;">9.0000e-01</td>
+<td style="text-align: right;">653.9165061262438</td>
+<td>HiGHS 714.4700590543218, Clp 714.4700590347206 and PIQP 714.4700559636733, each optimal and the latter two accepted by tools/verify_solution.py, in bench/results/head-to-head-maros-meszaros-d0eb672.csv (#1084); SANKHYA 714.470059768, optimal and verified, with qp_ipm_adaptive_dual_drop (#1178)</td>
 </tr>
 </tbody>
 </table></div>
@@ -23591,6 +23599,7 @@ What would earn the default: the per-node cost of the waiting pool coming down e
 <p>Eight legs, every one negative on the instances the issue named. The family fires — 14 candidates on <code>ran12x21</code> alone, moving its root bound from 3157.38 to 3228.32 — and does not close enough gap in 60 s to change an outcome.</p>
 <p>Files: <code>bench/results/miplib-419-{cuts-baseline,flow-cover-on,aggregation-baseline,aggregation-on,localsearch-baseline,localsearch-on}.csv</code>; the three stamps are branch commits carried to <code>main</code> by #454, recorded in <code>bench/results/squash-stamps.txt</code>. Section 2 of <code>docs/BENCHMARKS.md</code>.
 What would earn the default: a target instance reaching its published optimum under the family. The next lever is separation strength — exact sequential lifting (Gu, Nemhauser &amp; Savelsbergh 1999) — not the inequality or the filter.</p>
+<p><strong>The lifted form, on tier 1 (#1131).</strong> With the sequence-independent lifting of Gu, Nemhauser and Savelsbergh (1999) in place, the family measured again as <code>enable_flow_cover_cuts=true</code> against the defaults on MIPLIB tier 1: <code>ab-option</code>, <code>main</code> at <code>1f468a6</code>, 3 seeds, 60 s, one thread, both arms in one job on one runner. The two arms are identical run for run: 53 matched, 33 proved and 90 verified of 90 either way, shifted geometric mean 28.00 s both. On tier 1 the family recognises a switched flow on k16x240b only (root only, it closes 24.2% of that root gap lifted against 23.9% unlifted), and the single round's 30-row selection never takes a flow cover over the Gomory and MIR cuts there. File: <code>bench/results/option-ab-miplib-flowcover-lifted-1f468a6.csv</code> (the <code>arm</code> column). The set the family is built for is MIPLIB 3's fixed-charge and lot-sizing models (#1158), where its reading is separate.</p>
 <h4 id="the-harris-two-pass-ratio-test-ratio_testharris">The Harris two-pass ratio test (<code>ratio_test=harris</code>)</h4>
 <p>Selectable beside the default ratio test (#67). Off.</p>
 <div class="table-wrap"><table class="doc-table">
@@ -23822,7 +23831,61 @@ What would earn a default: a leg that gains a matched or proved seed and loses n
 <li><strong>Node throughput:</strong> lower on every run that moved; <code>ej</code> explored 416k nodes against 361k in the same 60 s.</li>
 </ul>
 <p>The cost is still the rows every node LP carries, not the root's time.</p>
-<p>Files: <code>bench/results/option-ab-miplib-rootloop-tailing-e01ae9c.csv</code> (the <code>arm</code> column), and the root-only legs <code>bench/results/rootgap-&lt;leg&gt;-24e289d9.csv</code>.
+<p><strong>On MIPLIB 3 (#1158), alone and with the pool and the aggregated flow covers.</strong> The 65-instance set is where the loop moves the root: set1ch, pp08a, fixnet6 and vpm2 close 0.3 to 0.6 of their root gap under it (root only, <code>bench/results/rootgap3-&lt;cfg&gt;-b69a3dc7.csv</code>). Two A/Bs at 60 s, 3 seeds, one thread, both arms in one bench.yml job:</p>
+<div class="table-wrap"><table class="doc-table">
+<thead>
+<tr>
+<th>A/B</th>
+<th>arm</th>
+<th>seed 0 m/p/v</th>
+<th>seed 1 m/p/v</th>
+<th>seed 2 m/p/v</th>
+<th>all m/p/v</th>
+<th style="text-align: right;">sgm time (s)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>(a) <code>main</code> d178213, run 41613095648</td>
+<td>defaults</td>
+<td>39/34/63</td>
+<td>37/34/63</td>
+<td>36/34/62</td>
+<td>112/102/188</td>
+<td style="text-align: right;">21.33</td>
+</tr>
+<tr>
+<td></td>
+<td><code>root_cut_loop=true</code></td>
+<td>40/36/63</td>
+<td>38/36/62</td>
+<td>38/34/63</td>
+<td>116/106/188</td>
+<td style="text-align: right;">20.22</td>
+</tr>
+<tr>
+<td>(b) <code>main</code> 94cdcc0 against #1183's 99dfa36, run 41755022388</td>
+<td><code>main</code>'s defaults</td>
+<td>39/35/63</td>
+<td>37/35/63</td>
+<td>38/35/63</td>
+<td>114/105/189</td>
+<td style="text-align: right;">20.42</td>
+</tr>
+<tr>
+<td></td>
+<td>loop + pool + aggregated flow covers</td>
+<td>41/39/62</td>
+<td>40/37/63</td>
+<td>40/38/63</td>
+<td>121/114/188</td>
+<td style="text-align: right;">17.38</td>
+</tr>
+</tbody>
+</table></div>
+<p>Proved is above the defaults on every seed in both, and both lose runs, so neither earns the default under the rule (proved &gt;= on every seed and nothing lost). (a) loses 3 proofs and 6 matches; (b) loses 8 proofs (10teams s1, air05 s2, bell5 s1 and s2, gen s1, gesa2_o s0, misc06 s2, qiu s0), 8 matches and arki001 seed 0's feasible point. Two kinds of loss: gen, misc06, gesa2 and gesa2_o end <code>optimal within the relative gap target</code> at 1.8e-5 to 9.9e-5 with a verified incumbent a few 1e-5 from the published value (the tighter root meets the 1e-4 target before the published optimum is found - a gap-target stop the 1e-6 match rule scores as a miss, not a wrong answer); bell5, 10teams, air05, qiu and danoint are trees the extra rows do not finish in 60 s (bell5 proves at 11k nodes in 1.5 s with 23 rows and runs 343k nodes with 57). The gains are the lot-sizing and fixed-charge models: in (b) fixnet6, pp08a, vpm2 and modglob prove on all three seeds (60 s unproved to 0.8-25 s), set1ch and pp08aCUTS on the seeds the defaults miss.</p>
+<p><strong>(c), the recipe gated on variable upper bounds</strong> (<code>root_cut_loop_when=switched-flows</code>, #1158): <code>main</code> a806109f's defaults against the gate branch 26204e00, run 41776346452: 121/112/189 against 127/119/187 matched/proved/verified (proved 38/37/37 -&gt; 41/38/40 per seed). Lost: bell5 seeds 1 and 2, qiu seed 0, air04 seed 1 and dsbmip seed 2 (a <code>numerical_error</code> the status guard caught: the point violated primal feasibility by 2e-4) as proofs, arki001 seed 0 and dsbmip seed 2 as points; four gap-target stops (gen, gesa2, gesa2_o, qnet1) beside them. The gate held 10teams, air05 and misc06 out but not bell5, a fixed-charge network that has the variable bounds it tests for; what separated the (b) losers was that no flow cover was found on them, so the next gate to try is round 1 finding a cover, not the rows existing. Not a default.</p>
+<p>Files: <code>bench/results/option-ab-miplib-rootloop-tailing-e01ae9c.csv</code> (tier 1), <code>option-ab-miplib3-rootloop-d178213.csv</code>, <code>option-ab-miplib3-recipe-99dfa36.csv</code> and <code>option-ab-miplib3-gated-recipe-26204e0.csv</code> (MIPLIB 3; the <code>arm</code> column), and the root-only legs <code>bench/results/rootgap-&lt;leg&gt;-24e289d9.csv</code> and <code>rootgap3-&lt;cfg&gt;-b69a3dc7.csv</code>.
 What would earn a default: a loop whose extra rows do not ride along in the tree. For example, keep only the rows still tight at the last root LP, or move the rest to the cut pool, then repeat this A/B.</p>
 <hr>
 <h3 id="2-demoted-by-a-measurement-made-on-a-branch-not-re-run-on-main">2. Demoted by a measurement made on a branch, not re-run on <code>main</code></h3>
@@ -23964,6 +24027,47 @@ What would earn a default: a loop whose extra rows do not ride along in the tree
 <li>The adaptive floor without Krylov (run 39752496156): 126 verified, cont-300 lost to time.</li>
 </ul>
 <p>The options remain, off by default. The CSVs were not committed; the branch stamps are not on <code>main</code>.</p>
+<h4 id="artificial-bounds-sized-from-the-model-and-released-early-with-harris-shift-removal-1006-1169-branch-a527dual-boxing-not-merged">Artificial bounds sized from the model and released early, with Harris shift removal (#1006, #1169, branch <code>a527/dual-boxing</code>, not merged)</h4>
+<p>The re-perturbation entry above left the pilot87 stall at the Harris-shift re-entry under the artificial bounds and the hand-over from a point parked on them. The change (<code>dual_adaptive_boxing</code>) sized the box a dual infeasible column is parked on from the model (1e3 times the largest finite bound, capped at the flat 1e6) and gave the column its real bounds back as soon as it left the box (a flip to its other side, or entering the basis), and once 1,000 Harris cost shifts had accumulated removed them, refactorized and resumed (Koberstein 2005, sec. 4.5 and 6.2.2; Maros ch. 9).</p>
+<p>On the target it is worse on both models (<code>a527-measure</code> runs 39841147240 and 39841154577, counters from the instrumented build). The model as presolve leaves it, optimal in 18,887 iterations and 14 s with the option off, goes through a scaled attempt that ends in a numerical error at 21.7 s and an unscaled retry that hits the 600 s limit at 331,920 iterations with 17,741 accuracy-forced refactorizations; the stall-case model (3% of rows substituted) goes from 12,314 iterations and 57 s on the unscaled retry to 21,406 and 164 s. The shift removal fired once per attempt and the shifts came straight back (3,130 in the first 10,656 iterations against 1,373 in 18,754 with the option off); the box release did not shorten the time on artificial bounds (2,542 and 3,633 iterations against 4,203). And the scaled attempt still hands over at a primal infeasibility of 3.200e+03 with the box at 1e3 times the largest bound, the same figure as with the flat 1e6: that number is not the box width, it is the scaled model's own conditioning (smallest factorization pivots 1.6e-9 scaled against 2.2e-7 unscaled, the unscaled retry solving every variant).</p>
+<p>Measured on GitHub Actions with <code>bench.yml</code>'s <code>ab-option</code> suite, one binary at <code>6b31e51</code>, both arms interleaved per instance on one machine: <code>bench/results/option-ab-netlib-adaptive-boxing-6b31e51.csv</code> (run 39854167447, 94 instances, 2 repeats; the first dispatch, 39841027101, failed after 54 minutes with its log purged and is not evidence either way), <code>option-ab-kennington-adaptive-boxing-6b31e51.csv</code> (41310882885; the first dispatch, 39841033606, was cancelled) and <code>option-ab-refinery-adaptive-boxing-6b31e51.csv</code> (39841040064, 3 repeats). Netlib loses pilot87 (optimal in 18,887 iterations and 14.3 s off, time_limit at 268,064 on), the other 93 verified in both arms with the iteration SGM flat, 410.9 against 411.4, and the time SGM 0.284 s against 0.646 s with the lost instance charged the limit; Kennington 16/16 both arms, iterations 2,039.1 against 2,039.4, 10.29 s against 10.36 s; the refinery LPs 18/18, iterations 257.5 against 256.8, 0.192 s against 0.210 s. Closed unmerged. What the two experiments leave as the item: the equilibration on the pilot family, not the dual loop.</p>
+<h4 id="dropping-the-qp-dual-regularization-to-its-cut-floor-at-once-1178-pr-1180-not-merged">Dropping the QP dual regularization to its cut floor at once (#1178, PR #1180, not merged)</h4>
+<p>With <code>qp_ipm_adaptive_dual_regularization</code> (on since #1156) a step that misses a tenth of the primal residual cuts the floor of delta, but delta itself falls only through <code>min(delta, 0.1 mu)</code>, and on liswet8, liswet9 and liswet12 mu rises after the cut, so the cut floor is never reached and the step keeps its 1e-8 proximal term. The change dropped delta to the new floor for the next factorization (option <code>qp_ipm_adaptive_dual_drop</code>), in two forms: unconditional, and keyed on <code>delta |dy|</code> outrunning the residual and judged by the first step factored with it (undone, with no further drop in the run, when that step missed no less of the residual, when its length collapsed, or when the trial iterate was not finite).</p>
+<p>Measured on GitHub Actions with <code>bench.yml</code>'s <code>ab-option</code> suite and <code>--base-binary</code>, both arms in one job, Maros-Meszaros 138 at 60 s:</p>
+<div class="table-wrap"><table class="doc-table">
+<thead>
+<tr>
+<th>version</th>
+<th>base</th>
+<th>new</th>
+<th>off</th>
+<th>on</th>
+<th>gained</th>
+<th>lost</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>unconditional (run 41425495840)</td>
+<td><code>d178213a</code></td>
+<td><code>87fa381e</code></td>
+<td>128 optimal / 127 matched / 132 verified</td>
+<td>129 / 127 / 133</td>
+<td>liswet8, liswet9, liswet12</td>
+<td>qgfrdxpn (feasible to Condat-Vu's ceiling), qshare1b (optimal to the same), qsierra (optimal to feasible, one product at 3e-4, 63 s)</td>
+</tr>
+<tr>
+<td>keyed and judged (run 41702161915)</td>
+<td><code>94cdcc02</code></td>
+<td><code>58762237</code></td>
+<td>128 / 127 / 132</td>
+<td>129 / 127 / 133</td>
+<td>the same three</td>
+<td>the same three</td>
+</tr>
+</tbody>
+</table></div>
+<p>Netlib was identical per instance in both (runs 41425504073 and 41702169175). On the laptop build the keyed version held all three (qgfrdxpn feasible in 69 iterations, qshare1b optimal in 80, qsierra optimal in 27) and still gained the LISWET three, so the judgement passes the drop on one machine's rounding and not another's: on a rank-deficient row block <code>|dy|</code> grows as 1/delta after a drop (qfffff80: 5.4e7 to 5.4e9 to 2.4e11 over 1e-8, 1e-10, 1e-12) and whether the run recovers is a knife edge. Not merged, in either form. What did ship from the same PR is the step rejection it was built on - a non-finite trial iterate restores the last finite one and raises the regularization, so no engine is ever handed a non-finite point - which changed no row on the 138 or on Netlib (run 41702177032). The three LISWET instances converge with a flat <code>qp_ipm_regularization=1e-12</code>, which loses qforplan and cont-201 (#1150); they stay open on #1178. The A/B CSVs are not committed (branch stamps).</p>
 <h3 id="3-built-opt-in-awaiting-the-measurement">3. Built opt-in, awaiting the measurement</h3>
 <p>Nothing has demoted these. Each is off by default until its A/B on <code>main</code> says what it changes, per the rule that a default is earned by a number.</p>
 <div class="table-wrap"><table class="doc-table">
@@ -24080,7 +24184,7 @@ tracks every PS26119 requirement against what exists on <code>main</code>; secti
 </tr>
 <tr>
 <td><strong>Parallelism</strong> - the threaded PDHG iteration of #487 landed off by default, its TSan job is #535, decomposition #525</td>
-<td>One thread by default in every engine. <code>--option threads=N</code> runs the column loops of a simplex iteration under OpenMP, deterministically - results are bit-identical at 1 and 8 threads - and at Netlib scale it is measured to buy nothing, because an iteration is too short to amortize the fork (#57). For PDHG the same workers run the A x product (<code>pdhg_parallel_spmv</code>, #587) and since #689 the rest of the iteration too (<code>pdhg_parallel_updates</code>), bitwise identical at any thread count; both are off by default, measured on <code>main</code> at <code>58a8374</code> (<code>bench/results/pdhg-threads-58a8374.csv</code>, <code>pdhg-threads-spmv-only-58a8374.csv</code>) and as the multithreaded CPU arm of the GPU row above, where 16 threads lost to one on brazil3. The branch-and-bound tree runs on <code>mip_threads</code> workers since #403, default 1; the symmetry rows in the parallel tree are PR #720, pending. Every one is a correctness-preserving switch, not a speed claim.</td>
+<td>One thread by default in every engine. <code>--option threads=N</code> runs the column loops of a simplex iteration under OpenMP, deterministically - results are bit-identical at 1 and 8 threads - and at Netlib scale it is measured to buy nothing, because an iteration is too short to amortize the fork (#57). For PDHG the same workers run the A x product (<code>pdhg_parallel_spmv</code>, #587) and since #689 the rest of the iteration too (<code>pdhg_parallel_updates</code>), bitwise identical at any thread count; both are off by default, measured on <code>main</code> at <code>58a8374</code> (<code>bench/results/pdhg-threads-58a8374.csv</code>, <code>pdhg-threads-spmv-only-58a8374.csv</code>) and as the multithreaded CPU arm of the GPU row above, where 16 threads lost to one on brazil3. The branch-and-bound tree runs on <code>mip_threads</code> workers since #403, one per core and at most 4 by default since #1158 (all 65 MIPLIB 3 models at 60 s, 3 seeds, one job: four threads prove 39 / 38 / 38 against 37 / 37 / 37 per seed, lose no verified point, 1.71x faster where both prove, <code>bench/results/option-ab-miplib3-threads4-seeds3-b69a3dc.csv</code>); the symmetry rows in the parallel tree are PR #720, pending. Every one is a correctness-preserving switch, not a speed claim.</td>
 </tr>
 </tbody>
 </table></div>
@@ -24140,8 +24244,8 @@ ours, so no iteration ratio is quoted.</p>
 <!-- fragment:footer -->
 <div class="wrap">
     <div>SANKHYA · Smart India Hackathon 2026 · PS SIH26119 · Apache-2.0 · <a href="https://sankhya-solver.vercel.app">sankhya-solver.vercel.app</a></div>
-    <div>Every figure on this site was last checked against SANKHYA <a href="https://github.com/thegoodengineers/SANKHYA/tree/8e1bec1ea71883434f3edf1f7fe505b6c1eabd64">main at <span data-fact="sankhya_commit">8e1bec1e</span></a>.</div>
-    <div><a href="https://github.com/thegoodengineers/SANKHYA">Source</a> · <a href="/docs">Docs</a> · <a href="/docs/benchmarks">Benchmarks</a> · <a href="/docs/provenance">Provenance</a> · <a href="/docs/coverage">Coverage tracker</a> · <a href="https://github.com/thegoodengineers/SANKHYA/blob/8e1bec1ea71883434f3edf1f7fe505b6c1eabd64/docs/REPORT.pdf">Jury report (PDF)</a></div>
+    <div>Every figure on this site was last checked against SANKHYA <a href="https://github.com/thegoodengineers/SANKHYA/tree/c190f91b167141a41ab0edfd7dbc4f78cadb23ce">main at <span data-fact="sankhya_commit">c190f91b</span></a>.</div>
+    <div><a href="https://github.com/thegoodengineers/SANKHYA">Source</a> · <a href="/docs">Docs</a> · <a href="/docs/benchmarks">Benchmarks</a> · <a href="/docs/provenance">Provenance</a> · <a href="/docs/coverage">Coverage tracker</a> · <a href="https://github.com/thegoodengineers/SANKHYA/blob/c190f91b167141a41ab0edfd7dbc4f78cadb23ce/docs/REPORT.pdf">Jury report (PDF)</a></div>
   </div>
 <!-- /fragment:footer -->
 </footer>
