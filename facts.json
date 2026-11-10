@@ -47,6 +47,12 @@
     "miplib_seeds_reach": {"value": "52", "source": "nodepricing-ab-miplib-seeds3-devex-fef0192.csv, matched_published = 1 on 52 of 90 rows"},
     "miplib_seeds_prove": {"value": "33", "source": "nodepricing-ab-miplib-seeds3-devex-fef0192.csv, proved_optimal = 1 on 33 of 90 rows"},
     "miplib_seeds_prove_all": {"value": "10", "source": "nodepricing-ab-miplib-seeds3-devex-fef0192.csv, proved_optimal = 1 on all three seeds for 10 of 30 instances"},
+    "miplib3_total": {"value": "65", "source": "bench/results/miplib3-60s-seeds3-312818a.csv (SANKHYA main at 312818a, bench.yml on GitHub Actions ubuntu-24.04, EPYC 9V74, 4 cores; 65 instances x 3 seeds, 60 s, one thread, solver defaults), the CSV the README scoreboard cites: 65 instances"},
+    "miplib3_proved": {"value": "35", "source": "bench/results/miplib3-60s-seeds3-312818a.csv (SANKHYA main at 312818a, bench.yml on GitHub Actions ubuntu-24.04, EPYC 9V74, 4 cores; 65 instances x 3 seeds, 60 s, one thread, solver defaults), the CSV the README scoreboard cites: proved_optimal, matched_published and independently_verified all 1 on at least one seed for 35 instances (33, 34 and 33 per seed)"},
+    "miplib3_matched": {"value": "39", "source": "bench/results/miplib3-60s-seeds3-312818a.csv (SANKHYA main at 312818a, bench.yml on GitHub Actions ubuntu-24.04, EPYC 9V74, 4 cores; 65 instances x 3 seeds, 60 s, one thread, solver defaults), the CSV the README scoreboard cites: matched_published and independently_verified both 1 on at least one seed for 39 instances"},
+    "miplib3_highs": {"value": "49", "source": "bench/results/highs-miplib3-60s-312818a.csv (the same job and machine, HiGHS 1.15.1, 60 s, one thread): counted_for_time = 1 (optimal, matched and verified) on 49 of 65"},
+    "qcqp_total": {"value": "13", "source": "bench/results/qplib-qcqp-fc7e7b4.csv (SANKHYA main at fc7e7b4, #1146; 300 s): 13 QPLIB convex QCQPs, engine conic"},
+    "qcqp_passed": {"value": "13", "source": "bench/results/qplib-qcqp-fc7e7b4.csv: engine conic, status optimal, matches_reference = 1 and verified = 1 (passed = 1) on 13 of 13; the global engine in the same CSV stops at the 300 s limit on all 13"},
     "walkthrough_length": {"value": "13:09", "source": "https://youtu.be/6A-G580x6RA, 789 s"},
 
     "mittelmann_total": {"value": "8", "source": "bench/results/mittelmann-5c7efbc.csv, 8 rows"},
