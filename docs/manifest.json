@@ -1,6 +1,6 @@
 {
-  "solver_commit": "c190f91b167141a41ab0edfd7dbc4f78cadb23ce",
-  "solver_date": "2026-11-05",
+  "solver_commit": "bac6543f2db306a61149610db5ce3e73be9b155a",
+  "solver_date": "2026-11-10",
   "markdown": "3.7",
   "pages": [
     "docs/adding-an-engine.html",

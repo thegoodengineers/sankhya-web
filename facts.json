@@ -1,7 +1,7 @@
 {
   "about": "Every figure the site states, once. Pages carry <span data-fact=\"key\">value</span>; run python tools/facts.py after editing this file, and python tools/facts.py --check before a PR. Paths are in thegoodengineers/SANKHYA on main at the commit in sankhya_commit.",
   "facts": {
-    "sankhya_commit": {"value": "c190f91b", "source": "git rev-parse --short=8 origin/main, 2026-11-05 (SANKHYA #1188, the rolling warm start re-measured)"},
+    "sankhya_commit": {"value": "bac6543f", "source": "git rev-parse --short=8 origin/main, 2026-11-10 (the README GPU row rewritten from #1161's refinery-year CSVs)"},
     "first_commit_date": {"value": "25 August 2026", "source": "git log --reverse --format=%ad --date=short | head -1 -> 2026-08-25"},
     "tests_total": {"value": "1718", "source": "ctest in the CI Release leg on main at 029dc93b (run 41971327319, job 127060031513): 100% tests passed, 0 tests failed out of 1668, then out of 50 in the serial set"},
     "tests_commit": {"value": "029dc93b", "source": "git rev-parse --short=8 of the main commit tests_total was read from (CI run 41971327319)"},
