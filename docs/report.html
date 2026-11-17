@@ -28,7 +28,7 @@
   <nav class="here" aria-label="On this page"><a href="#summary">Summary</a><a href="#1-architecture">1 Architecture</a><a href="#1-the-shape-in-one-paragraph" class="sub">1. The shape in one paragraph</a><a href="#2-modules-and-their-boundaries" class="sub">2. Modules and their boundaries</a><a href="#4-how-a-solve-flows" class="sub">4. How a solve flows</a><a href="#13-the-engine-layer-what-an-engine-is-promised-and-what-it-promises" class="sub">13. The engine layer: what an engine is promised, and what it promises</a><a href="#2-lp-engines">2 LP engines</a><a href="#1e-the-first-order-engine--pdhg" class="sub">1e. The first-order engine — PDHG</a><a href="#3-milp-engine">3 MILP engine</a><a href="#11-conflict-analysis-learning-from-infeasible-nodes" class="sub">11. Conflict analysis: learning from infeasible nodes</a><a href="#12-parallel-tree-search" class="sub">12. Parallel tree search</a><a href="#4-qp-engines">4 QP engines</a><a href="#2b-maros-meszaros-the-convex-qp-set" class="sub">2b. Maros-Meszaros, the convex QP set</a><a href="#2d-qplib-the-convex-continuous-qps" class="sub">2d. QPLIB, the convex continuous QPs</a><a href="#5-gpu-acceleration">5 GPU acceleration</a><a href="#1g-gpu-pdhg-crossover--when-the-gpu-wins" class="sub">1g. GPU PDHG crossover — when the GPU wins</a><a href="#5-what-the-hardware-lets-us-claim-and-what-it-does-not" class="sub">5. What the hardware lets us claim, and what it does not</a><a href="#6-numerical-stability">6 Numerical stability</a><a href="#3-the-two-invariants-everything-else-rests-on" class="sub">3. The two invariants everything else rests on</a><a href="#5-robustness--where-the-solver-stops-working" class="sub">5. Robustness — where the solver stops working</a><a href="#7-independent-verification">7 Independent verification</a><a href="#3-correctness-beyond-the-objective-value" class="sub">3. Correctness beyond the objective value</a><a href="#4-machine-checkable-evidence" class="sub">4. Machine-checkable evidence</a><a href="#8-benchmark-method">8 Benchmark method</a><a href="#7-reproducibility-and-what-is-actually-promised" class="sub">7. Reproducibility, and what is actually promised</a><a href="#6-what-these-numbers-do-not-say" class="sub">6. What these numbers do not say</a><a href="#9-results">9 Results</a><a href="#1c-the-full-set--the-honest-headline" class="sub">1c. The full set — the honest headline</a><a href="#1c1-the-kennington-set---the-next-rung" class="sub">1c.1 The Kennington set - the next rung</a><a href="#1d-beyond-netlib--mittelmanns-lp-set" class="sub">1d. Beyond Netlib — Mittelmann&#x27;s LP set</a><a href="#1f-scale--how-far-up-this-goes" class="sub">1f. Scale — how far up this goes</a><a href="#2-miplib--the-mixed-integer-side" class="sub">2. MIPLIB — the mixed-integer side</a><a href="#2e-nonlinear-programs---hock-schittkowski-and-convex-minlplib" class="sub">2e. Nonlinear programs - Hock-Schittkowski, and convex MINLPLib</a><a href="#4-comparison-against-an-established-solver" class="sub">4. Comparison against an established solver</a><a href="#10-limitations">10 Limitations</a><a href="#1-demoted-by-a-committed-measurement" class="sub">1. Demoted by a committed measurement</a><a href="#2-demoted-by-a-measurement-made-on-a-branch-not-re-run-on-main" class="sub">2. Demoted by a measurement made on a branch, not re-run on main</a><a href="#3-built-opt-in-awaiting-the-measurement" class="sub">3. Built opt-in, awaiting the measurement</a><a href="#4-withdrawn-claims" class="sub">4. Withdrawn claims</a><a href="#adding-an-entry" class="sub">Adding an entry</a><a href="#what-this-does-not-do" class="sub">What this does NOT do</a><a href="#11-future-work">11 Future work</a></nav>
 </aside>
 <main class="col" id="content">
-<header class="page" id="top"><div class="wrap"><nav class="crumbs" aria-label="Breadcrumb"><a href="/docs">Docs</a><span aria-hidden="true">/</span>Technical report</nav><h1>Technical report</h1><p class="doc-banner">Generated from <a href="https://github.com/thegoodengineers/sankhya-web/blob/main/content/report.md"><code>content/report.md</code></a> at commit <a href="https://github.com/thegoodengineers/SANKHYA/commit/c8544ed32cee0938884c658b9124c76441f470c5"><code>c8544ed</code></a> (2026-11-15). Do not edit this page by hand.</p></div></header>
+<header class="page" id="top"><div class="wrap"><nav class="crumbs" aria-label="Breadcrumb"><a href="/docs">Docs</a><span aria-hidden="true">/</span>Technical report</nav><h1>Technical report</h1><p class="doc-banner">Generated from <a href="https://github.com/thegoodengineers/sankhya-web/blob/main/content/report.md"><code>content/report.md</code></a> at commit <a href="https://github.com/thegoodengineers/SANKHYA/commit/f93f4bc6ed1d8dc12e05b4dc036b9c5bd65ab809"><code>f93f4bc</code></a> (2026-11-17). Do not edit this page by hand.</p></div></header>
 <details class="doc-toc"><summary>Contents</summary><ol><li><a href="#summary">Summary</a></li><li><a href="#1-architecture">1 Architecture</a></li><li class="sub"><a href="#1-the-shape-in-one-paragraph">1. The shape in one paragraph</a></li><li class="sub"><a href="#2-modules-and-their-boundaries">2. Modules and their boundaries</a></li><li class="sub"><a href="#4-how-a-solve-flows">4. How a solve flows</a></li><li class="sub"><a href="#13-the-engine-layer-what-an-engine-is-promised-and-what-it-promises">13. The engine layer: what an engine is promised, and what it promises</a></li><li><a href="#2-lp-engines">2 LP engines</a></li><li class="sub"><a href="#1e-the-first-order-engine--pdhg">1e. The first-order engine — PDHG</a></li><li><a href="#3-milp-engine">3 MILP engine</a></li><li class="sub"><a href="#11-conflict-analysis-learning-from-infeasible-nodes">11. Conflict analysis: learning from infeasible nodes</a></li><li class="sub"><a href="#12-parallel-tree-search">12. Parallel tree search</a></li><li><a href="#4-qp-engines">4 QP engines</a></li><li class="sub"><a href="#2b-maros-meszaros-the-convex-qp-set">2b. Maros-Meszaros, the convex QP set</a></li><li class="sub"><a href="#2d-qplib-the-convex-continuous-qps">2d. QPLIB, the convex continuous QPs</a></li><li><a href="#5-gpu-acceleration">5 GPU acceleration</a></li><li class="sub"><a href="#1g-gpu-pdhg-crossover--when-the-gpu-wins">1g. GPU PDHG crossover — when the GPU wins</a></li><li class="sub"><a href="#5-what-the-hardware-lets-us-claim-and-what-it-does-not">5. What the hardware lets us claim, and what it does not</a></li><li><a href="#6-numerical-stability">6 Numerical stability</a></li><li class="sub"><a href="#3-the-two-invariants-everything-else-rests-on">3. The two invariants everything else rests on</a></li><li class="sub"><a href="#5-robustness--where-the-solver-stops-working">5. Robustness — where the solver stops working</a></li><li><a href="#7-independent-verification">7 Independent verification</a></li><li class="sub"><a href="#3-correctness-beyond-the-objective-value">3. Correctness beyond the objective value</a></li><li class="sub"><a href="#4-machine-checkable-evidence">4. Machine-checkable evidence</a></li><li><a href="#8-benchmark-method">8 Benchmark method</a></li><li class="sub"><a href="#7-reproducibility-and-what-is-actually-promised">7. Reproducibility, and what is actually promised</a></li><li class="sub"><a href="#6-what-these-numbers-do-not-say">6. What these numbers do not say</a></li><li><a href="#9-results">9 Results</a></li><li class="sub"><a href="#1c-the-full-set--the-honest-headline">1c. The full set — the honest headline</a></li><li class="sub"><a href="#1c1-the-kennington-set---the-next-rung">1c.1 The Kennington set - the next rung</a></li><li class="sub"><a href="#1d-beyond-netlib--mittelmanns-lp-set">1d. Beyond Netlib — Mittelmann&#x27;s LP set</a></li><li class="sub"><a href="#1f-scale--how-far-up-this-goes">1f. Scale — how far up this goes</a></li><li class="sub"><a href="#2-miplib--the-mixed-integer-side">2. MIPLIB — the mixed-integer side</a></li><li class="sub"><a href="#2e-nonlinear-programs---hock-schittkowski-and-convex-minlplib">2e. Nonlinear programs - Hock-Schittkowski, and convex MINLPLib</a></li><li class="sub"><a href="#4-comparison-against-an-established-solver">4. Comparison against an established solver</a></li><li><a href="#10-limitations">10 Limitations</a></li><li class="sub"><a href="#1-demoted-by-a-committed-measurement">1. Demoted by a committed measurement</a></li><li class="sub"><a href="#2-demoted-by-a-measurement-made-on-a-branch-not-re-run-on-main">2. Demoted by a measurement made on a branch, not re-run on main</a></li><li class="sub"><a href="#3-built-opt-in-awaiting-the-measurement">3. Built opt-in, awaiting the measurement</a></li><li class="sub"><a href="#4-withdrawn-claims">4. Withdrawn claims</a></li><li class="sub"><a href="#adding-an-entry">Adding an entry</a></li><li class="sub"><a href="#what-this-does-not-do">What this does NOT do</a></li><li><a href="#11-future-work">11 Future work</a></li></ol></details>
 <article class="doc-body">
 <h2 id="summary">Summary</h2>
@@ -966,9 +966,9 @@ reports. Solved by whichever QP engine was the default at the run's commit (the 
 Condat-Vu <code>qp-condat-vu</code> before it and as the interior point's fallback on a numerical
 error) and judged the way the published QP benchmark judges it, on primal residual, dual residual and duality gap at 1e-6
 and at 1e-9, as well as against the published objective and by the independent verifier.</p>
-<p>Source CSV: <code>bench/results/maros-meszaros-c766eae.csv</code><br>
-Commit <code>c766eae</code> · machine <code>github-actions ubuntu-24.04 4 vCPU AMD EPYC 7763 64-Core Processor 15 GiB RAM</code> · time limit 60 s per instance · solver defaults</p>
-<p><strong>138 of 138 instances</strong> run. <code>optimal</code> on <strong>128</strong>; within 1e-6 relative of the published objective on <strong>127</strong>; accepted by the independent verifier on <strong>132</strong>.</p>
+<p>Source CSV: <code>bench/results/maros-meszaros-1659c8b.csv</code><br>
+Commit <code>1659c8b</code> · machine <code>github-actions ubuntu-24.04 4 vCPU AMD EPYC 7763 64-Core Processor 15 GiB RAM</code> · time limit 60 s per instance · solver defaults</p>
+<p><strong>138 of 138 instances</strong> run. <code>optimal</code> on <strong>131</strong>; within 1e-6 relative of the published objective on <strong>129</strong>; accepted by the independent verifier on <strong>135</strong>.</p>
 <div class="table-wrap"><table class="doc-table">
 <thead>
 <tr>
@@ -980,18 +980,18 @@ Commit <code>c766eae</code> · machine <code>github-actions ubuntu-24.04 4 vCPU 
 <tbody>
 <tr>
 <td>1e-6</td>
-<td style="text-align: right;">128 / 138</td>
-<td style="text-align: right;">110 / 138</td>
+<td style="text-align: right;">131 / 138</td>
+<td style="text-align: right;">113 / 138</td>
 </tr>
 <tr>
 <td>1e-9</td>
-<td style="text-align: right;">116 / 138</td>
+<td style="text-align: right;">117 / 138</td>
 <td style="text-align: right;">40 / 138</td>
 </tr>
 </tbody>
 </table></div>
 <p>Success at a level means the status is <code>optimal</code> and the primal residual, the dual residual and the duality gap are all within it, each recomputed from the QPS file and the written <code>.sol</code> by <code>bench/runners/qp_residuals.py</code> through the verifier's own MPS reader. The reference objectives are the readme's OPT column (BPMPD at default settings, eight significant digits), parsed by <code>bench/runners/fetch_maros_meszaros.py</code> into <code>data/maros-meszaros/reference.json</code> with every file's sha256.</p>
-<p>Shifted geometric mean of solver time, shift 10 s, an instance not successful at 1e-6 charged the full limit as the published report does: <strong>2.97 s</strong>.</p>
+<p>Shifted geometric mean of solver time, shift 10 s, an instance not successful at 1e-6 charged the full limit as the published report does: <strong>2.52 s</strong>.</p>
 <div class="table-wrap"><table class="doc-table">
 <thead>
 <tr>
@@ -1042,7 +1042,7 @@ Commit <code>c766eae</code> · machine <code>github-actions ubuntu-24.04 4 vCPU 
 <td style="text-align: right;">4.6e-15</td>
 <td style="text-align: right;">1.3e-16</td>
 <td style="text-align: right;">1</td>
-<td style="text-align: right;">0.06</td>
+<td style="text-align: right;">0.05</td>
 <td style="text-align: center;">yes</td>
 <td style="text-align: center;">yes</td>
 <td style="text-align: center;">yes</td>
@@ -1059,7 +1059,7 @@ Commit <code>c766eae</code> · machine <code>github-actions ubuntu-24.04 4 vCPU 
 <td style="text-align: right;">1.5e-16</td>
 <td style="text-align: right;">1.4e-14</td>
 <td style="text-align: right;">16</td>
-<td style="text-align: right;">0.30</td>
+<td style="text-align: right;">0.31</td>
 <td style="text-align: center;">yes</td>
 <td style="text-align: center;">yes</td>
 <td style="text-align: center;">yes</td>
@@ -1160,8 +1160,8 @@ Commit <code>c766eae</code> · machine <code>github-actions ubuntu-24.04 4 vCPU 
 <td style="text-align: right;">1.8e-14</td>
 <td style="text-align: right;">1.3e-15</td>
 <td style="text-align: right;">1.4e-12</td>
-<td style="text-align: right;">35</td>
-<td style="text-align: right;">29.39</td>
+<td style="text-align: right;">36</td>
+<td style="text-align: right;">31.64</td>
 <td style="text-align: center;">yes</td>
 <td style="text-align: center;">yes</td>
 <td style="text-align: center;">yes</td>
@@ -1178,7 +1178,7 @@ Commit <code>c766eae</code> · machine <code>github-actions ubuntu-24.04 4 vCPU 
 <td style="text-align: right;">3.9e-15</td>
 <td style="text-align: right;">8.1e-10</td>
 <td style="text-align: right;">69</td>
-<td style="text-align: right;">35.50</td>
+<td style="text-align: right;">36.24</td>
 <td style="text-align: center;">yes</td>
 <td style="text-align: center;">yes</td>
 <td style="text-align: center;">yes</td>
@@ -1212,7 +1212,7 @@ Commit <code>c766eae</code> · machine <code>github-actions ubuntu-24.04 4 vCPU 
 <td style="text-align: right;">0.0e+00</td>
 <td style="text-align: right;">2.4e-11</td>
 <td style="text-align: right;">12</td>
-<td style="text-align: right;">0.80</td>
+<td style="text-align: right;">0.82</td>
 <td style="text-align: center;">yes</td>
 <td style="text-align: center;">yes</td>
 <td style="text-align: center;">yes</td>
@@ -1229,7 +1229,7 @@ Commit <code>c766eae</code> · machine <code>github-actions ubuntu-24.04 4 vCPU 
 <td style="text-align: right;">0.0e+00</td>
 <td style="text-align: right;">8.2e-11</td>
 <td style="text-align: right;">11</td>
-<td style="text-align: right;">0.77</td>
+<td style="text-align: right;">0.76</td>
 <td style="text-align: center;">yes</td>
 <td style="text-align: center;">yes</td>
 <td style="text-align: center;">yes</td>
@@ -1246,7 +1246,7 @@ Commit <code>c766eae</code> · machine <code>github-actions ubuntu-24.04 4 vCPU 
 <td style="text-align: right;">0.0e+00</td>
 <td style="text-align: right;">1.8e-11</td>
 <td style="text-align: right;">13</td>
-<td style="text-align: right;">6.94</td>
+<td style="text-align: right;">6.88</td>
 <td style="text-align: center;">yes</td>
 <td style="text-align: center;">yes</td>
 <td style="text-align: center;">yes</td>
@@ -1263,7 +1263,7 @@ Commit <code>c766eae</code> · machine <code>github-actions ubuntu-24.04 4 vCPU 
 <td style="text-align: right;">0.0e+00</td>
 <td style="text-align: right;">5.8e-12</td>
 <td style="text-align: right;">12</td>
-<td style="text-align: right;">6.59</td>
+<td style="text-align: right;">6.49</td>
 <td style="text-align: center;">yes</td>
 <td style="text-align: center;">yes</td>
 <td style="text-align: center;">yes</td>
@@ -1280,7 +1280,7 @@ Commit <code>c766eae</code> · machine <code>github-actions ubuntu-24.04 4 vCPU 
 <td style="text-align: right;">0.0e+00</td>
 <td style="text-align: right;">3.1e-10</td>
 <td style="text-align: right;">13</td>
-<td style="text-align: right;">39.96</td>
+<td style="text-align: right;">39.64</td>
 <td style="text-align: center;">yes</td>
 <td style="text-align: center;">yes</td>
 <td style="text-align: center;">yes</td>
@@ -1297,7 +1297,7 @@ Commit <code>c766eae</code> · machine <code>github-actions ubuntu-24.04 4 vCPU 
 <td style="text-align: right;">0.0e+00</td>
 <td style="text-align: right;">8.8e-15</td>
 <td style="text-align: right;">15</td>
-<td style="text-align: right;">40.44</td>
+<td style="text-align: right;">38.27</td>
 <td style="text-align: center;">yes</td>
 <td style="text-align: center;">yes</td>
 <td style="text-align: center;">yes</td>
@@ -1348,7 +1348,7 @@ Commit <code>c766eae</code> · machine <code>github-actions ubuntu-24.04 4 vCPU 
 <td style="text-align: right;">0.0e+00</td>
 <td style="text-align: right;">7.3e-16</td>
 <td style="text-align: right;">18</td>
-<td style="text-align: right;">30.62</td>
+<td style="text-align: right;">29.77</td>
 <td style="text-align: center;">yes</td>
 <td style="text-align: center;">yes</td>
 <td style="text-align: center;">yes</td>
@@ -1399,7 +1399,7 @@ Commit <code>c766eae</code> · machine <code>github-actions ubuntu-24.04 4 vCPU 
 <td style="text-align: right;">0.0e+00</td>
 <td style="text-align: right;">1.1e-14</td>
 <td style="text-align: right;">13</td>
-<td style="text-align: right;">50.58</td>
+<td style="text-align: right;">48.79</td>
 <td style="text-align: center;">yes</td>
 <td style="text-align: center;">yes</td>
 <td style="text-align: center;">yes</td>
@@ -1416,7 +1416,7 @@ Commit <code>c766eae</code> · machine <code>github-actions ubuntu-24.04 4 vCPU 
 <td style="text-align: right;">0.0e+00</td>
 <td style="text-align: right;">2.4e-13</td>
 <td style="text-align: right;">14</td>
-<td style="text-align: right;">0.25</td>
+<td style="text-align: right;">0.26</td>
 <td style="text-align: center;">yes</td>
 <td style="text-align: center;">yes</td>
 <td style="text-align: center;">yes</td>
@@ -1620,7 +1620,7 @@ Commit <code>c766eae</code> · machine <code>github-actions ubuntu-24.04 4 vCPU 
 <td style="text-align: right;">0.0e+00</td>
 <td style="text-align: right;">1.6e-10</td>
 <td style="text-align: right;">14</td>
-<td style="text-align: right;">8.28</td>
+<td style="text-align: right;">8.15</td>
 <td style="text-align: center;">yes</td>
 <td style="text-align: center;">yes</td>
 <td style="text-align: center;">yes</td>
@@ -1858,7 +1858,7 @@ Commit <code>c766eae</code> · machine <code>github-actions ubuntu-24.04 4 vCPU 
 <td style="text-align: right;">6.7e-16</td>
 <td style="text-align: right;">3.9e-15</td>
 <td style="text-align: right;">14</td>
-<td style="text-align: right;">0.23</td>
+<td style="text-align: right;">0.24</td>
 <td style="text-align: center;">yes</td>
 <td style="text-align: center;"><strong>no</strong></td>
 <td style="text-align: center;"><strong>no</strong></td>
@@ -1902,14 +1902,14 @@ Commit <code>c766eae</code> · machine <code>github-actions ubuntu-24.04 4 vCPU 
 <td style="text-align: right;">10000</td>
 <td style="text-align: right;">10002</td>
 <td>optimal</td>
-<td style="text-align: right;">36.12239976</td>
+<td style="text-align: right;">36.12240099</td>
 <td style="text-align: right;">36.122402</td>
-<td style="text-align: right;">6.2e-08</td>
-<td style="text-align: right;">5.7e-15</td>
-<td style="text-align: right;">9.9e-11</td>
-<td style="text-align: right;">6.4e-08</td>
-<td style="text-align: right;">63</td>
-<td style="text-align: right;">4.15</td>
+<td style="text-align: right;">2.8e-08</td>
+<td style="text-align: right;">1.0e-15</td>
+<td style="text-align: right;">1.0e-10</td>
+<td style="text-align: right;">3.0e-08</td>
+<td style="text-align: right;">69</td>
+<td style="text-align: right;">4.42</td>
 <td style="text-align: center;">yes</td>
 <td style="text-align: center;">yes</td>
 <td style="text-align: center;"><strong>no</strong></td>
@@ -1919,14 +1919,14 @@ Commit <code>c766eae</code> · machine <code>github-actions ubuntu-24.04 4 vCPU 
 <td style="text-align: right;">10000</td>
 <td style="text-align: right;">10002</td>
 <td>optimal</td>
-<td style="text-align: right;">49.48578394</td>
+<td style="text-align: right;">49.4857853</td>
 <td style="text-align: right;">49.485785</td>
-<td style="text-align: right;">2.1e-08</td>
-<td style="text-align: right;">6.7e-16</td>
-<td style="text-align: right;">8.4e-11</td>
-<td style="text-align: right;">1.5e-08</td>
-<td style="text-align: right;">166</td>
-<td style="text-align: right;">13.53</td>
+<td style="text-align: right;">6.0e-09</td>
+<td style="text-align: right;">1.8e-16</td>
+<td style="text-align: right;">8.5e-11</td>
+<td style="text-align: right;">1.2e-08</td>
+<td style="text-align: right;">73</td>
+<td style="text-align: right;">5.53</td>
 <td style="text-align: center;">yes</td>
 <td style="text-align: center;">yes</td>
 <td style="text-align: center;"><strong>no</strong></td>
@@ -1936,14 +1936,14 @@ Commit <code>c766eae</code> · machine <code>github-actions ubuntu-24.04 4 vCPU 
 <td style="text-align: right;">10000</td>
 <td style="text-align: right;">10002</td>
 <td>optimal</td>
-<td style="text-align: right;">49.52395936</td>
+<td style="text-align: right;">49.52395741</td>
 <td style="text-align: right;">49.523957</td>
-<td style="text-align: right;">4.8e-08</td>
-<td style="text-align: right;">1.8e-16</td>
+<td style="text-align: right;">8.3e-09</td>
+<td style="text-align: right;">0.0e+00</td>
 <td style="text-align: right;">2.2e-11</td>
-<td style="text-align: right;">4.5e-08</td>
-<td style="text-align: right;">65</td>
-<td style="text-align: right;">4.92</td>
+<td style="text-align: right;">5.5e-09</td>
+<td style="text-align: right;">62</td>
+<td style="text-align: right;">4.54</td>
 <td style="text-align: center;">yes</td>
 <td style="text-align: center;">yes</td>
 <td style="text-align: center;"><strong>no</strong></td>
@@ -1952,18 +1952,18 @@ Commit <code>c766eae</code> · machine <code>github-actions ubuntu-24.04 4 vCPU 
 <td><code>liswet12</code></td>
 <td style="text-align: right;">10000</td>
 <td style="text-align: right;">10002</td>
-<td>iteration_limit</td>
-<td style="text-align: right;">1654.174082</td>
+<td>optimal</td>
+<td style="text-align: right;">1736.927426</td>
 <td style="text-align: right;">1736.9274</td>
-<td style="text-align: right;">4.8e-02</td>
 <td style="text-align: right;">1.5e-08</td>
-<td style="text-align: right;">3.4e-10</td>
-<td style="text-align: right;">4.7e-02</td>
-<td style="text-align: right;">210</td>
-<td style="text-align: right;">17.48</td>
-<td style="text-align: center;">-</td>
-<td style="text-align: center;"><strong>no</strong></td>
-<td style="text-align: center;"><strong>no</strong></td>
+<td style="text-align: right;">1.8e-16</td>
+<td style="text-align: right;">6.0e-10</td>
+<td style="text-align: right;">1.6e-10</td>
+<td style="text-align: right;">96</td>
+<td style="text-align: right;">7.37</td>
+<td style="text-align: center;">yes</td>
+<td style="text-align: center;">yes</td>
+<td style="text-align: center;">yes</td>
 </tr>
 <tr>
 <td><code>liswet2</code></td>
@@ -1977,7 +1977,7 @@ Commit <code>c766eae</code> · machine <code>github-actions ubuntu-24.04 4 vCPU 
 <td style="text-align: right;">4.0e-12</td>
 <td style="text-align: right;">5.9e-09</td>
 <td style="text-align: right;">24</td>
-<td style="text-align: right;">1.35</td>
+<td style="text-align: right;">1.27</td>
 <td style="text-align: center;">yes</td>
 <td style="text-align: center;">yes</td>
 <td style="text-align: center;"><strong>no</strong></td>
@@ -2011,7 +2011,7 @@ Commit <code>c766eae</code> · machine <code>github-actions ubuntu-24.04 4 vCPU 
 <td style="text-align: right;">1.6e-12</td>
 <td style="text-align: right;">2.7e-08</td>
 <td style="text-align: right;">16</td>
-<td style="text-align: right;">0.48</td>
+<td style="text-align: right;">0.49</td>
 <td style="text-align: center;">yes</td>
 <td style="text-align: center;">yes</td>
 <td style="text-align: center;"><strong>no</strong></td>
@@ -2028,7 +2028,7 @@ Commit <code>c766eae</code> · machine <code>github-actions ubuntu-24.04 4 vCPU 
 <td style="text-align: right;">1.3e-10</td>
 <td style="text-align: right;">2.2e-07</td>
 <td style="text-align: right;">12</td>
-<td style="text-align: right;">0.23</td>
+<td style="text-align: right;">0.22</td>
 <td style="text-align: center;">yes</td>
 <td style="text-align: center;">yes</td>
 <td style="text-align: center;"><strong>no</strong></td>
@@ -2045,7 +2045,7 @@ Commit <code>c766eae</code> · machine <code>github-actions ubuntu-24.04 4 vCPU 
 <td style="text-align: right;">5.2e-12</td>
 <td style="text-align: right;">6.3e-08</td>
 <td style="text-align: right;">15</td>
-<td style="text-align: right;">0.44</td>
+<td style="text-align: right;">0.46</td>
 <td style="text-align: center;">yes</td>
 <td style="text-align: center;">yes</td>
 <td style="text-align: center;"><strong>no</strong></td>
@@ -2055,51 +2055,51 @@ Commit <code>c766eae</code> · machine <code>github-actions ubuntu-24.04 4 vCPU 
 <td style="text-align: right;">10000</td>
 <td style="text-align: right;">10002</td>
 <td>optimal</td>
-<td style="text-align: right;">498.8408903</td>
+<td style="text-align: right;">498.8408925</td>
 <td style="text-align: right;">498.84089</td>
-<td style="text-align: right;">6.4e-10</td>
-<td style="text-align: right;">2.2e-16</td>
-<td style="text-align: right;">7.9e-10</td>
-<td style="text-align: right;">9.4e-10</td>
-<td style="text-align: right;">62</td>
-<td style="text-align: right;">4.66</td>
+<td style="text-align: right;">4.9e-09</td>
+<td style="text-align: right;">1.1e-16</td>
+<td style="text-align: right;">7.6e-10</td>
+<td style="text-align: right;">3.4e-09</td>
+<td style="text-align: right;">69</td>
+<td style="text-align: right;">5.19</td>
 <td style="text-align: center;">yes</td>
 <td style="text-align: center;">yes</td>
-<td style="text-align: center;">yes</td>
+<td style="text-align: center;"><strong>no</strong></td>
 </tr>
 <tr>
 <td><code>liswet8</code></td>
 <td style="text-align: right;">10000</td>
 <td style="text-align: right;">10002</td>
-<td>iteration_limit</td>
-<td style="text-align: right;">653.9165061</td>
+<td>optimal</td>
+<td style="text-align: right;">714.4700598</td>
 <td style="text-align: right;">7144.7006</td>
-<td style="text-align: right;">9.1e-01</td>
-<td style="text-align: right;">1.3e-08</td>
-<td style="text-align: right;">1.1e-09</td>
-<td style="text-align: right;">8.2e-02</td>
-<td style="text-align: right;">210</td>
-<td style="text-align: right;">17.39</td>
-<td style="text-align: center;">-</td>
-<td style="text-align: center;"><strong>no</strong></td>
+<td style="text-align: right;">9.0e-01</td>
+<td style="text-align: right;">1.9e-16</td>
+<td style="text-align: right;">3.6e-10</td>
+<td style="text-align: right;">1.0e-09</td>
+<td style="text-align: right;">96</td>
+<td style="text-align: right;">7.31</td>
+<td style="text-align: center;">yes</td>
+<td style="text-align: center;">yes</td>
 <td style="text-align: center;"><strong>no</strong></td>
 </tr>
 <tr>
 <td><code>liswet9</code></td>
 <td style="text-align: right;">10000</td>
 <td style="text-align: right;">10002</td>
-<td>iteration_limit</td>
-<td style="text-align: right;">1914.18689</td>
+<td>optimal</td>
+<td style="text-align: right;">1963.251261</td>
 <td style="text-align: right;">1963.2513</td>
-<td style="text-align: right;">2.5e-02</td>
-<td style="text-align: right;">1.1e-08</td>
-<td style="text-align: right;">1.0e-09</td>
-<td style="text-align: right;">2.5e-02</td>
-<td style="text-align: right;">210</td>
-<td style="text-align: right;">17.35</td>
-<td style="text-align: center;">-</td>
-<td style="text-align: center;"><strong>no</strong></td>
-<td style="text-align: center;"><strong>no</strong></td>
+<td style="text-align: right;">2.0e-08</td>
+<td style="text-align: right;">1.1e-16</td>
+<td style="text-align: right;">3.4e-10</td>
+<td style="text-align: right;">3.5e-11</td>
+<td style="text-align: right;">90</td>
+<td style="text-align: right;">6.76</td>
+<td style="text-align: center;">yes</td>
+<td style="text-align: center;">yes</td>
+<td style="text-align: center;">yes</td>
 </tr>
 <tr>
 <td><code>lotschd</code></td>
@@ -2163,8 +2163,8 @@ Commit <code>c766eae</code> · machine <code>github-actions ubuntu-24.04 4 vCPU 
 <td style="text-align: right;">4.0e-15</td>
 <td style="text-align: right;">1.2e-13</td>
 <td style="text-align: right;">9.6e-12</td>
-<td style="text-align: right;">47</td>
-<td style="text-align: right;">0.48</td>
+<td style="text-align: right;">51</td>
+<td style="text-align: right;">0.49</td>
 <td style="text-align: center;">yes</td>
 <td style="text-align: center;">yes</td>
 <td style="text-align: center;">yes</td>
@@ -2317,7 +2317,7 @@ Commit <code>c766eae</code> · machine <code>github-actions ubuntu-24.04 4 vCPU 
 <td style="text-align: right;">5.8e-14</td>
 <td style="text-align: right;">1.9e-12</td>
 <td style="text-align: right;">34</td>
-<td style="text-align: right;">0.98</td>
+<td style="text-align: right;">0.96</td>
 <td style="text-align: center;">yes</td>
 <td style="text-align: center;">yes</td>
 <td style="text-align: center;">yes</td>
@@ -2435,8 +2435,8 @@ Commit <code>c766eae</code> · machine <code>github-actions ubuntu-24.04 4 vCPU 
 <td style="text-align: right;">3.3e-17</td>
 <td style="text-align: right;">1.7e-17</td>
 <td style="text-align: right;">2.2e-16</td>
-<td style="text-align: right;">38</td>
-<td style="text-align: right;">0.39</td>
+<td style="text-align: right;">40</td>
+<td style="text-align: right;">0.37</td>
 <td style="text-align: center;">yes</td>
 <td style="text-align: center;">yes</td>
 <td style="text-align: center;">yes</td>
@@ -2487,7 +2487,7 @@ Commit <code>c766eae</code> · machine <code>github-actions ubuntu-24.04 4 vCPU 
 <td style="text-align: right;">4.0e-12</td>
 <td style="text-align: right;">1.6e-15</td>
 <td style="text-align: right;">176</td>
-<td style="text-align: right;">3.90</td>
+<td style="text-align: right;">3.65</td>
 <td style="text-align: center;">yes</td>
 <td style="text-align: center;">yes</td>
 <td style="text-align: center;">yes</td>
@@ -2504,7 +2504,7 @@ Commit <code>c766eae</code> · machine <code>github-actions ubuntu-24.04 4 vCPU 
 <td style="text-align: right;">0.0e+00</td>
 <td style="text-align: right;">4.2e-14</td>
 <td style="text-align: right;">30</td>
-<td style="text-align: right;">0.55</td>
+<td style="text-align: right;">0.52</td>
 <td style="text-align: center;">yes</td>
 <td style="text-align: center;"><strong>no</strong></td>
 <td style="text-align: center;"><strong>no</strong></td>
@@ -2520,8 +2520,8 @@ Commit <code>c766eae</code> · machine <code>github-actions ubuntu-24.04 4 vCPU 
 <td style="text-align: right;">3.1e-15</td>
 <td style="text-align: right;">1.5e-23</td>
 <td style="text-align: right;">7.6e-15</td>
-<td style="text-align: right;">36</td>
-<td style="text-align: right;">1.39</td>
+<td style="text-align: right;">39</td>
+<td style="text-align: right;">1.30</td>
 <td style="text-align: center;">yes</td>
 <td style="text-align: center;"><strong>no</strong></td>
 <td style="text-align: center;"><strong>no</strong></td>
@@ -2538,7 +2538,7 @@ Commit <code>c766eae</code> · machine <code>github-actions ubuntu-24.04 4 vCPU 
 <td style="text-align: right;">2.2e-17</td>
 <td style="text-align: right;">1.5e-16</td>
 <td style="text-align: right;">28</td>
-<td style="text-align: right;">2.52</td>
+<td style="text-align: right;">2.28</td>
 <td style="text-align: center;">yes</td>
 <td style="text-align: center;">yes</td>
 <td style="text-align: center;">yes</td>
@@ -2572,7 +2572,7 @@ Commit <code>c766eae</code> · machine <code>github-actions ubuntu-24.04 4 vCPU 
 <td style="text-align: right;">1.2e-16</td>
 <td style="text-align: right;">1.7e-14</td>
 <td style="text-align: right;">27</td>
-<td style="text-align: right;">0.02</td>
+<td style="text-align: right;">0.01</td>
 <td style="text-align: center;">yes</td>
 <td style="text-align: center;">yes</td>
 <td style="text-align: center;">yes</td>
@@ -2622,8 +2622,8 @@ Commit <code>c766eae</code> · machine <code>github-actions ubuntu-24.04 4 vCPU 
 <td style="text-align: right;">1.3e-17</td>
 <td style="text-align: right;">1.7e-19</td>
 <td style="text-align: right;">1.6e-16</td>
-<td style="text-align: right;">30</td>
-<td style="text-align: right;">1.09</td>
+<td style="text-align: right;">31</td>
+<td style="text-align: right;">1.01</td>
 <td style="text-align: center;">yes</td>
 <td style="text-align: center;">yes</td>
 <td style="text-align: center;">yes</td>
@@ -2639,8 +2639,8 @@ Commit <code>c766eae</code> · machine <code>github-actions ubuntu-24.04 4 vCPU 
 <td style="text-align: right;">3.9e-16</td>
 <td style="text-align: right;">8.0e-20</td>
 <td style="text-align: right;">6.8e-16</td>
-<td style="text-align: right;">30</td>
-<td style="text-align: right;">0.07</td>
+<td style="text-align: right;">33</td>
+<td style="text-align: right;">0.06</td>
 <td style="text-align: center;">yes</td>
 <td style="text-align: center;">yes</td>
 <td style="text-align: center;">yes</td>
@@ -2674,7 +2674,7 @@ Commit <code>c766eae</code> · machine <code>github-actions ubuntu-24.04 4 vCPU 
 <td style="text-align: right;">4.3e-07</td>
 <td style="text-align: right;">1.0e+00</td>
 <td style="text-align: right;">210</td>
-<td style="text-align: right;">2.91</td>
+<td style="text-align: right;">2.89</td>
 <td style="text-align: center;">-</td>
 <td style="text-align: center;"><strong>no</strong></td>
 <td style="text-align: center;"><strong>no</strong></td>
@@ -2809,8 +2809,8 @@ Commit <code>c766eae</code> · machine <code>github-actions ubuntu-24.04 4 vCPU 
 <td style="text-align: right;">7.3e-18</td>
 <td style="text-align: right;">1.4e-17</td>
 <td style="text-align: right;">3.6e-16</td>
-<td style="text-align: right;">41</td>
-<td style="text-align: right;">13.42</td>
+<td style="text-align: right;">43</td>
+<td style="text-align: right;">12.30</td>
 <td style="text-align: center;">yes</td>
 <td style="text-align: center;">yes</td>
 <td style="text-align: center;">yes</td>
@@ -2962,8 +2962,8 @@ Commit <code>c766eae</code> · machine <code>github-actions ubuntu-24.04 4 vCPU 
 <td style="text-align: right;">1.4e-16</td>
 <td style="text-align: right;">2.9e-15</td>
 <td style="text-align: right;">3.7e-16</td>
-<td style="text-align: right;">37</td>
-<td style="text-align: right;">2.44</td>
+<td style="text-align: right;">39</td>
+<td style="text-align: right;">2.26</td>
 <td style="text-align: center;">yes</td>
 <td style="text-align: center;">yes</td>
 <td style="text-align: center;">yes</td>
@@ -2980,7 +2980,7 @@ Commit <code>c766eae</code> · machine <code>github-actions ubuntu-24.04 4 vCPU 
 <td style="text-align: right;">1.9e-16</td>
 <td style="text-align: right;">6.1e-15</td>
 <td style="text-align: right;">31</td>
-<td style="text-align: right;">0.01</td>
+<td style="text-align: right;">0.02</td>
 <td style="text-align: center;">yes</td>
 <td style="text-align: center;">yes</td>
 <td style="text-align: center;">yes</td>
@@ -3013,8 +3013,8 @@ Commit <code>c766eae</code> · machine <code>github-actions ubuntu-24.04 4 vCPU 
 <td style="text-align: right;">4.1e-16</td>
 <td style="text-align: right;">8.7e-17</td>
 <td style="text-align: right;">4.7e-16</td>
-<td style="text-align: right;">35</td>
-<td style="text-align: right;">2.79</td>
+<td style="text-align: right;">37</td>
+<td style="text-align: right;">2.57</td>
 <td style="text-align: center;">yes</td>
 <td style="text-align: center;"><strong>no</strong></td>
 <td style="text-align: center;"><strong>no</strong></td>
@@ -3065,7 +3065,7 @@ Commit <code>c766eae</code> · machine <code>github-actions ubuntu-24.04 4 vCPU 
 <td style="text-align: right;">1.2e-18</td>
 <td style="text-align: right;">9.4e-15</td>
 <td style="text-align: right;">23</td>
-<td style="text-align: right;">0.69</td>
+<td style="text-align: right;">0.68</td>
 <td style="text-align: center;">yes</td>
 <td style="text-align: center;">yes</td>
 <td style="text-align: center;">yes</td>
@@ -3098,8 +3098,8 @@ Commit <code>c766eae</code> · machine <code>github-actions ubuntu-24.04 4 vCPU 
 <td style="text-align: right;">8.0e-16</td>
 <td style="text-align: right;">2.6e-18</td>
 <td style="text-align: right;">1.5e-16</td>
-<td style="text-align: right;">26</td>
-<td style="text-align: right;">7.43</td>
+<td style="text-align: right;">28</td>
+<td style="text-align: right;">6.93</td>
 <td style="text-align: center;">yes</td>
 <td style="text-align: center;">yes</td>
 <td style="text-align: center;">yes</td>
@@ -3115,8 +3115,8 @@ Commit <code>c766eae</code> · machine <code>github-actions ubuntu-24.04 4 vCPU 
 <td style="text-align: right;">1.3e-16</td>
 <td style="text-align: right;">1.2e-18</td>
 <td style="text-align: right;">1.5e-16</td>
-<td style="text-align: right;">26</td>
-<td style="text-align: right;">1.14</td>
+<td style="text-align: right;">28</td>
+<td style="text-align: right;">1.08</td>
 <td style="text-align: center;">yes</td>
 <td style="text-align: center;">yes</td>
 <td style="text-align: center;">yes</td>
@@ -3201,7 +3201,7 @@ Commit <code>c766eae</code> · machine <code>github-actions ubuntu-24.04 4 vCPU 
 <td style="text-align: right;">5.7e-05</td>
 <td style="text-align: right;">2.0e-04</td>
 <td style="text-align: right;">1000000</td>
-<td style="text-align: right;">50.57</td>
+<td style="text-align: right;">50.58</td>
 <td style="text-align: center;">-</td>
 <td style="text-align: center;"><strong>no</strong></td>
 <td style="text-align: center;"><strong>no</strong></td>
@@ -3330,14 +3330,14 @@ Commit <code>c766eae</code> · machine <code>github-actions ubuntu-24.04 4 vCPU 
 <td style="text-align: right;">2000</td>
 <td style="text-align: right;">2002</td>
 <td>optimal</td>
-<td style="text-align: right;">197.7042559</td>
+<td style="text-align: right;">197.704256</td>
 <td style="text-align: right;">197.70426</td>
-<td style="text-align: right;">2.1e-08</td>
+<td style="text-align: right;">2.0e-08</td>
 <td style="text-align: right;">5.6e-17</td>
-<td style="text-align: right;">1.2e-13</td>
-<td style="text-align: right;">1.1e-11</td>
-<td style="text-align: right;">69</td>
-<td style="text-align: right;">0.52</td>
+<td style="text-align: right;">1.1e-13</td>
+<td style="text-align: right;">9.0e-11</td>
+<td style="text-align: right;">68</td>
+<td style="text-align: right;">0.38</td>
 <td style="text-align: center;">yes</td>
 <td style="text-align: center;">yes</td>
 <td style="text-align: center;">yes</td>
@@ -3363,9 +3363,9 @@ Commit <code>c766eae</code> · machine <code>github-actions ubuntu-24.04 4 vCPU 
 </table></div>
 <p>Every failure, named:</p>
 <ul>
-<li><strong>Did not reach <code>optimal</code></strong> (10): <code>huestis</code>, <code>liswet12</code>, <code>liswet8</code>, <code>liswet9</code>, <code>qforplan</code>, <code>qgfrdxpn</code>, <code>qpilotno</code>, <code>qshell</code>, <code>stadat1</code>, <code>values</code>.</li>
-<li><strong><code>optimal</code> but more than 1e-6 relative from the reference objective</strong> (1): <code>hues-mod</code>.</li>
-<li><strong><code>optimal</code> but not successful at 1e-9 relative</strong> (12): <code>gouldqp3</code>, <code>hs268</code>, <code>hs35mod</code>, <code>liswet1</code>, <code>liswet10</code>, <code>liswet11</code>, <code>liswet2</code>, <code>liswet3</code>, <code>liswet4</code>, <code>liswet5</code>, <code>liswet6</code>, <code>s268</code>.</li>
+<li><strong>Did not reach <code>optimal</code></strong> (7): <code>huestis</code>, <code>qforplan</code>, <code>qgfrdxpn</code>, <code>qpilotno</code>, <code>qshell</code>, <code>stadat1</code>, <code>values</code>.</li>
+<li><strong><code>optimal</code> but more than 1e-6 relative from the reference objective</strong> (2): <code>hues-mod</code>, <code>liswet8</code>.</li>
+<li><strong><code>optimal</code> but not successful at 1e-9 relative</strong> (14): <code>gouldqp3</code>, <code>hs268</code>, <code>hs35mod</code>, <code>liswet1</code>, <code>liswet10</code>, <code>liswet11</code>, <code>liswet2</code>, <code>liswet3</code>, <code>liswet4</code>, <code>liswet5</code>, <code>liswet6</code>, <code>liswet7</code>, <code>liswet8</code>, <code>s268</code>.</li>
 </ul>
 <p><strong>Reference errata.</strong> For these instances the published objective is not the optimum: it was recomputed exactly, or independent solvers agree on another value (<code>data/maros-meszaros/reference_errata.json</code>). The table above still judges them against the published value, so they count as not matched.</p>
 <div class="table-wrap"><table class="doc-table">
@@ -3401,7 +3401,7 @@ Commit <code>c766eae</code> · machine <code>github-actions ubuntu-24.04 4 vCPU 
 <td style="text-align: right;">7.1447006e+03</td>
 <td style="text-align: right;">714.47006</td>
 <td style="text-align: right;">9.0000e-01</td>
-<td style="text-align: right;">653.9165061262438</td>
+<td style="text-align: right;">714.4700597551564</td>
 <td>HiGHS 714.4700590543218, Clp 714.4700590347206 and PIQP 714.4700559636733, each optimal and the latter two accepted by tools/verify_solution.py, in bench/results/head-to-head-maros-meszaros-d0eb672.csv (#1084); SANKHYA 714.470059768, optimal and verified, with qp_ipm_adaptive_dual_drop (#1178)</td>
 </tr>
 </tbody>
@@ -15092,27 +15092,11 @@ that, and both run in CI:</p>
 <code>bench/runners/fetch_netlib_infeasible.py</code>). Every instance is infeasible, so the status
 alone proves nothing; a pass needs the Farkas certificate the solver wrote to survive
 <code>tools/verify_solution.py</code> (<code>bench/runners/netlib_infeasible.py</code>).</p>
-<p>Source CSV: <code>bench/results/netlib-infeasible-5a39fb2.csv</code><br>
-Commit <code>5a39fb2</code> · machine <code>laptop, Intel i7-1355U 10 cores 12 threads, 16 GB, on mains, overnight with no other jobs</code> · time limit 60 s per instance</p>
-<p><strong>28 of 29</strong> reported <code>infeasible</code> <strong>and</strong> wrote a Farkas certificate that <code>tools/verify_solution.py</code> accepted. A status of <code>infeasible</code> without a certificate is not counted: the verifier has nothing to check, so the verdict is unproven.</p>
-<p><strong>12 of 29</strong> also named an irreducible infeasible subsystem (#217, the Chinneck-Dravnieks deletion filter) that the verifier proved on its own arithmetic: infeasible using nothing outside the set, and irreducible by one witness per element, a point that satisfies every other element and violates that one. 18 named one; not proved on klein1, klein2, klein3, qual, refinery, vol1.</p>
-<p><strong>1 not passed</strong>, every one named with its cause:</p>
-<div class="table-wrap"><table class="doc-table">
-<thead>
-<tr>
-<th>why</th>
-<th style="text-align: right;">count</th>
-<th>instances</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>no verdict: numerical_error</td>
-<td style="text-align: right;">1</td>
-<td>cplex2</td>
-</tr>
-</tbody>
-</table></div>
+<p>Source CSV: <code>bench/results/netlib-infeasible-1659c8b.csv</code><br>
+Commit <code>1659c8b</code> · machine <code>github-actions ubuntu-24.04 4 vCPU Intel(R) Xeon(R) 6975P-C 15 GiB RAM</code> · time limit 60 s per instance</p>
+<p><strong>29 of 29</strong> reported <code>infeasible</code> <strong>and</strong> wrote a Farkas certificate that <code>tools/verify_solution.py</code> accepted. A status of <code>infeasible</code> without a certificate is not counted: the verifier has nothing to check, so the verdict is unproven.</p>
+<p><strong>26 of 29</strong> also named an irreducible infeasible subsystem (#217, the Chinneck-Dravnieks deletion filter) that the verifier proved on its own arithmetic: infeasible using nothing outside the set, and irreducible by one witness per element, a point that satisfies every other element and violates that one. 28 named one; not proved on klein1, vol1.</p>
+<p>Every instance in the collection passed.</p>
 <div class="table-wrap"><table class="doc-table">
 <thead>
 <tr>
@@ -15138,9 +15122,9 @@ Commit <code>5a39fb2</code> · machine <code>laptop, Intel i7-1355U 10 cores 12 
 <td>presolve</td>
 <td>farkas</td>
 <td style="text-align: right;">2</td>
-<td style="text-align: right;">0.026</td>
+<td style="text-align: right;">0.004</td>
 <td style="text-align: center;">yes</td>
-<td>-</td>
+<td>3 proved</td>
 <td>row 163 allows activity of at most 24 but the column bounds force at least 54; proved by presolve; proof: the rows aggre</td>
 </tr>
 <tr>
@@ -15150,11 +15134,11 @@ Commit <code>5a39fb2</code> · machine <code>laptop, Intel i7-1355U 10 cores 12 
 <td>infeasible</td>
 <td>simplex-dual</td>
 <td>farkas</td>
-<td style="text-align: right;">7</td>
-<td style="text-align: right;">0.062</td>
+<td style="text-align: right;">39</td>
+<td style="text-align: right;">0.051</td>
 <td style="text-align: center;">yes</td>
-<td>23 proved</td>
-<td>dual simplex: basic variable 833 is outside its bounds by 5.949e+02, far above the 1.0e-07 feasibility tolerance, and no</td>
+<td>78 proved</td>
+<td>dual simplex: basic variable 635 is outside its bounds by 4.647e+03, far above the 1.0e-07 feasibility tolerance, and no</td>
 </tr>
 <tr>
 <td><code>bgindy</code></td>
@@ -15164,7 +15148,7 @@ Commit <code>5a39fb2</code> · machine <code>laptop, Intel i7-1355U 10 cores 12 
 <td>simplex-dual</td>
 <td>farkas</td>
 <td style="text-align: right;">3</td>
-<td style="text-align: right;">1.068</td>
+<td style="text-align: right;">0.832</td>
 <td style="text-align: center;">yes</td>
 <td>154 proved</td>
 <td>dual simplex: basic variable 12627 is outside its bounds by 7.134e+03, far above the 1.0e-07 feasibility tolerance, and</td>
@@ -15177,7 +15161,7 @@ Commit <code>5a39fb2</code> · machine <code>laptop, Intel i7-1355U 10 cores 12 
 <td>simplex-dual+primal</td>
 <td>farkas</td>
 <td style="text-align: right;">6</td>
-<td style="text-align: right;">0.022</td>
+<td style="text-align: right;">0.003</td>
 <td style="text-align: center;">yes</td>
 <td>12 proved</td>
 <td>phase 1 terminated with max bound violation 2.343e+01, far above the 1.0e-07 feasibility tolerance; proof: the rows aggr</td>
@@ -15189,11 +15173,11 @@ Commit <code>5a39fb2</code> · machine <code>laptop, Intel i7-1355U 10 cores 12 
 <td>infeasible</td>
 <td>simplex-dual</td>
 <td>farkas</td>
-<td style="text-align: right;">8</td>
-<td style="text-align: right;">0.030</td>
+<td style="text-align: right;">9</td>
+<td style="text-align: right;">0.005</td>
 <td style="text-align: center;">yes</td>
-<td>9 proved</td>
-<td>dual simplex: basic variable 271 is outside its bounds by 7.071e-01, far above the 1.0e-07 feasibility tolerance, and no</td>
+<td>10 proved</td>
+<td>dual simplex: basic variable 101 is outside its bounds by 5.000e-01, far above the 1.0e-07 feasibility tolerance, and no</td>
 </tr>
 <tr>
 <td><code>ceria3d</code></td>
@@ -15202,10 +15186,10 @@ Commit <code>5a39fb2</code> · machine <code>laptop, Intel i7-1355U 10 cores 12 
 <td>infeasible</td>
 <td>presolve</td>
 <td>farkas</td>
-<td style="text-align: right;">236</td>
-<td style="text-align: right;">0.228</td>
+<td style="text-align: right;">222</td>
+<td style="text-align: right;">1.662</td>
 <td style="text-align: center;">yes</td>
-<td>-</td>
+<td>222 proved</td>
 <td>row 292 needs activity of at least 0.75 but the column bounds cap it at 0.5; proved by presolve; certificate from the el</td>
 </tr>
 <tr>
@@ -15215,11 +15199,11 @@ Commit <code>5a39fb2</code> · machine <code>laptop, Intel i7-1355U 10 cores 12 
 <td>infeasible</td>
 <td>simplex-dual</td>
 <td>farkas</td>
-<td style="text-align: right;">7</td>
-<td style="text-align: right;">0.039</td>
+<td style="text-align: right;">21</td>
+<td style="text-align: right;">0.032</td>
 <td style="text-align: center;">yes</td>
-<td>42 proved</td>
-<td>dual simplex: basic variable 724 is outside its bounds by 2.849e+03, far above the 1.0e-07 feasibility tolerance, and no</td>
+<td>98 proved</td>
+<td>dual simplex: basic variable 704 is outside its bounds by 1.436e+03, far above the 1.0e-07 feasibility tolerance, and no</td>
 </tr>
 <tr>
 <td><code>cplex1</code></td>
@@ -15229,7 +15213,7 @@ Commit <code>5a39fb2</code> · machine <code>laptop, Intel i7-1355U 10 cores 12 
 <td>simplex-dual+primal</td>
 <td>farkas</td>
 <td style="text-align: right;">5</td>
-<td style="text-align: right;">0.350</td>
+<td style="text-align: right;">0.211</td>
 <td style="text-align: center;">yes</td>
 <td>6 proved</td>
 <td>phase 1 terminated with max bound violation 6.834e+06, far above the 1.0e-07 feasibility tolerance; proof: the rows aggr</td>
@@ -15238,14 +15222,14 @@ Commit <code>5a39fb2</code> · machine <code>laptop, Intel i7-1355U 10 cores 12 
 <td><code>cplex2</code></td>
 <td style="text-align: right;">224</td>
 <td style="text-align: right;">221</td>
-<td>numerical_error</td>
+<td>infeasible</td>
 <td>simplex-dual+primal</td>
-<td>none</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">0.035</td>
-<td style="text-align: center;">-</td>
+<td>farkas</td>
+<td style="text-align: right;">134</td>
+<td style="text-align: right;">0.048</td>
+<td style="text-align: center;">yes</td>
 <td>-</td>
-<td>phase 1 stalled at max bound violation 4.100e-06, only just above the 1.0e-07 feasibility tolerance; no column prices as</td>
+<td>proved infeasible in exact rational arithmetic: the model as read into doubles is exactly infeasible: its elastic LP's e</td>
 </tr>
 <tr>
 <td><code>ex72a</code></td>
@@ -15254,11 +15238,11 @@ Commit <code>5a39fb2</code> · machine <code>laptop, Intel i7-1355U 10 cores 12 
 <td>infeasible</td>
 <td>simplex-dual</td>
 <td>farkas</td>
-<td style="text-align: right;">58</td>
-<td style="text-align: right;">0.039</td>
+<td style="text-align: right;">60</td>
+<td style="text-align: right;">0.018</td>
 <td style="text-align: center;">yes</td>
-<td>59 proved</td>
-<td>dual simplex: basic variable 300 is outside its bounds by 7.071e-01, far above the 1.0e-07 feasibility tolerance, and no</td>
+<td>61 proved</td>
+<td>dual simplex: basic variable 50 is outside its bounds by 5.000e-01, far above the 1.0e-07 feasibility tolerance, and no</td>
 </tr>
 <tr>
 <td><code>ex73a</code></td>
@@ -15267,11 +15251,11 @@ Commit <code>5a39fb2</code> · machine <code>laptop, Intel i7-1355U 10 cores 12 
 <td>infeasible</td>
 <td>simplex-dual</td>
 <td>farkas</td>
-<td style="text-align: right;">24</td>
-<td style="text-align: right;">0.045</td>
+<td style="text-align: right;">25</td>
+<td style="text-align: right;">0.007</td>
 <td style="text-align: center;">yes</td>
-<td>25 proved</td>
-<td>dual simplex: basic variable 288 is outside its bounds by 7.071e-01, far above the 1.0e-07 feasibility tolerance, and no</td>
+<td>26 proved</td>
+<td>dual simplex: basic variable 48 is outside its bounds by 5.000e-01, far above the 1.0e-07 feasibility tolerance, and no</td>
 </tr>
 <tr>
 <td><code>forest6</code></td>
@@ -15281,7 +15265,7 @@ Commit <code>5a39fb2</code> · machine <code>laptop, Intel i7-1355U 10 cores 12 
 <td>simplex-dual</td>
 <td>farkas</td>
 <td style="text-align: right;">66</td>
-<td style="text-align: right;">0.072</td>
+<td style="text-align: right;">0.027</td>
 <td style="text-align: center;">yes</td>
 <td>94 proved</td>
 <td>dual simplex: basic variable 0 is outside its bounds by 3.221e+05, far above the 1.0e-07 feasibility tolerance, and no n</td>
@@ -15291,13 +15275,13 @@ Commit <code>5a39fb2</code> · machine <code>laptop, Intel i7-1355U 10 cores 12 
 <td style="text-align: right;">8</td>
 <td style="text-align: right;">8</td>
 <td>infeasible</td>
-<td>simplex-dual</td>
+<td>presolve</td>
 <td>farkas</td>
-<td style="text-align: right;">2</td>
-<td style="text-align: right;">0.023</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">0.003</td>
 <td style="text-align: center;">yes</td>
-<td>-</td>
-<td>dual simplex: basic variable 12 is outside its bounds by 1.500e+01, far above the 1.0e-07 feasibility tolerance, and no</td>
+<td>6 proved</td>
+<td>row 4 needs activity of at least 30 but the column bounds cap it at 20; proved by presolve; certificate from the elastic</td>
 </tr>
 <tr>
 <td><code>gosh</code></td>
@@ -15307,7 +15291,7 @@ Commit <code>5a39fb2</code> · machine <code>laptop, Intel i7-1355U 10 cores 12 
 <td>simplex-dual+primal</td>
 <td>farkas</td>
 <td style="text-align: right;">9</td>
-<td style="text-align: right;">5.633</td>
+<td style="text-align: right;">3.024</td>
 <td style="text-align: center;">yes</td>
 <td>9 proved</td>
 <td>phase 1 terminated with max bound violation 1.263e+01, far above the 1.0e-07 feasibility tolerance; proof: the rows aggr</td>
@@ -15317,13 +15301,13 @@ Commit <code>5a39fb2</code> · machine <code>laptop, Intel i7-1355U 10 cores 12 
 <td style="text-align: right;">2658</td>
 <td style="text-align: right;">2520</td>
 <td>infeasible</td>
-<td>simplex-dual+primal</td>
+<td>presolve</td>
 <td>farkas</td>
-<td style="text-align: right;">731</td>
-<td style="text-align: right;">0.219</td>
+<td style="text-align: right;">97</td>
+<td style="text-align: right;">2.534</td>
 <td style="text-align: center;">yes</td>
-<td>-</td>
-<td>phase 1 terminated with max bound violation 5.249e+06, far above the 1.0e-07 feasibility tolerance; proof: the rows aggr</td>
+<td>212 proved</td>
+<td>row 1612 allows activity of at most 97.7 but the column bounds force at least 97.7; proved by presolve; certificate from</td>
 </tr>
 <tr>
 <td><code>greenbea</code></td>
@@ -15333,9 +15317,9 @@ Commit <code>5a39fb2</code> · machine <code>laptop, Intel i7-1355U 10 cores 12 
 <td>presolve</td>
 <td>farkas</td>
 <td style="text-align: right;">1</td>
-<td style="text-align: right;">0.048</td>
+<td style="text-align: right;">0.235</td>
 <td style="text-align: center;">yes</td>
-<td>-</td>
+<td>94 proved</td>
 <td>row 1491 allows activity of at most 0 but the column bounds force at least 320; proved by presolve; proof: the rows aggr</td>
 </tr>
 <tr>
@@ -15346,9 +15330,9 @@ Commit <code>5a39fb2</code> · machine <code>laptop, Intel i7-1355U 10 cores 12 
 <td>presolve</td>
 <td>farkas</td>
 <td style="text-align: right;">3</td>
-<td style="text-align: right;">0.027</td>
+<td style="text-align: right;">0.003</td>
 <td style="text-align: center;">yes</td>
-<td>-</td>
+<td>3 proved</td>
 <td>row 4 allows activity of at most 2 but the column bounds force at least 13; proved by presolve; proof: the rows aggregat</td>
 </tr>
 <tr>
@@ -15359,9 +15343,9 @@ Commit <code>5a39fb2</code> · machine <code>laptop, Intel i7-1355U 10 cores 12 
 <td>presolve</td>
 <td>farkas</td>
 <td style="text-align: right;">3</td>
-<td style="text-align: right;">0.025</td>
+<td style="text-align: right;">0.002</td>
 <td style="text-align: center;">yes</td>
-<td>-</td>
+<td>3 proved</td>
 <td>row 3 needs activity of at least 50000 but the column bounds cap it at -30000; proved by presolve; proof: the rows aggre</td>
 </tr>
 <tr>
@@ -15372,7 +15356,7 @@ Commit <code>5a39fb2</code> · machine <code>laptop, Intel i7-1355U 10 cores 12 
 <td>simplex-dual</td>
 <td>farkas</td>
 <td style="text-align: right;">51</td>
-<td style="text-align: right;">0.069</td>
+<td style="text-align: right;">0.054</td>
 <td style="text-align: center;">yes</td>
 <td>55 <strong>not proved</strong></td>
 <td>dual simplex: basic variable 89 is outside its bounds by 7.734e+04, far above the 1.0e-07 feasibility tolerance, and no</td>
@@ -15385,9 +15369,9 @@ Commit <code>5a39fb2</code> · machine <code>laptop, Intel i7-1355U 10 cores 12 
 <td>simplex-dual</td>
 <td>farkas</td>
 <td style="text-align: right;">54</td>
-<td style="text-align: right;">0.226</td>
+<td style="text-align: right;">0.195</td>
 <td style="text-align: center;">yes</td>
-<td>55 <strong>not proved</strong></td>
+<td>55 proved</td>
 <td>dual simplex: basic variable 282 is outside its bounds by 5.350e+04, far above the 1.0e-07 feasibility tolerance, and no</td>
 </tr>
 <tr>
@@ -15398,9 +15382,9 @@ Commit <code>5a39fb2</code> · machine <code>laptop, Intel i7-1355U 10 cores 12 
 <td>simplex-dual</td>
 <td>farkas</td>
 <td style="text-align: right;">87</td>
-<td style="text-align: right;">1.235</td>
+<td style="text-align: right;">1.437</td>
 <td style="text-align: center;">yes</td>
-<td>89 <strong>not proved</strong></td>
+<td>89 proved</td>
 <td>dual simplex: basic variable 414 is outside its bounds by 6.342e+04, far above the 1.0e-07 feasibility tolerance, and no</td>
 </tr>
 <tr>
@@ -15410,24 +15394,24 @@ Commit <code>5a39fb2</code> · machine <code>laptop, Intel i7-1355U 10 cores 12 
 <td>infeasible</td>
 <td>simplex-dual</td>
 <td>farkas</td>
-<td style="text-align: right;">36</td>
-<td style="text-align: right;">0.060</td>
+<td style="text-align: right;">34</td>
+<td style="text-align: right;">0.026</td>
 <td style="text-align: center;">yes</td>
-<td>65 proved</td>
-<td>dual simplex: basic variable 474 is outside its bounds by 9.130e+03, far above the 1.0e-07 feasibility tolerance, and no</td>
+<td>61 proved</td>
+<td>dual simplex: basic variable 375 is outside its bounds by 9.130e+03, far above the 1.0e-07 feasibility tolerance, and no</td>
 </tr>
 <tr>
 <td><code>pang</code></td>
 <td style="text-align: right;">361</td>
-<td style="text-align: right;">459</td>
+<td style="text-align: right;">460</td>
 <td>infeasible</td>
 <td>simplex-dual+primal</td>
 <td>farkas</td>
 <td style="text-align: right;">13</td>
-<td style="text-align: right;">0.075</td>
+<td style="text-align: right;">0.049</td>
 <td style="text-align: center;">yes</td>
 <td>35 proved</td>
-<td>phase 1 terminated with max bound violation 7.814e+04, far above the 1.0e-07 feasibility tolerance; route: the scaled at</td>
+<td>phase 1 terminated with max bound violation 8.174e+04, far above the 1.0e-07 feasibility tolerance; route: the scaled at</td>
 </tr>
 <tr>
 <td><code>pilot4i</code></td>
@@ -15437,9 +15421,9 @@ Commit <code>5a39fb2</code> · machine <code>laptop, Intel i7-1355U 10 cores 12 
 <td>presolve</td>
 <td>farkas</td>
 <td style="text-align: right;">1</td>
-<td style="text-align: right;">0.022</td>
+<td style="text-align: right;">0.021</td>
 <td style="text-align: center;">yes</td>
-<td>-</td>
+<td>43 proved</td>
 <td>row 390 needs activity of at least 15.17 but the column bounds cap it at 0; proved by presolve; proof: the rows aggregat</td>
 </tr>
 <tr>
@@ -15449,11 +15433,11 @@ Commit <code>5a39fb2</code> · machine <code>laptop, Intel i7-1355U 10 cores 12 
 <td>infeasible</td>
 <td>simplex-dual+primal</td>
 <td>farkas</td>
-<td style="text-align: right;">120</td>
-<td style="text-align: right;">3.531</td>
+<td style="text-align: right;">125</td>
+<td style="text-align: right;">1.544</td>
 <td style="text-align: center;">yes</td>
-<td>229 <strong>not proved</strong></td>
-<td>phase 1 terminated with max bound violation 3.971e+04, far above the 1.0e-07 feasibility tolerance; proof: the rows aggr</td>
+<td>225 proved</td>
+<td>phase 1 terminated with max bound violation 1.363e+06, far above the 1.0e-07 feasibility tolerance; certificate from the</td>
 </tr>
 <tr>
 <td><code>reactor</code></td>
@@ -15463,9 +15447,9 @@ Commit <code>5a39fb2</code> · machine <code>laptop, Intel i7-1355U 10 cores 12 
 <td>presolve</td>
 <td>farkas</td>
 <td style="text-align: right;">1</td>
-<td style="text-align: right;">0.020</td>
+<td style="text-align: right;">0.008</td>
 <td style="text-align: center;">yes</td>
-<td>-</td>
+<td>15 proved</td>
 <td>row 116 needs activity of at least 0 but the column bounds cap it at -1; proved by presolve; proof: the rows aggregate t</td>
 </tr>
 <tr>
@@ -15475,11 +15459,11 @@ Commit <code>5a39fb2</code> · machine <code>laptop, Intel i7-1355U 10 cores 12 
 <td>infeasible</td>
 <td>simplex-dual+primal</td>
 <td>farkas</td>
-<td style="text-align: right;">85</td>
-<td style="text-align: right;">1.716</td>
+<td style="text-align: right;">82</td>
+<td style="text-align: right;">0.230</td>
 <td style="text-align: center;">yes</td>
-<td>167 <strong>not proved</strong></td>
-<td>phase 1 terminated with max bound violation 9.715e+04, far above the 1.0e-07 feasibility tolerance; proof: the rows aggr</td>
+<td>165 proved</td>
+<td>phase 1 terminated with max bound violation 2.129e+07, far above the 1.0e-07 feasibility tolerance; certificate from the</td>
 </tr>
 <tr>
 <td><code>vol1</code></td>
@@ -15488,11 +15472,11 @@ Commit <code>5a39fb2</code> · machine <code>laptop, Intel i7-1355U 10 cores 12 
 <td>infeasible</td>
 <td>simplex-dual+primal</td>
 <td>farkas</td>
-<td style="text-align: right;">209</td>
-<td style="text-align: right;">32.433</td>
+<td style="text-align: right;">130</td>
+<td style="text-align: right;">1.870</td>
 <td style="text-align: center;">yes</td>
-<td>394 <strong>not proved</strong></td>
-<td>phase 1 terminated with max bound violation 9.546e+05, far above the 1.0e-07 feasibility tolerance; proof: the rows aggr</td>
+<td>231 <strong>not proved</strong></td>
+<td>phase 1 terminated with max bound violation 2.094e+07, far above the 1.0e-07 feasibility tolerance; certificate from the</td>
 </tr>
 <tr>
 <td><code>woodinfe</code></td>
@@ -15502,9 +15486,9 @@ Commit <code>5a39fb2</code> · machine <code>laptop, Intel i7-1355U 10 cores 12 
 <td>presolve</td>
 <td>farkas</td>
 <td style="text-align: right;">1</td>
-<td style="text-align: right;">0.022</td>
+<td style="text-align: right;">0.003</td>
 <td style="text-align: center;">yes</td>
-<td>-</td>
+<td>2 proved</td>
 <td>row 17 needs activity of at least 0 but the column bounds cap it at -5; proved by presolve; proof: the rows aggregate to</td>
 </tr>
 </tbody>
@@ -16035,8 +16019,8 @@ preserved without re-running on a main commit.</p>
 <p>Every instance in Netlib's summary table. Both tiers above are defined by a row cap, which
 makes them the easier half of the library by construction; this is the number Phase 6's
 "&gt;= 95% of Netlib" exit criterion is measured against, and the one the README quotes.</p>
-<p>Source CSV: <code>bench/results/netlib-full-945cb4f.csv</code><br>
-Commit <code>945cb4f</code> · machine <code>github-actions ubuntu-latest 4 vCPU AMD EPYC 7763 64-Core Processor 15 GiB RAM</code> · generated 2026-10-19T05:54:35+00:00</p>
+<p>Source CSV: <code>bench/results/netlib-full-1659c8b.csv</code><br>
+Commit <code>1659c8b</code> · machine <code>github-actions ubuntu-24.04 4 vCPU Intel(R) Xeon(R) 6975P-C 15 GiB RAM</code> · generated 2026-11-16T13:57:36+00:00</p>
 <p><strong>83 of 94 instances in this working set</strong> matched their published optimum to a relative 1e-6 <strong>and</strong> passed independent verification by <code>tools/verify_solution.py</code>.</p>
 <p>The same run graded against the <strong>exact</strong> optimum, Koch's rational values (<em>The final NETLIB-LP results</em>, Oper. Res. Lett. 32, 2004; <code>data/netlib/koch_exact.json</code>): <strong>94 of 94</strong> within a relative 1e-6 <strong>and</strong> verified. Not within it: none.</p>
 <p>Coverage: this run used <strong>94 of the 97 instances</strong> Netlib publishes an optimal value for (set <code>full</code>, selected by <code>fetch_data.py --set full</code>). Phase 6's "full Netlib &gt;= 95%" exit criterion is measured against this set.</p>
@@ -16081,8 +16065,8 @@ Commit <code>945cb4f</code> · machine <code>github-actions ubuntu-latest 4 vCPU
 <td style="text-align: right;">5.5018458883e+03</td>
 <td style="text-align: right;">5.5018458883e+03</td>
 <td style="text-align: right;">2.4e-12</td>
-<td style="text-align: right;">2439</td>
-<td style="text-align: right;">1.012</td>
+<td style="text-align: right;">2016</td>
+<td style="text-align: right;">0.511</td>
 <td style="text-align: center;">yes</td>
 </tr>
 <tr>
@@ -16093,8 +16077,8 @@ Commit <code>945cb4f</code> · machine <code>github-actions ubuntu-latest 4 vCPU
 <td style="text-align: right;">9.8722419241e+05</td>
 <td style="text-align: right;">9.8723216072e+05</td>
 <td style="text-align: right;">8.1e-06</td>
-<td style="text-align: right;">3379</td>
-<td style="text-align: right;">0.199</td>
+<td style="text-align: right;">3495</td>
+<td style="text-align: right;">0.157</td>
 <td style="text-align: center;">yes</td>
 </tr>
 <tr>
@@ -16105,8 +16089,8 @@ Commit <code>945cb4f</code> · machine <code>github-actions ubuntu-latest 4 vCPU
 <td style="text-align: right;">2.2549496316e+05</td>
 <td style="text-align: right;">2.2549496316e+05</td>
 <td style="text-align: right;">1.1e-11</td>
-<td style="text-align: right;">76</td>
-<td style="text-align: right;">0.004</td>
+<td style="text-align: right;">77</td>
+<td style="text-align: right;">0.003</td>
 <td style="text-align: center;">yes</td>
 </tr>
 <tr>
@@ -16117,8 +16101,8 @@ Commit <code>945cb4f</code> · machine <code>github-actions ubuntu-latest 4 vCPU
 <td style="text-align: right;">-4.6475314286e+02</td>
 <td style="text-align: right;">-4.6475314286e+02</td>
 <td style="text-align: right;">6.1e-12</td>
-<td style="text-align: right;">13</td>
-<td style="text-align: right;">0.003</td>
+<td style="text-align: right;">11</td>
+<td style="text-align: right;">0.002</td>
 <td style="text-align: center;">yes</td>
 </tr>
 <tr>
@@ -16129,8 +16113,8 @@ Commit <code>945cb4f</code> · machine <code>github-actions ubuntu-latest 4 vCPU
 <td style="text-align: right;">-3.5991767287e+07</td>
 <td style="text-align: right;">-3.5991767287e+07</td>
 <td style="text-align: right;">1.2e-11</td>
-<td style="text-align: right;">159</td>
-<td style="text-align: right;">0.008</td>
+<td style="text-align: right;">112</td>
+<td style="text-align: right;">0.005</td>
 <td style="text-align: center;">yes</td>
 </tr>
 <tr>
@@ -16142,7 +16126,7 @@ Commit <code>945cb4f</code> · machine <code>github-actions ubuntu-latest 4 vCPU
 <td style="text-align: right;">-2.0239252356e+07</td>
 <td style="text-align: right;">1.1e-12</td>
 <td style="text-align: right;">173</td>
-<td style="text-align: right;">0.009</td>
+<td style="text-align: right;">0.006</td>
 <td style="text-align: center;">yes</td>
 </tr>
 <tr>
@@ -16154,7 +16138,7 @@ Commit <code>945cb4f</code> · machine <code>github-actions ubuntu-latest 4 vCPU
 <td style="text-align: right;">1.0312115935e+07</td>
 <td style="text-align: right;">8.7e-12</td>
 <td style="text-align: right;">168</td>
-<td style="text-align: right;">0.009</td>
+<td style="text-align: right;">0.006</td>
 <td style="text-align: center;">yes</td>
 </tr>
 <tr>
@@ -16165,8 +16149,8 @@ Commit <code>945cb4f</code> · machine <code>github-actions ubuntu-latest 4 vCPU
 <td style="text-align: right;">-1.5862801845e+02</td>
 <td style="text-align: right;">-1.5862801845e+02</td>
 <td style="text-align: right;">7.6e-13</td>
-<td style="text-align: right;">426</td>
-<td style="text-align: right;">0.015</td>
+<td style="text-align: right;">319</td>
+<td style="text-align: right;">0.009</td>
 <td style="text-align: center;">yes</td>
 </tr>
 <tr>
@@ -16177,8 +16161,8 @@ Commit <code>945cb4f</code> · machine <code>github-actions ubuntu-latest 4 vCPU
 <td style="text-align: right;">3.3592485807e+04</td>
 <td style="text-align: right;">3.3592485807e+04</td>
 <td style="text-align: right;">6.0e-12</td>
-<td style="text-align: right;">116</td>
-<td style="text-align: right;">0.007</td>
+<td style="text-align: right;">101</td>
+<td style="text-align: right;">0.005</td>
 <td style="text-align: center;">yes</td>
 </tr>
 <tr>
@@ -16189,8 +16173,8 @@ Commit <code>945cb4f</code> · machine <code>github-actions ubuntu-latest 4 vCPU
 <td style="text-align: right;">-3.0812149846e+01</td>
 <td style="text-align: right;">-3.0812149846e+01</td>
 <td style="text-align: right;">5.6e-12</td>
-<td style="text-align: right;">80</td>
-<td style="text-align: right;">0.004</td>
+<td style="text-align: right;">67</td>
+<td style="text-align: right;">0.003</td>
 <td style="text-align: center;">yes</td>
 </tr>
 <tr>
@@ -16201,8 +16185,8 @@ Commit <code>945cb4f</code> · machine <code>github-actions ubuntu-latest 4 vCPU
 <td style="text-align: right;">1.9776295615e+03</td>
 <td style="text-align: right;">1.9776292856e+03</td>
 <td style="text-align: right;">1.4e-07</td>
-<td style="text-align: right;">908</td>
-<td style="text-align: right;">0.037</td>
+<td style="text-align: right;">812</td>
+<td style="text-align: right;">0.024</td>
 <td style="text-align: center;">yes</td>
 </tr>
 <tr>
@@ -16213,8 +16197,8 @@ Commit <code>945cb4f</code> · machine <code>github-actions ubuntu-latest 4 vCPU
 <td style="text-align: right;">1.8112365404e+03</td>
 <td style="text-align: right;">1.8112365404e+03</td>
 <td style="text-align: right;">2.3e-11</td>
-<td style="text-align: right;">1567</td>
-<td style="text-align: right;">0.263</td>
+<td style="text-align: right;">1106</td>
+<td style="text-align: right;">0.163</td>
 <td style="text-align: center;">yes</td>
 </tr>
 <tr>
@@ -16225,8 +16209,8 @@ Commit <code>945cb4f</code> · machine <code>github-actions ubuntu-latest 4 vCPU
 <td style="text-align: right;">-3.3521356751e+02</td>
 <td style="text-align: right;">-3.3521356751e+02</td>
 <td style="text-align: right;">8.6e-12</td>
-<td style="text-align: right;">407</td>
-<td style="text-align: right;">0.012</td>
+<td style="text-align: right;">402</td>
+<td style="text-align: right;">0.010</td>
 <td style="text-align: center;">yes</td>
 </tr>
 <tr>
@@ -16238,7 +16222,7 @@ Commit <code>945cb4f</code> · machine <code>github-actions ubuntu-latest 4 vCPU
 <td style="text-align: right;">-3.1501872802e+02</td>
 <td style="text-align: right;">1.5e-11</td>
 <td style="text-align: right;">195</td>
-<td style="text-align: right;">0.005</td>
+<td style="text-align: right;">0.004</td>
 <td style="text-align: center;">yes</td>
 </tr>
 <tr>
@@ -16249,8 +16233,8 @@ Commit <code>945cb4f</code> · machine <code>github-actions ubuntu-latest 4 vCPU
 <td style="text-align: right;">1.3730803942e+03</td>
 <td style="text-align: right;">1.3730803942e+03</td>
 <td style="text-align: right;">6.2e-12</td>
-<td style="text-align: right;">135</td>
-<td style="text-align: right;">0.006</td>
+<td style="text-align: right;">51</td>
+<td style="text-align: right;">0.004</td>
 <td style="text-align: center;">yes</td>
 </tr>
 <tr>
@@ -16261,8 +16245,8 @@ Commit <code>945cb4f</code> · machine <code>github-actions ubuntu-latest 4 vCPU
 <td style="text-align: right;">1.5185098965e+03</td>
 <td style="text-align: right;">1.5185098965e+03</td>
 <td style="text-align: right;">7.8e-12</td>
-<td style="text-align: right;">245</td>
-<td style="text-align: right;">0.026</td>
+<td style="text-align: right;">154</td>
+<td style="text-align: right;">0.017</td>
 <td style="text-align: center;">yes</td>
 </tr>
 <tr>
@@ -16273,8 +16257,8 @@ Commit <code>945cb4f</code> · machine <code>github-actions ubuntu-latest 4 vCPU
 <td style="text-align: right;">2.6900129138e+03</td>
 <td style="text-align: right;">2.6900129138e+03</td>
 <td style="text-align: right;">1.2e-11</td>
-<td style="text-align: right;">266</td>
-<td style="text-align: right;">0.009</td>
+<td style="text-align: right;">191</td>
+<td style="text-align: right;">0.005</td>
 <td style="text-align: center;">yes</td>
 </tr>
 <tr>
@@ -16285,8 +16269,8 @@ Commit <code>945cb4f</code> · machine <code>github-actions ubuntu-latest 4 vCPU
 <td style="text-align: right;">-5.2263930249e+00</td>
 <td style="text-align: right;">-5.2263930249e+00</td>
 <td style="text-align: right;">1.1e-12</td>
-<td style="text-align: right;">299</td>
-<td style="text-align: right;">0.039</td>
+<td style="text-align: right;">245</td>
+<td style="text-align: right;">0.028</td>
 <td style="text-align: center;">yes</td>
 </tr>
 <tr>
@@ -16297,8 +16281,8 @@ Commit <code>945cb4f</code> · machine <code>github-actions ubuntu-latest 4 vCPU
 <td style="text-align: right;">2.1851966989e+06</td>
 <td style="text-align: right;">2.1851966989e+06</td>
 <td style="text-align: right;">2.0e-11</td>
-<td style="text-align: right;">822</td>
-<td style="text-align: right;">0.038</td>
+<td style="text-align: right;">774</td>
+<td style="text-align: right;">0.027</td>
 <td style="text-align: center;">yes</td>
 </tr>
 <tr>
@@ -16309,8 +16293,8 @@ Commit <code>945cb4f</code> · machine <code>github-actions ubuntu-latest 4 vCPU
 <td style="text-align: right;">1.2278421081e+05</td>
 <td style="text-align: right;">1.2278423615e+05</td>
 <td style="text-align: right;">2.1e-07</td>
-<td style="text-align: right;">4905</td>
-<td style="text-align: right;">15.120</td>
+<td style="text-align: right;">4772</td>
+<td style="text-align: right;">5.541</td>
 <td style="text-align: center;">yes</td>
 </tr>
 <tr>
@@ -16322,7 +16306,7 @@ Commit <code>945cb4f</code> · machine <code>github-actions ubuntu-latest 4 vCPU
 <td style="text-align: right;">3.1549166667e+02</td>
 <td style="text-align: right;">1.1e-11</td>
 <td style="text-align: right;">353</td>
-<td style="text-align: right;">0.067</td>
+<td style="text-align: right;">0.053</td>
 <td style="text-align: center;">yes</td>
 </tr>
 <tr>
@@ -16334,7 +16318,7 @@ Commit <code>945cb4f</code> · machine <code>github-actions ubuntu-latest 4 vCPU
 <td style="text-align: right;">-1.4351780000e+03</td>
 <td style="text-align: right;">0.0e+00</td>
 <td style="text-align: right;">434</td>
-<td style="text-align: right;">0.019</td>
+<td style="text-align: right;">0.015</td>
 <td style="text-align: center;">yes</td>
 </tr>
 <tr>
@@ -16344,9 +16328,9 @@ Commit <code>945cb4f</code> · machine <code>github-actions ubuntu-latest 4 vCPU
 <td>optimal</td>
 <td style="text-align: right;">-9.8729400000e+02</td>
 <td style="text-align: right;">-9.8729400000e+02</td>
-<td style="text-align: right;">4.6e-16</td>
-<td style="text-align: right;">1901</td>
-<td style="text-align: right;">0.194</td>
+<td style="text-align: right;">3.5e-16</td>
+<td style="text-align: right;">1797</td>
+<td style="text-align: right;">0.140</td>
 <td style="text-align: center;">yes</td>
 </tr>
 <tr>
@@ -16357,8 +16341,8 @@ Commit <code>945cb4f</code> · machine <code>github-actions ubuntu-latest 4 vCPU
 <td style="text-align: right;">1.1266396047e+07</td>
 <td style="text-align: right;">1.1266400000e+07</td>
 <td style="text-align: right;">3.5e-07</td>
-<td style="text-align: right;">23941</td>
-<td style="text-align: right;">13.364</td>
+<td style="text-align: right;">17112</td>
+<td style="text-align: right;">5.199</td>
 <td style="text-align: center;">yes</td>
 </tr>
 <tr>
@@ -16369,8 +16353,8 @@ Commit <code>945cb4f</code> · machine <code>github-actions ubuntu-latest 4 vCPU
 <td style="text-align: right;">-1.1638929066e+01</td>
 <td style="text-align: right;">-1.8751929066e+01</td>
 <td style="text-align: right;">3.8e-01</td>
-<td style="text-align: right;">311</td>
-<td style="text-align: right;">0.012</td>
+<td style="text-align: right;">300</td>
+<td style="text-align: right;">0.009</td>
 <td style="text-align: center;">yes</td>
 </tr>
 <tr>
@@ -16381,8 +16365,8 @@ Commit <code>945cb4f</code> · machine <code>github-actions ubuntu-latest 4 vCPU
 <td style="text-align: right;">-7.5571523331e+02</td>
 <td style="text-align: right;">-7.5571521774e+02</td>
 <td style="text-align: right;">2.1e-08</td>
-<td style="text-align: right;">544</td>
-<td style="text-align: right;">0.015</td>
+<td style="text-align: right;">508</td>
+<td style="text-align: right;">0.012</td>
 <td style="text-align: center;">yes</td>
 </tr>
 <tr>
@@ -16393,8 +16377,8 @@ Commit <code>945cb4f</code> · machine <code>github-actions ubuntu-latest 4 vCPU
 <td style="text-align: right;">5.5567956482e+05</td>
 <td style="text-align: right;">5.5567961165e+05</td>
 <td style="text-align: right;">8.4e-08</td>
-<td style="text-align: right;">607</td>
-<td style="text-align: right;">0.022</td>
+<td style="text-align: right;">486</td>
+<td style="text-align: right;">0.015</td>
 <td style="text-align: center;">yes</td>
 </tr>
 <tr>
@@ -16405,8 +16389,8 @@ Commit <code>945cb4f</code> · machine <code>github-actions ubuntu-latest 4 vCPU
 <td style="text-align: right;">1.7279106560e+05</td>
 <td style="text-align: right;">1.7279096547e+05</td>
 <td style="text-align: right;">5.8e-07</td>
-<td style="text-align: right;">361</td>
-<td style="text-align: right;">0.029</td>
+<td style="text-align: right;">343</td>
+<td style="text-align: right;">0.018</td>
 <td style="text-align: center;">yes</td>
 </tr>
 <tr>
@@ -16418,7 +16402,7 @@ Commit <code>945cb4f</code> · machine <code>github-actions ubuntu-latest 4 vCPU
 <td style="text-align: right;">-9.1463780924e+03</td>
 <td style="text-align: right;">2.3e-12</td>
 <td style="text-align: right;">45</td>
-<td style="text-align: right;">0.013</td>
+<td style="text-align: right;">0.009</td>
 <td style="text-align: center;">yes</td>
 </tr>
 <tr>
@@ -16430,7 +16414,7 @@ Commit <code>945cb4f</code> · machine <code>github-actions ubuntu-latest 4 vCPU
 <td style="text-align: right;">9.1463780924e+03</td>
 <td style="text-align: right;">2.3e-12</td>
 <td style="text-align: right;">802</td>
-<td style="text-align: right;">0.064</td>
+<td style="text-align: right;">0.044</td>
 <td style="text-align: center;">yes</td>
 </tr>
 <tr>
@@ -16442,7 +16426,7 @@ Commit <code>945cb4f</code> · machine <code>github-actions ubuntu-latest 4 vCPU
 <td style="text-align: right;">-6.8464293294e+04</td>
 <td style="text-align: right;">2.5e-12</td>
 <td style="text-align: right;">126</td>
-<td style="text-align: right;">0.141</td>
+<td style="text-align: right;">0.096</td>
 <td style="text-align: center;">yes</td>
 </tr>
 <tr>
@@ -16454,7 +16438,7 @@ Commit <code>945cb4f</code> · machine <code>github-actions ubuntu-latest 4 vCPU
 <td style="text-align: right;">6.8464293232e+04</td>
 <td style="text-align: right;">9.0e-10</td>
 <td style="text-align: right;">4975</td>
-<td style="text-align: right;">2.158</td>
+<td style="text-align: right;">1.528</td>
 <td style="text-align: center;">yes</td>
 </tr>
 <tr>
@@ -16465,8 +16449,8 @@ Commit <code>945cb4f</code> · machine <code>github-actions ubuntu-latest 4 vCPU
 <td style="text-align: right;">-6.6421896127e+02</td>
 <td style="text-align: right;">-6.6421873953e+02</td>
 <td style="text-align: right;">3.3e-07</td>
-<td style="text-align: right;">244</td>
-<td style="text-align: right;">0.010</td>
+<td style="text-align: right;">223</td>
+<td style="text-align: right;">0.008</td>
 <td style="text-align: center;">yes</td>
 </tr>
 <tr>
@@ -16477,8 +16461,8 @@ Commit <code>945cb4f</code> · machine <code>github-actions ubuntu-latest 4 vCPU
 <td style="text-align: right;">-1.0958573613e+05</td>
 <td style="text-align: right;">-1.0958636356e+05</td>
 <td style="text-align: right;">5.7e-06</td>
-<td style="text-align: right;">1156</td>
-<td style="text-align: right;">0.028</td>
+<td style="text-align: right;">633</td>
+<td style="text-align: right;">0.013</td>
 <td style="text-align: center;">yes</td>
 </tr>
 <tr>
@@ -16489,8 +16473,8 @@ Commit <code>945cb4f</code> · machine <code>github-actions ubuntu-latest 4 vCPU
 <td style="text-align: right;">6.9022359995e+06</td>
 <td style="text-align: right;">6.9022359995e+06</td>
 <td style="text-align: right;">7.1e-12</td>
-<td style="text-align: right;">472</td>
-<td style="text-align: right;">0.015</td>
+<td style="text-align: right;">431</td>
+<td style="text-align: right;">0.011</td>
 <td style="text-align: center;">yes</td>
 </tr>
 <tr>
@@ -16501,8 +16485,8 @@ Commit <code>945cb4f</code> · machine <code>github-actions ubuntu-latest 4 vCPU
 <td style="text-align: right;">-7.2555248130e+07</td>
 <td style="text-align: right;">-7.2462405908e+07</td>
 <td style="text-align: right;">1.3e-03</td>
-<td style="text-align: right;">5393</td>
-<td style="text-align: right;">40.066</td>
+<td style="text-align: right;">3053</td>
+<td style="text-align: right;">9.329</td>
 <td style="text-align: center;">yes</td>
 </tr>
 <tr>
@@ -16513,8 +16497,8 @@ Commit <code>945cb4f</code> · machine <code>github-actions ubuntu-latest 4 vCPU
 <td style="text-align: right;">-4.3022602612e+06</td>
 <td style="text-align: right;">-4.3021476065e+06</td>
 <td style="text-align: right;">2.6e-05</td>
-<td style="text-align: right;">5429</td>
-<td style="text-align: right;">38.003</td>
+<td style="text-align: right;">3177</td>
+<td style="text-align: right;">5.994</td>
 <td style="text-align: center;">yes</td>
 </tr>
 <tr>
@@ -16526,7 +16510,7 @@ Commit <code>945cb4f</code> · machine <code>github-actions ubuntu-latest 4 vCPU
 <td style="text-align: right;">-1.0687094129e+08</td>
 <td style="text-align: right;">3.3e-11</td>
 <td style="text-align: right;">983</td>
-<td style="text-align: right;">0.041</td>
+<td style="text-align: right;">0.032</td>
 <td style="text-align: center;">yes</td>
 </tr>
 <tr>
@@ -16537,8 +16521,8 @@ Commit <code>945cb4f</code> · machine <code>github-actions ubuntu-latest 4 vCPU
 <td style="text-align: right;">-1.6083433648e+08</td>
 <td style="text-align: right;">-1.6083433648e+08</td>
 <td style="text-align: right;">1.6e-11</td>
-<td style="text-align: right;">1675</td>
-<td style="text-align: right;">0.088</td>
+<td style="text-align: right;">1710</td>
+<td style="text-align: right;">0.072</td>
 <td style="text-align: center;">yes</td>
 </tr>
 <tr>
@@ -16550,7 +16534,7 @@ Commit <code>945cb4f</code> · machine <code>github-actions ubuntu-latest 4 vCPU
 <td style="text-align: right;">-4.7787811815e+07</td>
 <td style="text-align: right;">6.0e-12</td>
 <td style="text-align: right;">446</td>
-<td style="text-align: right;">0.013</td>
+<td style="text-align: right;">0.011</td>
 <td style="text-align: center;">yes</td>
 </tr>
 <tr>
@@ -16562,7 +16546,7 @@ Commit <code>945cb4f</code> · machine <code>github-actions ubuntu-latest 4 vCPU
 <td style="text-align: right;">-8.9664482186e+05</td>
 <td style="text-align: right;">3.4e-12</td>
 <td style="text-align: right;">130</td>
-<td style="text-align: right;">0.007</td>
+<td style="text-align: right;">0.005</td>
 <td style="text-align: center;">yes</td>
 </tr>
 <tr>
@@ -16573,8 +16557,8 @@ Commit <code>945cb4f</code> · machine <code>github-actions ubuntu-latest 4 vCPU
 <td style="text-align: right;">-1.7499001299e+03</td>
 <td style="text-align: right;">-1.7499001299e+03</td>
 <td style="text-align: right;">3.5e-12</td>
-<td style="text-align: right;">49</td>
-<td style="text-align: right;">0.003</td>
+<td style="text-align: right;">50</td>
+<td style="text-align: right;">0.002</td>
 <td style="text-align: center;">yes</td>
 </tr>
 <tr>
@@ -16586,7 +16570,7 @@ Commit <code>945cb4f</code> · machine <code>github-actions ubuntu-latest 4 vCPU
 <td style="text-align: right;">-2.5264706062e+01</td>
 <td style="text-align: right;">4.7e-12</td>
 <td style="text-align: right;">185</td>
-<td style="text-align: right;">0.007</td>
+<td style="text-align: right;">0.005</td>
 <td style="text-align: center;">yes</td>
 </tr>
 <tr>
@@ -16597,8 +16581,8 @@ Commit <code>945cb4f</code> · machine <code>github-actions ubuntu-latest 4 vCPU
 <td style="text-align: right;">-5.8063743701e+04</td>
 <td style="text-align: right;">-5.8063743701e+04</td>
 <td style="text-align: right;">2.2e-12</td>
-<td style="text-align: right;">1254</td>
-<td style="text-align: right;">0.441</td>
+<td style="text-align: right;">760</td>
+<td style="text-align: right;">0.161</td>
 <td style="text-align: center;">yes</td>
 </tr>
 <tr>
@@ -16610,7 +16594,7 @@ Commit <code>945cb4f</code> · machine <code>github-actions ubuntu-latest 4 vCPU
 <td style="text-align: right;">1.4971851665e+06</td>
 <td style="text-align: right;">1.4e-11</td>
 <td style="text-align: right;">28</td>
-<td style="text-align: right;">7.154</td>
+<td style="text-align: right;">4.823</td>
 <td style="text-align: center;">yes</td>
 </tr>
 <tr>
@@ -16620,9 +16604,9 @@ Commit <code>945cb4f</code> · machine <code>github-actions ubuntu-latest 4 vCPU
 <td>optimal</td>
 <td style="text-align: right;">3.2061972906e+02</td>
 <td style="text-align: right;">3.2061972906e+02</td>
-<td style="text-align: right;">1.3e-11</td>
-<td style="text-align: right;">649</td>
-<td style="text-align: right;">0.152</td>
+<td style="text-align: right;">1.4e-11</td>
+<td style="text-align: right;">543</td>
+<td style="text-align: right;">0.080</td>
 <td style="text-align: center;">yes</td>
 </tr>
 <tr>
@@ -16633,8 +16617,8 @@ Commit <code>945cb4f</code> · machine <code>github-actions ubuntu-latest 4 vCPU
 <td style="text-align: right;">1.4076036488e+07</td>
 <td style="text-align: right;">1.4076073035e+07</td>
 <td style="text-align: right;">2.6e-06</td>
-<td style="text-align: right;">2094</td>
-<td style="text-align: right;">0.124</td>
+<td style="text-align: right;">2119</td>
+<td style="text-align: right;">0.098</td>
 <td style="text-align: center;">yes</td>
 </tr>
 <tr>
@@ -16645,8 +16629,8 @@ Commit <code>945cb4f</code> · machine <code>github-actions ubuntu-latest 4 vCPU
 <td style="text-align: right;">-9.3807552782e+03</td>
 <td style="text-align: right;">-9.3807580773e+03</td>
 <td style="text-align: right;">3.0e-07</td>
-<td style="text-align: right;">1505</td>
-<td style="text-align: right;">1.031</td>
+<td style="text-align: right;">1084</td>
+<td style="text-align: right;">0.459</td>
 <td style="text-align: center;">yes</td>
 </tr>
 <tr>
@@ -16657,8 +16641,8 @@ Commit <code>945cb4f</code> · machine <code>github-actions ubuntu-latest 4 vCPU
 <td style="text-align: right;">-5.5748972929e+02</td>
 <td style="text-align: right;">-5.5740430007e+02</td>
 <td style="text-align: right;">1.5e-04</td>
-<td style="text-align: right;">3487</td>
-<td style="text-align: right;">1.320</td>
+<td style="text-align: right;">5694</td>
+<td style="text-align: right;">1.519</td>
 <td style="text-align: center;">yes</td>
 </tr>
 <tr>
@@ -16669,8 +16653,8 @@ Commit <code>945cb4f</code> · machine <code>github-actions ubuntu-latest 4 vCPU
 <td style="text-align: right;">-6.1131364656e+03</td>
 <td style="text-align: right;">-6.1131344111e+03</td>
 <td style="text-align: right;">3.4e-07</td>
-<td style="text-align: right;">1459</td>
-<td style="text-align: right;">1.964</td>
+<td style="text-align: right;">1578</td>
+<td style="text-align: right;">0.804</td>
 <td style="text-align: center;">yes</td>
 </tr>
 <tr>
@@ -16681,8 +16665,8 @@ Commit <code>945cb4f</code> · machine <code>github-actions ubuntu-latest 4 vCPU
 <td style="text-align: right;">-2.7201075328e+06</td>
 <td style="text-align: right;">-2.7201027439e+06</td>
 <td style="text-align: right;">1.8e-06</td>
-<td style="text-align: right;">2667</td>
-<td style="text-align: right;">0.185</td>
+<td style="text-align: right;">2419</td>
+<td style="text-align: right;">0.118</td>
 <td style="text-align: center;">yes</td>
 </tr>
 <tr>
@@ -16693,8 +16677,8 @@ Commit <code>945cb4f</code> · machine <code>github-actions ubuntu-latest 4 vCPU
 <td style="text-align: right;">-2.5811392589e+03</td>
 <td style="text-align: right;">-2.5811392641e+03</td>
 <td style="text-align: right;">2.0e-09</td>
-<td style="text-align: right;">641</td>
-<td style="text-align: right;">0.466</td>
+<td style="text-align: right;">644</td>
+<td style="text-align: right;">0.205</td>
 <td style="text-align: center;">yes</td>
 </tr>
 <tr>
@@ -16706,7 +16690,7 @@ Commit <code>945cb4f</code> · machine <code>github-actions ubuntu-latest 4 vCPU
 <td style="text-align: right;">3.0171072827e+02</td>
 <td style="text-align: right;">1.3e-06</td>
 <td style="text-align: right;">18887</td>
-<td style="text-align: right;">47.798</td>
+<td style="text-align: right;">81.939</td>
 <td style="text-align: center;">yes</td>
 </tr>
 <tr>
@@ -16717,8 +16701,8 @@ Commit <code>945cb4f</code> · machine <code>github-actions ubuntu-latest 4 vCPU
 <td style="text-align: right;">-4.4972761882e+03</td>
 <td style="text-align: right;">-4.4972761882e+03</td>
 <td style="text-align: right;">4.2e-12</td>
-<td style="text-align: right;">1063</td>
-<td style="text-align: right;">0.077</td>
+<td style="text-align: right;">1104</td>
+<td style="text-align: right;">0.059</td>
 <td style="text-align: center;">yes</td>
 </tr>
 <tr>
@@ -16729,8 +16713,8 @@ Commit <code>945cb4f</code> · machine <code>github-actions ubuntu-latest 4 vCPU
 <td style="text-align: right;">-2.6661600000e+02</td>
 <td style="text-align: right;">-2.6661600000e+02</td>
 <td style="text-align: right;">1.1e-15</td>
-<td style="text-align: right;">42</td>
-<td style="text-align: right;">0.004</td>
+<td style="text-align: right;">41</td>
+<td style="text-align: right;">0.003</td>
 <td style="text-align: center;">yes</td>
 </tr>
 <tr>
@@ -16741,8 +16725,8 @@ Commit <code>945cb4f</code> · machine <code>github-actions ubuntu-latest 4 vCPU
 <td style="text-align: right;">-5.2202061212e+01</td>
 <td style="text-align: right;">-5.2202061212e+01</td>
 <td style="text-align: right;">5.6e-12</td>
-<td style="text-align: right;">95</td>
-<td style="text-align: right;">0.004</td>
+<td style="text-align: right;">70</td>
+<td style="text-align: right;">0.003</td>
 <td style="text-align: center;">yes</td>
 </tr>
 <tr>
@@ -16753,8 +16737,8 @@ Commit <code>945cb4f</code> · machine <code>github-actions ubuntu-latest 4 vCPU
 <td style="text-align: right;">-5.2202061212e+01</td>
 <td style="text-align: right;">-5.2202061212e+01</td>
 <td style="text-align: right;">5.6e-12</td>
-<td style="text-align: right;">217</td>
-<td style="text-align: right;">0.006</td>
+<td style="text-align: right;">166</td>
+<td style="text-align: right;">0.004</td>
 <td style="text-align: center;">yes</td>
 </tr>
 <tr>
@@ -16765,7 +16749,7 @@ Commit <code>945cb4f</code> · machine <code>github-actions ubuntu-latest 4 vCPU
 <td style="text-align: right;">-6.4575077059e+01</td>
 <td style="text-align: right;">-6.4575077059e+01</td>
 <td style="text-align: right;">6.7e-12</td>
-<td style="text-align: right;">42</td>
+<td style="text-align: right;">28</td>
 <td style="text-align: right;">0.003</td>
 <td style="text-align: center;">yes</td>
 </tr>
@@ -16776,8 +16760,8 @@ Commit <code>945cb4f</code> · machine <code>github-actions ubuntu-latest 4 vCPU
 <td>optimal</td>
 <td style="text-align: right;">-7.0000000000e+01</td>
 <td style="text-align: right;">-7.0000000000e+01</td>
-<td style="text-align: right;">2.0e-16</td>
-<td style="text-align: right;">42</td>
+<td style="text-align: right;">0.0e+00</td>
+<td style="text-align: right;">28</td>
 <td style="text-align: right;">0.003</td>
 <td style="text-align: center;">yes</td>
 </tr>
@@ -16789,8 +16773,8 @@ Commit <code>945cb4f</code> · machine <code>github-actions ubuntu-latest 4 vCPU
 <td style="text-align: right;">-1.4753433061e+07</td>
 <td style="text-align: right;">-1.4753433061e+07</td>
 <td style="text-align: right;">1.6e-11</td>
-<td style="text-align: right;">403</td>
-<td style="text-align: right;">0.011</td>
+<td style="text-align: right;">277</td>
+<td style="text-align: right;">0.007</td>
 <td style="text-align: center;">yes</td>
 </tr>
 <tr>
@@ -16801,8 +16785,8 @@ Commit <code>945cb4f</code> · machine <code>github-actions ubuntu-latest 4 vCPU
 <td style="text-align: right;">-2.3313898243e+06</td>
 <td style="text-align: right;">-2.3313892548e+06</td>
 <td style="text-align: right;">2.4e-07</td>
-<td style="text-align: right;">134</td>
-<td style="text-align: right;">0.005</td>
+<td style="text-align: right;">69</td>
+<td style="text-align: right;">0.004</td>
 <td style="text-align: center;">yes</td>
 </tr>
 <tr>
@@ -16813,8 +16797,8 @@ Commit <code>945cb4f</code> · machine <code>github-actions ubuntu-latest 4 vCPU
 <td style="text-align: right;">1.8416759028e+04</td>
 <td style="text-align: right;">1.8416759028e+04</td>
 <td style="text-align: right;">1.9e-11</td>
-<td style="text-align: right;">411</td>
-<td style="text-align: right;">0.034</td>
+<td style="text-align: right;">376</td>
+<td style="text-align: right;">0.025</td>
 <td style="text-align: center;">yes</td>
 </tr>
 <tr>
@@ -16825,8 +16809,8 @@ Commit <code>945cb4f</code> · machine <code>github-actions ubuntu-latest 4 vCPU
 <td style="text-align: right;">3.6660261565e+04</td>
 <td style="text-align: right;">3.6660261565e+04</td>
 <td style="text-align: right;">3.3e-14</td>
-<td style="text-align: right;">857</td>
-<td style="text-align: right;">0.105</td>
+<td style="text-align: right;">738</td>
+<td style="text-align: right;">0.069</td>
 <td style="text-align: center;">yes</td>
 </tr>
 <tr>
@@ -16837,8 +16821,8 @@ Commit <code>945cb4f</code> · machine <code>github-actions ubuntu-latest 4 vCPU
 <td style="text-align: right;">5.4901254550e+04</td>
 <td style="text-align: right;">5.4901254550e+04</td>
 <td style="text-align: right;">4.5e-12</td>
-<td style="text-align: right;">1276</td>
-<td style="text-align: right;">0.161</td>
+<td style="text-align: right;">1111</td>
+<td style="text-align: right;">0.104</td>
 <td style="text-align: center;">yes</td>
 </tr>
 <tr>
@@ -16849,8 +16833,8 @@ Commit <code>945cb4f</code> · machine <code>github-actions ubuntu-latest 4 vCPU
 <td style="text-align: right;">1.8781248227e+03</td>
 <td style="text-align: right;">1.8781248227e+03</td>
 <td style="text-align: right;">2.0e-11</td>
-<td style="text-align: right;">241</td>
-<td style="text-align: right;">0.042</td>
+<td style="text-align: right;">59</td>
+<td style="text-align: right;">0.019</td>
 <td style="text-align: center;">yes</td>
 </tr>
 <tr>
@@ -16861,8 +16845,8 @@ Commit <code>945cb4f</code> · machine <code>github-actions ubuntu-latest 4 vCPU
 <td style="text-align: right;">9.0429695380e+02</td>
 <td style="text-align: right;">9.0429998619e+02</td>
 <td style="text-align: right;">3.4e-06</td>
-<td style="text-align: right;">536</td>
-<td style="text-align: right;">0.038</td>
+<td style="text-align: right;">340</td>
+<td style="text-align: right;">0.024</td>
 <td style="text-align: center;">yes</td>
 </tr>
 <tr>
@@ -16874,7 +16858,7 @@ Commit <code>945cb4f</code> · machine <code>github-actions ubuntu-latest 4 vCPU
 <td style="text-align: right;">8.6666666743e+00</td>
 <td style="text-align: right;">3.9e-12</td>
 <td style="text-align: right;">95</td>
-<td style="text-align: right;">0.007</td>
+<td style="text-align: right;">0.005</td>
 <td style="text-align: center;">yes</td>
 </tr>
 <tr>
@@ -16886,7 +16870,7 @@ Commit <code>945cb4f</code> · machine <code>github-actions ubuntu-latest 4 vCPU
 <td style="text-align: right;">5.0500000078e+01</td>
 <td style="text-align: right;">3.8e-13</td>
 <td style="text-align: right;">224</td>
-<td style="text-align: right;">0.011</td>
+<td style="text-align: right;">0.009</td>
 <td style="text-align: center;">yes</td>
 </tr>
 <tr>
@@ -16898,7 +16882,7 @@ Commit <code>945cb4f</code> · machine <code>github-actions ubuntu-latest 4 vCPU
 <td style="text-align: right;">9.0499999993e+02</td>
 <td style="text-align: right;">5.0e-12</td>
 <td style="text-align: right;">786</td>
-<td style="text-align: right;">0.036</td>
+<td style="text-align: right;">0.028</td>
 <td style="text-align: center;">yes</td>
 </tr>
 <tr>
@@ -16909,8 +16893,8 @@ Commit <code>945cb4f</code> · machine <code>github-actions ubuntu-latest 4 vCPU
 <td style="text-align: right;">1.4122500000e+03</td>
 <td style="text-align: right;">1.4122500000e+03</td>
 <td style="text-align: right;">0.0e+00</td>
-<td style="text-align: right;">274</td>
-<td style="text-align: right;">0.008</td>
+<td style="text-align: right;">273</td>
+<td style="text-align: right;">0.006</td>
 <td style="text-align: center;">yes</td>
 </tr>
 <tr>
@@ -16921,8 +16905,8 @@ Commit <code>945cb4f</code> · machine <code>github-actions ubuntu-latest 4 vCPU
 <td style="text-align: right;">1.7248071429e+03</td>
 <td style="text-align: right;">1.7248071429e+03</td>
 <td style="text-align: right;">2.5e-11</td>
-<td style="text-align: right;">727</td>
-<td style="text-align: right;">0.019</td>
+<td style="text-align: right;">725</td>
+<td style="text-align: right;">0.012</td>
 <td style="text-align: center;">yes</td>
 </tr>
 <tr>
@@ -16933,8 +16917,8 @@ Commit <code>945cb4f</code> · machine <code>github-actions ubuntu-latest 4 vCPU
 <td style="text-align: right;">1.4240000000e+03</td>
 <td style="text-align: right;">1.4240000000e+03</td>
 <td style="text-align: right;">0.0e+00</td>
-<td style="text-align: right;">944</td>
-<td style="text-align: right;">0.026</td>
+<td style="text-align: right;">949</td>
+<td style="text-align: right;">0.016</td>
 <td style="text-align: center;">yes</td>
 </tr>
 <tr>
@@ -16944,9 +16928,9 @@ Commit <code>945cb4f</code> · machine <code>github-actions ubuntu-latest 4 vCPU
 <td>optimal</td>
 <td style="text-align: right;">1.5711600000e+04</td>
 <td style="text-align: right;">1.5711600000e+04</td>
-<td style="text-align: right;">0.0e+00</td>
-<td style="text-align: right;">440</td>
-<td style="text-align: right;">0.011</td>
+<td style="text-align: right;">1.2e-16</td>
+<td style="text-align: right;">106</td>
+<td style="text-align: right;">0.007</td>
 <td style="text-align: center;">yes</td>
 </tr>
 <tr>
@@ -16958,7 +16942,7 @@ Commit <code>945cb4f</code> · machine <code>github-actions ubuntu-latest 4 vCPU
 <td style="text-align: right;">-7.6589318579e+04</td>
 <td style="text-align: right;">2.4e-12</td>
 <td style="text-align: right;">129</td>
-<td style="text-align: right;">0.005</td>
+<td style="text-align: right;">0.004</td>
 <td style="text-align: center;">yes</td>
 </tr>
 <tr>
@@ -16970,7 +16954,7 @@ Commit <code>945cb4f</code> · machine <code>github-actions ubuntu-latest 4 vCPU
 <td style="text-align: right;">-4.1573224074e+02</td>
 <td style="text-align: right;">3.4e-12</td>
 <td style="text-align: right;">123</td>
-<td style="text-align: right;">0.005</td>
+<td style="text-align: right;">0.004</td>
 <td style="text-align: center;">yes</td>
 </tr>
 <tr>
@@ -16981,8 +16965,8 @@ Commit <code>945cb4f</code> · machine <code>github-actions ubuntu-latest 4 vCPU
 <td style="text-align: right;">1.2088253460e+09</td>
 <td style="text-align: right;">1.2088253460e+09</td>
 <td style="text-align: right;">0.0e+00</td>
-<td style="text-align: right;">405</td>
-<td style="text-align: right;">0.015</td>
+<td style="text-align: right;">291</td>
+<td style="text-align: right;">0.011</td>
 <td style="text-align: center;">yes</td>
 </tr>
 <tr>
@@ -16994,7 +16978,7 @@ Commit <code>945cb4f</code> · machine <code>github-actions ubuntu-latest 4 vCPU
 <td style="text-align: right;">1.7933245380e+06</td>
 <td style="text-align: right;">1.7e-11</td>
 <td style="text-align: right;">457</td>
-<td style="text-align: right;">0.014</td>
+<td style="text-align: right;">0.010</td>
 <td style="text-align: center;">yes</td>
 </tr>
 <tr>
@@ -17005,8 +16989,8 @@ Commit <code>945cb4f</code> · machine <code>github-actions ubuntu-latest 4 vCPU
 <td style="text-align: right;">1.7987147004e+06</td>
 <td style="text-align: right;">1.7987147004e+06</td>
 <td style="text-align: right;">2.5e-11</td>
-<td style="text-align: right;">309</td>
-<td style="text-align: right;">0.011</td>
+<td style="text-align: right;">310</td>
+<td style="text-align: right;">0.008</td>
 <td style="text-align: center;">yes</td>
 </tr>
 <tr>
@@ -17017,8 +17001,8 @@ Commit <code>945cb4f</code> · machine <code>github-actions ubuntu-latest 4 vCPU
 <td style="text-align: right;">1.9090552114e+06</td>
 <td style="text-align: right;">1.9090552114e+06</td>
 <td style="text-align: right;">5.7e-12</td>
-<td style="text-align: right;">764</td>
-<td style="text-align: right;">0.028</td>
+<td style="text-align: right;">770</td>
+<td style="text-align: right;">0.020</td>
 <td style="text-align: center;">yes</td>
 </tr>
 <tr>
@@ -17030,7 +17014,7 @@ Commit <code>945cb4f</code> · machine <code>github-actions ubuntu-latest 4 vCPU
 <td style="text-align: right;">1.9200982105e+06</td>
 <td style="text-align: right;">1.8e-11</td>
 <td style="text-align: right;">434</td>
-<td style="text-align: right;">0.015</td>
+<td style="text-align: right;">0.012</td>
 <td style="text-align: center;">yes</td>
 </tr>
 <tr>
@@ -17041,8 +17025,8 @@ Commit <code>945cb4f</code> · machine <code>github-actions ubuntu-latest 4 vCPU
 <td style="text-align: right;">1.4701879193e+06</td>
 <td style="text-align: right;">1.4701879193e+06</td>
 <td style="text-align: right;">2.0e-11</td>
-<td style="text-align: right;">1100</td>
-<td style="text-align: right;">0.038</td>
+<td style="text-align: right;">1095</td>
+<td style="text-align: right;">0.026</td>
 <td style="text-align: center;">yes</td>
 </tr>
 <tr>
@@ -17053,8 +17037,8 @@ Commit <code>945cb4f</code> · machine <code>github-actions ubuntu-latest 4 vCPU
 <td style="text-align: right;">1.4892361344e+06</td>
 <td style="text-align: right;">1.4892361344e+06</td>
 <td style="text-align: right;">4.1e-12</td>
-<td style="text-align: right;">572</td>
-<td style="text-align: right;">0.018</td>
+<td style="text-align: right;">575</td>
+<td style="text-align: right;">0.014</td>
 <td style="text-align: center;">yes</td>
 </tr>
 <tr>
@@ -17066,7 +17050,7 @@ Commit <code>945cb4f</code> · machine <code>github-actions ubuntu-latest 4 vCPU
 <td style="text-align: right;">1.5394362184e+07</td>
 <td style="text-align: right;">2.4e-11</td>
 <td style="text-align: right;">583</td>
-<td style="text-align: right;">0.021</td>
+<td style="text-align: right;">0.015</td>
 <td style="text-align: center;">yes</td>
 </tr>
 <tr>
@@ -17077,8 +17061,8 @@ Commit <code>945cb4f</code> · machine <code>github-actions ubuntu-latest 4 vCPU
 <td style="text-align: right;">-2.5126695119e+02</td>
 <td style="text-align: right;">-2.5126695119e+02</td>
 <td style="text-align: right;">1.2e-11</td>
-<td style="text-align: right;">405</td>
-<td style="text-align: right;">0.357</td>
+<td style="text-align: right;">333</td>
+<td style="text-align: right;">0.181</td>
 <td style="text-align: center;">yes</td>
 </tr>
 <tr>
@@ -17089,8 +17073,8 @@ Commit <code>945cb4f</code> · machine <code>github-actions ubuntu-latest 4 vCPU
 <td style="text-align: right;">1.2576995000e+03</td>
 <td style="text-align: right;">1.2576995000e+03</td>
 <td style="text-align: right;">1.8e-16</td>
-<td style="text-align: right;">52</td>
-<td style="text-align: right;">0.008</td>
+<td style="text-align: right;">37</td>
+<td style="text-align: right;">0.006</td>
 <td style="text-align: center;">yes</td>
 </tr>
 <tr>
@@ -17101,8 +17085,8 @@ Commit <code>945cb4f</code> · machine <code>github-actions ubuntu-latest 4 vCPU
 <td style="text-align: right;">1.4060175000e+03</td>
 <td style="text-align: right;">1.4060175000e+03</td>
 <td style="text-align: right;">1.6e-16</td>
-<td style="text-align: right;">198</td>
-<td style="text-align: right;">0.010</td>
+<td style="text-align: right;">177</td>
+<td style="text-align: right;">0.008</td>
 <td style="text-align: center;">yes</td>
 </tr>
 <tr>
@@ -17113,8 +17097,8 @@ Commit <code>945cb4f</code> · machine <code>github-actions ubuntu-latest 4 vCPU
 <td style="text-align: right;">-4.1131976219e+04</td>
 <td style="text-align: right;">-4.1131976219e+04</td>
 <td style="text-align: right;">1.1e-11</td>
-<td style="text-align: right;">114</td>
-<td style="text-align: right;">0.005</td>
+<td style="text-align: right;">75</td>
+<td style="text-align: right;">0.004</td>
 <td style="text-align: center;">yes</td>
 </tr>
 <tr>
@@ -17125,8 +17109,8 @@ Commit <code>945cb4f</code> · machine <code>github-actions ubuntu-latest 4 vCPU
 <td style="text-align: right;">-3.9024408538e+04</td>
 <td style="text-align: right;">-3.9024408538e+04</td>
 <td style="text-align: right;">3.0e-12</td>
-<td style="text-align: right;">2057</td>
-<td style="text-align: right;">0.105</td>
+<td style="text-align: right;">1363</td>
+<td style="text-align: right;">0.053</td>
 <td style="text-align: center;">yes</td>
 </tr>
 <tr>
@@ -17137,8 +17121,8 @@ Commit <code>945cb4f</code> · machine <code>github-actions ubuntu-latest 4 vCPU
 <td style="text-align: right;">-3.9976783944e+04</td>
 <td style="text-align: right;">-3.9976661576e+04</td>
 <td style="text-align: right;">3.1e-06</td>
-<td style="text-align: right;">15927</td>
-<td style="text-align: right;">3.933</td>
+<td style="text-align: right;">10607</td>
+<td style="text-align: right;">1.146</td>
 <td style="text-align: center;">yes</td>
 </tr>
 <tr>
@@ -17150,7 +17134,7 @@ Commit <code>945cb4f</code> · machine <code>github-actions ubuntu-latest 4 vCPU
 <td style="text-align: right;">4.5881584719e+05</td>
 <td style="text-align: right;">9.6e-12</td>
 <td style="text-align: right;">19406</td>
-<td style="text-align: right;">2.509</td>
+<td style="text-align: right;">2.055</td>
 <td style="text-align: center;">yes</td>
 </tr>
 <tr>
@@ -17161,8 +17145,8 @@ Commit <code>945cb4f</code> · machine <code>github-actions ubuntu-latest 4 vCPU
 <td style="text-align: right;">2.9214776509e-01</td>
 <td style="text-align: right;">2.9214776509e-01</td>
 <td style="text-align: right;">3.6e-12</td>
-<td style="text-align: right;">186</td>
-<td style="text-align: right;">0.010</td>
+<td style="text-align: right;">139</td>
+<td style="text-align: right;">0.008</td>
 <td style="text-align: center;">yes</td>
 </tr>
 <tr>
@@ -17173,8 +17157,8 @@ Commit <code>945cb4f</code> · machine <code>github-actions ubuntu-latest 4 vCPU
 <td style="text-align: right;">1.2983146246e+05</td>
 <td style="text-align: right;">1.2983146246e+05</td>
 <td style="text-align: right;">1.0e-11</td>
-<td style="text-align: right;">161</td>
-<td style="text-align: right;">0.006</td>
+<td style="text-align: right;">70</td>
+<td style="text-align: right;">0.004</td>
 <td style="text-align: center;">yes</td>
 </tr>
 <tr>
@@ -17185,8 +17169,8 @@ Commit <code>945cb4f</code> · machine <code>github-actions ubuntu-latest 4 vCPU
 <td style="text-align: right;">1.4429024116e+00</td>
 <td style="text-align: right;">1.4429024116e+00</td>
 <td style="text-align: right;">1.8e-11</td>
-<td style="text-align: right;">223</td>
-<td style="text-align: right;">0.068</td>
+<td style="text-align: right;">186</td>
+<td style="text-align: right;">0.052</td>
 <td style="text-align: center;">yes</td>
 </tr>
 <tr>
@@ -17197,16 +17181,16 @@ Commit <code>945cb4f</code> · machine <code>github-actions ubuntu-latest 4 vCPU
 <td style="text-align: right;">1.3044763331e+00</td>
 <td style="text-align: right;">1.3044763331e+00</td>
 <td style="text-align: right;">1.2e-11</td>
-<td style="text-align: right;">2119</td>
-<td style="text-align: right;">0.239</td>
+<td style="text-align: right;">1173</td>
+<td style="text-align: right;">0.085</td>
 <td style="text-align: center;">yes</td>
 </tr>
 </tbody>
 </table></div>
 <p><strong>Summary</strong></p>
 <ul>
-<li>shifted geometric mean solve time (shift 1s): <strong>0.212s</strong></li>
-<li>slowest solved instance: 15.120s</li>
+<li>shifted geometric mean solve time (shift 1s): <strong>0.142s</strong></li>
+<li>slowest solved instance: 5.541s</li>
 <li>worst relative error against a published optimum: <strong>5.79e-07</strong></li>
 <li><strong>failed: <code>80bau3b</code>, <code>e226</code>, <code>ganges</code>, <code>greenbea</code>, <code>greenbeb</code>, <code>nesm</code>, <code>pilot</code>, <code>pilot.we</code>, <code>pilot87</code>, <code>scrs8</code>, <code>stocfor3</code></strong> — kept in the table on purpose</li>
 </ul>
@@ -17232,8 +17216,8 @@ and #548 stays open for a scale-aware reduced-cost test.</p>
 Operations Research 38(2), 1990), larger and sparser than the core Netlib set. Fetched and
 hashed by <code>bench/runners/fetch_kennington.py</code>, which parses the published optima from the
 directory's own readme; run by <code>bench/runners/kennington.py</code> under the full-set rules.</p>
-<p>Source CSV: <code>bench/results/kennington-full-9463fd7.csv</code><br>
-Commit <code>9463fd7</code> · machine <code>laptop, Intel i7-1355U 10 cores 12 threads, 16 GB, on mains, no other jobs</code> · generated 2026-10-02T06:14:09+00:00</p>
+<p>Source CSV: <code>bench/results/kennington-full-1659c8b.csv</code><br>
+Commit <code>1659c8b</code> · machine <code>github-actions ubuntu-24.04 4 vCPU INTEL(R) XEON(R) PLATINUM 8573C 15 GiB RAM</code> · generated 2026-11-16T14:04:17+00:00</p>
 <p><strong>16 of 16</strong> matched the readme's published optimum to a relative 1e-6 <strong>and</strong> passed independent verification. The published values are Vanderbei's ALPO results printed to eight significant figures, so rounding moves them by at most 5e-8 relative, well inside the tolerance.</p>
 <p>Every instance in this set passed.</p>
 <div class="table-wrap"><table class="doc-table">
@@ -17260,8 +17244,8 @@ Commit <code>9463fd7</code> · machine <code>laptop, Intel i7-1355U 10 cores 12 
 <td style="text-align: right;">2.3595407061e+07</td>
 <td style="text-align: right;">2.3595407e+07</td>
 <td style="text-align: right;">2.6e-09</td>
-<td style="text-align: right;">2609</td>
-<td style="text-align: right;">0.162</td>
+<td style="text-align: right;">2499</td>
+<td style="text-align: right;">0.098</td>
 <td style="text-align: center;">yes</td>
 </tr>
 <tr>
@@ -17272,8 +17256,8 @@ Commit <code>9463fd7</code> · machine <code>laptop, Intel i7-1355U 10 cores 12 
 <td style="text-align: right;">2.3129639887e+07</td>
 <td style="text-align: right;">2.3129640e+07</td>
 <td style="text-align: right;">4.9e-09</td>
-<td style="text-align: right;">8560</td>
-<td style="text-align: right;">19.272</td>
+<td style="text-align: right;">7513</td>
+<td style="text-align: right;">1.487</td>
 <td style="text-align: center;">yes</td>
 </tr>
 <tr>
@@ -17284,8 +17268,8 @@ Commit <code>9463fd7</code> · machine <code>laptop, Intel i7-1355U 10 cores 12 
 <td style="text-align: right;">2.5275116141e+07</td>
 <td style="text-align: right;">2.5275116e+07</td>
 <td style="text-align: right;">5.6e-09</td>
-<td style="text-align: right;">2460</td>
-<td style="text-align: right;">0.191</td>
+<td style="text-align: right;">2313</td>
+<td style="text-align: right;">0.102</td>
 <td style="text-align: center;">yes</td>
 </tr>
 <tr>
@@ -17296,8 +17280,8 @@ Commit <code>9463fd7</code> · machine <code>laptop, Intel i7-1355U 10 cores 12 
 <td style="text-align: right;">2.4454969765e+07</td>
 <td style="text-align: right;">2.4454970e+07</td>
 <td style="text-align: right;">9.6e-09</td>
-<td style="text-align: right;">7356</td>
-<td style="text-align: right;">14.493</td>
+<td style="text-align: right;">6369</td>
+<td style="text-align: right;">1.075</td>
 <td style="text-align: center;">yes</td>
 </tr>
 <tr>
@@ -17308,8 +17292,8 @@ Commit <code>9463fd7</code> · machine <code>laptop, Intel i7-1355U 10 cores 12 
 <td style="text-align: right;">-6.7952044338e+08</td>
 <td style="text-align: right;">-6.7952044e+08</td>
 <td style="text-align: right;">5.0e-09</td>
-<td style="text-align: right;">1308</td>
-<td style="text-align: right;">0.082</td>
+<td style="text-align: right;">1202</td>
+<td style="text-align: right;">0.029</td>
 <td style="text-align: center;">yes</td>
 </tr>
 <tr>
@@ -17320,8 +17304,8 @@ Commit <code>9463fd7</code> · machine <code>laptop, Intel i7-1355U 10 cores 12 
 <td style="text-align: right;">-6.9723822625e+09</td>
 <td style="text-align: right;">-6.9723823e+09</td>
 <td style="text-align: right;">5.4e-09</td>
-<td style="text-align: right;">8265</td>
-<td style="text-align: right;">0.920</td>
+<td style="text-align: right;">7254</td>
+<td style="text-align: right;">0.271</td>
 <td style="text-align: center;">yes</td>
 </tr>
 <tr>
@@ -17332,8 +17316,8 @@ Commit <code>9463fd7</code> · machine <code>laptop, Intel i7-1355U 10 cores 12 
 <td style="text-align: right;">-1.0257394789e+10</td>
 <td style="text-align: right;">-1.0257395e+10</td>
 <td style="text-align: right;">2.1e-08</td>
-<td style="text-align: right;">6117</td>
-<td style="text-align: right;">4.850</td>
+<td style="text-align: right;">13345</td>
+<td style="text-align: right;">0.886</td>
 <td style="text-align: center;">yes</td>
 </tr>
 <tr>
@@ -17344,8 +17328,8 @@ Commit <code>9463fd7</code> · machine <code>laptop, Intel i7-1355U 10 cores 12 
 <td style="text-align: right;">-5.2217025287e+10</td>
 <td style="text-align: right;">-5.2217025e+10</td>
 <td style="text-align: right;">5.5e-09</td>
-<td style="text-align: right;">232861</td>
-<td style="text-align: right;">423.610</td>
+<td style="text-align: right;">51536</td>
+<td style="text-align: right;">8.437</td>
 <td style="text-align: center;">yes</td>
 </tr>
 <tr>
@@ -17356,8 +17340,8 @@ Commit <code>9463fd7</code> · machine <code>laptop, Intel i7-1355U 10 cores 12 
 <td style="text-align: right;">5.3572251730e+05</td>
 <td style="text-align: right;">5.3572252e+05</td>
 <td style="text-align: right;">5.0e-09</td>
-<td style="text-align: right;">50</td>
-<td style="text-align: right;">0.469</td>
+<td style="text-align: right;">39</td>
+<td style="text-align: right;">0.789</td>
 <td style="text-align: center;">yes</td>
 </tr>
 <tr>
@@ -17369,7 +17353,7 @@ Commit <code>9463fd7</code> · machine <code>laptop, Intel i7-1355U 10 cores 12 
 <td style="text-align: right;">1.1064628e+06</td>
 <td style="text-align: right;">4.0e-08</td>
 <td style="text-align: right;">55</td>
-<td style="text-align: right;">0.980</td>
+<td style="text-align: right;">2.346</td>
 <td style="text-align: center;">yes</td>
 </tr>
 <tr>
@@ -17380,8 +17364,8 @@ Commit <code>9463fd7</code> · machine <code>laptop, Intel i7-1355U 10 cores 12 
 <td style="text-align: right;">2.1421398732e+06</td>
 <td style="text-align: right;">2.1421399e+06</td>
 <td style="text-align: right;">1.3e-08</td>
-<td style="text-align: right;">76</td>
-<td style="text-align: right;">1.728</td>
+<td style="text-align: right;">81</td>
+<td style="text-align: right;">3.709</td>
 <td style="text-align: center;">yes</td>
 </tr>
 <tr>
@@ -17393,7 +17377,7 @@ Commit <code>9463fd7</code> · machine <code>laptop, Intel i7-1355U 10 cores 12 
 <td style="text-align: right;">4.0440725e+06</td>
 <td style="text-align: right;">7.8e-10</td>
 <td style="text-align: right;">200</td>
-<td style="text-align: right;">5.659</td>
+<td style="text-align: right;">12.041</td>
 <td style="text-align: center;">yes</td>
 </tr>
 <tr>
@@ -17404,8 +17388,8 @@ Commit <code>9463fd7</code> · machine <code>laptop, Intel i7-1355U 10 cores 12 
 <td style="text-align: right;">2.8857862010e+10</td>
 <td style="text-align: right;">2.8857862e+10</td>
 <td style="text-align: right;">3.5e-10</td>
-<td style="text-align: right;">1144</td>
-<td style="text-align: right;">0.090</td>
+<td style="text-align: right;">595</td>
+<td style="text-align: right;">0.037</td>
 <td style="text-align: center;">yes</td>
 </tr>
 <tr>
@@ -17416,8 +17400,8 @@ Commit <code>9463fd7</code> · machine <code>laptop, Intel i7-1355U 10 cores 12 
 <td style="text-align: right;">2.7761037600e+10</td>
 <td style="text-align: right;">2.7761038e+10</td>
 <td style="text-align: right;">1.4e-08</td>
-<td style="text-align: right;">6486</td>
-<td style="text-align: right;">0.694</td>
+<td style="text-align: right;">5188</td>
+<td style="text-align: right;">0.444</td>
 <td style="text-align: center;">yes</td>
 </tr>
 <tr>
@@ -17428,8 +17412,8 @@ Commit <code>9463fd7</code> · machine <code>laptop, Intel i7-1355U 10 cores 12 
 <td style="text-align: right;">2.6727094976e+10</td>
 <td style="text-align: right;">2.6727095e+10</td>
 <td style="text-align: right;">9.0e-10</td>
-<td style="text-align: right;">6183</td>
-<td style="text-align: right;">29.348</td>
+<td style="text-align: right;">10971</td>
+<td style="text-align: right;">1.282</td>
 <td style="text-align: center;">yes</td>
 </tr>
 <tr>
@@ -17440,15 +17424,15 @@ Commit <code>9463fd7</code> · machine <code>laptop, Intel i7-1355U 10 cores 12 
 <td style="text-align: right;">2.3821658640e+10</td>
 <td style="text-align: right;">2.3821659e+10</td>
 <td style="text-align: right;">1.5e-08</td>
-<td style="text-align: right;">18190</td>
-<td style="text-align: right;">420.767</td>
+<td style="text-align: right;">26554</td>
+<td style="text-align: right;">7.509</td>
 <td style="text-align: center;">yes</td>
 </tr>
 </tbody>
 </table></div>
 <p><strong>Summary</strong></p>
 <ul>
-<li>shifted geometric mean solve time over the passed instances (shift 1s): <strong>4.997s</strong></li>
+<li>shifted geometric mean solve time over the passed instances (shift 1s): <strong>1.438s</strong></li>
 <li>worst relative error against a published optimum: <strong>4.04e-08</strong></li>
 <li>no failures on this set</li>
 </ul>
@@ -17462,9 +17446,9 @@ of variables", and the only honest way to say where this solver stands on that i
 instances of that size and name what happens. These are the eight smallest archives in
 Mittelmann's LP test set (<code>bench/runners/fetch_mittelmann.py</code>, provenance in
 <code>data/mittelmann/reference.json</code>).</p>
-<p>Source CSV: <code>bench/results/mittelmann-72123ff.csv</code><br>
-Commit <code>72123ff</code> · machine <code>Windows-AMD64</code> · time limit 300 s per instance, both solvers</p>
-<p><strong>5 of 12</strong> instances reached <code>optimal</code> inside the limit; <strong>5 of 12</strong> also passed the independent verifier and agree with HiGHS. HiGHS, run as a separate process under the same limit, finished <strong>4 of 12</strong>.</p>
+<p>Source CSV: <code>bench/results/mittelmann-2e53805.csv</code><br>
+Commit <code>2e53805</code> · machine <code>github-actions ubuntu-24.04 4 vCPU Intel(R) Xeon(R) 6975P-C 15 GiB RAM</code> · time limit 600 s per instance, both solvers</p>
+<p><strong>7 of 16</strong> instances reached <code>optimal</code> inside the limit; <strong>7 of 16</strong> also passed the independent verifier and agree with HiGHS. HiGHS, run as a separate process under the same limit, finished <strong>9 of 16</strong>.</p>
 <p>These are the smallest archives in Mittelmann's LP directory; against Netlib's largest instance (dfl001, 6,071 rows, 35,632 nonzeros) they range from the same row count with 2.7x the nonzeros (qap15) to 62x the rows and 42x the nonzeros (bdry2). No published optimum exists for them, so there is no pass-against-a-number column: the outcome is the status, the verifier's verdict where a solution was written, and HiGHS's objective where HiGHS finished. <code>our objective</code> on a <code>time_limit</code> row is the last iterate's value, not a bound, and is printed only so that a later run can be compared with it.</p>
 <div class="table-wrap"><table class="doc-table">
 <thead>
@@ -17489,11 +17473,11 @@ Commit <code>72123ff</code> · machine <code>Windows-AMD64</code> · time limit 
 <td style="text-align: right;">69004</td>
 <td style="text-align: right;">566193</td>
 <td>time_limit</td>
-<td style="text-align: right;">0.7756970849</td>
-<td style="text-align: right;">Time limit reached</td>
+<td style="text-align: right;">0.1958250349</td>
+<td style="text-align: right;">0.19886847</td>
 <td style="text-align: right;">-</td>
-<td style="text-align: right;">24039</td>
-<td style="text-align: right;">300.1</td>
+<td style="text-align: right;">215387</td>
+<td style="text-align: right;">422.7</td>
 <td style="text-align: center;">-</td>
 </tr>
 <tr>
@@ -17502,11 +17486,11 @@ Commit <code>72123ff</code> · machine <code>Windows-AMD64</code> · time limit 
 <td style="text-align: right;">250998</td>
 <td style="text-align: right;">1500003</td>
 <td>time_limit</td>
-<td style="text-align: right;">0.001999991456</td>
+<td style="text-align: right;">0.001999991446</td>
 <td style="text-align: right;">Time limit reached</td>
 <td style="text-align: right;">-</td>
-<td style="text-align: right;">7019</td>
-<td style="text-align: right;">253.4</td>
+<td style="text-align: right;">68744</td>
+<td style="text-align: right;">426.2</td>
 <td style="text-align: center;">-</td>
 </tr>
 <tr>
@@ -17517,9 +17501,9 @@ Commit <code>72123ff</code> · machine <code>Windows-AMD64</code> · time limit 
 <td>optimal</td>
 <td style="text-align: right;">2</td>
 <td style="text-align: right;">2</td>
-<td style="text-align: right;">3.7e-11</td>
+<td style="text-align: right;">3.9e-11</td>
 <td style="text-align: right;">15</td>
-<td style="text-align: right;">5.9</td>
+<td style="text-align: right;">332.9</td>
 <td style="text-align: center;">yes</td>
 </tr>
 <tr>
@@ -17530,9 +17514,9 @@ Commit <code>72123ff</code> · machine <code>Windows-AMD64</code> · time limit 
 <td>optimal</td>
 <td style="text-align: right;">3</td>
 <td style="text-align: right;">3</td>
-<td style="text-align: right;">2.6e-12</td>
-<td style="text-align: right;">560</td>
-<td style="text-align: right;">57.9</td>
+<td style="text-align: right;">1.2e-11</td>
+<td style="text-align: right;">520</td>
+<td style="text-align: right;">0.8</td>
 <td style="text-align: center;">yes</td>
 </tr>
 <tr>
@@ -17545,7 +17529,7 @@ Commit <code>72123ff</code> · machine <code>Windows-AMD64</code> · time limit 
 <td style="text-align: right;">Time limit reached</td>
 <td style="text-align: right;">-</td>
 <td style="text-align: right;">10</td>
-<td style="text-align: right;">153.0</td>
+<td style="text-align: right;">600.1</td>
 <td style="text-align: center;">yes</td>
 </tr>
 <tr>
@@ -17556,9 +17540,22 @@ Commit <code>72123ff</code> · machine <code>Windows-AMD64</code> · time limit 
 <td>optimal</td>
 <td style="text-align: right;">100</td>
 <td style="text-align: right;">100</td>
-<td style="text-align: right;">3.0e-12</td>
-<td style="text-align: right;">1480</td>
-<td style="text-align: right;">77.6</td>
+<td style="text-align: right;">1.1e-11</td>
+<td style="text-align: right;">1600</td>
+<td style="text-align: right;">123.3</td>
+<td style="text-align: center;">yes</td>
+</tr>
+<tr>
+<td><code>graph40-40</code></td>
+<td style="text-align: right;">360900</td>
+<td style="text-align: right;">102600</td>
+<td style="text-align: right;">1260900</td>
+<td>optimal</td>
+<td style="text-align: right;">-300</td>
+<td style="text-align: right;">Time limit reached</td>
+<td style="text-align: right;">-</td>
+<td style="text-align: right;">1400</td>
+<td style="text-align: right;">6.8</td>
 <td style="text-align: center;">yes</td>
 </tr>
 <tr>
@@ -17567,11 +17564,24 @@ Commit <code>72123ff</code> · machine <code>Windows-AMD64</code> · time limit 
 <td style="text-align: right;">61728</td>
 <td style="text-align: right;">523257</td>
 <td>time_limit</td>
-<td style="text-align: right;">2454378.022</td>
+<td style="text-align: right;">2454384.171</td>
+<td style="text-align: right;">2546254.563</td>
+<td style="text-align: right;">-</td>
+<td style="text-align: right;">349591</td>
+<td style="text-align: right;">430.7</td>
+<td style="text-align: center;">-</td>
+</tr>
+<tr>
+<td><code>neos-5251015</code></td>
+<td style="text-align: right;">486531</td>
+<td style="text-align: right;">136971</td>
+<td style="text-align: right;">1955388</td>
+<td>time_limit</td>
+<td style="text-align: right;">0.1058</td>
 <td style="text-align: right;">Time limit reached</td>
 <td style="text-align: right;">-</td>
-<td style="text-align: right;">36902</td>
-<td style="text-align: right;">240.2</td>
+<td style="text-align: right;">89326</td>
+<td style="text-align: right;">443.4</td>
 <td style="text-align: center;">-</td>
 </tr>
 <tr>
@@ -17580,11 +17590,11 @@ Commit <code>72123ff</code> · machine <code>Windows-AMD64</code> · time limit 
 <td style="text-align: right;">79555</td>
 <td style="text-align: right;">1062479</td>
 <td>time_limit</td>
-<td style="text-align: right;">1431579.932</td>
+<td style="text-align: right;">2073465.404</td>
 <td style="text-align: right;">Time limit reached</td>
 <td style="text-align: right;">-</td>
-<td style="text-align: right;">21399</td>
-<td style="text-align: right;">216.8</td>
+<td style="text-align: right;">175551</td>
+<td style="text-align: right;">426.2</td>
 <td style="text-align: center;">-</td>
 </tr>
 <tr>
@@ -17593,11 +17603,11 @@ Commit <code>72123ff</code> · machine <code>Windows-AMD64</code> · time limit 
 <td style="text-align: right;">22275</td>
 <td style="text-align: right;">94950</td>
 <td>time_limit</td>
-<td style="text-align: right;">172.7930772</td>
-<td style="text-align: right;">Time limit reached</td>
+<td style="text-align: right;">905.7691413</td>
+<td style="text-align: right;">1040.994041</td>
 <td style="text-align: right;">-</td>
-<td style="text-align: right;">23875</td>
-<td style="text-align: right;">300.1</td>
+<td style="text-align: right;">272875</td>
+<td style="text-align: right;">600.0</td>
 <td style="text-align: center;">-</td>
 </tr>
 <tr>
@@ -17606,12 +17616,25 @@ Commit <code>72123ff</code> · machine <code>Windows-AMD64</code> · time limit 
 <td style="text-align: right;">42438</td>
 <td style="text-align: right;">879732</td>
 <td>time_limit</td>
-<td style="text-align: right;">-5042.486721</td>
+<td style="text-align: right;">-5042.482905</td>
+<td style="text-align: right;">-5042.482963</td>
+<td style="text-align: right;">-</td>
+<td style="text-align: right;">123301</td>
+<td style="text-align: right;">422.6</td>
+<td style="text-align: center;">-</td>
+</tr>
+<tr>
+<td><code>s100</code></td>
+<td style="text-align: right;">14733</td>
+<td style="text-align: right;">364417</td>
+<td style="text-align: right;">1777917</td>
+<td>feasible</td>
+<td style="text-align: right;">-0.1710967589</td>
 <td style="text-align: right;">Time limit reached</td>
 <td style="text-align: right;">-</td>
-<td style="text-align: right;">20597</td>
-<td style="text-align: right;">216.7</td>
-<td style="text-align: center;">-</td>
+<td style="text-align: right;">26099</td>
+<td style="text-align: right;">600.1</td>
+<td style="text-align: center;">yes</td>
 </tr>
 <tr>
 <td><code>s250r10</code></td>
@@ -17619,11 +17642,24 @@ Commit <code>72123ff</code> · machine <code>Windows-AMD64</code> · time limit 
 <td style="text-align: right;">273142</td>
 <td style="text-align: right;">1318607</td>
 <td>optimal</td>
-<td style="text-align: right;">-0.1726767184</td>
+<td style="text-align: right;">-0.1726768597</td>
 <td style="text-align: right;">-0.1726770419</td>
-<td style="text-align: right;">3.2e-07</td>
-<td style="text-align: right;">116</td>
-<td style="text-align: right;">185.0</td>
+<td style="text-align: right;">1.8e-07</td>
+<td style="text-align: right;">94</td>
+<td style="text-align: right;">600.0</td>
+<td style="text-align: center;">yes</td>
+</tr>
+<tr>
+<td><code>savsched1</code></td>
+<td style="text-align: right;">295989</td>
+<td style="text-align: right;">328575</td>
+<td style="text-align: right;">1770507</td>
+<td>optimal</td>
+<td style="text-align: right;">217.4035706</td>
+<td style="text-align: right;">Time limit reached</td>
+<td style="text-align: right;">-</td>
+<td style="text-align: right;">5120</td>
+<td style="text-align: right;">41.0</td>
 <td style="text-align: center;">yes</td>
 </tr>
 <tr>
@@ -17632,16 +17668,16 @@ Commit <code>72123ff</code> · machine <code>Windows-AMD64</code> · time limit 
 <td style="text-align: right;">14770</td>
 <td style="text-align: right;">555082</td>
 <td>time_limit</td>
-<td style="text-align: right;">3.383924801</td>
-<td style="text-align: right;">Time limit reached</td>
+<td style="text-align: right;">3.383923566</td>
+<td style="text-align: right;">3.383923666</td>
 <td style="text-align: right;">-</td>
-<td style="text-align: right;">22080</td>
-<td style="text-align: right;">220.7</td>
+<td style="text-align: right;">254618</td>
+<td style="text-align: right;">426.1</td>
 <td style="text-align: center;">-</td>
 </tr>
 </tbody>
 </table></div>
-<p><strong>Not solved inside the limit</strong>, named rather than dropped: <code>Linf_520c</code>, <code>bdry2</code>, <code>irish-electricity</code>, <code>physiciansched3-3</code>, <code>qap15</code>, <code>rmine15</code>, <code>supportcase10</code>.</p>
+<p><strong>Not solved inside the limit</strong>, named rather than dropped: <code>Linf_520c</code>, <code>bdry2</code>, <code>irish-electricity</code>, <code>neos-5251015</code>, <code>physiciansched3-3</code>, <code>qap15</code>, <code>rmine15</code>, <code>s100</code>, <code>supportcase10</code>.</p>
 <p>Each one attributed to one cause (#417), read from the engine that ran and the solver's own message in the CSV, which is the log line quoted:</p>
 <div class="table-wrap"><table class="doc-table">
 <thead>
@@ -17659,60 +17695,74 @@ Commit <code>72123ff</code> · machine <code>Windows-AMD64</code> · time limit 
 <td>time_limit</td>
 <td>pdhg-cpu</td>
 <td>PDHG converges too slowly for the tolerance</td>
-<td>stopped at relative primal 8.439e-02, dual 2.181e-04, gap 9.999e-01 after 24039 iterations and 13 restarts (target 1.0e-04); no time left for the interior-point polish; the interior point declined (th</td>
+<td>stopped at relative primal 3.034e-03, dual 6.971e-05, gap 1.845e-02 after 215387 iterations and 20 restarts (target 1.0e-08); the interior-point polish did not improve it (not_solved after 0 iteration</td>
 </tr>
 <tr>
 <td><code>bdry2</code></td>
 <td>time_limit</td>
 <td>pdhg-cpu</td>
 <td>PDHG converges too slowly for the tolerance</td>
-<td>stopped at relative primal 6.027e-02, dual 4.566e-07, gap 9.911e-01 after 7019 iterations and 10 restarts (target 1.0e-04); the interior-point polish did not improve it (time_limit after 0 iterations:</td>
+<td>stopped at relative primal 6.022e-02, dual 4.548e-07, gap 9.911e-01 after 68744 iterations and 16 restarts (target 1.0e-08); the interior-point polish did not improve it (not_solved after 0 iterations</td>
 </tr>
 <tr>
 <td><code>irish-electricity</code></td>
 <td>time_limit</td>
 <td>pdhg-cpu</td>
 <td>PDHG converges too slowly for the tolerance</td>
-<td>stopped at relative primal 6.079e-06, dual 1.151e-04, gap 1.793e-06 after 36902 iterations and 16 restarts (target 1.0e-04); the interior-point polish did not improve it (time_limit after 11 iteration</td>
+<td>stopped at relative primal 7.530e-08, dual 2.848e-05, gap 1.266e-07 after 349591 iterations and 21 restarts (target 1.0e-08); the interior-point polish did not improve it (iteration_limit after 50 ite</td>
+</tr>
+<tr>
+<td><code>neos-5251015</code></td>
+<td>time_limit</td>
+<td>pdhg-cpu</td>
+<td>PDHG converges too slowly for the tolerance</td>
+<td>stopped at relative primal 1.573e-17, dual 5.753e-15, gap 5.506e-10 after 89326 iterations and 23 restarts (target 1.0e-08); the interior-point polish did not improve it (numerical_error after 0 itera</td>
 </tr>
 <tr>
 <td><code>physiciansched3-3</code></td>
 <td>time_limit</td>
 <td>pdhg-cpu</td>
 <td>PDHG converges too slowly for the tolerance</td>
-<td>stopped at relative primal 3.097e-04, dual 5.597e+00, gap 6.016e-02 after 21399 iterations and 14 restarts (target 1.0e-04); the interior-point polish did not improve it (not_solved after 0 iterations</td>
+<td>stopped at relative primal 6.621e-05, dual 2.648e+00, gap 4.666e-02 after 175551 iterations and 19 restarts (target 1.0e-08); the interior-point polish did not improve it (not_solved after 0 iteration</td>
 </tr>
 <tr>
 <td><code>qap15</code></td>
 <td>time_limit</td>
-<td>simplex-dual+primal</td>
+<td>simplex-dual</td>
 <td>too large for the simplex at this iteration cost</td>
-<td>time limit 149.994s reached inside the basis factorization, which was abandoned; route: the scaled attempt returned time_limit after 150.0 s of its 150 s share; neither attempt produced a usable point</td>
+<td>stopped at the time limit of 599.995s after 599.99s, 272875 iterations, 0 nodes; route: the scaled attempt returned time_limit after 600.0 s of its 600 s share; nothing was left for an unscaled retry</td>
 </tr>
 <tr>
 <td><code>rmine15</code></td>
 <td>time_limit</td>
 <td>pdhg-cpu</td>
 <td>PDHG converges too slowly for the tolerance</td>
-<td>stopped at relative primal 1.508e-05, dual 0.000e+00, gap 5.528e-06 after 20597 iterations and 14 restarts (target 1.0e-04); the interior-point polish did not improve it (not_solved after 0 iterations</td>
+<td>stopped at relative primal 1.043e-07, dual 0.000e+00, gap 3.769e-08 after 123301 iterations and 19 restarts (target 1.0e-08); the interior-point polish did not improve it (not_solved after 0 iteration</td>
+</tr>
+<tr>
+<td><code>s100</code></td>
+<td>feasible</td>
+<td>ipm+crossover</td>
+<td>interior point does not converge inside the limit</td>
+<td>crossover push: 1542 superbasic, 983 pivots in the push; crossover: 26015 pivots from the starting basis in 102.73s, after 84 interior point iterations; engine reported optimal but strong duality fail</td>
 </tr>
 <tr>
 <td><code>supportcase10</code></td>
 <td>time_limit</td>
 <td>pdhg-cpu</td>
 <td>PDHG converges too slowly for the tolerance</td>
-<td>stopped at relative primal 2.308e-08, dual 0.000e+00, gap 1.843e-05 after 22080 iterations and 13 restarts (target 1.0e-04); the interior-point polish did not improve it (not_solved after 0 iterations</td>
+<td>stopped at relative primal 2.131e-09, dual 0.000e+00, gap 2.003e-07 after 254618 iterations and 21 restarts (target 1.0e-08); the interior-point polish did not improve it (not_solved after 0 iteration</td>
 </tr>
 </tbody>
 </table></div>
 <h4 id="the-same-eight-under-each-engine">The same eight under each engine</h4>
-<p>Source CSVs: <code>bench/results/mittelmann-72123ff.csv</code> (dual simplex), <code>bench/results/mittelmann-pdhg-0fe40ba.csv</code> (PDHG), <code>bench/results/mittelmann-brazil3-ipm-xover-65eecbc.csv</code> (interior point)<br>
-Same 300 s limit per instance and engine; HiGHS is not re-run here.</p>
+<p>Source CSVs: <code>bench/results/mittelmann-2e53805.csv</code> (default (auto)), <code>bench/results/mittelmann-pdhg-0fe40ba.csv</code> (PDHG), <code>bench/results/mittelmann-brazil3-ipm-xover-65eecbc.csv</code> (interior point)<br>
+Limit per instance: default (auto) 600 s, PDHG 300 s, interior point 300 s; HiGHS is not re-run here.</p>
 <div class="table-wrap"><table class="doc-table">
 <thead>
 <tr>
 <th>instance</th>
-<th>dual simplex: status · verified · time (s)</th>
+<th>default (auto): status · verified · time (s)</th>
 <th>PDHG: status · verified · time (s)</th>
 <th>interior point: status · verified · time (s)</th>
 </tr>
@@ -17720,79 +17770,103 @@ Same 300 s limit per instance and engine; HiGHS is not re-run here.</p>
 <tbody>
 <tr>
 <td><code>Linf_520c</code></td>
-<td>time_limit · - · 300.1</td>
+<td>time_limit · - · 422.7</td>
 <td>time_limit · - · 210.2</td>
 <td>not run</td>
 </tr>
 <tr>
 <td><code>bdry2</code></td>
-<td>time_limit · - · 253.4</td>
+<td>time_limit · - · 426.2</td>
 <td>time_limit · - · 210.5</td>
 <td>not run</td>
 </tr>
 <tr>
 <td><code>brazil3</code></td>
-<td>optimal · yes · 5.9</td>
+<td>optimal · yes · 332.9</td>
 <td>optimal · yes · 82.7</td>
 <td>optimal · yes · 2.7</td>
 </tr>
 <tr>
 <td><code>chromaticindex1024-7</code></td>
-<td>optimal · yes · 57.9</td>
+<td>optimal · yes · 0.8</td>
 <td>optimal · yes · 0.8</td>
 <td>not run</td>
 </tr>
 <tr>
 <td><code>datt256_lp</code></td>
-<td>optimal · yes · 153.0</td>
+<td>optimal · yes · 600.1</td>
 <td>not run</td>
 <td>not run</td>
 </tr>
 <tr>
 <td><code>ex10</code></td>
-<td>optimal · yes · 77.6</td>
+<td>optimal · yes · 123.3</td>
+<td>not run</td>
+<td>not run</td>
+</tr>
+<tr>
+<td><code>graph40-40</code></td>
+<td>optimal · yes · 6.8</td>
 <td>not run</td>
 <td>not run</td>
 </tr>
 <tr>
 <td><code>irish-electricity</code></td>
-<td>time_limit · - · 240.2</td>
+<td>time_limit · - · 430.7</td>
 <td>time_limit · - · 240.1</td>
 <td>not run</td>
 </tr>
 <tr>
+<td><code>neos-5251015</code></td>
+<td>time_limit · - · 443.4</td>
+<td>not run</td>
+<td>not run</td>
+</tr>
+<tr>
 <td><code>physiciansched3-3</code></td>
-<td>time_limit · - · 216.8</td>
+<td>time_limit · - · 426.2</td>
 <td>not run</td>
 <td>not run</td>
 </tr>
 <tr>
 <td><code>qap15</code></td>
-<td>time_limit · - · 300.1</td>
+<td>time_limit · - · 600.0</td>
 <td>optimal · yes · 93.0</td>
 <td>not run</td>
 </tr>
 <tr>
 <td><code>rmine15</code></td>
-<td>time_limit · - · 216.7</td>
+<td>time_limit · - · 422.6</td>
 <td>time_limit · - · 216.3</td>
 <td>not run</td>
 </tr>
 <tr>
+<td><code>s100</code></td>
+<td>feasible · yes · 600.1</td>
+<td>not run</td>
+<td>not run</td>
+</tr>
+<tr>
 <td><code>s250r10</code></td>
-<td>optimal · yes · 185.0</td>
+<td>optimal · yes · 600.0</td>
+<td>not run</td>
+<td>not run</td>
+</tr>
+<tr>
+<td><code>savsched1</code></td>
+<td>optimal · yes · 41.0</td>
 <td>not run</td>
 <td>not run</td>
 </tr>
 <tr>
 <td><code>supportcase10</code></td>
-<td>time_limit · - · 220.7</td>
+<td>time_limit · - · 426.1</td>
 <td>time_limit · - · 210.3</td>
 <td>not run</td>
 </tr>
 </tbody>
 </table></div>
-<p>Finished and verified inside the limit: dual simplex <strong>5 of 12</strong>, PDHG <strong>3 of 12</strong>, interior point <strong>1 of 12</strong>.</p>
+<p>Finished and verified inside the limit: default (auto) <strong>7 of 16</strong> run, PDHG <strong>3 of 8</strong> run, interior point <strong>1 of 1</strong> run.</p>
 <p><strong>PDHG at the feasibility-page standard (#486).</strong> The same PDHG runs, read at the standard Mittelmann's LP feasibility page uses: the relative KKT error at or under 1e-6, no basis, no polish (the crossing is taken in the first-order phase, before any polish). This is a first-order tolerance, <strong>not an optimal basis</strong> and not what <code>optimal</code> means elsewhere in this document; the last two columns are what the full run went on to report and the verifier's verdict on that point.</p>
 <div class="table-wrap"><table class="doc-table">
 <thead>
@@ -23692,7 +23766,8 @@ What would earn a default above one: a measured win at the sizes where the gathe
 </table></div>
 <p>Same instances, same card, opposite movements at the two tolerances. The spread is the honest width of a laptop-GPU measurement, and a single two-decimal figure hides it. The runner now takes N repeats per cell and reports the median with its min–max (#449); a committed repeats CSV is #445.</p>
 <h4 id="the-forresttomlin-basis-update-basis_updateforrest-tomlin">The Forrest–Tomlin basis update (<code>basis_update=forrest-tomlin</code>)</h4>
-<p>Landed in #279: the entering column folded into U with a sparse spike and one row eta, against the product-form default; #396 added Tomlin's loss-of-significance test (<code>kFtCancellationThreshold</code>), a row-eta bound and the pivot test after the fold was measured drifting 2.5e-3. Measured against the product form on the full Netlib set (94 instances), both sides the same binary built at <code>462fa39e</code>, alternated, 3 runs a side, <code>threads=1</code>, 600 s wall limit, on the shared Windows laptop at 100% CPU:</p>
+<p>Landed in #279; #396 added Tomlin's loss-of-significance test (<code>kFtCancellationThreshold</code>), a row-eta bound and the product form's own pivot test. Since then, under #1042: contiguous row and column files for U (#1043), the update over alpha's support (#1077), the spike kept from the entering column's FTRAN (#1101), hyper-sparse solves (#1134), and, in #1282, the dual iteration's index lists carried through every Forrest–Tomlin solve, the update's partial BTRAN over its reach and an O(1) move of the leaving step. #1282 took ken-18 under Forrest–Tomlin from 289.7 G to 53.7 G instructions on the same 51,462-iteration path (callgrind, bench run 43796138692).</p>
+<p>Measured against the product form after all of that, one binary, both arms in one job, GitHub-hosted runner:</p>
 <div class="table-wrap"><table class="doc-table">
 <thead>
 <tr>
@@ -23703,35 +23778,51 @@ What would earn a default above one: a measured win at the sizes where the gathe
 </thead>
 <tbody>
 <tr>
+<td>Netlib, 94 x 3 repeats: optimal / exact (Koch) / verified / certified</td>
+<td style="text-align: right;">94 / 94 / 94 / 93 every repeat</td>
+<td style="text-align: right;">94 / 94 / 94 / 93 every repeat</td>
+</tr>
+<tr>
+<td>Netlib solver-seconds SGM (medians, 1 ms floor)</td>
+<td style="text-align: right;">1.000</td>
+<td style="text-align: right;"><strong>1.103</strong>, faster in 44 of 282 pairs</td>
+</tr>
+<tr>
 <td><code>pilot</code></td>
-<td style="text-align: right;">optimal, 9,900 iterations, 3 of 3</td>
-<td style="text-align: right;"><strong>feasible, not optimal</strong> (strong duality fails), 7,525 iterations, 3 of 3</td>
+<td style="text-align: right;">1.12 s, 5,694 iterations</td>
+<td style="text-align: right;">8.33 s, 6,255 (the scaled attempt ends <code>numerical_error</code>, the unscaled retry answers)</td>
 </tr>
 <tr>
 <td><code>pilot87</code></td>
-<td style="text-align: right;">optimal, 21,163 iterations, 2 of 3 (the third stopped by the limit at 21,044)</td>
-<td style="text-align: right;"><strong>time limit</strong> 2 of 3 at 23,727 and 26,150 iterations, <strong>phase 1 diverged</strong> in the third</td>
+<td style="text-align: right;">8.62 s, 18,887 iterations</td>
+<td style="text-align: right;">105.9 s, 11,100 (the first attempt ends <code>numerical_error</code>, the equilibrated retry answers)</td>
 </tr>
 <tr>
-<td><code>dfl001</code></td>
-<td style="text-align: right;">optimal, 85,012 iterations</td>
-<td style="text-align: right;">optimal, 70,654 iterations</td>
+<td><code>fit2p</code> / <code>truss</code> (wall)</td>
+<td style="text-align: right;">1.204 s / 1.331 s</td>
+<td style="text-align: right;">1.007 s / 1.200 s</td>
 </tr>
 <tr>
-<td>exact-grade matches (Koch), per run</td>
-<td style="text-align: right;">92, 92, 93</td>
-<td style="text-align: right;">90, 91, 91</td>
+<td>Kennington, 16 x 3 repeats: optimal and verified</td>
+<td style="text-align: right;">16 every repeat</td>
+<td style="text-align: right;">16 every repeat</td>
 </tr>
 <tr>
-<td>shifted geomean, 10 s, per-instance median</td>
-<td style="text-align: right;">1.000×</td>
-<td style="text-align: right;">1.025×</td>
+<td>Kennington solver-seconds SGM</td>
+<td style="text-align: right;">1.000</td>
+<td style="text-align: right;"><strong>1.107</strong>, faster in 7 of 48 pairs</td>
+</tr>
+<tr>
+<td><code>ken-18</code></td>
+<td style="text-align: right;">5.47 s</td>
+<td style="text-align: right;">5.85 s</td>
 </tr>
 </tbody>
 </table></div>
-<p>It takes fewer iterations and less time on many mid-size instances (<code>d2q06c</code>, <code>truss</code>, <code>greenbea</code>, <code>dfl001</code>), but it loses <code>pilot</code> outright and <code>pilot87</code> in every run, and a wrong answer scores zero. The product form stays the default.</p>
-<p>Files: <code>bench/results/lu-ft-ab-netlib-{product-form,forrest-tomlin}-462fa39e-r{1,2,3}.csv</code> and <code>lu-ft-ab-netlib-462fa39e-summary.csv</code>.
-What would earn the default: <code>pilot</code> and <code>pilot87</code> optimal under it in every run — the accuracy of the row-eta file on the pilot family, not its speed.</p>
+<p>The pilot family no longer ends wrong or unsolved, as it did at <code>462fa39e</code> (feasible-not-optimal on <code>pilot</code>, time limits and a diverged phase 1 on <code>pilot87</code>), but it ends right only through the retry ladder, and the per-iteration gains do not carry the rest of the set past the product form.</p>
+<p>Where the pilot family's time goes (#1042 step 4, a verbose solve log under callgrind, bench run 43878383727, main <code>1659c8b5</code>). On <code>pilot87</code> the scaled attempt runs 100,724 iterations with 2,245 refactorizations, 1,794 of them for an update declined as unsafe (1.8% of iterations) and 234 forced by the accuracy check; it passes over 1,526 rows whose pivot disagrees between the row and the column on <strong>fresh</strong> factors, repairs 41 singular bases, stalls in dual degeneracy at iteration 54,103, and ends in the primal at a primal infeasibility of 3.2e3. <code>pilot</code> does the same at a smaller scale (6,999 dual iterations, then 23 singular repairs in the primal). The decline rate is about the product form's on <code>pilot87</code> (366 declines in 18,887 iterations, the figure in #1042's step-4 brief, not re-measured in that run). Disagreement on fresh factors and singular repairs are properties of the bases the path visits, not of how the updates are represented. One run does not say why the Forrest–Tomlin path reaches those bases and the product form's does not, so no stability change was made and <code>kUpdatePivotThreshold</code> is unchanged.</p>
+<p>Files: <code>bench/results/option-ab-netlib-ft-vs-pf-c0e28b8.csv</code> and <code>option-ab-kennington-ft-vs-pf-55abeac.csv</code> (#1282; both stamps are that PR's branch commits, whose library code <code>main</code> carries as <code>1659c8b5</code> after the squash merge), and the earlier <code>lu-ft-ab-netlib-{product-form,forrest-tomlin}-462fa39e-r{1,2,3}.csv</code> with <code>lu-ft-ab-netlib-462fa39e-summary.csv</code>. The profile and the verbose logs are run artifacts, not CSVs: a diagnosis, not a benchmark claim.
+What would earn the default: the scaled attempt on <code>pilot</code> and <code>pilot87</code> ending optimal under it, then the Netlib and Kennington SGMs at or below 1.0. The next measurement is the split of the declines by which test refused them (the product form's pivot test, Tomlin's cancellation test, the row-eta bound), and the iteration at which the Forrest–Tomlin path first leaves the product form's.</p>
 <h4 id="the-primal-heuristics-that-never-earned-a-default-414">The primal heuristics that never earned a default (#414)</h4>
 <p>Each optional heuristic behind its own <code>mip_heur_*</code> switch, measured on alone against the defaults (rounding, the fractional dive, Feasibility Jump and parity): MIPLIB tier 1, 3 seeds, <code>node_limit=2000</code>, one thread, <code>main</code> at <code>729112d8</code>. Off by default (<code>auto</code>, which follows the <code>mip_heuristics</code> master switch, itself off); kept in the tree, since off they cost nothing.</p>
 <div class="table-wrap"><table class="doc-table">
@@ -24106,6 +24197,7 @@ What would earn a default: nothing at a flat cap; a cap that grows only where th
 - <strong>The loss shares a cause with coefficient tightening's</strong> (the entry above). On modglob both leave the Gomory and MIR candidates and the root LP bound as they were and cut the round-1 flow covers from 58 to 48, on every seed. What the two have in common is the tightened column bounds they write, not the coefficients.</p>
 <p>Files: <code>bench/results/option-ab-miplib3-probing-66b38df.csv</code>, <code>option-ab-miplib2017-drayage-probing-9d479e5.csv</code> (the <code>arm</code> column).
 What would earn a default: the flow cover separator keeping its covers under the tightened bounds, then this A/B again.</p>
+<p><strong>What did become a default (#1264):</strong> probing's integer bounds written only where probing fixes at least a fifth of the integer columns (<code>presolve_probing_fixed_share = 0.2</code>), the clique conflicts left off. On MIPLIB 3 only mitre reaches that share; the same-job A/B (run 43689623563, <code>option-ab-miplib3-probing-share-9605693.csv</code>) proved mitre on seed 0 and lost nothing, and tier 1 (run 43694331338, <code>option-ab-miplib-tier1-probing-share-9605693.csv</code>) was identical in its counts. Full probing as a default stays where this entry leaves it.</p>
 <h4 id="pdhg-feasibility-polishing-as-a-default-pdhg_feasibility_polish-483-1177">PDHG feasibility polishing as a default (<code>pdhg_feasibility_polish</code>, #483, #1177)</h4>
 <p>First-order feasibility polishing after Applegate, Hinder, Lu &amp; Lubin (arXiv:2501.07018): PDHG on the zero-objective and the zero-bound problem, so a first-order answer is primal feasible to 1e-8 with its gap measured. Off: <code>pdhg_feasibility_polish = false</code>.</p>
 <div class="table-wrap"><table class="doc-table">
@@ -24238,6 +24330,78 @@ What would earn the default: fffff800, bnl1 and perold keeping their answers wit
 </tbody>
 </table></div>
 <p>The heuristics pay where the search has no point and cost proving time where it has one. What was adopted is the same schedule only while there is no incumbent (<code>mip_heuristics=auto</code>, the default since), which loses no proof on either set; <code>mip_heuristics=true</code> stays a choice, not the default. The 66b38df and c77bc4f CSVs record the options under the names they had then (<code>mip_heuristics=true</code> with the dive options; <code>mip_heuristics_until_incumbent=true</code>, since folded into <code>mip_heuristics=auto</code>).</p>
+<h4 id="rins-kept-running-under-mip_heuristicsauto-mip_heur_rinson-1158">RINS kept running under <code>mip_heuristics=auto</code> (<code>mip_heur_rins=on</code>, #1158)</h4>
+<p>Under <code>auto</code> every optional heuristic stands down at the first incumbent, however poor: on mod011 the first fractional dive's -50.8M (optimum -54.56M) is still the incumbent after 13,000 nodes, and on p2756 the incumbents are 3587, 11588 and 9122 against 3124. RINS (Danna, Rothberg and Le Pape 2005) kept running while the relative gap is above a threshold was the candidate. The threshold comes from the mechanism, not a fit: a RINS sub-MIP can at best take the incumbent to the node bound, so the one gap below which it has nothing left to do is the gap at which the solve stops anyway, <code>mip_relative_gap</code>. That is what the existing switch <code>mip_heur_rins=on</code> does under <code>auto</code>, so it was measured as it stands. Option A/B on one <code>main</code> binary (<code>f60c6ea</code>), both arms in one job, 3 seeds, 60 s, one thread:</p>
+<div class="table-wrap"><table class="doc-table">
+<thead>
+<tr>
+<th>set (run)</th>
+<th>arm</th>
+<th>seed 0 m / p / v</th>
+<th>seed 1</th>
+<th>seed 2</th>
+<th>proved, best of 3</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>MIPLIB 3, 65 (43885721444)</td>
+<td>defaults</td>
+<td>46 / 44 / 64</td>
+<td>46 / 45 / 64</td>
+<td>45 / 45 / 64</td>
+<td>46</td>
+</tr>
+<tr>
+<td></td>
+<td>RINS on</td>
+<td>47 / 44 / 64</td>
+<td>47 / 45 / 64</td>
+<td>46 / 44 / 64</td>
+<td>46</td>
+</tr>
+<tr>
+<td>25 MIPLIB 2017 targets (43885730120)</td>
+<td>defaults</td>
+<td>3 / 0 / 18</td>
+<td>4 / 1 / 18</td>
+<td>3 / 1 / 18</td>
+<td>1</td>
+</tr>
+<tr>
+<td></td>
+<td>RINS on</td>
+<td>3 / 0 / 18</td>
+<td>4 / 1 / 18</td>
+<td>4 / 1 / 18</td>
+<td>1</td>
+</tr>
+<tr>
+<td>MIPLIB 2017 tier 1, 30 (43915160597)</td>
+<td>defaults</td>
+<td>18 / 11 / 30</td>
+<td>19 / 11 / 30</td>
+<td>17 / 11 / 29</td>
+<td>12</td>
+</tr>
+<tr>
+<td></td>
+<td>RINS on</td>
+<td>18 / 11 / 30</td>
+<td>20 / 11 / 30</td>
+<td>18 / 11 / 29</td>
+<td>12</td>
+</tr>
+</tbody>
+</table></div>
+<p>(m / p / v: matched the published optimum / proved it / verified point; the verifier rejected nothing in any arm.)</p>
+<ul>
+<li><strong>Fails the rule:</strong> gesa2 seed 2 loses its proof and its match. It stops at the 1e-4 gap target in 1.75 s on an incumbent RINS found, 25780672.3, 3.2e-5 above the optimum, where the defaults prove 25779856.4. Matches are lost on irp seed 0 and neos-3083819-nubu seed 1 (targets) and markshare_4_0 seed 1 (tier 1); no verified point is lost.</li>
+<li><strong>Matches gained:</strong> mas76 on all three seeds and noswot seed 2 (MIPLIB 3); p200x1188c on all three seeds (targets); k16x240b seed 1, neos5 seed 2 and noswot seed 1 (tier 1).</li>
+<li><strong>Better incumbents, no proof:</strong> mod011 -50.8M to -53.1M (seed 0) and -52.7M to -53.4M (seed 2); p2756 3587 / 11588 / 9122 to 3514 / 3214 / 3487; rout seed 1 1104.73 to 1079.73 (optimum 1077.56); harp2, mas74, danoint and arki001 closer too. Over the runs whose incumbent changed, RINS on ends closer to the published optimum on 29 and further on 18 (MIPLIB 3), 13 and 4 (targets), 21 and 10 (tier 1); markshare1, mkc, swath seed 1 and air05 seed 1 are the clear losses.</li>
+<li><strong>Why it cannot prove them:</strong> RINS moves the incumbent, not the bound. What stops mod011, p2756 and rout at 60 s is the dual bound (-56.0M to -56.5M against -54.56M; 2728 to 2782 against 3124; 1049.0 to 1052.9 against 1077.56, both arms, every seed), and none of them is proved with the better point.</li>
+</ul>
+<p>Files: <code>bench/results/option-ab-miplib3-rins-on-f60c6ea.csv</code>, <code>option-ab-miplib2017-targets-rins-on-f60c6ea.csv</code>, <code>option-ab-miplib-tier1-rins-on-f60c6ea.csv</code> (the <code>arm</code> column; both arms are the <code>f60c6ea</code> binary on <code>main</code>). What would earn a default: a stronger root bound on those models, so a better incumbent closes a tree, then this A/B again.</p>
 <h3 id="2-demoted-by-a-measurement-made-on-a-branch-not-re-run-on-main">2. Demoted by a measurement made on a branch, not re-run on <code>main</code></h3>
 <p>These decisions were made on numbers that are not in <code>bench/results/</code>. They are recorded as such, and each names the re-run that would move it to section 1.</p>
 <h4 id="parallel-tree-search-mip_threads">Parallel tree search (<code>mip_threads</code>)</h4>
@@ -24418,12 +24582,147 @@ What would earn the default: fffff800, bnl1 and perold keeping their answers wit
 </tbody>
 </table></div>
 <p>Netlib was identical per instance in both (runs 41425504073 and 41702169175). On the laptop build the keyed version held all three (qgfrdxpn feasible in 69 iterations, qshare1b optimal in 80, qsierra optimal in 27) and still gained the LISWET three, so the judgement passes the drop on one machine's rounding and not another's: on a rank-deficient row block <code>|dy|</code> grows as 1/delta after a drop (qfffff80: 5.4e7 to 5.4e9 to 2.4e11 over 1e-8, 1e-10, 1e-12) and whether the run recovers is a knife edge. Not merged, in either form. What did ship from the same PR is the step rejection it was built on - a non-finite trial iterate restores the last finite one and raises the regularization, so no engine is ever handed a non-finite point - which changed no row on the 138 or on Netlib (run 41702177032). The three LISWET instances converge with a flat <code>qp_ipm_regularization=1e-12</code>, which loses qforplan and cont-201 (#1150); they stay open on #1178. The A/B CSVs are not committed (branch stamps).</p>
+<p>What shipped later (#1178): the same drop restricted to a standard form in which every row carries a slack column. There M = [A, -I] has full row rank, the Schur complement on y stays positive definite as delta falls, and the 1/delta growth of dy above cannot occur; all three losses have equality rows, and in run 41425495840 every all-inequality model the drop touched (the LISWET family and yao) stayed optimal. Measured with <code>--base-binary</code>, base <code>ddf9913e</code>, new <code>53c580d8</code>, run 43788506503 (<code>bench/results/option-ab-maros-meszaros-qp-ipm-full-rank-drop-53c580d.csv</code>): 128 optimal / 127 matched / 132 verified to 131 / 129 / 135, liswet8, liswet9 and liswet12 gained (liswet8 at 714.47006, the erratum value), nothing lost, only LISWET and yao paths changed.</p>
 <ul>
 <li><strong>Complemented knapsack covers do not move the MIPLIB 3 root bounds they were built for (#1158).</strong> The lifted cover separator reads only <code>&lt;=</code> rows with positive coefficients; on p2756 its 357 such rows give no violated cover at the root, and the knapsacks are the 375 mixed-sign rows. A <code>knapsack_cover_complement</code> option, which negated <code>&gt;=</code> rows and complemented negative-coefficient binaries (Crowder, Johnson &amp; Padberg 1983; it passed an exhaustive 0/1 validity check over 400 random rows), separated 65 violated covers on p2756 and 363 on mitre where there were none. The bound did not follow.</li>
 <li>p2756, with the loop on and every candidate taken each round: 2702.75 with the covers and 2702.75 without; published optimum 3124.</li>
 <li>mitre, the same setting: 114929 with them and 114984 without; published 115155. Neither arm found a feasible point in 60 s.</li>
 </ul>
 <p>These are WSL seed-0 logs at 60 s, one thread, not a CSV, and the change was not merged; the branch was never pushed. What does move p2756's root is #511's coefficient tightening (506 coefficients, 2698.95 to 2730.14 after cuts in the same setting), whose two-gate A/B is the re-run that decides it.</p>
+<h4 id="the-1e-4-pdhg-hand-off-as-the-default-with-the-polish-budget-scaled-1166-pr-1280-default-not-flipped">The 1e-4 PDHG hand-off as the default, with the polish budget scaled (#1166, PR #1280, default not flipped)</h4>
+<h1 id="1163-left-the-default-hand-off-at-pdhg_tolerance-1e-8-at-1e-4-the-50-iteration-interior-point-polish-fell-short-on-agg-and-dfl001-pr-1280-scales-the-polish-budget-with-the-hand-off-polish_iteration_limit-from-1e-8-or-tighter-plus-tolkpolishiterationsperhandoffdecade-25-for-each-decade-looser-so-150-at-1e-4-at-the-default-1e-8-the-budget-is-unchanged-the-ab-then-put-the-1e-4-hand-off-against-the-current-default">1163 left the default hand-off at <code>pdhg_tolerance</code> 1e-8. At 1e-4 the 50-iteration interior-point polish fell short on agg and dfl001. PR #1280 scales the polish budget with the hand-off: <code>polish_iteration_limit</code> from 1e-8 or tighter, plus <code>tol::kPolishIterationsPerHandoffDecade</code> (25) for each decade looser, so 150 at 1e-4. At the default 1e-8 the budget is unchanged. The A/B then put the 1e-4 hand-off against the current default.</h1>
+<p>Setup: <code>bench.yml</code> <code>ab-option</code>, both arms on the <code>93bf260</code> binary in one job, <code>algorithm=pdhg</code>. The <code>off</code> arm is the default 1e-8 hand-off and the <code>on</code> arm is <code>pdhg_tolerance=1e-4</code>. Machine: 4 vCPU Xeon 6975P-C. CSV <code>option-ab-93bf260.csv</code> in each run's artifact.</p>
+<div class="table-wrap"><table class="doc-table">
+<thead>
+<tr>
+<th>set</th>
+<th>run</th>
+<th>arm</th>
+<th style="text-align: right;">verified</th>
+<th style="text-align: right;">optimal</th>
+<th style="text-align: right;">passed</th>
+<th style="text-align: right;">SGM iterations (shift 10)</th>
+<th style="text-align: right;">solver s</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Netlib full, 94, 60 s, 100,000 PDHG iterations</td>
+<td>43788380408</td>
+<td>1e-8</td>
+<td style="text-align: right;">86</td>
+<td style="text-align: right;">85</td>
+<td style="text-align: right;">79</td>
+<td style="text-align: right;">62,251</td>
+<td style="text-align: right;">301.9</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>1e-4</td>
+<td style="text-align: right;"><strong>90</strong></td>
+<td style="text-align: right;">88</td>
+<td style="text-align: right;">80</td>
+<td style="text-align: right;">12,711</td>
+<td style="text-align: right;">190.5</td>
+</tr>
+<tr>
+<td>refinery LPs, 18, 600 s, same</td>
+<td>43788380408</td>
+<td>1e-8</td>
+<td style="text-align: right;">18</td>
+<td style="text-align: right;">18</td>
+<td style="text-align: right;">18</td>
+<td style="text-align: right;">6,486</td>
+<td style="text-align: right;">15.9</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>1e-4</td>
+<td style="text-align: right;">18</td>
+<td style="text-align: right;">18</td>
+<td style="text-align: right;">18</td>
+<td style="text-align: right;">840</td>
+<td style="text-align: right;">2.0</td>
+</tr>
+<tr>
+<td>Mittelmann small, 8, 300 s, no HiGHS cross-check</td>
+<td>43788401903</td>
+<td>1e-8</td>
+<td style="text-align: right;"><strong>3</strong></td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">56,945</td>
+<td style="text-align: right;">1,337.1</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>1e-4</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">13,014</td>
+<td style="text-align: right;">657.2</td>
+</tr>
+</tbody>
+</table></div>
+<p>The <code>off</code> rows reproduce #1163's 1e-8 arm exactly (86 / 85, SGM 62,251; 18 / 18, SGM 6,486), so the default path did not move.</p>
+<p>The larger budget is what finished four Netlib instances at 1e-4. Each was polished in more than the old 50 iterations:</p>
+<ul>
+<li>agg: 60 iterations.</li>
+<li>fffff800: 53 iterations.</li>
+<li>forplan: 74 iterations.</li>
+<li>pilot87: 57 iterations.</li>
+</ul>
+<p>The issue's acceptance holds on its two sets: verified counts are at least the 1e-8 hand-off's and total time is lower. The default still stays at 1e-8, for three reasons:</p>
+<ul>
+<li><strong>dfl001 is lost.</strong> At 1e-8 it is optimal and verified. At 1e-4 the polish reaches 68 iterations and then hits its own 30 s clock (<code>polish_max_seconds</code>), a limit the iteration budget does not touch.</li>
+<li><strong>finnis drops from optimal to feasible.</strong> It is still verified, but the reduced costs miss dual feasibility after the polish.</li>
+<li><strong>The Mittelmann small set loses qap15.</strong> At 1e-8 PDHG runs 242,120 iterations and qap15 ends feasible and verified at 178 s. At 1e-4 PDHG stops after 1,840 iterations at 31 s, the point is not primal feasible, and the polish does not finish it. irish-electricity, rmine15 and supportcase10 also stop at 31 to 79 s with most of their 300 s unused. Their 1e-8 arm runs to the time limit, so none of the three is verified in either arm.</li>
+</ul>
+<p>A default flips only when nothing verified is lost, so the default hand-off stays at 1e-8, and 1e-4 remains an explicit request that now finishes more instances.</p>
+<p>What would earn the flip: when the polish declines or cannot finish a 1e-4 point, PDHG resumes toward 1e-8 on the time that is left, and the polish's clock scales with the hand-off the same way its iteration budget does.</p>
+<p>The CSVs are not committed because they carry branch stamps. Each is in its run's artifact.</p>
+<h4 id="a-global-strong-branching-iteration-budget-pr-1289-closed">A global strong-branching iteration budget (PR #1289, closed)</h4>
+<p>On seven MIPLIB 2017 models HiGHS proves in 1 to 26 s, the profiled runs at <code>1b8af4e</code> put 33 to 53 s of 60 into <code>branching</code>: decomp2, drayage-100-23, drayage-25-23, irp, neos-3083819-nubu, neos-860300 and nw04. PR #1289 capped strong branching over the whole search: once the probes had spent more than 100,000 + 0.5 x the node LPs' own iterations, a node branched on its pseudocosts and probed nothing (Achterberg 2007, ch. 5).</p>
+<p>Setup: <code>bench.yml</code> <code>ab-option</code>, run 43847282121. The <code>off</code> arm is <code>1b8af4e</code> and the <code>on</code> arm <code>968b50e</code>, both in one job. 25 models x 3 seeds, 60 s, one thread.</p>
+<p>It changed no count: 2 proved, 10 matched and 54 verified in both arms, nothing gained or lost. On the drayage pair the budget bit: nodes went 1171 -&gt; 3447 and 1238 -&gt; 3978, and branching fell from 51.5 s to about 40 s, but the bound barely moved. On decomp2 and nw04 nothing changed: branching took 51.9 s and 36.6 s in both arms, at 328 and 184 nodes. decomp2's node LPs take 2.75 s in all, so the time inside <code>branching</code> is not the probes' simplex iterations, which is the only thing this budget limits. Finding what it is needs the nested profile per solve (<code>miplib.py --profile-dir</code>).</p>
+<p>The CSV is not committed because it carries branch stamps. It is in the run's artifact.</p>
+<h4 id="irish-electricity-no-strict-interior-and-the-two-presolve-reductions-aimed-at-it-are-not-enough-pr-1302-diagnosis-only">irish-electricity: no strict interior, and the two presolve reductions aimed at it are not enough (PR #1302, diagnosis only)</h4>
+<p>Every one of our runs on Mittelmann's irish-electricity settles at objective about 2,454,39x with a model-space primal violation near 1e-4. That covers the interior point with presolve on and off, scaling on and off, and both the proximal and normal-equations paths, plus PDHG. HiGHS reports 2,546,254.56 optimal. <code>bench/runners/interior_check.py</code> (PR #1302) answers two questions without our solver:</p>
+<ul>
+<li><strong>HiGHS's point is primal feasible by our standard</strong> (run 43901416734). <code>tools/verify_solution.py</code> passes its bounds (7.9e-08), rows (8.1e-08 relative), objective and strong duality. Only the reduced-cost identity misses, at 2.9e-06 relative. Our point is therefore infeasible, not a better optimum: a 1e-4 relaxation of a few rows is worth 3.6% of the objective here.</li>
+<li><strong>The feasible set has no strict interior</strong> (run 43919907943). The max-min-slack LP (Boyd &amp; Vandenberghe 2004, 11.4.1), solved by HiGHS's interior point, gives t* = 0. Its 42 inequalities with a nonzero dual are pairs <code>C_initstart_k</code> / <code>C_aStart_k_1</code>. For k = 47 they read <code>cstart_47_1 - v_47_1 &gt;= 0</code> and <code>cstart_47_1 - v_47_1 + hstart_47_1 &lt;= 0</code>, with <code>hstart_47_1</code> in [0, 1] and in no other row. Together they force <code>hstart = 0</code> and <code>cstart = v</code> at every feasible point: implicit equalities, so there is no interior for the interior point to follow.</li>
+</ul>
+<p><strong>Tried:</strong> <code>presolve_dual_fixing=true presolve_parallel_rows=true</code>, the two reductions that remove exactly that pattern (fix <code>hstart</code> at 0, then merge the two identical rows into an equality). Both fired: 88 dual-fixed columns and 1,859 parallel rows merged (run 43995441320, verbose log in its artifact). Nothing changed:</p>
+<div class="table-wrap"><table class="doc-table">
+<thead>
+<tr>
+<th>engine</th>
+<th>run</th>
+<th>off</th>
+<th>on</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>algorithm=ipm</code></td>
+<td>43921068158</td>
+<td>iteration_limit, 2,454,396.5</td>
+<td>iteration_limit, 2,454,394.0</td>
+</tr>
+<tr>
+<td><code>auto</code> (PDHG)</td>
+<td>43921075853</td>
+<td>time_limit, 2,454,384.17</td>
+<td>time_limit, 2,454,384.17</td>
+</tr>
+</tbody>
+</table></div>
+<p>Both A/Bs were on main at <code>c288ba1</code>. Other implicit equalities remain after them.</p>
+<p><strong>Next step, not taken:</strong> the same slack LP on the presolved model, which needs the presolved model written out, to name what remains. The CSVs are not committed; they are in the runs' artifacts.</p>
 <h3 id="3-built-opt-in-awaiting-the-measurement">3. Built opt-in, awaiting the measurement</h3>
 <p>Nothing has demoted these. Each is off by default until its A/B on <code>main</code> says what it changes, per the rule that a default is earned by a number.</p>
 <div class="table-wrap"><table class="doc-table">
@@ -24532,7 +24831,7 @@ tracks every PS26119 requirement against what exists on <code>main</code>; secti
 </tr>
 <tr>
 <td><strong>Non-convex QP and quadratic constraints</strong> - a first slice of the global solver is #514, standard pooling instances #516</td>
-<td>Refused by default: a non-convex Hessian with an LDL^T certificate, a quadratic row (MPS <code>QCMATRIX</code>) by name at read time. A local optimum reported as a global one is not something this solver will do. <code>--option nonconvex=global</code> reads quadratic rows and solves continuous models by spatial branch and bound over McCormick relaxations (#514): <code>optimal</code> only when the proven bound closes the gap, otherwise <code>feasible</code> with the bound, and every point is checked against the original rows; <code>tools/verify_solution.py</code> reads <code>QCMATRIX</code> too. Measured on <code>main</code> at <code>5a39fb2</code> (#516): <strong>32 of 39</strong> standard pooling runs (13 instances in P-, Q- and PQ-formulation) reach the published global optimum, claim <code>optimal</code> and pass the verifier at 60 s; the 7 others end <code>feasible</code> with the gap open (<code>bench/results/pooling-5a39fb2.csv</code>, <code>docs/BENCHMARKS.md</code> section 2c). Still off by default.</td>
+<td>Refused by default: a non-convex Hessian with an LDL^T certificate, a quadratic row (MPS <code>QCMATRIX</code>) by name at read time. A local optimum reported as a global one is not something this solver will do. <code>--option nonconvex=global</code> reads quadratic rows and solves continuous models by spatial branch and bound over McCormick relaxations (#514): <code>optimal</code> only when the proven bound closes the gap, otherwise <code>feasible</code> with the bound, and every point is checked against the original rows; <code>tools/verify_solution.py</code> reads <code>QCMATRIX</code> too. Measured on <code>main</code> at <code>1659c8b</code>, with the reformulation-linearization rows on by default (#1291): <strong>38 of 39</strong> standard pooling runs (13 instances in P-, Q- and PQ-formulation) reach the published global optimum, claim <code>optimal</code> and pass the verifier at 60 s; <code>adhya3</code> in the P-formulation ends <code>feasible</code> with the gap open, and all 39 bound certificates are accepted by <code>tools/verify_global_certificate.py</code> (<code>bench/results/pooling-1659c8b.csv</code>, <code>pooling-certificate-1659c8b.csv</code>, <code>docs/BENCHMARKS.md</code> section 2c; 32 of 39 at <code>5a39fb2</code>). Still off by default.</td>
 </tr>
 <tr>
 <td><strong>MIQP bound quality</strong> - the QP interior point as the node solver landed opt-in (#687), its warm start from the parent opt-in too; the QPLIB MIQP A/B is what is left of #494</td>
@@ -24600,8 +24899,8 @@ ours, so no iteration ratio is quoted.</p>
 <!-- fragment:footer -->
 <div class="wrap">
     <div>SANKHYA · Smart India Hackathon 2026 · PS SIH26119 · Apache-2.0 · <a href="https://sankhya-solver.vercel.app">sankhya-solver.vercel.app</a></div>
-    <div>Every figure on this site was last checked against SANKHYA <a href="https://github.com/thegoodengineers/SANKHYA/tree/c8544ed32cee0938884c658b9124c76441f470c5">main at <span data-fact="sankhya_commit">c8544ed3</span></a>.</div>
-    <div><a href="https://github.com/thegoodengineers/SANKHYA">Source</a> · <a href="/docs">Docs</a> · <a href="/docs/benchmarks">Benchmarks</a> · <a href="/docs/provenance">Provenance</a> · <a href="/docs/coverage">Coverage tracker</a> · <a href="https://github.com/thegoodengineers/SANKHYA/blob/c8544ed32cee0938884c658b9124c76441f470c5/docs/REPORT.pdf">Jury report (PDF)</a></div>
+    <div>Every figure on this site was last checked against SANKHYA <a href="https://github.com/thegoodengineers/SANKHYA/tree/f93f4bc6ed1d8dc12e05b4dc036b9c5bd65ab809">main at <span data-fact="sankhya_commit">f93f4bc6</span></a>.</div>
+    <div><a href="https://github.com/thegoodengineers/SANKHYA">Source</a> · <a href="/docs">Docs</a> · <a href="/docs/benchmarks">Benchmarks</a> · <a href="/docs/provenance">Provenance</a> · <a href="/docs/coverage">Coverage tracker</a> · <a href="https://github.com/thegoodengineers/SANKHYA/blob/f93f4bc6ed1d8dc12e05b4dc036b9c5bd65ab809/docs/REPORT.pdf">Jury report (PDF)</a></div>
   </div>
 <!-- /fragment:footer -->
 </footer>
