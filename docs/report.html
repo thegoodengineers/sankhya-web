@@ -28,7 +28,7 @@
   <nav class="here" aria-label="On this page"><a href="#summary">Summary</a><a href="#1-architecture">1 Architecture</a><a href="#1-the-shape-in-one-paragraph" class="sub">1. The shape in one paragraph</a><a href="#2-modules-and-their-boundaries" class="sub">2. Modules and their boundaries</a><a href="#4-how-a-solve-flows" class="sub">4. How a solve flows</a><a href="#13-the-engine-layer-what-an-engine-is-promised-and-what-it-promises" class="sub">13. The engine layer: what an engine is promised, and what it promises</a><a href="#2-lp-engines">2 LP engines</a><a href="#1e-the-first-order-engine--pdhg" class="sub">1e. The first-order engine — PDHG</a><a href="#3-milp-engine">3 MILP engine</a><a href="#11-conflict-analysis-learning-from-infeasible-nodes" class="sub">11. Conflict analysis: learning from infeasible nodes</a><a href="#12-parallel-tree-search" class="sub">12. Parallel tree search</a><a href="#4-qp-engines">4 QP engines</a><a href="#2b-maros-meszaros-the-convex-qp-set" class="sub">2b. Maros-Meszaros, the convex QP set</a><a href="#2d-qplib-the-convex-continuous-qps" class="sub">2d. QPLIB, the convex continuous QPs</a><a href="#5-gpu-acceleration">5 GPU acceleration</a><a href="#1g-gpu-pdhg-crossover--when-the-gpu-wins" class="sub">1g. GPU PDHG crossover — when the GPU wins</a><a href="#5-what-the-hardware-lets-us-claim-and-what-it-does-not" class="sub">5. What the hardware lets us claim, and what it does not</a><a href="#6-numerical-stability">6 Numerical stability</a><a href="#3-the-two-invariants-everything-else-rests-on" class="sub">3. The two invariants everything else rests on</a><a href="#5-robustness--where-the-solver-stops-working" class="sub">5. Robustness — where the solver stops working</a><a href="#7-independent-verification">7 Independent verification</a><a href="#3-correctness-beyond-the-objective-value" class="sub">3. Correctness beyond the objective value</a><a href="#4-machine-checkable-evidence" class="sub">4. Machine-checkable evidence</a><a href="#8-benchmark-method">8 Benchmark method</a><a href="#7-reproducibility-and-what-is-actually-promised" class="sub">7. Reproducibility, and what is actually promised</a><a href="#6-what-these-numbers-do-not-say" class="sub">6. What these numbers do not say</a><a href="#9-results">9 Results</a><a href="#1c-the-full-set--the-honest-headline" class="sub">1c. The full set — the honest headline</a><a href="#1c1-the-kennington-set---the-next-rung" class="sub">1c.1 The Kennington set - the next rung</a><a href="#1d-beyond-netlib--mittelmanns-lp-set" class="sub">1d. Beyond Netlib — Mittelmann&#x27;s LP set</a><a href="#1f-scale--how-far-up-this-goes" class="sub">1f. Scale — how far up this goes</a><a href="#2-miplib--the-mixed-integer-side" class="sub">2. MIPLIB — the mixed-integer side</a><a href="#2e-nonlinear-programs---hock-schittkowski-and-convex-minlplib" class="sub">2e. Nonlinear programs - Hock-Schittkowski, and convex MINLPLib</a><a href="#4-comparison-against-an-established-solver" class="sub">4. Comparison against an established solver</a><a href="#10-limitations">10 Limitations</a><a href="#1-demoted-by-a-committed-measurement" class="sub">1. Demoted by a committed measurement</a><a href="#2-demoted-by-a-measurement-made-on-a-branch-not-re-run-on-main" class="sub">2. Demoted by a measurement made on a branch, not re-run on main</a><a href="#3-built-opt-in-awaiting-the-measurement" class="sub">3. Built opt-in, awaiting the measurement</a><a href="#4-withdrawn-claims" class="sub">4. Withdrawn claims</a><a href="#adding-an-entry" class="sub">Adding an entry</a><a href="#what-this-does-not-do" class="sub">What this does NOT do</a><a href="#11-future-work">11 Future work</a></nav>
 </aside>
 <main class="col" id="content">
-<header class="page" id="top"><div class="wrap"><nav class="crumbs" aria-label="Breadcrumb"><a href="/docs">Docs</a><span aria-hidden="true">/</span>Technical report</nav><h1>Technical report</h1><p class="doc-banner">Generated from <a href="https://github.com/thegoodengineers/sankhya-web/blob/main/content/report.md"><code>content/report.md</code></a> at commit <a href="https://github.com/thegoodengineers/SANKHYA/commit/a0ef19e1c0b4e7de60b612bec6a5f97bb53ce13d"><code>a0ef19e</code></a> (2026-11-17). Do not edit this page by hand.</p></div></header>
+<header class="page" id="top"><div class="wrap"><nav class="crumbs" aria-label="Breadcrumb"><a href="/docs">Docs</a><span aria-hidden="true">/</span>Technical report</nav><h1>Technical report</h1><p class="doc-banner">Generated from <a href="https://github.com/thegoodengineers/sankhya-web/blob/main/content/report.md"><code>content/report.md</code></a> at commit <a href="https://github.com/thegoodengineers/SANKHYA/commit/cb5ef02a82c2c629296b53a4db8f77b7adc5a88e"><code>cb5ef02</code></a> (2026-11-23). Do not edit this page by hand.</p></div></header>
 <details class="doc-toc"><summary>Contents</summary><ol><li><a href="#summary">Summary</a></li><li><a href="#1-architecture">1 Architecture</a></li><li class="sub"><a href="#1-the-shape-in-one-paragraph">1. The shape in one paragraph</a></li><li class="sub"><a href="#2-modules-and-their-boundaries">2. Modules and their boundaries</a></li><li class="sub"><a href="#4-how-a-solve-flows">4. How a solve flows</a></li><li class="sub"><a href="#13-the-engine-layer-what-an-engine-is-promised-and-what-it-promises">13. The engine layer: what an engine is promised, and what it promises</a></li><li><a href="#2-lp-engines">2 LP engines</a></li><li class="sub"><a href="#1e-the-first-order-engine--pdhg">1e. The first-order engine — PDHG</a></li><li><a href="#3-milp-engine">3 MILP engine</a></li><li class="sub"><a href="#11-conflict-analysis-learning-from-infeasible-nodes">11. Conflict analysis: learning from infeasible nodes</a></li><li class="sub"><a href="#12-parallel-tree-search">12. Parallel tree search</a></li><li><a href="#4-qp-engines">4 QP engines</a></li><li class="sub"><a href="#2b-maros-meszaros-the-convex-qp-set">2b. Maros-Meszaros, the convex QP set</a></li><li class="sub"><a href="#2d-qplib-the-convex-continuous-qps">2d. QPLIB, the convex continuous QPs</a></li><li><a href="#5-gpu-acceleration">5 GPU acceleration</a></li><li class="sub"><a href="#1g-gpu-pdhg-crossover--when-the-gpu-wins">1g. GPU PDHG crossover — when the GPU wins</a></li><li class="sub"><a href="#5-what-the-hardware-lets-us-claim-and-what-it-does-not">5. What the hardware lets us claim, and what it does not</a></li><li><a href="#6-numerical-stability">6 Numerical stability</a></li><li class="sub"><a href="#3-the-two-invariants-everything-else-rests-on">3. The two invariants everything else rests on</a></li><li class="sub"><a href="#5-robustness--where-the-solver-stops-working">5. Robustness — where the solver stops working</a></li><li><a href="#7-independent-verification">7 Independent verification</a></li><li class="sub"><a href="#3-correctness-beyond-the-objective-value">3. Correctness beyond the objective value</a></li><li class="sub"><a href="#4-machine-checkable-evidence">4. Machine-checkable evidence</a></li><li><a href="#8-benchmark-method">8 Benchmark method</a></li><li class="sub"><a href="#7-reproducibility-and-what-is-actually-promised">7. Reproducibility, and what is actually promised</a></li><li class="sub"><a href="#6-what-these-numbers-do-not-say">6. What these numbers do not say</a></li><li><a href="#9-results">9 Results</a></li><li class="sub"><a href="#1c-the-full-set--the-honest-headline">1c. The full set — the honest headline</a></li><li class="sub"><a href="#1c1-the-kennington-set---the-next-rung">1c.1 The Kennington set - the next rung</a></li><li class="sub"><a href="#1d-beyond-netlib--mittelmanns-lp-set">1d. Beyond Netlib — Mittelmann&#x27;s LP set</a></li><li class="sub"><a href="#1f-scale--how-far-up-this-goes">1f. Scale — how far up this goes</a></li><li class="sub"><a href="#2-miplib--the-mixed-integer-side">2. MIPLIB — the mixed-integer side</a></li><li class="sub"><a href="#2e-nonlinear-programs---hock-schittkowski-and-convex-minlplib">2e. Nonlinear programs - Hock-Schittkowski, and convex MINLPLib</a></li><li class="sub"><a href="#4-comparison-against-an-established-solver">4. Comparison against an established solver</a></li><li><a href="#10-limitations">10 Limitations</a></li><li class="sub"><a href="#1-demoted-by-a-committed-measurement">1. Demoted by a committed measurement</a></li><li class="sub"><a href="#2-demoted-by-a-measurement-made-on-a-branch-not-re-run-on-main">2. Demoted by a measurement made on a branch, not re-run on main</a></li><li class="sub"><a href="#3-built-opt-in-awaiting-the-measurement">3. Built opt-in, awaiting the measurement</a></li><li class="sub"><a href="#4-withdrawn-claims">4. Withdrawn claims</a></li><li class="sub"><a href="#adding-an-entry">Adding an entry</a></li><li class="sub"><a href="#what-this-does-not-do">What this does NOT do</a></li><li><a href="#11-future-work">11 Future work</a></li></ol></details>
 <article class="doc-body">
 <h2 id="summary">Summary</h2>
@@ -24402,6 +24402,117 @@ What would earn the default: fffff800, bnl1 and perold keeping their answers wit
 <li><strong>Why it cannot prove them:</strong> RINS moves the incumbent, not the bound. What stops mod011, p2756 and rout at 60 s is the dual bound (-56.0M to -56.5M against -54.56M; 2728 to 2782 against 3124; 1049.0 to 1052.9 against 1077.56, both arms, every seed), and none of them is proved with the better point.</li>
 </ul>
 <p>Files: <code>bench/results/option-ab-miplib3-rins-on-f60c6ea.csv</code>, <code>option-ab-miplib2017-targets-rins-on-f60c6ea.csv</code>, <code>option-ab-miplib-tier1-rins-on-f60c6ea.csv</code> (the <code>arm</code> column; both arms are the <code>f60c6ea</code> binary on <code>main</code>). What would earn a default: a stronger root bound on those models, so a better incumbent closes a tree, then this A/B again.</p>
+<h4 id="four-lp-engine-settings-for-the-root-lps-of-ex9-ex10-and-ns1116954-miplib-2017-benchmark-set">Four LP-engine settings for the root LPs of ex9, ex10 and ns1116954 (MIPLIB 2017 benchmark set)</h4>
+<p>HiGHS proves ex9, ex10 and ns1116954 in 3.4, 9.9 and 3.9 s in the same 60 s jobs (<code>highs-miplib2017-bench-60s-c8544ed.csv</code>); our search never leaves the root. Diagnosis run 44010017090 (profile=detailed with nested profiles, verbose logs, 3 seeds, the branch of #1316):</p>
+<ul>
+<li><strong>Presolve is not the gap on ex9 and ex10.</strong> Ours takes ex9 from 40962 rows, 10404 columns to 33846 and 8560, and ex10 from 69608 and 17680 to 63016 and 15936: exactly the sizes the MIPLIB 2017 instance pages publish after trivial presolving. On ns1116954, a zero-objective (feasibility) model, ours removes nothing and trivial presolving removes 120 of 131991 rows and 720 of 12648 columns, which cannot matter at that size.</li>
+<li><strong>The root dual simplex does not finish in 57 s.</strong> ex9: 24995 iterations, 446684 bound flips, 888 refactorizations (one every 28 iterations), and 26.7 s of 57 in the basic-values update (the FTRAN carrying each iteration's bound flips into x_B, and the recomputation after each refactorization), 10.2 s in FTRAN, 6.9 s refactorizing; 58711 of the FTRAN results were 30% dense or more. ex10: 19953 iterations, 27.6 s in basic values. ns1116954: 27775 iterations, 30.7 s in basic values, 10.7 s refactorizing. Symmetry detection spends 1.8-2.6 s on each before stopping at its budget.</li>
+</ul>
+<p>Four settings were tried on one <code>main</code> binary (<code>c1e5290</code>), all arms in one job, seed 0, 60 s, one thread (run 44081344529): <code>dual_perturb_costs_at_start=true</code>, <code>dual_ratio_test=harris</code>, <code>basis_update=forrest-tomlin</code>, and <code>mip_node_engine=primal</code>. None finishes the root LP of ex9 or ex10 (57.3-57.6 s of node LP in every arm). On ns1116954 Harris finishes the root in 15.4 s and the primal simplex in 38.0 s, against 58.0 s unfinished for the default, and bound 0 is then proved; but no feasible point follows (24.0 s of root cuts and 18.6 s of heuristics under Harris), so the status is the same. On neos-960392 the arms change the node count and the incumbent (-23 default, -55 Harris, -118 perturbed), never the proof.</p>
+<p>What would move these models: a root dual simplex whose flip update and refactorization rate do not grow with the density of B^-1 on degenerate 0/1 LPs; for ns1116954, a feasible point. Files: <code>bench/results/option-ab-miplib2017-root-lp-arms-c1e5290.csv</code> (the <code>arm</code> column).</p>
+<h4 id="neos859080-is-proved-on-some-seeds-and-not-others-conflict-analysis-is-off-conflict_analysis">neos859080 is proved on some seeds and not others: conflict analysis is off (<code>conflict_analysis</code>)</h4>
+<p>neos859080 (164 rows, 80 binary and 80 general integer columns, infeasible) is proved infeasible in 3.2 s on seeds 1 and 2 (95 and 117 nodes) and runs out of time on seed 0 (141,000+ nodes, the open list growing by about one node per node from node 60). The row and column permutation decides the branching order, and on seed 0 the order leaves open nodes that fail for the same reason. With <code>conflict_analysis=true</code> every seed is proved, seed 0 in 2.7 s and 93 nodes; <code>mip_heuristics=true</code> changes nothing (run 44081402766, <code>main</code> <code>c1e5290</code>, 3 seeds, 60 s, one thread). Of each 3.2 s proof, about 3.0 s is the propagation dive at the root.</p>
+<p>The default stays off, now on a <code>main</code> measurement (the same <code>c1e5290</code> binary, both arms in one job, 3 seeds, 60 s, one thread; this replaces the branch measurement in section 2):</p>
+<div class="table-wrap"><table class="doc-table">
+<thead>
+<tr>
+<th>set (run)</th>
+<th>arm</th>
+<th>seed 0 m / p / v</th>
+<th>seed 1</th>
+<th>seed 2</th>
+<th>proved, best of 3</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>MIPLIB 3, 65 (44088198542)</td>
+<td>off</td>
+<td>47 / 45 / 64</td>
+<td>46 / 45 / 64</td>
+<td>45 / 45 / 64</td>
+<td>46</td>
+</tr>
+<tr>
+<td></td>
+<td><code>conflict_analysis=true</code></td>
+<td>47 / 44 / 64</td>
+<td>46 / 45 / 64</td>
+<td>45 / 45 / 64</td>
+<td>46</td>
+</tr>
+<tr>
+<td>MIPLIB 2017 tier 1, 30 (44088204926)</td>
+<td>off</td>
+<td>18 / 11 / 30</td>
+<td>19 / 11 / 30</td>
+<td>17 / 11 / 29</td>
+<td>12</td>
+</tr>
+<tr>
+<td></td>
+<td><code>conflict_analysis=true</code></td>
+<td>18 / 11 / 30</td>
+<td>20 / 10 / 30</td>
+<td>17 / 11 / 29</td>
+<td>12</td>
+</tr>
+</tbody>
+</table></div>
+<ul>
+<li><strong>Fails the rule:</strong> enlight8 seed 1 loses its proof (optimal in 40.1 s and 412,295 nodes off; 37,936 nodes in 60 s on, the analysis taking most of each node), and air05 seed 0 loses a proof made at 59.9 s (523 against 532 nodes).</li>
+<li><strong>Gained:</strong> neos859080 on every seed (above), and the noswot seed 1 match (-41).</li>
+</ul>
+<p>Files: <code>bench/results/option-ab-miplib2017-heur-conflict-arms-c1e5290.csv</code>, <code>option-ab-miplib3-conflict-on-c1e5290.csv</code>, <code>option-ab-miplib-tier1-conflict-on-c1e5290.csv</code> (the <code>arm</code> column). What would earn a default: an analysis whose cost per node is bounded (enlight8), then this A/B again.</p>
+<h4 id="the-lu-rebuilt-every-128-updates-again-inside-branch-and-bound-1275-measured-on-mip-default-not-changed">The LU rebuilt every 128 updates again inside branch and bound (#1275 measured on MIP, default not changed)</h4>
+<h1 id="1275-raised-lu_update_limit-from-128-to-512-on-an-lp-ab-netlib-kennington-on-the-miplib-2017-benchmark-set-9-proved-at-c8544ed-became-7-at-3dba456-a-same-job-bisect-both-arms-on-one-runner-3-seeds-60-s-one-thread-finds-1275-to-be-the-only-commit-in-that-range-that-changes-the-search-path-of-nu25-pr12-and-neos-957323-nu25-pr12s-root-bound-after-cuts-moves-from-5325933-to-5326967-and-its-seed-0-goes-from-proved-in-463-s-to-not-proved-in-60-s-neos-957323s-seed-0-goes-from-323-s-and-30-nodes-to-605-s-and-166-run-44469021991-every-other-step-leaves-the-paths-unchanged-runs-44463479230-44463490379-44469031925-44469044197-44469054720-44469069852">1275 raised <code>lu_update_limit</code> from 128 to 512 on an LP A/B (Netlib, Kennington). On the MIPLIB 2017 benchmark set, 9 proved at <code>c8544ed</code> became 7 at <code>3dba456</code>. A same-job bisect (both arms on one runner, 3 seeds, 60 s, one thread) finds #1275 to be the only commit in that range that changes the search path of nu25-pr12 and neos-957323. nu25-pr12's root bound after cuts moves from 53259.33 to 53269.67, and its seed 0 goes from proved in 46.3 s to not proved in 60 s. neos-957323's seed 0 goes from 32.3 s and 30 nodes to 60.5 s and 166 (run 44469021991). Every other step leaves the paths unchanged (runs 44463479230, 44463490379, 44469031925, 44469044197, 44469054720, 44469069852).</h1>
+<p>The default stays 512, on a <code>main</code> measurement at <code>854a328</code>: one binary, <code>lu_update_limit=128</code> against the default in the same job, 60 s, one thread.</p>
+<div class="table-wrap"><table class="doc-table">
+<thead>
+<tr>
+<th>set (runs)</th>
+<th>arm</th>
+<th style="text-align: right;">proved</th>
+<th style="text-align: right;">matched</th>
+<th style="text-align: right;">feasible and verified</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>benchmark set, 240, seed 0 (44473575740, 44473582769, 44473590520, 44473597442, 44473604002, 44473610259)</td>
+<td>512</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">15</td>
+<td style="text-align: right;">132</td>
+</tr>
+<tr>
+<td></td>
+<td>128</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">14</td>
+<td style="text-align: right;">130</td>
+</tr>
+<tr>
+<td>SAMADHAN's 50, 3 seeds, 150 solves (44473616807, 44473623921)</td>
+<td>512</td>
+<td style="text-align: right;">11</td>
+<td style="text-align: right;">21</td>
+<td style="text-align: right;">132</td>
+</tr>
+<tr>
+<td></td>
+<td>128</td>
+<td style="text-align: right;">13</td>
+<td style="text-align: right;">22</td>
+<td style="text-align: right;">132</td>
+</tr>
+</tbody>
+</table></div>
+<ul>
+<li><strong>Flips both ways:</strong> on the 240, 128 gains nu25-pr12 (35.0 s) and loses neos-827175 (7.0 s at 512, not proved at 128). On the 50, 128 gains nu25-pr12 seed 0 (44.1 s) and qap10 seed 1 (45.2 s; at 512 that solve stopped at the 60 s limit) and loses none.</li>
+<li><strong>Time</strong> where both arms prove: geometric mean ratio 128/512 of 0.878 on the 240 (6 models) and 0.945 on the 50 (11 solves).</li>
+</ul>
+<p>The search path is sensitive to the factorization interval, and neither interval wins. Files: <code>bench/results/option-ab-miplib2017-bench-lu-update-limit-128-854a328.csv</code>, <code>option-ab-miplib2017-samadhan50-lu-update-limit-128-854a328.csv</code>, <code>option-ab-miplib2017-9b0ec5d-vs-ddf9913.csv</code>, <code>option-ab-miplib2017-c8544ed-vs-3dba456.csv</code> (the <code>arm</code> column). What would earn a change: a node-LP interval that wins on a whole set, not on a model.</p>
 <h3 id="2-demoted-by-a-measurement-made-on-a-branch-not-re-run-on-main">2. Demoted by a measurement made on a branch, not re-run on <code>main</code></h3>
 <p>These decisions were made on numbers that are not in <code>bench/results/</code>. They are recorded as such, and each names the re-run that would move it to section 1.</p>
 <h4 id="parallel-tree-search-mip_threads">Parallel tree search (<code>mip_threads</code>)</h4>
@@ -24411,7 +24522,7 @@ What would earn the default: fffff800, bnl1 and perold keeping their answers wit
 <h4 id="conflict-analysis-mip_conflict_analysis">Conflict analysis (<code>mip_conflict_analysis</code>)</h4>
 <p>Landed in #381/#292: the search learns from every node it proves infeasible which branching decisions were to blame, and prunes or tightens later nodes that repeat them; a conflict is stored only after re-proof from the global bounds. Off by default.</p>
 <p>On the branch at <code>6c405f8</code> (#405), 30 MIPLIB instances at 60 s: the same 14 reached and 9 proved either way, no verdict moved. On the nine instances that finish, conflicts take the node count to 0.965× (2,204 against 2,285). On the 21 stopped by the limit the count is 0.938× in the same wall clock — nodes not reached, not search saved — with <code>enlight8</code> at 0.373× and 37.4 s of its 60 s budget spent inside the analysis.</p>
-<p>Re-run that would settle it: the same A/B at a <code>main</code> commit, with the analysis time per instance in the CSV.</p>
+<p>Re-run on <code>main</code> at <code>c1e5290</code>: section 1, "neos859080 is proved on some seeds and not others". It still fails the rule there (enlight8 and air05 each lose a proof), so the default stays off.</p>
 <h4 id="an-infeasibility-neighbourhood-for-the-qp-interior-point-981-branch-qp-ipm-pmm-not-merged">An infeasibility neighbourhood for the QP interior point (#981, branch <code>qp-ipm-pmm</code>, not merged)</h4>
 <p>The neighbourhood of the interior point-proximal method of multipliers (Pougkakiotis &amp; Gondzio, Comput. Optim. Appl. 78, 2021; Wright 1997, ch. 6): the starting ratio mu / r is recorded and, whenever mu falls below a tenth of that ratio times the relative infeasibility left, the centring parameter is raised until the target sigma mu is not. The aim was the LISWET stalls, where the primal residual stays near 1e-7 while mu falls to 1e-33.</p>
 <p>Measured at <code>45f31f8c</code> (branch) under WSL on the laptop with other jobs running, 60 s, the eleven instances the interior point stalls on, judged by iteration counts and the stall test's own measure (load changes how many iterations fit in 60 s, not what an iteration does):</p>
@@ -24723,6 +24834,88 @@ What would earn the default: fffff800, bnl1 and perold keeping their answers wit
 </table></div>
 <p>Both A/Bs were on main at <code>c288ba1</code>. Other implicit equalities remain after them.</p>
 <p><strong>Next step, not taken:</strong> the same slack LP on the presolved model, which needs the presolved model written out, to name what remains. The CSVs are not committed; they are in the runs' artifacts.</p>
+<h4 id="c-mir-aggregation-by-variable-bound-distance-pr-1296-draft">c-MIR aggregation by variable-bound distance (PR #1296, draft)</h4>
+<p>PR #1296 changed how the MIR row aggregation picks the column to eliminate. Before, it measured a continuous column's distance to its simple bounds only; with <code>mir_variable_bound_aggregation</code> it measures the distance to the closest simple or variable bound at the LP point (Marchand and Wolsey 2001, sec. 2). A flow sitting on its x &lt;= u y is then left for the c-MIR bound substitution. The option also lets a network's flow balance rows start an aggregation.</p>
+<p>The target was the fixed-charge networks among the weak-root MIPLIB 2017 models. In run 43876593093 (#1297), p200x1188c's root closed 0.238 of the gap and beasleyC3's 0.637, even with <code>root_cut_loop_when=always</code> and 200 cuts a round; HiGHS's root closes 1.000 and 0.968.</p>
+<p>Setup: <code>bench.yml</code> <code>ab-option</code> at <code>d80f5cb</code>. Both arms on one runner, 60 s, one thread, 3 seeds.</p>
+<div class="table-wrap"><table class="doc-table">
+<thead>
+<tr>
+<th>gate</th>
+<th>run</th>
+<th>off: proved / matched / verified</th>
+<th>on: proved / matched / verified</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>25 MIPLIB 2017 targets</td>
+<td>43879990262</td>
+<td>3 / 13 / 54</td>
+<td>3 / 13 / 54</td>
+</tr>
+<tr>
+<td>MIPLIB 3, 65 models</td>
+<td>43879997189</td>
+<td>137 / - / 192</td>
+<td>134 / - / 191</td>
+</tr>
+</tbody>
+</table></div>
+<ul>
+<li><strong>Targets:</strong> nothing gained. Only p200x1188c's root moved, from 0.224 to 0.318 of the gap closed.</li>
+<li><strong>MIPLIB 3:</strong> bell5 lost its proof on all three seeds. The cuts closed more of its root gap (0.144 to 0.867), but the root loop then kept 6 rounds and 103 cut rows instead of 1 round and 23. The tree went from about 19,000 nodes and a proof in 1.6-3.5 s to about 500,000 nodes at the 60 s limit.</li>
+<li><strong>Tier-1:</strong> not run.</li>
+</ul>
+<p>The CSVs are not committed because they carry branch stamps (<code>d80f5cb</code>). They are in the runs' artifacts (<code>option-ab-d80f5cb.csv</code> in each) and on PR #1296's branch.</p>
+<p>What would earn it a place: a separator that closes p200x1188c's root, and a loop gate that keeps bell5's rounds from costing its tree. The second is the root-loop gate's call (#1278), not this option's.</p>
+<h4 id="flow-path-cuts-by-a-walk-along-switched-outflows-pr-1303-closed">Flow path cuts by a walk along switched outflows (PR #1303, closed)</h4>
+<p><code>flow_cover_path_walk</code> extends the flow cover aggregation, which eliminates only unswitched columns. When none is left, the walk continues along the switched outflow carrying the most LP flow into the next node's balance row, and separates the flow cover of the summed path balance. These are the path inequalities of Van Roy and Wolsey (1985). The target was p200x1188c: HiGHS's root closes it, ours closes about 0.22 of the gap.</p>
+<p>Setup: <code>bench.yml</code> <code>ab-option</code> at <code>31860ca</code>. Both arms on one runner, 60 s, one thread, 3 seeds.</p>
+<div class="table-wrap"><table class="doc-table">
+<thead>
+<tr>
+<th>gate</th>
+<th>run</th>
+<th>off: proved / matched / verified</th>
+<th>on: proved / matched / verified</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>25 MIPLIB 2017 targets</td>
+<td>43912240097</td>
+<td>0 / 10 / 54</td>
+<td>0 / 10 / 54</td>
+</tr>
+<tr>
+<td>MIPLIB 3, 65 models</td>
+<td>43912248011</td>
+<td>139 / 140 / 192</td>
+<td>139 / 140 / 192</td>
+</tr>
+</tbody>
+</table></div>
+<ul>
+<li><strong>Counts:</strong> nothing gained and nothing lost in either gate. This targets runner (an EPYC 7763) proved none of the 25 in either arm.</li>
+<li><strong>Shifted geometric mean</strong> where both arms prove MIPLIB 3 (139 runs): 2.28 s off, 2.25 s on.</li>
+<li><strong>p200x1188c's root did not move:</strong> 0.217-0.224 of the gap closed off, 0.215-0.218 on.</li>
+<li><strong>beasleyC3</strong> gained 0.005-0.007 on every seed.</li>
+<li><strong>Root gap closed moved by up to 0.08 either way on</strong> h80x6320d, vpm2, mod011, fixnet6, egout and modglob. Their round counts changed too.</li>
+</ul>
+<p>The CSVs are not committed because they carry branch stamps (<code>31860ca</code>). They are in the runs' artifacts (<code>option-ab-31860ca.csv</code> in each) and on PR #1303's branch.</p>
+<p>What would earn it a place: a gain on a fixed-charge network's root. p200x1188c's weakness is not missing path aggregates. It is not big-M arc capacities either: <code>presolve_coefficient_tightening</code> leaves its root LP and root bound unchanged (run 43995480555). That option also gives wrong <code>optimal</code> answers on egout and modglob (#1312).</p>
+<h4 id="no-incumbent-on-five-miplib-2017-models-where-the-60-s-go-and-fix-and-propagate-before-the-root-lp-branch-expprelp-fixprop-not-merged">No incumbent on five MIPLIB 2017 models: where the 60 s go, and fix-and-propagate before the root LP (branch <code>exp/prelp-fixprop</code>, not merged)</h4>
+<p>HiGHS proves neos-950242, neos-3381206-awhea, hypothyroid-k1, neos-960392 and ns1116954 in 10.0, 1.6, 9.1, 7.2 and 3.9 s in the same 60 s jobs (<code>highs-miplib2017-bench-60s-c8544ed.csv</code>). We find no point on four of them and only -23 against -238 on neos-960392. Diagnosis run 44348500088 (<code>ab-option</code> on <code>main</code> at <code>4fc850f</code>, 60 s, one thread, 3 seeds, <code>profile=detailed</code> with nested profiles, verbose logs; a second arm with <code>mip_heuristics=true</code>) and run 44348916362 (the same with <code>gpu_fix_and_prop</code> or <code>gpu_pump</code> on the CPU):</p>
+<ul>
+<li><strong>neos-950242</strong> (5520 binaries, 240 integers, 34224 rows): the root LP takes 0.9 s. One root dive then takes the rest: the coefficient dive spends 51.4, 34.3 and 38.7 s on 15, 50 and 5 LP re-solves (seeds 0-2), mostly in the dual simplex's basic-values update. Feasibility Jump stalls with no point after about 9200 moves. RENS and the pump do nothing. The root bound is 1 and the optimum is 4, so a point alone would not prove it.</li>
+<li><strong>hypothyroid-k1</strong> (2602 binaries, 433884 nonzeros): the parity heuristic spends 11.3 s on two sub-MIPs, each fixing 3 of the 2602 binaries (#1323). The fractional and coefficient dives then spend 33 s on 25-31 re-solves (13.4 s refactorizing). With <code>mip_heuristics=true</code> the vector-length dive found the optimum, -2851, on seed 1 at 51 s.</li>
+<li><strong>neos-3381206-awhea</strong> (475 binaries, 1900 general integers): the tree runs 16,500-23,000 nodes. The dives repeated every 50 nodes take 27 s over 459 calls per rule and find nothing, and the propagation dive takes 3-4 s. Fix-and-propagate spends its 5 back-ups in 0.01 s. The feasibility pump leaves general integers out of its distance (<code>heuristics.hpp</code>), and 1900 of the 2375 columns are general integers here.</li>
+<li><strong>neos-960392</strong> (59376 binaries): the heuristics take 2 s. Feasibility Jump finds -23, -27 or -179 before the root LP. The root bound is already -238, the optimum. The 31 nodes take 39.6 s of node LP (about 8000 dual simplex iterations each) and 14.7 s of branching. The cost is the node LP on a degenerate 0/1 model, which belongs with the root dual simplex work.</li>
+<li><strong>ns1116954</strong> (feasibility, zero objective): the root LP does not finish (57.9 s, 31.1 s in basic values; see the ex9/ex10/ns1116954 entry above). Feasibility Jump before the LP stalls after 5205 moves and 0.1 s. So only an LP-free heuristic before the root LP can find a point.</li>
+</ul>
+<p><strong>Tried: fix-and-propagate before the root LP</strong> (<code>mip_fix_and_prop_before_lp</code>, branch <code>exp/prelp-fixprop</code> at <code>ca303dd</code>). This is <code>gpu_fix_and_prop</code> on the CPU, from the box point closest to zero, once before the root LP, for the ns1116954 case. Run 44453732125, 3 seeds, 60 s, with <code>gpu_fix_backtrack</code> at 5 and at 1000. <strong>No point on any of the five models in either arm.</strong> With 5 back-ups it gives up in 0.03-1.0 s ("back-up budget spent; the repair found nothing"). With 1000 back-ups it runs into its time share (4.8-5.9 s) on neos-950242, hypothyroid-k1 and ns1116954, and spends the 1000 back-ups in 0.2-0.3 s on neos-3381206-awhea. Not merged. The CSV is in the run's artifact (<code>option-ab-ca303dd.csv</code>, branch stamp).</p>
+<p>What these runs led to instead: a time budget per dive (#1324), which gives hypothyroid-k1 a point on every seed, and parity fixings only when they fix half the binaries (#1323). What would move the rest: for ns1116954 and neos-960392, the root and node dual simplex on degenerate 0/1 LPs. For neos-3381206-awhea, a pump distance that covers general integers (Bertacco, Fischetti and Lodi 2007).</p>
 <h3 id="3-built-opt-in-awaiting-the-measurement">3. Built opt-in, awaiting the measurement</h3>
 <p>Nothing has demoted these. Each is off by default until its A/B on <code>main</code> says what it changes, per the rule that a default is earned by a number.</p>
 <div class="table-wrap"><table class="doc-table">
@@ -24899,8 +25092,8 @@ ours, so no iteration ratio is quoted.</p>
 <!-- fragment:footer -->
 <div class="wrap">
     <div>SANKHYA · Smart India Hackathon 2026 · PS SIH26119 · Apache-2.0 · <a href="https://sankhya-solver.vercel.app">sankhya-solver.vercel.app</a></div>
-    <div>Every figure on this site was last checked against SANKHYA <a href="https://github.com/thegoodengineers/SANKHYA/tree/a0ef19e1c0b4e7de60b612bec6a5f97bb53ce13d">main at <span data-fact="sankhya_commit">a0ef19e1</span></a>.</div>
-    <div><a href="https://github.com/thegoodengineers/SANKHYA">Source</a> · <a href="/docs">Docs</a> · <a href="/docs/benchmarks">Benchmarks</a> · <a href="/docs/provenance">Provenance</a> · <a href="/docs/coverage">Coverage tracker</a> · <a href="https://github.com/thegoodengineers/SANKHYA/blob/a0ef19e1c0b4e7de60b612bec6a5f97bb53ce13d/docs/REPORT.pdf">Jury report (PDF)</a></div>
+    <div>Every figure on this site was last checked against SANKHYA <a href="https://github.com/thegoodengineers/SANKHYA/tree/cb5ef02a82c2c629296b53a4db8f77b7adc5a88e">main at <span data-fact="sankhya_commit">cb5ef02a</span></a>.</div>
+    <div><a href="https://github.com/thegoodengineers/SANKHYA">Source</a> · <a href="/docs">Docs</a> · <a href="/docs/benchmarks">Benchmarks</a> · <a href="/docs/provenance">Provenance</a> · <a href="/docs/coverage">Coverage tracker</a> · <a href="https://github.com/thegoodengineers/SANKHYA/blob/cb5ef02a82c2c629296b53a4db8f77b7adc5a88e/docs/REPORT.pdf">Jury report (PDF)</a></div>
   </div>
 <!-- /fragment:footer -->
 </footer>
